@@ -16,5 +16,4 @@ y_create_vm_from_backing.sh
 (This will create one VM using the backing image that was created with x_create_backing_image.sh)
 
 Notes:
-Files and scripts may be added to the folder "vm_scripts" This folder gets copied into the image and will thus be available in all VM's that 
-
+Files and scripts may be added to the folder "vm_scripts" This folder gets copied into the image and will thus be available in all VM's
