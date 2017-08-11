@@ -41,11 +41,11 @@ EOL
   
 # Check for package install
 if [ -f /etc/redhat-release ]; then
-  rpm -qa cloud-image-utils | grep -q cloud-utils || apt-get install cloud-utils -y
+  rpm -qa cloud-image-utils | grep -q cloud-utils || yum install cloud-utils -y
 fi
 
 if [ -f /etc/lsb-release ]; then
-  dpkg -l cloud-image-utils | grep -q cloud-image-utils || yum install cloud-image-utils -y
+  dpkg -l cloud-image-utils | grep -q cloud-image-utils || apt-get install cloud-image-utils -y
 fi
 
 #Generate tmp cloud-init data
