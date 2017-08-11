@@ -10,6 +10,7 @@ if [ -z “$1” ]; then
 fi
 
 #Configure Interface
+updatedb
 DPDK_DEVBIND=$(locate dpdk-devbind.py | head -1)
 PCIA="$(ethtool -i sdn_v0.40 | grep bus | cut -d ' ' -f 5)"
 
