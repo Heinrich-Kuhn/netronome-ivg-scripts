@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 #package_install.sh
 
 dpkg -i agilio-ovs*_2.6.A.*_amd64.deb \
