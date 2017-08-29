@@ -2,7 +2,7 @@
 
 
 PCIA="$(ethtool -i nfp_v0.42 | grep bus | cut -d ' ' -f 5)"
-PCIA2="$(ethtool -i nfp_v0.44 | grep bus | cut -d ' ' -f 5)"
+PCIA2="$(ethtool -i nfp_v0.43 | grep bus | cut -d ' ' -f 5)"
 interface_list=($PCIA $PCIA2)
 driver=vfio-pci
 # updatedb
