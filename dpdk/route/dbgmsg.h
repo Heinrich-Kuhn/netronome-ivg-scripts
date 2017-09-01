@@ -30,7 +30,7 @@ static inline const char *
 rt_hwaddr_str (rt_eth_addr_t hwaddr)
 {
     static char str[32];
-    const uint8_t *a = (const uint8_t *) &hwaddr;
+    const uint8_t *a = (const uint8_t *) hwaddr;
     sprintf(str, "%02x:%02x:%02x:%02x:%02x:%02x",
         a[0], a[1], a[2], a[3], a[4], a[5]);
     return str;

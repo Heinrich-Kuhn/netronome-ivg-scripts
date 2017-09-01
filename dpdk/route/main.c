@@ -187,9 +187,12 @@ print_load_statistics (int portid)
     }
     printf("\nLoad: ");
     for (i = 0 ; i < 4 ; i++ ) {
-        printf("  %c: %5.1f%%%s",
-            ("ESPF")[i],
-            100.0 * ((double) delta.cnt[i]) / ((double) total),
+        char numstr[32] = "";
+        if (total > 0) {
+            sprintf(numstr, "%5.1f%%", 100.0 * 
+                ((double) delta.cnt[i]) / ((double) total));
+        }
+        printf("  %c: %-6s%s", ("ESPF")[i], numstr,
             (i < (LS_COUNTERS - 1)) ? ", " : ""
         );
     }

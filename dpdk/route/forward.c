@@ -125,17 +125,12 @@ rt_pkt_ipv4_send (rt_pkt_t pkt, rt_ipv4_addr_t ipda)
             rt_pkt_nh_resolve(pkt, rt, ipda);
             return;
         }
-        /* The route has a HWADDR but it was possibly resolved for
-         * a different NHIPA, so create a new DT entry and continue.
-         */
-        rt_dt_create(rt, ipda);
     }
 
     if (flags & RT_LPM_F_HAS_HWADDR) {
-        /*
-         * This should be a transitory state
-         * Update MAC addresses and send
-         */
+        /* Add a Direct Table entry */
+        rt_dt_create(rt, ipda);
+        /* Update MAC addresses and send */
         rt_pkt_set_hw_addrs(pkt, rt->pi, rt->hwaddr);
         rt_pkt_send(pkt, rt->pi);
     } else {
@@ -153,7 +148,6 @@ rt_pkt_ipv4_process (rt_pkt_t pkt)
         /* Update MAC addresses */
         memcpy(&pkt.eth->dst, drp->eth.dst, 6);
         memcpy(&pkt.eth->src, &drp->eth.src, 6);
-        //memcpy(&pkt.eth->src, pkt.pi->hwaddr, 6);
         /* Send Packet */
         rt_pkt_send_fast(pkt, drp->port, drp->tx_buffer);
         return;
