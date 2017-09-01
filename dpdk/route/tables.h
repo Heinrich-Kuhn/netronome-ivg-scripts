@@ -76,6 +76,7 @@ rt_dt_lookup (rt_rd_t rdidx, rt_ipv4_addr_t ipaddr)
 rt_dt_route_t *rt_dt_lookup (rt_rd_t vifidx, rt_ipv4_addr_t addr);
 extern void rt_dt_create (rt_lpm_t *, rt_ipv4_addr_t addr);
 extern void rt_dt_init (void);
+extern int rt_dt_sprintf (char *str, const rt_dt_route_t *dt);
 extern void rt_dt_dump (FILE *fd);
 
 rt_lpm_t *rt_lpm_lookup (rt_rd_t rdidx, rt_ipv4_addr_t addr);
@@ -111,7 +112,7 @@ rt_lpm_set_hwaddr (rt_lpm_t *rt, rt_eth_addr_t hwaddr)
 }
 
 extern void rt_lpm_table_init (void);
-
+extern int rt_lpm_sprintf (char *str, const rt_lpm_t *rt);
 extern void rt_lpm_dump (FILE *);
 
 #endif

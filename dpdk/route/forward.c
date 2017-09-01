@@ -110,6 +110,7 @@ rt_pkt_ipv4_send (rt_pkt_t pkt, rt_ipv4_addr_t ipda)
     }
 
     uint32_t flags = rt->flags;
+    rt_ipv4_addr_t nhipa = ipda;
 
     if (flags & RT_LPM_F_LOCAL) {
         rt_pkt_ipv4_local_process(pkt);
@@ -119,8 +120,10 @@ rt_pkt_ipv4_send (rt_pkt_t pkt, rt_ipv4_addr_t ipda)
     if (rt->nh != NULL) {
         rt = rt->nh;
         flags = rt->flags;
+        nhipa = rt->prefix.addr;
     } else
     if (flags & RT_LPM_F_HAS_NEXTHOP) {
+        nhipa = rt->nhipa;
         if (!(rt->flags & RT_LPM_F_HAS_HWADDR)) {
             rt_pkt_nh_resolve(pkt, rt, ipda);
             return;
@@ -134,7 +137,7 @@ rt_pkt_ipv4_send (rt_pkt_t pkt, rt_ipv4_addr_t ipda)
         rt_pkt_set_hw_addrs(pkt, rt->pi, rt->hwaddr);
         rt_pkt_send(pkt, rt->pi);
     } else {
-        rt_arp_generate(pkt, ipda, rt);
+        rt_arp_generate(pkt, nhipa, rt);
     }
 }
 

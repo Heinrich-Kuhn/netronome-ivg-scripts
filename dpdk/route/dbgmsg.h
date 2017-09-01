@@ -27,7 +27,7 @@ rt_ipaddr_nr_str (rt_ipv4_addr_t ipaddr)
 }
 
 static inline const char *
-rt_hwaddr_str (rt_eth_addr_t hwaddr)
+rt_hwaddr_str (const rt_eth_addr_t hwaddr)
 {
     static char str[32];
     const uint8_t *a = (const uint8_t *) hwaddr;
