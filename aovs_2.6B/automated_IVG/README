@@ -5,33 +5,33 @@ The script uses tmux to open multiple windows.
 The following options are available once the script is running:
 
 1) Connect to DUT's
-    This option will prompt you to enter the IP addresses or hostnames of the two DUT's that are connected back to back
-    It will create a ssh key-pair and install the public key on the two DUT's for passwordless access during the tests
+This option will prompt you to enter the IP addresses or hostnames of the two DUT's that are connected back to back
+It will create a ssh key-pair and install the public key on the two DUT's for passwordless access during the tests
 
 2) Install/Re-install Agilio OVS
-    This option will first check if there is a valid agilio-ovs.tar.gz file inside this folder. If no such file exits the script will exit
-    If the file exists it will copy it to the DUT's and re-install Agilio OVS, regardless if a pre existing install is present on the DUT
+This option will first check if there is a valid agilio-ovs.tar.gz file inside this folder. If no such file exits the script will exit
+If the file exists it will copy it to the DUT's and re-install Agilio OVS, regardless if a pre existing install is present on the DUT
 
 3) Create backing image for test VM's (Only done once)
-    This option will download a ubuntu cloud image to this folder and then copy that cloud image over to the DUT's
-    It will the create a backing image that will be used for all future VM's.
-    This option must be run at least once to ensure that there is a backing image available to create VM's from for test cases 2 and 3
-    If this options is run more than once the pre-existing backing image will be overwritten
+This option will download a ubuntu cloud image to this folder and then copy that cloud image over to the DUT's
+It will the create a backing image that will be used for all future VM's.
+This option must be run at least once to ensure that there is a backing image available to create VM's from for test cases 2 and 3
+If this options is run more than once the pre-existing backing image will be overwritten
 
 4) Test Case 1 (Simple ping between hosts)
-    The option will set up a simple ping test between the two hosts using a NORMAL rule
+The option will set up a simple ping test between the two hosts using a NORMAL rule
 
 5) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)
-    This option will create a Rx and Tx VM on DUT 1 and 2 respectively and add VF's using SRIOV passthrough.
-    It will run DPDK-Pktgen inside the Tx VM on DUT 1 and it will run a capture script on DUT 2 that will record incoming traffic.
-    The following packet sizes are tested with this option, each packet size sampling for 15 seconds
-    Packet sizes:  64, 96, 128, 196, 256, 384, 512, 768, 1024, 1152, 1280, 1500, 1518
+This option will create a Rx and Tx VM on DUT 1 and 2 respectively and add VF's using SRIOV passthrough.
+It will run DPDK-Pktgen inside the Tx VM on DUT 1 and it will run a capture script on DUT 2 that will record incoming traffic.
+The following packet sizes are tested with this option, each packet size sampling for 15 seconds
+Packet sizes:  64, 96, 128, 196, 256, 384, 512, 768, 1024, 1152, 1280, 1500, 1518
 
 6) Test Case 3 (DPDK-pktgen VM-VM uni-directional XVIO)
-    This option will create a Rx and Tx VM on DUT 1 and 2 respectively and add VF's using Netronome's XVIO
-    It will run DPDK-Pktgen inside the Tx VM on DUT 1 and it will run a capture script on DUT 2 that will record incoming traffic.
-    The following packet sizes are tested with this option, each packet size sampling for 15 seconds
-    Packet sizes:  64, 96, 128, 196, 256, 384, 512, 768, 1024, 1152, 1280, 1500, 1518
+This option will create a Rx and Tx VM on DUT 1 and 2 respectively and add VF's using Netronome's XVIO
+It will run DPDK-Pktgen inside the Tx VM on DUT 1 and it will run a capture script on DUT 2 that will record incoming traffic.
+The following packet sizes are tested with this option, each packet size sampling for 15 seconds
+Packet sizes:  64, 96, 128, 196, 256, 384, 512, 768, 1024, 1152, 1280, 1500, 1518
 
 The results of test cases 2 and 3 will automatically be copied back into the folder were run_ivg.sh was started from
 
