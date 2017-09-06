@@ -51,6 +51,11 @@ else
       cd xenial
    fi
    dpkg -i *.deb || exit -1
+   echo
+   echo
+   echo "Flashing NFP firmware, please wait..."
+   sleep 10
+   /opt/netronome/bin/nfp-update-flash.sh
 fi
 
 exit 0
