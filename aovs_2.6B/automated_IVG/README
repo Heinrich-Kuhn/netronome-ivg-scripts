@@ -11,6 +11,7 @@ It will create a ssh key-pair and install the public key on the two DUT's for pa
 2) Install/Re-install Agilio OVS
 This option will first check if there is a valid agilio-ovs.tar.gz file inside this folder. If no such file exits the script will exit
 If the file exists it will copy it to the DUT's and re-install Agilio OVS, regardless if a pre existing install is present on the DUT
+After installing Agilio OVS the card will be flashed with updated firmware. After this procces completes the DUT's will have to be restarted
 
 3) Create backing image for test VM's (Only done once)
 This option will download a ubuntu cloud image to this folder and then copy that cloud image over to the DUT's
