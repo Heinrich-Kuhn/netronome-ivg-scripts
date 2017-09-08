@@ -84,6 +84,9 @@ else # else $TMUX is not empty, start test.
                echo "Please copy the Agilio-OVS .tar.gz file into the same folder as this script"
                sleep 10
             else
+               
+               tmux send-keys -t 2 "mkdir IVG_folder" C-m
+               tmux send-keys -t 3 "mkdir IVG_folder" C-m
                LATEST_AOVS=$(ls agilio-ovs-2.6.B-r* 2>/dev/null | grep .tar.gz | tail -n1)
                scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT1:/root/IVG_folder/
                scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT2:/root/IVG_folder/
