@@ -72,6 +72,9 @@ else # else $TMUX is not empty, start test.
             #SSH into DUT's
             tmux send-keys -t 2 "ssh -i ~/.ssh/netronome_key root@$IP_DUT1" C-m
             tmux send-keys -t 3 "ssh -i ~/.ssh/netronome_key root@$IP_DUT2" C-m
+            
+            tmux send-keys -t 2 "mkdir IVG_folder" C-m
+            tmux send-keys -t 3 "mkdir IVG_folder" C-m
             ;;
 
         2)  echo "2) Install/Re-install Agilio-OVS"
@@ -114,6 +117,9 @@ else # else $TMUX is not empty, start test.
             #Copy VM creator script to DUT
             scp -i ~/.ssh/netronome_key -r vm_creator root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r vm_creator root@$IP_DUT2:/root/IVG_folder/
+
+            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/check_deps.sh" C-m
+            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/check_deps.sh" C-m         
 
             #Download cloud image to local machine
             echo "Downloading cloud image..."
