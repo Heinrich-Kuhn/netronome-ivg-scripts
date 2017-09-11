@@ -56,6 +56,7 @@ else # else $TMUX is not empty, start test.
         echo "4) Test Case 1 (Simple ping between hosts)"
         echo "5) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
         echo "6) Test Case 3 (DPDK-pktgen VM-VM uni-directional XVIO)"
+        echo "7) Test case 4 SR-IOV l2fwd"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
         case "$OPT" in
@@ -324,9 +325,39 @@ else # else $TMUX is not empty, start test.
             done
             mv capture.txt "XVIO_test_run-$num.txt" 
             fi
-            
-            
             ;;
+         7)  echo "7) Test case 4 (SR-IOV l2fwd)"
+            
+            
+            read -p "Enter IP of DUT to run l2fwd VM on: " l2fwd_IP
+            
+            if [ $l2fwd_IP == $IP_DUT1 ]; then
+            tmux_pane=2
+            else 
+                tmux_pane=3
+            fi
+            
+            VM_BASE_NAME=netronome-l2fwd
+            
+            #Copy VM creator script to DUT
+            scp -i ~/.ssh/netronome_key -r vm_creator root@$l2fwd_IP:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r test_case_4 root@$l2fwd_IP:/root/IVG_folder/
+
+            echo "VM is called $VM_BASE_NAME"
+            tmux send-keys -t $tmux_pane "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-1" C-m
+            
+            echo "Creating test VM from backing image"
+            wait_text $tmux_pane "VM has been created!" > /dev/null
+            
+            tmux send-keys -t $tmux_pane "./IVG_folder/test_case_4/setup_test_case_4.sh $VM_BASE_NAME-1 3" C-m
+            wait_text $tmux_pane "* Documentation:  https://help.ubuntu.com" > /dev/null
+            
+            sleep 1
+            tmux send-keys -t $tmux_pane "cd vm_scripts/samples/DPDK-l2fwd" C-m
+           
+            tmux send-keys -t $tmux_pane "./3_run_l2fwd.sh" C-m
+            ;;
+
 
         x)  echo "x) Exiting script"
             sleep 1
