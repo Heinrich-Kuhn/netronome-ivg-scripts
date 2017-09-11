@@ -1,9 +1,8 @@
 #!/bin/bash
 #2_configure_L2FWD.sh
 
-
-#allocate hugepages
-echo 512 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
+./1_configure_hugepages.sh
+./2_auto_bind_igb_uio.sh
 
 export DPDK_BASE_DIR=/root
 

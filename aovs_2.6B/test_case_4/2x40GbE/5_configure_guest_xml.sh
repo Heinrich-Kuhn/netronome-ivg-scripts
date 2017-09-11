@@ -1,5 +1,5 @@
 #!/bin/bash
-VM_NAME="vm1"
+VM_NAME="netronome-l2fwd"
 
 # Remove vhostuser interface
 EDITOR='sed -i "/<interface type=.vhostuser.>/,/<\/interface>/d"' virsh edit $VM_NAME
