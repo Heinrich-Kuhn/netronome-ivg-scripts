@@ -1,6 +1,7 @@
 #!/bin/bash
 #package_install.sh
 
+apt-get update
 
 apt-get -y install make autoconf automake libtool gcc g++ bison \
     flex hwloc-nox libreadline-dev libpcap-dev dkms libftdi1 \
