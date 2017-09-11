@@ -95,9 +95,18 @@ else # else $TMUX is not empty, start test.
                scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT1:/root/IVG_folder/
                scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT2:/root/IVG_folder/
 
+               scp -i ~/.ssh/netronome_key grub_setup.sh root@$IP_DUT1:/root/IVG_folder/
+               scp -i ~/.ssh/netronome_key grub_setup.sh root@$IP_DUT2:/root/IVG_folder/
+
                scp -i ~/.ssh/netronome_key package_install.sh root@$IP_DUT1:/root/IVG_folder/
                scp -i ~/.ssh/netronome_key package_install.sh root@$IP_DUT2:/root/IVG_folder/
                
+               tmux send-keys -t 2 "./IVG_folder/grub_setup.sh" C-m
+               tmux send-keys -t 3 "./IVG_folder/grub_setup.sh" C-m
+    
+               wait_text 2 "Grub updated" > /dev/null
+               wait_text 3 "Grub updated" > /dev/null
+
                tmux send-keys -t 2 "./IVG_folder/package_install.sh" C-m
                tmux send-keys -t 3 "./IVG_folder/package_install.sh" C-m
 
@@ -105,6 +114,7 @@ else # else $TMUX is not empty, start test.
                
                wait_text 2 "root@" > /dev/null
                wait_text 3 "root@" > /dev/null
+                
 
             fi
             ;;
