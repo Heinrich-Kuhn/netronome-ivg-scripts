@@ -212,8 +212,8 @@ else # else $TMUX is not empty, start test.
 
             sleep 5
 
-            tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
-            tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+            tmux send-keys -t 2 "cd DPDK-pktgen" C-m
+            tmux send-keys -t 3 "cd DPDK-pktgen" C-m
 
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             sleep 5
@@ -304,8 +304,8 @@ else # else $TMUX is not empty, start test.
 
             sleep 5
 
-            tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
-            tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+            tmux send-keys -t 2 "cd DPDK-pktgen" C-m
+            tmux send-keys -t 3 "cd DPDK-pktgen" C-m
 
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             sleep 5
@@ -364,7 +364,15 @@ else # else $TMUX is not empty, start test.
             wait_text $tmux_pane "* Documentation:  https://help.ubuntu.com" > /dev/null
             
             sleep 1
-            tmux send-keys -t $tmux_pane "cd vm_scripts/samples/DPDK-l2fwd" C-m
+            tmux send-keys -t $tmux_pane "cd vm_scripts/samples/" C-m
+            tmux send-keys -t $tmux_pane "./1_configure_hugepages.sh" C-m
+            
+            sleep 1
+
+            tmux send-keys -t $tmux_pane "./2_auto_bind_igb_uio.sh" C-m
+            
+            sleep 1
+            tmux send-keys -t $tmux_pane "cd DPDK-l2fwd" C-m
            
             tmux send-keys -t $tmux_pane "./3_run_l2fwd.sh" C-m
             ;;
