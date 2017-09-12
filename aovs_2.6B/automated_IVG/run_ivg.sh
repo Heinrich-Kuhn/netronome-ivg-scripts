@@ -57,7 +57,8 @@ else # else $TMUX is not empty, start test.
         echo "5) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
         echo "6) Test Case 3 (DPDK-pktgen VM-VM uni-directional XVIO)"
         echo "7) Test case 4 (SR-IOV l2fwd)"
-        echo "8) Test Case 6 (DPDK-pktgen VM-VM uni-directional SR-IOV - VXLAN)"
+        echo "8) Test case 5 (XVIO l2fwd)"
+        echo "9) Test Case 6 (DPDK-pktgen VM-VM uni-directional SR-IOV - VXLAN)"
         echo "r) Reboot host machines"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
@@ -358,10 +359,10 @@ else # else $TMUX is not empty, start test.
             
             if [ $l2fwd_IP == $IP_DUT1 ]; then
             tmux_pane=2
-	    vm_number=1
+	        vm_number=1
             else 
                 tmux_pane=3
-		vm_number=2
+		        vm_number=2
             fi
             
             VM_BASE_NAME=netronome-l2fwd
@@ -407,9 +408,67 @@ else # else $TMUX is not empty, start test.
 
             ;;
                 
+            8)  echo "8) Test case 5 (XVIO l2fwd)"
+            
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+            
+            read -p "Enter IP of DUT to run l2fwd VM on: " l2fwd_IP
+            
+            if [ $l2fwd_IP == $IP_DUT1 ]; then
+            tmux_pane=2
+	        vm_number=1
+            else 
+                tmux_pane=3
+		        vm_number=2
+            fi
+            
+            VM_BASE_NAME=netronome-l2fwd-xvio
+            
+            #Copy VM creator script to DUT
+            scp -i ~/.ssh/netronome_key -r vm_creator root@$l2fwd_IP:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r test_case_5 root@$l2fwd_IP:/root/IVG_folder/
+
+            echo "VM is called $VM_BASE_NAME"
+            tmux send-keys -t $tmux_pane "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-$vm_number" C-m
+            
+            echo "Creating test VM from backing image"
+            wait_text $tmux_pane "VM has been created!" > /dev/null
+            
+            tmux send-keys -t $tmux_pane "./IVG_folder/test_case_5/setup_test_case_5.sh $VM_BASE_NAME-$vm_number 3 2" C-m
+            wait_text $tmux_pane "* Documentation:  https://help.ubuntu.com" > /dev/null
+            
+            sleep 1
+            tmux send-keys -t $tmux_pane "cd vm_scripts/samples/" C-m
+            tmux send-keys -t $tmux_pane "./1_configure_hugepages.sh" C-m
+            
+            sleep 1
+
+            tmux send-keys -t $tmux_pane "./2_auto_bind_igb_uio.sh" C-m
+            
+            sleep 1
+            tmux send-keys -t $tmux_pane "cd DPDK-l2fwd" C-m
+           
+            tmux send-keys -t $tmux_pane "./3_run_l2fwd.sh" C-m
+            
+            while :; do
+            read -p "Enter 'x' to kill the VM running l2fwd: " l2fwd_kill            
+            
+            if [ $l2fwd_kill == 'x' ]; then
+                 tmux send-keys -t $tmux_pane C-c
+                 sleep 1
+                 tmux send-keys -t $tmux_pane "poweroff" C-m
+                 sleep 1
+                 tmux send-keys -t $tmux_pane "virsh undefine $VM_BASE_NAME-$vm_number" C-m
+		 break
+            fi        
+            done
+
+            ;;
+
 
         
-         8)  echo "8) Test Case 6 (DPDK-pktgen VM-VM uni-directional SR-IOV - VXLAN)"
+         9)  echo "9) Test Case 6 (DPDK-pktgen VM-VM uni-directional SR-IOV - VXLAN)"
             
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
