@@ -561,8 +561,8 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r test_case_7 root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r test_case_7 root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_7/setup_test_case_7.sh $VM_BASE_NAME-1 3 10.10.10.1 10.10.10.2" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_7/setup_test_case_7.sh $VM_BASE_NAME-2 3 10.10.10.2 10.10.10.1" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_7/setup_test_case_7.sh $VM_BASE_NAME-1 3 2 10.10.10.1 10.10.10.2" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_7/setup_test_case_7.sh $VM_BASE_NAME-2 3 2 10.10.10.2 10.10.10.1" C-m
             
             #Pause tmux until VM boots up 
             wait_text 2 "* Documentation:  https://help.ubuntu.com" > /dev/null
