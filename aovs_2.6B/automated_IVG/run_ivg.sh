@@ -376,9 +376,9 @@ else # else $TMUX is not empty, start test.
                 echo "Rebooting DUT's"
                 tmux send-keys -t 2 "reboot" C-m
                 tmux send-keys -t 3 "reboot" C-m
-
-
+            fi
             ;;
+
         x)  echo "x) Exiting script"
             sleep 1
             tmux kill-session -t $SESSIONNAME
