@@ -57,6 +57,7 @@ else # else $TMUX is not empty, start test.
         echo "5) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
         echo "6) Test Case 3 (DPDK-pktgen VM-VM uni-directional XVIO)"
         echo "7) Test case 4 (SR-IOV l2fwd)"
+        echo "8) Test Case 6 (DPDK-pktgen VM-VM uni-directional SR-IOV - VXLAN)"
         echo "r) Reboot host machines"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
@@ -389,6 +390,84 @@ else # else $TMUX is not empty, start test.
            
             tmux send-keys -t $tmux_pane "./3_run_l2fwd.sh" C-m
             ;;
+
+        
+         8)  echo "8) Test Case 6 (DPDK-pktgen VM-VM uni-directional SR-IOV - VXLAN)"
+            
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
+            VM_BASE_NAME=netronome-sriov-vm-vxlan
+            echo "VM's are called $VM_BASE_NAME"
+            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-1" C-m
+            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-2" C-m
+            
+            echo "Creating test VM from backing image"
+            wait_text 2 "VM has been created!" > /dev/null
+            wait_text 3 "VM has been created!" > /dev/null
+
+            scp -i ~/.ssh/netronome_key -r test_case_6 root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r test_case_6 root@$IP_DUT2:/root/IVG_folder/
+
+            tmux send-keys -t 2 "./IVG_folder/test_case_2/setup_test_case_6.sh $VM_BASE_NAME-1 3 10.10.10.1 10.10.10.2" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_2/setup_test_case_6.sh $VM_BASE_NAME-2 3 10.10.10.2 10.10.10.1" C-m
+            
+            #Pause tmux until VM boots up 
+            wait_text 2 "* Documentation:  https://help.ubuntu.com" > /dev/null
+            wait_text 3 "* Documentation:  https://help.ubuntu.com" > /dev/null
+            
+            sleep 1
+            tmux send-keys -t 2 "cd vm_scripts/samples/" C-m
+            tmux send-keys -t 3 "cd vm_scripts/samples/" C-m
+
+            tmux send-keys -t 2 "./1_configure_hugepages.sh" C-m
+            tmux send-keys -t 3 "./1_configure_hugepages.sh" C-m
+
+            sleep 1
+
+            tmux send-keys -t 2 "./2_auto_bind_igb_uio.sh" C-m
+            tmux send-keys -t 3 "./2_auto_bind_igb_uio.sh" C-m
+
+            sleep 5
+
+            tmux send-keys -t 2 "cd DPDK-pktgen" C-m
+            tmux send-keys -t 3 "cd DPDK-pktgen" C-m
+
+            tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
+            sleep 5
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
+            
+            echo "Running test case 6 - SRIOV DPDK-pktgen VXLAN"
+            wait_text 3 "root@" > /dev/null
+
+            tmux send-keys -t 2 "exit" C-m
+            tmux send-keys -t 3 "exit" C-m
+            
+            echo "copy data..."
+            sleep 1
+            tmux send-keys -t 3 "./IVG_folder/test_case_6/7_copy_data_dump.sh $VM_BASE_NAME-2" C-m
+            
+            sleep 2
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
+            sleep 2
+
+            tmux send-keys -t 2 "./IVG_folder/test_case_6/8_shutdown_vm.sh $VM_BASE_NAME-1" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_6/8_shutdown_vm.sh $VM_BASE_NAME-2" C-m
+            
+            
+            if [[ ! -e "capture.txt" ]]; then
+               mv capture.txt SRIOV_test_run_vxlan-0.txt
+            else
+            num=1
+            while [[ -e "SRIOV_test_run_vxlan-$num.txt" ]]; do
+              (( num++ ))
+            done
+            mv capture.txt "SRIOV_test_run_vxlan-$num.txt" 
+            fi 
+
+
+
+
 
         r)  echo "r) Reboot host machines"
             read -p "Are you sure you want to reboot DUT's (y/n): " REBOOT_ANS
