@@ -549,7 +549,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
-            VM_BASE_NAME=netronome-sriov-vm-vxlan
+            VM_BASE_NAME=netronome-xvio-vm-vxlan
             echo "VM's are called $VM_BASE_NAME"
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-1" C-m
             tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-2" C-m
@@ -608,13 +608,13 @@ else # else $TMUX is not empty, start test.
             
             
             if [[ ! -e "capture.txt" ]]; then
-               mv capture.txt SRIOV_test_run_vxlan-0.txt
+               mv capture.txt XVIO_test_run_vxlan-0.txt
             else
             num=1
-            while [[ -e "SRIOV_test_run_vxlan-$num.txt" ]]; do
+            while [[ -e "XVIO_test_run_vxlan-$num.txt" ]]; do
               (( num++ ))
             done
-            mv capture.txt "SRIOV_test_run_vxlan-$num.txt" 
+            mv capture.txt "XVIO_test_run_vxlan-$num.txt" 
             fi 
 
 
