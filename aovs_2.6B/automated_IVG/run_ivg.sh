@@ -358,8 +358,10 @@ else # else $TMUX is not empty, start test.
             
             if [ $l2fwd_IP == $IP_DUT1 ]; then
             tmux_pane=2
+	    vm_number=1
             else 
                 tmux_pane=3
+		vm_number=2
             fi
             
             VM_BASE_NAME=netronome-l2fwd
@@ -393,13 +395,14 @@ else # else $TMUX is not empty, start test.
             while :; do
             read -p "Enter 'x' to kill the VM running l2fwd: " l2fwd_kill            
             
-            if [ l2fwd_kill == 'x' ]; then
-                 tmux send-keys -t $tmux_pane C-r
+            if [ $l2fwd_kill == 'x' ]; then
+                 tmux send-keys -t $tmux_pane C-c
                  sleep 1
                  tmux send-keys -t $tmux_pane "poweroff" C-m
                  sleep 1
-                 tmux send-keys -t $tmux_pane "virsh undefine $VM_BASE_NAME" C-m
-                    
+                 tmux send-keys -t $tmux_pane "virsh undefine $VM_BASE_NAME-$vm_number" C-m
+		 break
+            fi        
             done
 
             ;;
