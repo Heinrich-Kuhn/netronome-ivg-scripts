@@ -81,6 +81,9 @@ else # else $TMUX is not empty, start test.
 
         2)  echo "2) Install/Re-install Agilio-OVS"
             
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
             #Check if any agilio .tar files are in the folder
             ls agilio-ovs-2.6.B-r* 2>/dev/null
 
@@ -122,6 +125,9 @@ else # else $TMUX is not empty, start test.
 
         3)  echo "3) Create backing image for test VM's (Only done once)"
             
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
             #Create working dir on DUT's
             tmux send-keys -t 2 "mkdir IVG_folder" C-m
             tmux send-keys -t 3 "mkdir IVG_folder" C-m
@@ -153,6 +159,9 @@ else # else $TMUX is not empty, start test.
         
         4)  echo "4) Test Case 1 (Simple ping between hosts)"
             
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
             scp -i ~/.ssh/netronome_key -r test_case_1 root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r test_case_1 root@$IP_DUT2:/root/IVG_folder/
 
@@ -179,6 +188,9 @@ else # else $TMUX is not empty, start test.
             ;;
         5)  echo "5) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
             
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
             VM_BASE_NAME=netronome-sriov-vm
             echo "VM's are called $VM_BASE_NAME"
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-1" C-m
@@ -253,14 +265,15 @@ else # else $TMUX is not empty, start test.
         6)  echo "6) Test Case 3 (DPDK-pktgen VM-VM uni-directional XVIO)"
             
 
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+            
             scp -i ~/.ssh/netronome_key configure_hugepages.sh root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key configure_hugepages.sh root@$IP_DUT2:/root/IVG_folder/
              
-
             sleep 2
-           tmux send-keys -t 2 "./IVG_folder/configure_hugepages.sh" C-m
+            tmux send-keys -t 2 "./IVG_folder/configure_hugepages.sh" C-m
             tmux send-keys -t 3 "./IVG_folder/configure_hugepages.sh" C-m
-            
             
             sleep 2
         
@@ -276,13 +289,11 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r test_case_3 root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r test_case_3 root@$IP_DUT2:/root/IVG_folder/
             
-            
             sleep 2
             tmux send-keys -t 2 "rmmod vfio-pci" C-m
             tmux send-keys -t 3 "rmmod vfio-pci" C-m
             sleep 2
 
-            
             tmux send-keys -t 2 "./IVG_folder/test_case_3/setup_test_case_3.sh $VM_BASE_NAME-1 3 2" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_3/setup_test_case_3.sh $VM_BASE_NAME-2 3 2" C-m
             
@@ -339,6 +350,8 @@ else # else $TMUX is not empty, start test.
             ;;
          7)  echo "7) Test case 4 (SR-IOV l2fwd)"
             
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
             
             read -p "Enter IP of DUT to run l2fwd VM on: " l2fwd_IP
             
