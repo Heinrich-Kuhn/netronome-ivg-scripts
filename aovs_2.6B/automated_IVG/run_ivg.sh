@@ -56,7 +56,8 @@ else # else $TMUX is not empty, start test.
         echo "4) Test Case 1 (Simple ping between hosts)"
         echo "5) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
         echo "6) Test Case 3 (DPDK-pktgen VM-VM uni-directional XVIO)"
-        echo "7) Test case 4 SR-IOV l2fwd"        
+        echo "7) Test case 4 (SR-IOV l2fwd)"
+        echo "r) Reboot host machines"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
         case "$OPT" in
@@ -368,7 +369,16 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t $tmux_pane "./3_run_l2fwd.sh" C-m
             ;;
 
+        r)  echo "r) Reboot host machines"
+            read -p "Are you sure you want to reboot DUT's (y/n): " REBOOT_ANS
 
+            if [ $REBOOT_ANS == 'y' ]; then
+                echo "Rebooting DUT's"
+                tmux send-keys -t 2 "reboot" C-m
+                tmux send-keys -t 3 "reboot" C-m
+
+
+            ;;
         x)  echo "x) Exiting script"
             sleep 1
             tmux kill-session -t $SESSIONNAME
