@@ -389,7 +389,21 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t $tmux_pane "cd DPDK-l2fwd" C-m
            
             tmux send-keys -t $tmux_pane "./3_run_l2fwd.sh" C-m
+            
+            while :; do
+            read -p "Enter 'x' to kill the VM running l2fwd: " l2fwd_kill            
+            
+            if [ l2fwd_kill == 'x' ]; then
+                 tmux send-keys -t $tmux_pane C-r
+                 sleep 1
+                 tmux send-keys -t $tmux_pane "poweroff" C-m
+                 sleep 1
+                 tmux send-keys -t $tmux_pane "virsh undefine $VM_BASE_NAME" C-m
+                    
+            done
+
             ;;
+                
 
         
          8)  echo "8) Test Case 6 (DPDK-pktgen VM-VM uni-directional SR-IOV - VXLAN)"
