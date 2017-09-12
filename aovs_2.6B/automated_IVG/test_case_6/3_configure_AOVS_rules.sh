@@ -14,7 +14,7 @@ done
 ovs-vsctl add-br $BRIDGE
 ovs-vsctl add-br $BRIDGE_BOND
 ovs-vsctl add-bond $BRIDGE_BOND bond0 nfp_p0 nfp_p1
-ovs-vsctl add-port $BRIDGE_DON patch-bond-to-br -- set interface patch-bond-to-br type=patch options:peer=patch-br-to-bond
+ovs-vsctl add-port $BRIDGE_BOND patch-bond-to-br -- set interface patch-bond-to-br type=patch options:peer=patch-br-to-bond
 ovs-vsctl set port bond0 bond_mode=balance-tcp
 ovs-vsctl set port bond0 lacp=active
 ovs-vsctl set port bond0 other_config:lacp-time=fast

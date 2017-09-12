@@ -409,8 +409,8 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r test_case_6 root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r test_case_6 root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_2/setup_test_case_6.sh $VM_BASE_NAME-1 3 10.10.10.1 10.10.10.2" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_2/setup_test_case_6.sh $VM_BASE_NAME-2 3 10.10.10.2 10.10.10.1" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_6/setup_test_case_6.sh $VM_BASE_NAME-1 3 10.10.10.1 10.10.10.2" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_6/setup_test_case_6.sh $VM_BASE_NAME-2 3 10.10.10.2 10.10.10.1" C-m
             
             #Pause tmux until VM boots up 
             wait_text 2 "* Documentation:  https://help.ubuntu.com" > /dev/null
@@ -435,7 +435,7 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             sleep 5
-            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh y" C-m
             
             echo "Running test case 6 - SRIOV DPDK-pktgen VXLAN"
             wait_text 3 "root@" > /dev/null
@@ -466,7 +466,7 @@ else # else $TMUX is not empty, start test.
             fi 
 
 
-
+           ;;
 
 
         r)  echo "r) Reboot host machines"

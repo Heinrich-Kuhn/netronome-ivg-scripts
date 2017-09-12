@@ -1,5 +1,7 @@
 #!/bin/bash
 
+VXLAN=$1
+
 export DPDK_BASE_DIR=/root
 export PKTGEN=/root/pktgen-dpdk-pktgen-3.3.2
 script_dir="$(dirname $(readlink -f $0))"
@@ -46,6 +48,9 @@ done
 echo "whitelist: $whitelist"
 echo "mapping: $mapping"
 
-/root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_transmitter.lua
-
+if [ $VXLAN == 'y' ]; then
+	/root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_transmitter_vxlan.lua
+else
+	/root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_transmitter.lua
+fi
 reset
