@@ -8,6 +8,7 @@ The following steps may be followed to setup DPDK-Pktgen inside a VM running on 
 1. Bind two VF's to vfio-pci using dpdk-devbind.py
 2. Create a OVS bridge and add the two VF's and physical ports to the bridge
 4. Add a NORMAL rule to the bridge
+5. Modify the xml file of the VM that was created using the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section
 
 ### Example usage:
 Follow the steps outlined in the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section of this repo to create a backing image for this test.
