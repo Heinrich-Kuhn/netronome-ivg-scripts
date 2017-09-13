@@ -45,4 +45,5 @@ Run the following scripts on the transmitting VM
 > The following packet sizes will be tested
 > - 64, 128, 256, 512, 1024, 1280, 1518
 
-The receiving VM will log the results of the test and save it to a **comma seperated file**
+The receiving VM will log the results of the test and save it to a **comma seperated file** called capture.txt
+This file can be found at **/root/capture.txt** of the receving VM
