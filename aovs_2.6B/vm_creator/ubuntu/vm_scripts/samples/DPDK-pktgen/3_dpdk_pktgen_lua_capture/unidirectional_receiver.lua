@@ -7,7 +7,7 @@ require "Pktgen";
 
 -- Time in seconds to transmit for
 local pauseTime   = 1000;
-local filename_prefix    = "capture";
+local filename_prefix    = "/root/capture";
 local filename_suffix    = ".txt";
 local globalStartTime    = os.time();
 local previous_framesize = -1;
