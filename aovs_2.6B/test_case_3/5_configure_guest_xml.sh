@@ -1,14 +1,15 @@
 #!/bin/bash
 #5_configure_guest_xml.sh
 
-#If no VM name is passed in the default VM name is vm1
 if [ -z “$1” ]; then
-   VM_NAME="vm1"
+   echo "ERROR: No VM name was passed to this script."
+   echo "Example: ./4_guest_xml_configure.sh <vm_name>"
+   exit -1
    else
    VM_NAME=$1
 fi
 
-VM_CPU=6
+VM_CPU=4
 max_memory=$(virsh dominfo $VM_NAME | grep 'Max memory:' | awk '{print $3}')
 
 # Remove vhostuser interface

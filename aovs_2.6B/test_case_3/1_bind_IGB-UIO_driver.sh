@@ -1,7 +1,6 @@
 #!/bin/bash
 #1_bind_IGB-UIO_driver.sh
 
-
 PCIA1="$(ethtool -i nfp_v0.39 | grep bus | cut -d ' ' -f 5)"
 PCIA2="$(ethtool -i nfp_v0.40 | grep bus | cut -d ' ' -f 5)"
 
