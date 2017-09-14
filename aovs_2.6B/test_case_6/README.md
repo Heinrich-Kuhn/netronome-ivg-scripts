@@ -1,4 +1,4 @@
-# Test Case 2: VM-VM - SR-IOV Configuration
+# Test Case 6: VM-VM - SR-IOV VXLAN Offload Configuration
 
 ![Test Case 2 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_2/test_case_2_layout.png?raw=true)
 
