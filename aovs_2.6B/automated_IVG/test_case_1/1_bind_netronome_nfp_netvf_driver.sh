@@ -39,3 +39,6 @@ ETH=$($DPDK_DEVBIND --status | grep $PCIA | cut -d ' ' -f 4 | cut -d '=' -f 2)
 
 ip a add $1/24 dev $ETH #change IP address to 14.0.0.2 for second host**
 ip l set dev $ETH up
+
+echo "DONE($(basename $0))"
+exit 0

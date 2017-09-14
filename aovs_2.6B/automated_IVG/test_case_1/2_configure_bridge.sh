@@ -44,3 +44,6 @@ ovs-appctl upcall/set-flow-limit 1000000
 ovs-vsctl show
 ovs-ofctl show $BRIDGE
 ovs-ofctl dump-flows $BRIDGE
+
+echo "DONE($(basename $0))"
+exit 0

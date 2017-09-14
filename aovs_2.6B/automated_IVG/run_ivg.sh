@@ -6,12 +6,21 @@ script_dir="$(dirname $(readlink -f $0))"
 apt-get install -y tmux
 
 function wait_text {
-  while :; do
-          tmux capture-pane -t $1 -p | grep "$2" && return 0
-       done
-       # never executed unless a timeout mechanism is implemented
-       return 1
-EOT
+    local pane="$1"
+    local text="$2"
+    if [ "$pane" == "ALL" ]; then
+        wait_text 2 "$text" || exit -1
+        wait_text 3 "$text" || exit -1
+        return 0
+    fi
+    while :; do
+        tmux capture-pane -t "$pane" -p \
+            | grep "$text" > /dev/null \
+            && return 0
+        sleep 0.25
+    done
+    # never executed unless a timeout mechanism is implemented
+    return -1
 }
 
 #######################################################################
@@ -170,24 +179,19 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./IVG_folder/test_case_1/1_bind_netronome_nfp_netvf_driver.sh 10.0.0.1" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_1/1_bind_netronome_nfp_netvf_driver.sh 10.0.0.2" C-m
 
-            echo "Running test case 1 - Simple ping"
-            wait_text 3 "root@" > /dev/null
+            wait_text ALL "DONE(1_bind_netronome_nfp_netvf_driver.sh)"
 
             tmux send-keys -t 2 "./IVG_folder/test_case_1/2_configure_bridge.sh" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_1/2_configure_bridge.sh" C-m
 
-            sleep 2
+            wait_text ALL "DONE(2_configure_bridge.sh)"
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_1/3_configure_ovs_rules.sh" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_1/3_configure_ovs_rules.sh" C-m
-
-            wait_text 3 "actions=NORMAL" > /dev/null
-            sleep 2 
+            echo "Running test case 1 - Simple ping"
 
             tmux send-keys -t 2 "ping 10.0.0.2 -c 5" C-m
 
-
             ;;
+
         5)  echo "5) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
             
             tmux send-keys -t 3 "cd" C-m
