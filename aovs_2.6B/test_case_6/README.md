@@ -21,20 +21,25 @@ The following steps may be followed to setup DPDK-Pktgen inside a VM running on 
 Follow the steps outlined in the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section of this repo to create a backing image for this test.
 >**NOTE:**
 >These steps should be performed on both hosts
+>The remote and local IP address must be switched when running the script on the second DUT
+>- ex
+>- DUT1: ./3_configure_AOVS_rules.sh **10.10.10.1 10.10.10.2**
+>- DUT2: ./3_configure_AOVS_rules.sh **10.10.10.2 10.10.10.1**
 ```
 ./1_bind_VFIO-PCI_driver.sh
 ./2_configure_AVOS.sh
-./3_configure_AOVS_rules.sh <remote_bridge_ip> <local_bridge_ip>"
+./3_configure_AOVS_rules.sh <remote_bridge_ip> <local_bridge_ip>
 ./4_guest_xml_configure.sh <your_vm_name>
 ./5_vm_pinning.sh <vm_name> <number_of_cpu's>
-
-virsh start <your_vm_name>
 ```
 Alternativly, you can call the setup_test_case_6.sh script and it will in turn call all the above mentioned scripts in sequence.
 ```
-./setup_test_case_6.sh <vm_name> <number_of_cpu's>
+./setup_test_case_6.sh <vm_name> <number_of_cpu's> <remote_bridge_ip> <local_bridge_ip>
 ```
-
+To start your new VM
+```
+virsh start <your_vm_name>
+```
 To list DHCP leases of VM's
 ```
 virsh net-dhcp-leases default
