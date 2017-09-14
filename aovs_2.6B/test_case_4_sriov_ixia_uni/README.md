@@ -1,8 +1,8 @@
-# Test Case 2: VM-VM - SR-IOV Configuration
+# Test Case 4: VM-VM - SR-IOV Ixia Uni-Directional
 
-![Test Case 2 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_2/test_case_2_layout.png?raw=true)
+![Test Case 4 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_2/test_case_2_layout.png?raw=true)
 
-The following steps may be followed to setup DPDK-Pktgen inside a VM running on the first host and create a second instance of DPDK-Pktgen running inside a VM on the second host.
+The following steps may be followed to setup DPDK-Pktgen inside a VM running on the host and then either transmit to, or recivce from Ixia
 
 ### The scripts will:
 1. Bind two VF's to vfio-pci using dpdk-devbind.py
