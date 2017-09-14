@@ -15,15 +15,17 @@ The following steps may be followed to perform a simple ping test between two ho
 #### DUT2
 ```
 ./1_bind_netronome_nfp_netvf_driver.sh 20.0.0.2
-./2_configure_bridge.sh
-./3_configure_ovs_rules.sh
+./2_configure_AOVS.sh
+./3_configure_bridge.sh
+./4_configure_ovs_rules.sh
 ```
 
 #### DUT1
 ```
 ./1_bind_netronome_nfp_netvf_driver.sh 20.0.0.1
-./2_configure_bridge.sh
-./3_configure_ovs_rules.sh
+./2_configure_AOVS.sh
+./3_configure_bridge.sh
+./4_configure_ovs_rules.sh
 
 ping 20.0.0.2
 ```
