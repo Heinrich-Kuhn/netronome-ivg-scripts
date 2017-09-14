@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -z "$v1" ] && [ -e "$2" ] && [ -e "$3" ]; then
+if [ -z "$v1" ] && [ -z "$2" ] && [ -z "$3" ]; then
       echo "ERROR: Not enough arguments where passed"
       echo "Example: ./6_vm_pinning <vm_name> <number_of_vm_cpu's> <number_of_xvio_cpu's"
       exit -1

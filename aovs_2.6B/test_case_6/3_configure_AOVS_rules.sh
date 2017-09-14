@@ -3,7 +3,7 @@
 BONDBR_DEST_IP=$1 
 BONDBR_SRC_IP=$2
 
-if [ ! -z "$1" ] && [ -e "$2" ]; then
+if [ -z "$1" ] && [ -z "$2" ]; then
     echo "ERROR: Not enough parameters where passed to this script"
     echo "Example: ./3_configure_AOVS_rules.sh 10.10.10.1 10.10.10.2"
     exit -1

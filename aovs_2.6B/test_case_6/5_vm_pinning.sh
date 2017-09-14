@@ -4,7 +4,7 @@ card_node=$(cat /sys/bus/pci/drivers/nfp/0*/numa_node | head -n1 | cut -d " " -f
 nfp_cpu_list=$(lscpu -a -p | awk -F',' -v var="$card_node" '$4 == var {printf "%s%s",sep,$1; sep=" "} END{print ""}')
 
 #Check if VM name is passed
-if [ -z “$1” ]; then
+if [ -z "$1" ]; then
    echo "ERROR: Please pass a VM name that you whish to pin as the first parameter of this script..."
    exit -1
    else

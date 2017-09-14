@@ -1,5 +1,12 @@
 #!/bin/bash
-VM_NAME=$1
+
+if [ -z "$1" ]; then
+   echo "ERROR: No VM name was passed to this script."
+   echo "Example: ./4_guest_xml_configure.sh <vm_name>"
+   exit -1
+   else
+   VM_NAME=$1
+fi
 
 # Remove vhostuser interface
 EDITOR='sed -i "/<interface type=.vhostuser.>/,/<\/interface>/d"' virsh edit $VM_NAME

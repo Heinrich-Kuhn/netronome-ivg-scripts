@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -z “$1” ]; then
+if [ -z "$1" ]; then
    echo "ERROR: Number of XVIO CPU's was not passed to this scipt"
    echo "Example: ./2_configure_ovs.sh <number_of_xvio_cpu's"
    exit -1

@@ -1,7 +1,7 @@
 #!/bin/bash
 #5_configure_guest_xml.sh
 
-if [ -z “$1” ]; then
+if [ -z "$1" ]; then
    echo "ERROR: No VM name was passed to this script."
    echo "Example: ./4_guest_xml_configure.sh <vm_name>"
    exit -1
