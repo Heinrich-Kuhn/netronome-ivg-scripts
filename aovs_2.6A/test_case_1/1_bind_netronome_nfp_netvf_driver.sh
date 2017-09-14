@@ -3,7 +3,7 @@
 #1_bind_netronome_nfp_netvf_driver.sh
 
 #If no IP is passed, use a default IP of 14.0.0.1
-if [ -z “$1” ]; then
+if [ -z "$1" ]; then
    IP=14.0.0.1
    else
    IP=$1

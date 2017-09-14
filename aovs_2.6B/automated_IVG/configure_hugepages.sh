@@ -2,8 +2,8 @@
 
 function printCol {
   # Usage: printCol <COLOR> <MESSAGE>
-  # 0 – Black. 1 – Red.     2 – Green. 3 – Yellow.
-  # 4 – Blue.  5 – Magenta. 6 – Cyan.  7 – White.
+  # 0 Black. 1 Red.     2 Green. 3 Yellow.
+  # 4 Blue.  5 Magenta. 6 Cyan.  7 White.
   echo "$(tput bold)$(tput setaf $1)$2$(tput sgr0)"
 }
 

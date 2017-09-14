@@ -11,7 +11,7 @@ if [ -z "$1" ]; then
    VM_NAME=$1
 fi
 
-if [ -z “$2” ]; then
+if [ -z "$2" ]; then
    echo "Using default 4 CPU's for VM"
    else
    CPU_COUNT=$2

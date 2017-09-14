@@ -8,7 +8,7 @@ done
 
 
 
-if [ -z “$1” ]; then
+if [ -z "$1" ]; then
    IP=14.0.0.1
 else
    IP=$1

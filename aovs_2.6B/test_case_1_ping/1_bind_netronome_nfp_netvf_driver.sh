@@ -3,7 +3,7 @@
 #1_bind_netronome_nfp_netvf_driver.sh
 
 #Check if IP is passed
-if [ -z “$1” ]; then
+if [ -z "$1" ]; then
    echo "ERROR: No IP address was passed"
    echo "Example: ./1_bind_netronome_nfp_netvf_driver.sh 10.10.10.1"
    exit -1

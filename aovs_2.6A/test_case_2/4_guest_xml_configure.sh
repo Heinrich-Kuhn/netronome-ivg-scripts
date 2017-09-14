@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #If no VM name is passed in the default VM name is vm1
-if [ -z “$1” ]; then
+if [ -z "$1" ]; then
    VM_NAME="vm1"
    else
    VM_NAME=$1
