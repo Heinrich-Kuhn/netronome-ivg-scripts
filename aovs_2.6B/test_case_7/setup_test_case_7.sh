@@ -2,7 +2,7 @@
 
 if [ -z "$1" ] && [ -z "$2" ] && [ -z "$3" ] && [ -z "$4" ] && [ -z "$5" ]; then
       echo "ERROR: Not enough arguments where passed"
-      echo "Example: ./6_vm_pinning <vm_name> <number_of_vm_cpu's> <number_of_xvio_cpu's"
+      echo "Example: ./6_vm_pinning <vm_name> <number_of_vm_cpu's> <number_of_xvio_cpu's <local_bridge_ip> <remote_bridge_ip>"
       exit -1
    else
       VM_NAME=$1
