@@ -9,6 +9,13 @@ The following steps may be followed to setup DPDK-Pktgen inside a VM running on 
 2. Create a OVS bridge and add the two VF's and physical ports to the bridge
 4. Add a NORMAL rule to the bridge
 5. Modify the xml file of the VM that was created using the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section
+5. Pin the VM to CPU's that are local to the Agilio NIC for maximum performance
+
+>**NOTE:**
+>If both physical ports of the Netronome NIC are connected, the scripts will setup bonding of those two ports.
+>If there is switching infrastructure between the two DUT's care must be taken to set them up for the bond to work properly
+>- LACP = fast
+>- Mode = balance-tcp
 
 ### Example usage:
 Follow the steps outlined in the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section of this repo to create a backing image for this test.
@@ -19,9 +26,15 @@ Follow the steps outlined in the [VM creator](https://github.com/netronome-suppo
 ./2_configure_AVOS.sh
 ./3_configure_AOVS_rules.sh
 ./4_guest_xml_configure.sh <your_vm_name>
+./5_vm_pinning.sh <vm_name> <number_of_cpu's>
 
 virsh start <your_vm_name>
 ```
+Alternativly, you can call the setup_test_case_2.sh script and it will in turn call all the above mentioned scripts in sequence.
+```
+./setup_test_case_2.sh <vm_name> <number_of_cpu's>
+```
+
 To list DHCP leases of VM's
 ```
 virsh net-dhcp-leases default
