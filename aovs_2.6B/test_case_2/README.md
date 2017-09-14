@@ -27,14 +27,16 @@ Follow the steps outlined in the [VM creator](https://github.com/netronome-suppo
 ./3_configure_AOVS_rules.sh
 ./4_guest_xml_configure.sh <your_vm_name>
 ./5_vm_pinning.sh <vm_name> <number_of_cpu's>
-
-virsh start <your_vm_name>
 ```
+
 Alternativly, you can call the setup_test_case_2.sh script and it will in turn call all the above mentioned scripts in sequence.
 ```
 ./setup_test_case_2.sh <vm_name> <number_of_cpu's>
 ```
-
+To start your new VM
+```
+virsh start <your_vm_name>
+```
 To list DHCP leases of VM's
 ```
 virsh net-dhcp-leases default
@@ -49,6 +51,8 @@ Run the following scripts on the receiving VM
 /root/vm_scripts/samples/DPDK-pktgen/2_auto_bind_igb_uio.sh
 /root/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/0_run_dpdk-pktgen_uni-rx.sh
 ```
+> **NOTE:**
+> The receiving VM has a 60 second timeout if no traffic is received. Th transmit script must be started within 60 seconds of starting the transmitting script. This also means that the receving script will automatically timeout after 60 seconds once the test is completed
 Run the following scripts on the transmitting VM
 ```
 /root/vm_scripts/samples/DPDK-pktgen/1_configure_hugepages.sh
