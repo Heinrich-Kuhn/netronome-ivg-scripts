@@ -1,6 +1,8 @@
 #!/bin/bash
 #package_install.sh
 
+script_dir="$(dirname $(readlink -f $0))"
+
 apt-get update
 
 apt-get -y install make autoconf automake libtool gcc g++ bison \
@@ -44,7 +46,7 @@ else
 fi
 
 #Check if any agilio .tar files are in the folder
-cd /root/IVG_folder
+cd script_dir="$(dirname $(readlink -f $0))"
 ls agilio-ovs-2.6.B-r* 2>/dev/null
 
 if [ $? == 2 ]; then
