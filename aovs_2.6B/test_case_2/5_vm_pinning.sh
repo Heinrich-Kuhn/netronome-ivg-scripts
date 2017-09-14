@@ -5,8 +5,8 @@ nfp_cpu_list=$(lscpu -a -p | awk -F',' -v var="$card_node" '$4 == var {printf "%
 
 #Check if VM name is passed
 if [ -z “$1” ]; then
-   echo "Please pass a VM name that you whish to pin as the first parameter of this script..."
-   exit 1
+   echo "ERROR: Please pass a VM name that you whish to pin as the first parameter of this script..."
+   exit -1
    else
    VM_NAME=$1
 fi
@@ -30,3 +30,5 @@ for counter in $(seq 0 $((CPU_COUNT-1)))
     virsh --quiet vcpupin $VM_NAME $counter ${nfp_cpu_list[$counter+1]} --config
   done
 virsh vcpupin $VM_NAME
+
+exit 0

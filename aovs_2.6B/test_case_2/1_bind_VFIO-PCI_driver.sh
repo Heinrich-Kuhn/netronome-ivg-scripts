@@ -6,7 +6,6 @@ PCIB="$(ethtool -i nfp_v0.42 | grep bus | cut -d ' ' -f 5)"
 # Bind VF's using vfio-pci driver
 driver=vfio-pci
 
-# updatedb
 DPDK_DEVBIND=$(find /opt/netronome -iname dpdk-devbind.py | head -1)
 if [ "$DPDK_DEVBIND" == "" ]; then
   echo "ERROR: could not find dpdk-devbind.py tool"

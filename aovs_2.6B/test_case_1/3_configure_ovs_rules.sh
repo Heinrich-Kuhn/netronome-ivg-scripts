@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 BRIDGE=br0
 
 ovs-ofctl del-flows $BRIDGE

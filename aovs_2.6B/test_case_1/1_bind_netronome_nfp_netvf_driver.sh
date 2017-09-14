@@ -9,20 +9,23 @@ if [ -z “$1” ]; then
    IP=$1
 fi
 
-#Configure Interface
+#Locate the dpdk-devbind.py script
 updatedb
 DPDK_DEVBIND=$(locate dpdk-devbind.py | head -1)
-PCIA="$(ethtool -i nfp_v0.40 | grep bus | cut -d ' ' -f 5)"
 
+#Grab the PCI address of VF nfp_v0.40
+PCIA="$(ethtool -i nfp_v0.40 | grep bus | cut -d ' ' -f 5)"
+    
+  #Bind the VF to nfp_netvf
   echo $DPDK_DEVBIND --bind nfp_netvf $PCIA
   $DPDK_DEVBIND --bind nfp_netvf $PCIA
 
   echo $DPDK_DEVBIND --status
   $DPDK_DEVBIND --status
 
-#Assign IP
+#Get netdev name
 ETH=$($DPDK_DEVBIND --status | grep $PCIA | cut -d ' ' -f 4 | cut -d '=' -f 2)
 
-#UP link
+#Assign IP to netdev and up the interface
 ip a add $IP/24 dev $ETH
 ip link set dev $ETH up

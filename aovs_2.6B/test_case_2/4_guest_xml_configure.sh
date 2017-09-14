@@ -1,8 +1,10 @@
 #!/bin/bash
 
-#If no VM name is passed in the default VM name is vm1
+#Check if VM name is passed
 if [ -z “$1” ]; then
-   VM_NAME="vm1"
+   echo "ERROR: No VM name was passed to this script."
+   echo "Example: ./4_guest_xml_configure.sh <vm_name>"
+   exit -1
    else
    VM_NAME=$1
 fi
@@ -20,3 +22,4 @@ EDITOR='sed -i "/<devices/a \<hostdev mode=\"subsystem\" type=\"pci\" managed=\"
 
 EDITOR='sed -i "/<devices/a \<hostdev mode=\"subsystem\" type=\"pci\" managed=\"yes\">  <source> <address domain=\"0x0000\" bus=\"0x'${bus}'\" slot=\"0x0d\" function=\"0x2\"\/> <\/source>  <address type=\"pci\" domain=\"0x0000\" bus=\"0x00\" slot=\"0x07\" function=\"0x0\"\/> <\/hostdev>"' virsh edit $VM_NAME
 
+exit 0

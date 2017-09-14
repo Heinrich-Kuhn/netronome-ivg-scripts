@@ -2,7 +2,7 @@
 
 BRIDGE=br0
 
-# Delete all bridges
+# Delete all existing bridges 
 for br in $(ovs-vsctl list-br);
 do
   ovs-vsctl --if-exists del-br $br
