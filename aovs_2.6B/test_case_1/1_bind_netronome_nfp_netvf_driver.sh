@@ -15,8 +15,8 @@ fi
 updatedb
 DPDK_DEVBIND=$(locate dpdk-devbind.py | head -1)
 
-#Grab the PCI address of VF nfp_v0.40
-PCIA="$(ethtool -i nfp_v0.40 | grep bus | cut -d ' ' -f 5)"
+#Grab the PCI address of VF nfp_v0.1
+PCIA="$(ethtool -i nfp_v0.1 | grep bus | cut -d ' ' -f 5)"
     
   #Bind the VF to nfp_netvf
   echo $DPDK_DEVBIND --bind nfp_netvf $PCIA
