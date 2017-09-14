@@ -1,12 +1,12 @@
 # Test Case 7: VM-VM - XVIO VXLAN Offload Uni-Directional
 
-![Test Case 3 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_2/test_case_2_layout.png?raw=true)
+![Test Case 7 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_2/test_case_2_layout.png?raw=true)
 
-The following steps may be followed to setup DPDK-Pktgen inside a VM running on the first host and create a second instance of DPDK-Pktgen running inside a VM on the second host. Packets between the hosts will be encapsulated by VXLAN
+The following steps may be followed to setup DPDK-Pktgen inside a VM running on the first host and create a second instance of DPDK-Pktgen running inside a VM on the second host. Packets between the hosts will be **encapsulated by VXLAN**
 
 ### The scripts will:
-1. Bind two VF's to vfio-pci using dpdk-devbind.py
-2. Create a OVS bridge and add the two VF's to this bridge and add a VXLAN port to this bridge
+1. Bind two VF's to **vfio-pci** using **dpdk-devbind.py**
+2. Create a OVS bridge and add the two VF's to this bridge and add a **VXLAN port** to this bridge
 3. Create a bond bridge with the two physical ports
 4. Modify the xml file of the VM that was created using the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section
 5. Pin the VM to CPU's that are local to the Agilio NIC for maximum performance
@@ -33,7 +33,7 @@ Follow the steps outlined in the [VM creator](https://github.com/netronome-suppo
 ./5_guest_xml_configure.sh <your_vm_name>
 ./6_vm_pinning <vm_name> <number_of_vm_cpu's> <number_of_xvio_cpu's>
 ```
-Alternativly, you can call the setup_test_case_6.sh script and it will in turn call all the above mentioned scripts in sequence.
+Alternativly, you can call the setup_test_case_7.sh script and it will in turn call all the above mentioned scripts in sequence.
 ```
 ./setup_test_case_7.sh <vm_name> <number_of_cpu's> <number_of_xvio_cpu's> <remote_bridge_ip> <local_bridge_ip>
 ```
