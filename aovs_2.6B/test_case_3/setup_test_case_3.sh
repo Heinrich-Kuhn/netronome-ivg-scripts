@@ -15,6 +15,7 @@ script_dir="$(dirname $(readlink -f $0))"
 echo $VM_NAME
 echo $VM_CPU_COUNT
 
+.script_dir/test_case_3/0_configure_hugepages.sh
 .script_dir/test_case_3/1_bind_IGB-UIO_driver.sh
 .script_dir/test_case_3/2_configure_ovs.sh $XVIO_CPU_COUNT
 .script_dir/test_case_3/3_configure_ovs_rules.sh
