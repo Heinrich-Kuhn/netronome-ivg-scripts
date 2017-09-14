@@ -5,11 +5,12 @@
 The following steps may be followed to setup DPDK-Pktgen inside a VM running on the first host and create a second instance of DPDK-Pktgen running inside a VM on the second host. Packets between the hosts will be **encapsulated by VXLAN**
 
 ### The scripts will:
-1. Bind two VF's to **vfio-pci** using **dpdk-devbind.py**
-2. Create a OVS bridge and add the two VF's to this bridge and add a **VXLAN port** to this bridge
-3. Create a bond bridge with the two physical ports
-4. Modify the xml file of the VM that was created using the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section
-5. Pin the VM to CPU's that are local to the Agilio NIC for maximum performance
+1. Setup **hugepages** for XVIO to use
+2. Bind two VF's to **vfio-pci** using **dpdk-devbind.py**
+3. Create a OVS bridge and add the two VF's to this bridge and add a **VXLAN port** to this bridge
+4. Create a bond bridge with the two physical ports
+5. Modify the xml file of the VM that was created using the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section
+6. Pin the VM to CPU's that are local to the Agilio NIC for maximum performance
 
 >**NOTE:**
 >If both physical ports of the Netronome NIC are connected, the scripts will setup bonding of those two ports.
@@ -26,8 +27,9 @@ Follow the steps outlined in the [VM creator](https://github.com/netronome-suppo
 >- DUT1: ./3_configure_AOVS_rules.sh **10.10.10.1 10.10.10.2**
 >- DUT2: ./3_configure_AOVS_rules.sh **10.10.10.2 10.10.10.1**
 ```
+./0_configure_hugepages.sh
 ./1_bind_VFIO-PCI_driver.sh
-./2_configure_AVOS.sh
+./2_configure_AVOS.sh <number_of_xvio_cpu's>
 ./3_configure_AOVS_rules.sh <local_bridge_ip> <remote_bride_ip>
 ./4_configure_apparmor.sh
 ./5_guest_xml_configure.sh <your_vm_name>
