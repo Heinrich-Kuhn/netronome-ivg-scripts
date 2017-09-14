@@ -5,23 +5,26 @@
 The following steps may be followed to setup DPDK-Pktgen inside a VM running on the first host and create a second instance of DPDK-Pktgen running inside a VM on the second host.
 
 ### The scripts will:
-1. Bind two VF's to igb_uio using dpdk-devbind.py
-2. Configure Agilio-OVS to use XVIO by modifying /etc/netronome.conf
-3. Create a OVS bridge and add the two XVIO VF's and physical ports to the bridge
-4. Add a NORMAL rule to the bridge
-5. Configure Apparmor to configure the propper permissions for Libvirt
-6. Modify the xml file of the VM that was created using the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section
+1. Setup hugepages for XVIO to use
+2. Bind two VF's to igb_uio using dpdk-devbind.py
+3. Configure Agilio-OVS to use XVIO by modifying /etc/netronome.conf
+4. Create a OVS bridge and add the two XVIO VF's and physical ports to the bridge
+5. Add a NORMAL rule to the bridge
+6. Configure Apparmor to configure the propper permissions for Libvirt
+7. Modify the xml file of the VM that was created using the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section
 
 ### Example usage:
 Follow the steps outlined in the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section of this repo to create a backing image for this test.
 >**NOTE:**
 >These steps should be performed on both hosts
 ```
+./0_configure_hugepages.sh
 ./1_bind_IGB-UIO_driver.sh
-./2_configure_ovs.sh
+./2_configure_ovs.sh <number_of_xvio_cpu's>
 ./3_configure_ovs_rules.sh
 ./4_configure_apparmor.sh
-5_configure_guest_xml.sh <your_vm_name>
+./5_configure_guest_xml.sh <your_vm_name>
+./6_vm_pinning <vm_name> <number_of_vm_cpu's> <number_of_xvio_cpu's>
 
 virsh start <your_vm_name>
 ```
