@@ -2,9 +2,11 @@
 
 #1_bind_netronome_nfp_netvf_driver.sh
 
-#If no IP is passed, use a default IP of 14.0.0.1
+#Check if IP is passed
 if [ -z “$1” ]; then
-   IP=14.0.0.1
+   echo "ERROR: No IP address was passed"
+   echo "Example: ./1_bind_netronome_nfp_netvf_driver.sh 10.10.10.1"
+   exit -1
    else
    IP=$1
 fi
@@ -29,3 +31,5 @@ ETH=$($DPDK_DEVBIND --status | grep $PCIA | cut -d ' ' -f 4 | cut -d '=' -f 2)
 #Assign IP to netdev and up the interface
 ip a add $IP/24 dev $ETH
 ip link set dev $ETH up
+
+exit 0
