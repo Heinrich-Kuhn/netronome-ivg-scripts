@@ -2,7 +2,7 @@
 
 if [ -z "$1" ] && [ -z "$2" ] && [ -z "$3" ] && [ -z "$4" ]; then
     echo "ERROR: Not enough parameters where passed to this script"
-    echo "Example: ./setup_test_case_6.sh <vm_name> <number_of_vm_cpu's> 10.10.10.1 10.10.10.2"
+    echo "Example: ./setup_test_case_6.sh <vm_name> <number_of_vm_cpu's> <local_bridge_ip> <remote_bridge_ip>"
     exit -1
 else
     VM_NAME=$1

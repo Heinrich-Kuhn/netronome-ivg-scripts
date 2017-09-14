@@ -10,6 +10,7 @@ fi
 
 if [ -z “$2” ]; then
    echo "Using default 4 CPU's for VM"
+   VM_CPU_COUNT=4
    else
    VM_CPU_COUNT=$2
 fi
