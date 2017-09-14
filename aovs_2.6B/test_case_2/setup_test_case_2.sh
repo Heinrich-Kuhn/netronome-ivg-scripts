@@ -11,7 +11,7 @@ fi
 if [ -z “$2” ]; then
    echo "Using default 4 CPU's for VM"
    else
-   CPU_COUNT=$2
+   VM_CPU_COUNT=$2
 fi
 
 script_dir="$(dirname $(readlink -f $0))"

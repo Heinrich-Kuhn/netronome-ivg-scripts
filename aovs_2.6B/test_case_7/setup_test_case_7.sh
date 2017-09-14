@@ -6,7 +6,7 @@ if [ -z "$1" ] && [ -z "$2" ] && [ -z "$3" ] && [ -z "$4" ] && [ -z "$5" ]; then
       exit -1
    else
       VM_NAME=$1
-      CPU_COUNT=$2
+      VM_CPU_COUNT=$2
       XVIO_CPU_COUNT=$3
       BONDBR_DEST_IP=$4
       BONDBR_SRC_IP=$5
