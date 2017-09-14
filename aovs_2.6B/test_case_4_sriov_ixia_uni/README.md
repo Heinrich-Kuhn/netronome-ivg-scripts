@@ -13,8 +13,6 @@ The following steps may be followed to setup DPDK-Pktgen inside a VM running on 
 
 ### Example usage:
 Follow the steps outlined in the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section of this repo to create a backing image for this test.
->**NOTE:**
->These steps should be performed on both hosts
 ```
 ./1_bind_VFIO-PCI_driver.sh
 ./2_configure_AVOS.sh
@@ -22,7 +20,6 @@ Follow the steps outlined in the [VM creator](https://github.com/netronome-suppo
 ./4_guest_xml_configure.sh <your_vm_name>
 ./5_vm_pinning.sh <vm_name> <number_of_cpu's>
 ```
-
 Alternativly, you can call the **setup_test_case_4.sh** script and it will in turn call all the above mentioned scripts in sequence.
 ```
 ./setup_test_case_4.sh <vm_name> <number_of_cpu's>
