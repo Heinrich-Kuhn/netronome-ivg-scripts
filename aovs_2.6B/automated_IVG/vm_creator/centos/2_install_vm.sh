@@ -4,7 +4,7 @@
 VM_NAME=centos_backing
 
 cpu_model=$(virsh capabilities | grep -o '<model>.*</model>' | head -1 | sed 's/\(<model>\|<\/model>\)//g')
-virsh undefine $VM_NAME 2/dev/null
+virsh undefine $VM_NAME > /dev/null 2>&1
 virt-install \
   --name $VM_NAME \
   --disk path=/var/lib/libvirt/images/CentOS-7-x86_64-GenericCloud.qcow2,format=qcow2,bus=virtio,cache=none \

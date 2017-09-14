@@ -4,7 +4,7 @@
 VM_NAME=ubuntu_backing
 
 cpu_model=$(virsh capabilities | grep -o '<model>.*</model>' | head -1 | sed 's/\(<model>\|<\/model>\)//g')
-virsh undefine $VM_NAME 2/dev/null
+virsh undefine $VM_NAME > /dev/null 2>&1
 virt-install \
   --name $VM_NAME \
   --disk path=/var/lib/libvirt/images/ubuntu-16.04-server-cloudimg-amd64-disk1.img,format=qcow2,bus=virtio,cache=none \
