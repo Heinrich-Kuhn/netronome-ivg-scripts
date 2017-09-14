@@ -1,8 +1,8 @@
 #!/bin/bash
 
 
-PCIA="$(ethtool -i nfp_v0.42 | grep bus | cut -d ' ' -f 5)"
-PCIA2="$(ethtool -i nfp_v0.43 | grep bus | cut -d ' ' -f 5)"
+PCIA="$(ethtool -i nfp_v0.45 | grep bus | cut -d ' ' -f 5)"
+PCIA2="$(ethtool -i nfp_v0.46 | grep bus | cut -d ' ' -f 5)"
 interface_list=($PCIA $PCIA2)
 driver=igb_uio
 mp=uio
