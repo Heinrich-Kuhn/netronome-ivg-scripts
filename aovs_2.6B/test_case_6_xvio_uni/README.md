@@ -26,7 +26,7 @@ Follow the steps outlined in the [VM creator](https://github.com/netronome-suppo
 ./5_configure_guest_xml.sh <your_vm_name>
 ./6_vm_pinning <vm_name> <number_of_vm_cpu's> <number_of_xvio_cpu's>
 ```
-Alternativly, you can call the setup_test_case_2.sh script and it will in turn call all the above mentioned scripts in sequence.
+Alternativly, you can call the **setup_test_case_6.sh** script and it will in turn call all the above mentioned scripts in sequence.
 ```
 ./setup_test_case_6.sh <vm_name> <number_of_cpu's> <number_of_xvio_cpu's>
 ```
