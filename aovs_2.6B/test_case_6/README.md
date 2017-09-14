@@ -54,6 +54,9 @@ Run the following scripts on the receiving VM
 /root/vm_scripts/samples/DPDK-pktgen/2_auto_bind_igb_uio.sh
 /root/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/0_run_dpdk-pktgen_uni-rx.sh
 ```
+> **NOTE:**
+> The receiving VM has a 60 second timeout if no traffic is received. Th transmit script must be started within 60 seconds of starting the transmitting script. This also means that the receving script will automatically timeout after 60 seconds once the test is completed
+
 Run the following scripts on the transmitting VM
 ```
 /root/vm_scripts/samples/DPDK-pktgen/1_configure_hugepages.sh
