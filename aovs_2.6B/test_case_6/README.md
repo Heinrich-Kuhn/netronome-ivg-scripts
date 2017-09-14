@@ -24,15 +24,15 @@ Follow the steps outlined in the [VM creator](https://github.com/netronome-suppo
 ```
 ./1_bind_VFIO-PCI_driver.sh
 ./2_configure_AVOS.sh
-./3_configure_AOVS_rules.sh
+./3_configure_AOVS_rules.sh <remote_bridge_ip> <local_bridge_ip>"
 ./4_guest_xml_configure.sh <your_vm_name>
 ./5_vm_pinning.sh <vm_name> <number_of_cpu's>
 
 virsh start <your_vm_name>
 ```
-Alternativly, you can call the setup_test_case_2.sh script and it will in turn call all the above mentioned scripts in sequence.
+Alternativly, you can call the setup_test_case_6.sh script and it will in turn call all the above mentioned scripts in sequence.
 ```
-./setup_test_case_2.sh <vm_name> <number_of_cpu's>
+./setup_test_case_6.sh <vm_name> <number_of_cpu's>
 ```
 
 To list DHCP leases of VM's
