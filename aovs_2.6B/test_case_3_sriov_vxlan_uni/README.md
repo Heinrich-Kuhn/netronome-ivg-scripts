@@ -2,7 +2,7 @@
 
 ![Test Case 3 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_2/test_case_2_layout.png?raw=true)
 
-The following steps may be followed to setup DPDK-Pktgen inside a VM running on the first host and create a second instance of DPDK-Pktgen running inside a VM on the second host.
+The following steps may be followed to setup DPDK-Pktgen inside a VM running on the first host and create a second instance of DPDK-Pktgen running inside a VM on the second host. Packets between the hosts will be encapsulated by VXLAN
 
 ### The scripts will:
 1. Bind two VF's to vfio-pci using dpdk-devbind.py
