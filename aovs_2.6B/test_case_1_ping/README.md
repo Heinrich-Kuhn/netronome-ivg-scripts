@@ -1,6 +1,6 @@
 # Test Case 1: Simple VF netdev back-2-back ping
 
-![Test Case 1 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_1/test_case_1_layout.png?raw=true)
+![Test Case 1 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_1_ping/test_case_1_layout.png?raw=true)
 
 The following steps may be followed to perform a simple ping test between two host machines that are connected back to back with a Netronome NIC.
 
