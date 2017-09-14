@@ -11,6 +11,12 @@ The following steps may be followed to setup DPDK-Pktgen inside a VM running on 
 5. Modify the xml file of the VM that was created using the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section
 5. Pin the VM to CPU's that are local to the Agilio NIC for maximum performance
 
+>**NOTE:**
+>If both physical ports of the Netronome NIC are connected, the scripts will setup bonding of those two ports.
+>If there is switching infrastructure between the two DUT's care must be taken to set them up for the bond to work properly
+>- LACP = fast
+>- Mode = balance-tcp
+
 ### Example usage:
 Follow the steps outlined in the [VM creator](https://github.com/netronome-support/IVG/tree/master/aovs_2.6B/vm_creator/ubuntu) section of this repo to create a backing image for this test.
 >**NOTE:**
