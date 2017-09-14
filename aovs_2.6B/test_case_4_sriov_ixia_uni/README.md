@@ -57,7 +57,6 @@ If you want to transmit traffic with Ixia and let **DPDK-Pktgen recevie** this t
 ```
 > **NOTE:**
 > The receiving VM has a 60 second timeout if no traffic is received. Th transmit script must be started within 60 seconds of starting the transmitting script. This also means that the receving script will automatically timeout after 60 seconds once the test is completed
-Run the following scripts on the transmitting VM
 
 The receiving VM will log the results of the test and save it to a **comma seperated file** called capture.txt
 This file can be found at **/root/capture.txt** of the receving VM
