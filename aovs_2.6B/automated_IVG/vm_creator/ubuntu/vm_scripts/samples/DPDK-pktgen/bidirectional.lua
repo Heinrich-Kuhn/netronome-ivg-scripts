@@ -37,12 +37,14 @@ local function setupTraffic()
   pktgen.icmp_echo("all", "on");
 
   -- Send ARP requests
+  pktgen.delay(100); -- 100ms
   pktgen.send_arp("all","r");
-  pktgen.delay(1);
+  pktgen.delay(100); -- 100ms
 
   -- Send ICMP requests
   pktgen.set_proto("all", "icmp");
   pktgen.ping4("all");
+  pktgen.delay(100); -- 100ms
 
   -- Convert single-packet mode output into multi-packet mode output
   pktgen.save("/root/temp.txt");
