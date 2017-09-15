@@ -19,11 +19,11 @@ ovs-vsctl add-port $BRIDGE nfp_v0.24 -- set interface nfp_v0.24 ofport_request=2
 
 ovs-ofctl del-flows $BRIDGE
 
-ovs-ofctl -O OpenFlow13 add-flow in_port=1,actions=output:23
-ovs-ofctl -O OpenFlow13 add-flow in_port=23,actions=output:1
+ovs-ofctl -O OpenFlow13 add-flow $BRIDGE in_port=1,actions=output:23
+ovs-ofctl -O OpenFlow13 add-flow $BRIDGE in_port=23,actions=output:1
 
-ovs-ofctl -O OpenFlow13 add-flow in_port=2,actions=output:24
-ovs-ofctl -O OpenFlow13 add-flow in_port=24,actions=output:2
+ovs-ofctl -O OpenFlow13 add-flow $BRIDGE in_port=2,actions=output:24
+ovs-ofctl -O OpenFlow13 add-flow $BRIDGE in_port=24,actions=output:2
 
 ovs-vsctl set Open_vSwitch . other_config:max-idle=300000
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
