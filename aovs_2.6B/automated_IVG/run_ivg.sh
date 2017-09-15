@@ -23,6 +23,22 @@ function wait_text {
     return -1
 }
 
+sshopts=()
+sshopts+=( "-i" "$HOME/.ssh/netronome_key" )
+sshopts+=( "-q" )
+sshcmd="ssh ${sshopts[@]}"
+
+function rsync_duts {
+    local dirlist="$@"
+    ropts=()
+    ropts+=( "-e" "$sshcmd -l root" )
+    for ipaddr in $IP_DUT1 $IP_DUT2 ; do
+        rsync "${ropts[@]}" -a $dirlist $ipaddr:IVG_folder \
+            || return -1
+    done
+    return 0
+}
+
 #######################################################################
 ######################### Main function ###############################
 #######################################################################
@@ -69,6 +85,7 @@ else # else $TMUX is not empty, start test.
         echo "8) Test case 5 (XVIO l2fwd)"
         echo "9) Test Case 6 (DPDK-pktgen VM-VM uni-directional SR-IOV - VXLAN)"
         echo "10) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO - VXLAN)"
+        echo "11) Test Case 8 (DPDK-pktgen VM-VM bi-directional SR-IOV)"
         echo "r) Reboot host machines"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
@@ -79,7 +96,7 @@ else # else $TMUX is not empty, start test.
             #Get IP's of DUT's
             read -p "Enter IP of first DUT: " IP_DUT1
             read -p "Enter IP of second DUT: " IP_DUT2
-            
+
             #Copy n new public key to DUT's
             ./copy_ssh_key.sh $IP_DUT1 $IP_DUT2
             
@@ -441,7 +458,7 @@ else # else $TMUX is not empty, start test.
             
             tmux send-keys -t $tmux_pane "./IVG_folder/test_case_5/setup_test_case_5.sh $VM_BASE_NAME-$vm_number 3 2" C-m
             wait_text $tmux_pane "* Documentation:  https://help.ubuntu.com" > /dev/null
-            
+
             sleep 1
             tmux send-keys -t $tmux_pane "cd vm_scripts/samples/" C-m
             tmux send-keys -t $tmux_pane "./1_configure_hugepages.sh" C-m
@@ -620,9 +637,59 @@ else # else $TMUX is not empty, start test.
             mv capture.txt "XVIO_test_run_vxlan-$num.txt" 
             fi 
 
+            ;;
 
-           ;;
+        11)  echo "11) Test Case 8 (DPDK-pktgen VM-VM bi-directional SR-IOV)"
 
+            tcname="test_case_8"
+
+            VM_BASE_NAME="ns-bi-sriov"
+
+            rsync_duts $tcname vm_creator || exit -1
+
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
+            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-1" C-m
+            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-2" C-m
+
+            wait_text ALL "VM has been created!"
+
+            tmux send-keys -t 2 "./IVG_folder/$tcname/setup_test_case.sh $VM_BASE_NAME-1 3" C-m
+            tmux send-keys -t 3 "./IVG_folder/$tcname/setup_test_case.sh $VM_BASE_NAME-2 3" C-m
+
+            wait_text ALL "DONE(setup_test_case.sh)"
+
+            tmux send-keys -t 2 "./IVG_folder/$tcname/rsync-vm.sh $VM_BASE_NAME-1" C-m
+            tmux send-keys -t 3 "./IVG_folder/$tcname/rsync-vm.sh $VM_BASE_NAME-2" C-m
+
+            tmux send-keys -t 2 "./IVG_folder/$tcname/access.sh $VM_BASE_NAME-1" C-m
+            tmux send-keys -t 3 "./IVG_folder/$tcname/access.sh $VM_BASE_NAME-2" C-m
+
+            wait_text 2 "root@$VM_BASE_NAME-1"
+            wait_text 3 "root@$VM_BASE_NAME-2"
+
+            tmux send-keys -t 2 "cd vm_scripts/samples" C-m
+            tmux send-keys -t 3 "cd vm_scripts/samples" C-m
+
+            tmux send-keys -t 2 "./1_configure_hugepages.sh" C-m
+            tmux send-keys -t 3 "./1_configure_hugepages.sh" C-m
+
+            sleep 1
+
+            tmux send-keys -t 2 "./2_auto_bind_igb_uio.sh" C-m
+            tmux send-keys -t 3 "./2_auto_bind_igb_uio.sh" C-m
+
+            sleep 1
+
+            tmux send-keys -t 3 "./DPDK-route/run-dpdk-route-dual.sh" C-m
+
+            sleep 2
+
+            tmux send-keys -t 2 "cd DPDK-pktgen" C-m
+            tmux send-keys -t 2 "./run-dpdk-pktgen-bi-directional.sh" C-m
+
+            ;;
 
         r)  echo "r) Reboot host machines"
             read -p "Are you sure you want to reboot DUT's (y/n): " REBOOT_ANS
