@@ -30,8 +30,8 @@ ovs-vsctl add-port $BRIDGE_BOND patch-bond-to-br -- set interface patch-bond-to-
 ovs-vsctl add-port $BRIDGE patch-br-to-bond -- set interface patch-br-to-bond type=patch options:peer=patch-bond-to-br
 
 #Add VF's to br0 
-ovs-vsctl add-port $BRIDGE nfp_v0.10 -- set interface nfp_v0.25 ofport_request=25 external_ids:virtio_relay=25
-ovs-vsctl add-port $BRIDGE nfp_v0.11 -- set interface nfp_v0.26 ofport_request=26 external_ids:virtio_relay=26
+ovs-vsctl add-port $BRIDGE nfp_v0.25 -- set interface nfp_v0.25 ofport_request=25 external_ids:virtio_relay=25
+ovs-vsctl add-port $BRIDGE nfp_v0.26 -- set interface nfp_v0.26 ofport_request=26 external_ids:virtio_relay=26
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE
