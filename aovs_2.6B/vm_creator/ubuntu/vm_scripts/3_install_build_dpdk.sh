@@ -23,3 +23,9 @@ sed 's/CONFIG_RTE_LIBRTE_NFP_PMD=n/CONFIG_RTE_LIBRTE_NFP_PMD=y/' -i config/commo
 sed 's@SRCS-y += ethtool/igb/igb_main.c@#SRCS-y += ethtool/igb/igb_main.c@g' -i lib/librte_eal/linuxapp/kni/Makefile
 make config T=x86_64-native-linuxapp-gcc
 make -j $NUM_CPUS install DESTDIR=dpdk-install T=$DPDK_TARGET
+
+lsmod | grep -q igb_uio && modprobe -r igb_uio
+igb_ko=$(readlink -f $(find . -name "igb_uio.ko" | head -1))
+cp $igb_ko  /lib/modules/$(uname -r)/
+depmod -a
+modprobe igb_uio
