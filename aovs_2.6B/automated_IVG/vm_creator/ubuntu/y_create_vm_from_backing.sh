@@ -20,8 +20,8 @@ if [ -f /etc/lsb-release ]; then
   apt-get -y install libguestfs-tools
 fi
 
-
-
+virsh destroy $VM_NAME > /dev/null 2>&1
+virsh undefine $VM_NAME > /dev/null 2>&1
 
 echo "create overlay image"
 overlay=$LIBVIRT_DIR/$VM_NAME.qcow2
@@ -30,10 +30,13 @@ sleep 5
 guestfish --rw -i -a $overlay write /etc/hostname $VM_NAME
 echo "create domain"
 
-  cpu_model=$(virsh capabilities | grep -o '<model>.*</model>' | head -1 | sed 's/\(<model>\|<\/model>\)//g')
-  name=$VM_NAME
-  virt-install \
-    --name $name \
+cpu_model=$(virsh capabilities \
+    | grep -o '<model>.*</model>' \
+    | head -1 \
+    | sed 's/\(<model>\|<\/model>\)//g')
+
+virt-install \
+    --name $VM_NAME \
     --disk path=${overlay},format=qcow2,bus=virtio,cache=none \
     --ram 4096 \
     --vcpus 4 \
@@ -46,7 +49,8 @@ echo "create domain"
     --os-variant=ubuntu16.04 \
     --noautoconsole \
     --noreboot \
-    --import
+    --import \
+    || exit -1
 
 echo "VM has been created!"
-
+exit 0

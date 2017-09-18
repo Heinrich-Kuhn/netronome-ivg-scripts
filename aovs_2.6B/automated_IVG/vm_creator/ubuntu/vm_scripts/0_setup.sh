@@ -7,6 +7,7 @@
 /root/vm_scripts/6_install_iperf3.sh
 /root/vm_scripts/7_install_netperf.sh
 #/root/vm_scripts/8_build_moongen.sh
+/root/vm_scripts/9_build_netronome_tools.sh
 
 sed -i '/exit 0/d' /etc/rc.local
 echo "/vm_scripts/samples/2_auto_bind_igb_uio.sh || exit 1" >> /etc/rc.local
