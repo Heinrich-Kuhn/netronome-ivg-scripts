@@ -93,6 +93,7 @@ trace1 = go.Scatter(
     name="'Pkts/s'",
     hoverinfo='value',
     line=dict(
+        color = ('rgb(22, 96, 167)'),
         shape='spline'
     )
 )
@@ -105,6 +106,7 @@ trace2 = go.Scatter(
     hoverinfo='value',
     yaxis='y2',
     line=dict(
+        color = ('rgb(205, 12, 24)'),
         shape='spline'
     )
 )
