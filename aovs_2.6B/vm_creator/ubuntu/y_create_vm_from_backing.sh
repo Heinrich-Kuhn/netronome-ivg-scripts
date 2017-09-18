@@ -1,5 +1,9 @@
 #!/bin/bash
 
+script_dir="$(dirname $(readlink -f $0))"
+IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
+$IVG_dir/helper_scripts/vm_shutdown.sh
+
 LIBVIRT_DIR=/var/lib/libvirt/images
 basefile=$LIBVIRT_DIR/ubuntu-16.04-server-cloudimg-amd64-disk1.img
 read -p "Enter a name for VM: " VM_NAME

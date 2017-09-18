@@ -12,6 +12,9 @@ fi
 
 script_dir="$(dirname $(readlink -f $0))"
 
+IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
+$IVG_dir/helper_scripts/vm_shutdown.sh
+
 echo $VM_NAME
 echo $VM_CPU_COUNT
 
