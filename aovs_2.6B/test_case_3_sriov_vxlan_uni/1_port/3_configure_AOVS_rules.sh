@@ -20,6 +20,9 @@ do
   ovs-vsctl --if-exists del-br $br
 done
 
+# Create a new bridge
+ovs-vsctl add-br $BRIDGE
+
 #Add PF to br0
 ovs-vsctl add-port $BRIDGE nfp_p0 -- set interface nfp_p0 ofport_request=1
 
