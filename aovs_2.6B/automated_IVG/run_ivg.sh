@@ -198,15 +198,10 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs2.6B/test_case_1_ping root@$IP_DUT2:/root/IVG_folder/
 
             #Bind VF's to nfp_netvf
-            tmux send-keys -t 2 "./IVG_folder/test_case_1_ping/1_bind_netronome_nfp_netvf_driver.sh 10.0.0.1" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_1_ping/1_bind_netronome_nfp_netvf_driver.sh 10.0.0.2" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_1_ping/setup_test_case_1.sh 10.0.0.1" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_1_ping/setup_test_case_1.sh 10.0.0.2" C-m
 
-            wait_text ALL "DONE(1_bind_netronome_nfp_netvf_driver.sh)"
-
-            tmux send-keys -t 2 "./IVG_folder/test_case_1_ping/2_configure_AOVS.sh" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_1_ping/2_configure_AOVS.sh" C-m
-
-            wait_text ALL "DONE(2_configure_AOVS.sh)"
+            wait_text ALL "DONE(setup_test_case_1.sh)"
 
             echo "Running test case 1 - Simple ping"
 
