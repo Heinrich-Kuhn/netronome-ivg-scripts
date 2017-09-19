@@ -6,7 +6,14 @@ $IVG_dir/helper_scripts/vm_shutdown.sh
 
 LIBVIRT_DIR=/var/lib/libvirt/images
 basefile=$LIBVIRT_DIR/ubuntu-16.04-server-cloudimg-amd64-disk1.img
-read -p "Enter a name for VM: " VM_NAME
+
+#Check if VM name is passed
+if [ -z "$1" ]; then
+   echo "ERROR: Please pass a VM name as the first parameter of this script..."
+   exit -1
+   else
+   VM_NAME=$1
+fi
 
 cat <<- EOF > /tmp/ifcfg-eth0
 DEVICE="eth0"
