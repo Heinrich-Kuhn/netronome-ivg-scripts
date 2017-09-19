@@ -236,10 +236,10 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./IVG_folder/test_case_2_sriov_uni/1_port/setup_test_case_2.sh $VM_BASE_NAME $VM_CPUS" C-m
             
             wait_text ALL "DONE(setup_test_case_2.sh)"
-	    
-            tmux send-keys -t 2 "virsh start $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "virsh start $VM_BASE_NAME" C-m
 
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
+	    
             #Pause tmux until VM boots up 
             wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
             
