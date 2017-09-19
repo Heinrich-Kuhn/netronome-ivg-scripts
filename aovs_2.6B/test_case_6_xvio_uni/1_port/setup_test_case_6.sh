@@ -14,6 +14,7 @@ script_dir="$(dirname $(readlink -f $0))"
 
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 $IVG_dir/helper_scripts/vm_shutdown.sh
+IVG_folder/helper_scripts/vm_shutdown.sh
 
 echo $VM_NAME
 echo $VM_CPU_COUNT
@@ -25,3 +26,6 @@ $script_dir/3_configure_ovs_rules.sh
 $script_dir/4_configure_apparmor.sh
 $script_dir/5_configure_guest_xml.sh $VM_NAME
 $script_dir/6_vm_pinning.sh $VM_NAME $VM_CPU_COUNT $XVIO_CPU_COUNT
+
+echo "DONE($(basename $0))"
+exit 0
