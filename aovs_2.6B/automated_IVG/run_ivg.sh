@@ -162,8 +162,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
 
             #Copy VM creator script to DUT
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
 
             #Check pre-req for installing VM's
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/check_deps.sh" C-m
@@ -171,12 +171,12 @@ else # else $TMUX is not empty, start test.
 
             #Download cloud image to local machine
             echo "Downloading cloud image..."
-            ./0_download_cloud_image.sh
+            $IVG_dir/helper_scripts/0_download_cloud_image.sh
             
             #Copy downloaded image to DUT's
             echo "Copying image to DUT's"
-            scp -i ~/.ssh/netronome_key ubuntu-16.04-server-cloudimg-amd64-disk1.img root@$IP_DUT1:/var/lib/libvirt/images/
-            scp -i ~/.ssh/netronome_key ubuntu-16.04-server-cloudimg-amd64-disk1.img root@$IP_DUT2:/var/lib/libvirt/images/
+            scp -i ~/.ssh/netronome_key /root/ubuntu-16.04-server-cloudimg-amd64-disk1.img root@$IP_DUT1:/var/lib/libvirt/images/
+            scp -i ~/.ssh/netronome_key /root/ubuntu-16.04-server-cloudimg-amd64-disk1.img root@$IP_DUT2:/var/lib/libvirt/images/
 
             #Create backing image
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh" C-m
@@ -185,8 +185,7 @@ else # else $TMUX is not empty, start test.
             echo "Creating base image for test VM's, please wait..."
                
             #Wait until base image is completed
-            wait_text 2 "Base image created!" > /dev/null
-            wait_text 3 "Base image created!" > /dev/null
+            wait_text ALL "Base image created!"
             ;;
         
         4)  echo "4) Test Case 1 (Simple ping between hosts)"
@@ -194,13 +193,15 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
+            #Copy test case 1 to DUT's
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT2:/root/IVG_folder/
 
-            #Bind VF's to nfp_netvf
+            #Setup test case 1
             tmux send-keys -t 2 "./IVG_folder/test_case_1_ping/setup_test_case_1.sh 10.0.0.1" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_1_ping/setup_test_case_1.sh 10.0.0.2" C-m
 
+            #Wait for test case 1 setup to complete
             wait_text ALL "DONE(setup_test_case_1.sh)"
 
             echo "Running test case 1 - Simple ping"
@@ -215,28 +216,31 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
+
             VM_BASE_NAME=netronome-sriov-vm
+            VM_CPUS=4
+            
             echo "VM's are called $VM_BASE_NAME"
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-1" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-2" C-m
+            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
             echo "Creating test VM from backing image"
-            wait_text 2 "VM has been created!" > /dev/null
-            wait_text 3 "VM has been created!" > /dev/null
+            wait_text ALL "VM has been created!"
 
-            scp -i ~/.ssh/netronome_key -r test_case_2 root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r test_case_2 root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_2_sriov_uni root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_2_sriov_uni root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_2/setup_test_case_2.sh $VM_BASE_NAME-1 3" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_2/setup_test_case_2.sh $VM_BASE_NAME-2 3" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_2_sriov_uni/setup_test_case_2.sh $VM_BASE_NAME $VM_CPUS" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_2_sriov_uni/setup_test_case_2.sh $VM_BASE_NAME $VM_CPUS" C-m
             
             #Pause tmux until VM boots up 
-            wait_text 2 "* Documentation:  https://help.ubuntu.com" > /dev/null
-            wait_text 3 "* Documentation:  https://help.ubuntu.com" > /dev/null
+            wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
             
             sleep 1
-            tmux send-keys -t 2 "cd vm_scripts/samples/" C-m
-            tmux send-keys -t 3 "cd vm_scripts/samples/" C-m
+            tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
+            tmux send-keys -t 3 "cd vm_scripts/samples/DPDK-pktgen" C-m
 
             tmux send-keys -t 2 "./1_configure_hugepages.sh" C-m
             tmux send-keys -t 3 "./1_configure_hugepages.sh" C-m
@@ -248,10 +252,10 @@ else # else $TMUX is not empty, start test.
 
             sleep 5
 
-            tmux send-keys -t 2 "cd DPDK-pktgen" C-m
-            tmux send-keys -t 3 "cd DPDK-pktgen" C-m
-
+            tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
+            tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
+            
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
             
@@ -263,14 +267,14 @@ else # else $TMUX is not empty, start test.
             
             echo "copy data..."
             sleep 1
-            tmux send-keys -t 3 "./IVG_folder/test_case_2/7_copy_data_dump.sh $VM_BASE_NAME-2" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
             
             sleep 2
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
             sleep 2
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_2/8_shutdown_vm.sh $VM_BASE_NAME-1" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_2/8_shutdown_vm.sh $VM_BASE_NAME-2" C-m
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_shutdown_vm.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_shutdown_vm.sh $VM_BASE_NAME" C-m
             
             
             if [[ ! -e "capture.txt" ]]; then
