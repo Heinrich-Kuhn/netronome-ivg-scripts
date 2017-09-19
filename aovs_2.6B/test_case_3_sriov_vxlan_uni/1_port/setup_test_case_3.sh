@@ -15,6 +15,7 @@ script_dir="$(dirname $(readlink -f $0))"
 
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 $IVG_dir/helper_scripts/vm_shutdown.sh
+/root/IVG_folder/helper_scripts/vm_shutdown.sh
 
 $script_dir/1_bind_VFIO-PCI_driver.sh
 $script_dir/2_configure_AOVS.sh
@@ -22,4 +23,5 @@ $script_dir/3_configure_AOVS_rules.sh $BONDBR_DEST_IP $BONDBR_SRC_IP
 $script_dir/4_guest_xml_configure.sh $VM_NAME
 $script_dir/5_vm_pinning.sh $VM_NAME $VM_CPU_COUNT
 
+echo "DONE($(basename $0))"
 exit 0
