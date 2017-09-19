@@ -194,8 +194,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs2.6B/test_case_1_ping root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs2.6B/test_case_1_ping root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT2:/root/IVG_folder/
 
             #Bind VF's to nfp_netvf
             tmux send-keys -t 2 "./IVG_folder/test_case_1_ping/setup_test_case_1.sh 10.0.0.1" C-m

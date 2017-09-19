@@ -15,7 +15,7 @@ ovs-vsctl add-br $BRIDGE
 ovs-vsctl add-port $BRIDGE nfp_p0 -- set interface nfp_p0 ofport_request=1
 
 # Add VF ports
-ovs-vsctl add-port $BRIDGE nfp_v0.40 -- set interface nfp_v0.40 ofport_request=40
+ovs-vsctl add-port $BRIDGE nfp_v0.1 -- set interface nfp_v0.1 ofport_request=1
 
 ovs-vsctl set Open_vSwitch . other_config:max-idle=300000
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
