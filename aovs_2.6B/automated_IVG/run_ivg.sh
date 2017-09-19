@@ -305,8 +305,8 @@ else # else $TMUX is not empty, start test.
 
             VM_BASE_NAME=netronome-sriov-vxlan-vm
             VM_CPUS=4
-            DST_IP="10.0.0.2"
-            SRC_IP="10.0.0.1"
+            DST_IP="10.10.10.2"
+            SRC_IP="10.10.10.1"
 
             echo "VM's are called $VM_BASE_NAME"
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
