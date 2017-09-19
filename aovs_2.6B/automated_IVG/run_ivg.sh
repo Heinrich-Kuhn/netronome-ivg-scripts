@@ -506,10 +506,12 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
 
-            VM_BASE_NAME=netronome-xvio-vm
+            VM_BASE_NAME=netronome-xvio-vxlan-vm
             VM_CPUS=4
             XVIO_CPUS=2
-            
+            DST_IP="10.10.10.2"
+            SRC_IP="10.10.10.1"
+
             echo "VM's are called $VM_BASE_NAME"
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
@@ -517,13 +519,13 @@ else # else $TMUX is not empty, start test.
             echo "Creating test VM from backing image"
             wait_text ALL "VM has been created!"
 
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_6_xvio_uni root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_6_xvio_uni root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_7_xvio_vxlan_uni root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_7_xvio_vxlan_uni root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_7_xvio_vxlan_uni/1_port/setup_test_case_7.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS $DST_IP $SRC_IP" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_7_xvio_vxlan_uni/1_port/setup_test_case_7.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS $SRC_IP $DST_IP" C-m
             
-            wait_text ALL "DONE(setup_test_case_6.sh)"
+            wait_text ALL "DONE(setup_test_case_7.sh)"
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
@@ -552,7 +554,7 @@ else # else $TMUX is not empty, start test.
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
             
-            echo "Running test case 2 - SRIOV DPDK-pktgen"
+            echo "Running test case 7 - VXIO VXLAN"
             wait_text 3 "root@" > /dev/null
 
             tmux send-keys -t 2 "exit" C-m
@@ -571,14 +573,14 @@ else # else $TMUX is not empty, start test.
             
             
             if [[ ! -e "capture.txt" ]]; then
-               mv capture.txt SRIOV_test_run-0.txt
+               mv capture.txt XVIO_vxlan_test_run-0.txt
             else
             num=1
-            while [[ -e "XVIO_test_run-$num.txt" ]]; do
+            while [[ -e "XVIO_vxlan_test_run-$num.txt" ]]; do
               (( num++ ))
             done
-            mv capture.txt "XVIO_test_run-$num.txt" 
-            fi
+            mv capture.txt "XVIO_vxlan_test_run-$num.txt" 
+            fi 
             ;;
 
 
