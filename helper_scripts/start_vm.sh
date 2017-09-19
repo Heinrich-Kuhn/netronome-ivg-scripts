@@ -2,6 +2,7 @@
 
 VM_NAME=$1
 
+virsh start $VM_NAME
 echo "Adding 60 second sleep while VM boots up"
 counter=0
 while [ $counter -lt 12 ];
