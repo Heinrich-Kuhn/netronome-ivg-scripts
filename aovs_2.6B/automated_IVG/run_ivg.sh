@@ -81,7 +81,7 @@ else # else $TMUX is not empty, start test.
         echo "3) Create backing image for test VM's (Only done once)"
         echo "4) Test Case 1 (Simple ping between hosts)"
         echo "5) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
-        echo "6) Test Case 3 (DPDK-pktgen VM-VM uni-directional XVIO)"
+        echo "6) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
         echo "7) Test case 4 (SR-IOV l2fwd)"
         echo "8) Test case 5 (XVIO l2fwd)"
         echo "9) Test Case 6 (DPDK-pktgen VM-VM uni-directional SR-IOV - VXLAN)"
@@ -305,41 +305,9 @@ else # else $TMUX is not empty, start test.
 
             VM_BASE_NAME=netronome-sriov-vxlan-vm
             VM_CPUS=4
-            
-            echo "VM's are called $VM_BASE_NAME"
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            
-            echo "Creating test VM from backing image"
-            wait_text ALL "VM has been created!"
-
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
-
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
-
-            VM_BASE_NAME=netronome-sriov-vm
-            VM_CPUS=4
-            SRC_IP="10.0.0.1"
             DST_IP="10.0.0.2"
-            
-            echo "VM's are called $VM_BASE_NAME"
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            
-            echo "Creating test VM from backing image"
-            wait_text ALL "VM has been created!"
+            SRC_IP="10.0.0.1"
 
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
-
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
-
-            VM_BASE_NAME=netronome-sriov-vm
-            VM_CPUS=4
-            
             echo "VM's are called $VM_BASE_NAME"
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
@@ -350,8 +318,8 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_3_sriov_vxlan_uni root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_3_sriov_vxlan_uni root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_3_sriov_vxlan_uni/1_port/setup_test_case_3.sh $VM_BASE_NAME $VM_CPUS $SRC_IP $DST_IP" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_3_sriov_vxlan_uni/1_port/setup_test_case_3.sh $VM_BASE_NAME $VM_CPUS $DST_IP $SRC_IP" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_3_sriov_vxlan_uni/1_port/setup_test_case_3.sh $VM_BASE_NAME $VM_CPUS $DST_IP $SRC_IP" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_3_sriov_vxlan_uni/1_port/setup_test_case_3.sh $VM_BASE_NAME $VM_CPUS $SRC_IP $DST_IP" C-m
             
             wait_text ALL "DONE(setup_test_case_3.sh)"
 
@@ -401,14 +369,14 @@ else # else $TMUX is not empty, start test.
             
             
             if [[ ! -e "capture.txt" ]]; then
-               mv capture.txt SRIOV_test_run-0.txt
+               mv capture.txt SRIOV_vxlan_test_run-0.txt
             else
             num=1
             while [[ -e "SRIOV_vxlan_test_run-$num.txt" ]]; do
               (( num++ ))
             done
             mv capture.txt "SRIOV_vxlan_test_run-$num.txt" 
-            fi
+            fi 
             
             ;;
          7)  echo "7) Test case 4 (SR-IOV l2fwd)"
