@@ -2,6 +2,7 @@
 
 SESSIONNAME=IVG
 script_dir="$(dirname $(readlink -f $0))"
+IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 
 apt-get install -y tmux
 
@@ -121,7 +122,7 @@ else # else $TMUX is not empty, start test.
                echo "Please copy the Agilio-OVS .tar.gz file into the same folder as this script"
                sleep 10
             else
-               lmux send-keys -t 2 "mkdir -p IVG_folder" C-m
+               tmux send-keys -t 2 "mkdir -p IVG_folder" C-m
                tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
                LATEST_AOVS=$(ls agilio-ovs-2.6.B-r* 2>/dev/null | grep .tar.gz | tail -n1)
                scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT1:/root/IVG_folder/
@@ -161,9 +162,10 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
 
             #Copy VM creator script to DUT
-            scp -i ~/.ssh/netronome_key -r vm_creator root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r vm_creator root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
 
+            #Check pre-req for installing VM's
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/check_deps.sh" C-m
             tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/check_deps.sh" C-m         
 
@@ -171,18 +173,20 @@ else # else $TMUX is not empty, start test.
             echo "Downloading cloud image..."
             ./0_download_cloud_image.sh
             
+            #Copy downloaded image to DUT's
             echo "Copying image to DUT's"
             scp -i ~/.ssh/netronome_key ubuntu-16.04-server-cloudimg-amd64-disk1.img root@$IP_DUT1:/var/lib/libvirt/images/
             scp -i ~/.ssh/netronome_key ubuntu-16.04-server-cloudimg-amd64-disk1.img root@$IP_DUT2:/var/lib/libvirt/images/
 
+            #Create backing image
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh" C-m
             tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh" C-m
             
             echo "Creating base image for test VM's, please wait..."
                
-               wait_text 2 "Base image created!" > /dev/null
-               wait_text 3 "Base image created!" > /dev/null
-
+            #Wait until base image is completed
+            wait_text 2 "Base image created!" > /dev/null
+            wait_text 3 "Base image created!" > /dev/null
             ;;
         
         4)  echo "4) Test Case 1 (Simple ping between hosts)"
@@ -190,21 +194,23 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
-            scp -i ~/.ssh/netronome_key -r test_case_1 root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r test_case_1 root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs2.6B/test_case_1_ping root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs2.6B/test_case_1_ping root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_1/1_bind_netronome_nfp_netvf_driver.sh 10.0.0.1" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_1/1_bind_netronome_nfp_netvf_driver.sh 10.0.0.2" C-m
+            #Bind VF's to nfp_netvf
+            tmux send-keys -t 2 "./IVG_folder/test_case_1_ping/1_bind_netronome_nfp_netvf_driver.sh 10.0.0.1" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_1_ping/1_bind_netronome_nfp_netvf_driver.sh 10.0.0.2" C-m
 
             wait_text ALL "DONE(1_bind_netronome_nfp_netvf_driver.sh)"
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_1/2_configure_bridge.sh" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_1/2_configure_bridge.sh" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_1_ping/2_configure_AOVS.sh" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_1_ping/2_configure_AOVS.sh" C-m
 
-            wait_text ALL "DONE(2_configure_bridge.sh)"
+            wait_text ALL "DONE(2_configure_AOVS.sh)"
 
             echo "Running test case 1 - Simple ping"
 
+            #Ping form one host
             tmux send-keys -t 2 "ping 10.0.0.2 -c 5" C-m
 
             ;;
