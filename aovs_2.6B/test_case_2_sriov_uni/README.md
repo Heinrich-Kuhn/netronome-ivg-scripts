@@ -1,6 +1,6 @@
 # Test Case 2: VM-VM - SR-IOV Configuration Uni-Directional
 
-![Test Case 2 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_2_sriov_uni/test_case_2_layout.png?raw=true)
+![Test Case 2 Layout](https://github.com/netronome-support/IVG/blob/master/Vector%20Diagrams/Graphics/Test%20Case%202.png?raw=true)
 
 The following steps may be followed to setup DPDK-Pktgen inside a VM running on the first host and create a second instance of DPDK-Pktgen running inside a VM on the second host.
 
