@@ -1,41 +1,41 @@
 #!/bin/bash
-DEFAULT_D_BUS="01"
-DEFAULT_D_SLOT=$2
-DEFAULT_D_FUNCTION="0"
-DEFAULT_VM_NAME=$1
-DEFAULT_BRIDGE="br-fo"
+D_BUS="01"
+D_SLOT=$2
+D_FUNCTION="0"
+VM_NAME=$1
+BRIDGE="br-fo"
 
-function print_usage {
-    echo "Script to add vhostnet interfaces to vm"
-    echo "Usage: "
-    echo "-b <bus>       --bus <bus>                Bus value of new interface"
-    echo "-s <slot>      --slot <slot>              Slot value of new interface"
-    echo "-f <function>  --function <function>      Function value of new interface"
-    echo "-vn <name>     --vmname <name>            Name of vm to add interface too"
-    echo "-sb <bridge>   --sourcebridge <bridge>    Source bridge of interface"
-    echo "-h             --help                     Prints this message and exits"
-}
+#function print_usage {
+#    echo "Script to add vhostnet interfaces to vm"
+#    echo "Usage: "
+#    echo "-b <bus>       --bus <bus>                Bus value of new interface"
+#    echo "-s <slot>      --slot <slot>              Slot value of new interface"
+#    echo "-f <function>  --function <function>      Function value of new interface"
+#    echo "-vn <name>     --vmname <name>            Name of vm to add interface too"
+#    echo "-sb <bridge>   --sourcebridge <bridge>    Source bridge of interface"
+#    echo "-h             --help                     Prints this message and exits"
+#}
 
-while [[ $# -gt 0 ]]
-do
-    argument="$1"
-    case $argument in
+#while [[ $# -gt 0 ]]
+#do
+#    argument="$1"
+#    case $argument in
         # Help
-        -h|--help) print_usage; exit 1;;
-        -b|--bus) D_BUS="$2"; shift 2;;
-        -s|--slot) D_SLOT="$2"; shift 2;;
-        -f|--function) D_FUNCTION="$2"; shift 2;;
-        -vn|--vmname) VM_NAME="$2"; shift 2;;
-        -sb|--sourcebridge) BRIDGE="$2"; shift 2;;
-        *) echo "Unkown argument: \"$argument\""; print_usage; exit 1;;
-    esac
-done
+#        -h|--help) print_usage; exit 1;;
+#        -b|--bus) D_BUS="$2"; shift 2;;
+#        -s|--slot) D_SLOT="$2"; shift 2;;
+#        -f|--function) D_FUNCTION="$2"; shift 2;;
+#        -vn|--vmname) VM_NAME="$2"; shift 2;;
+#        -sb|--sourcebridge) BRIDGE="$2"; shift 2;;
+#        *) echo "Unkown argument: \"$argument\""; print_usage; exit 1;;
+#    esac
+#done
 
-if [ -z "$D_BUS" ] ; then D_BUS=$DEFAULT_D_BUS ; fi
-if [ -z "$D_SLOT" ] ; then D_SLOT=$DEFAULT_D_SLOT ; fi
-if [ -z "$D_FUNCTION" ] ; then D_FUNCTION=$DEFAULT_D_FUNCTION ; fi
-if [ -z "$VM_NAME" ] ; then VM_NAME=$DEFAULT_VM_NAME ; fi
-if [ -z "$BRIDGE" ] ; then BRIDGE=$DEFAULT_BRIDGE ; fi
+#if [ -z "$D_BUS" ] ; then D_BUS=$DEFAULT_D_BUS ; fi
+#if [ -z "$D_SLOT" ] ; then D_SLOT=$DEFAULT_D_SLOT ; fi
+#if [ -z "$D_FUNCTION" ] ; then D_FUNCTION=$DEFAULT_D_FUNCTION ; fi
+#if [ -z "$VM_NAME" ] ; then VM_NAME=$DEFAULT_VM_NAME ; fi
+#if [ -z "$BRIDGE" ] ; then BRIDGE=$DEFAULT_BRIDGE ; fi
 
 cat > /tmp/interface << EOL
 <interface type='bridge'>
