@@ -15,6 +15,7 @@ virsh list | while read x; do
                 device="$(echo $x | cut -d ' ' -f2)"
 
                 virsh shutdown $device
+                virsh undefine $device
 
         fi
 
