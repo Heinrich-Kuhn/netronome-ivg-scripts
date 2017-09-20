@@ -18,7 +18,7 @@ fi
 script_dir="$(dirname $(readlink -f $0))"
 
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
-$IVG_dir/helper_scripts/vm_shutdown.sh
+$IVG_dir/helper_scripts/vm_shutdown_all.sh
 
 $script_dir/1_bind_VFIO-PCI_driver.sh
 $script_dir/2_configure_AOVS.sh
