@@ -1,6 +1,6 @@
 # Test Case 4: VM-VM - SR-IOV Ixia Uni-Directional
 
-![Test Case 4 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_2/test_case_2_layout.png?raw=true)
+![Test Case 4 Layout](https://github.com/netronome-support/IVG/blob/master/Vector%20Diagrams/Graphics/Test%20Case%204.png?raw=true)
 
 The following steps may be followed to setup DPDK-Pktgen inside a VM running on the host and then either **transmit to, or recivce from Ixia**
 

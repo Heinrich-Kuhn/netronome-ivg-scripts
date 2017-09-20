@@ -1,6 +1,6 @@
 # Test Case 3: VM-VM - SR-IOV VXLAN Offload Uni-Directional
 
-![Test Case 3 Layout](https://github.com/netronome-support/IVG/blob/master/aovs_2.6B/test_case_2/test_case_2_layout.png?raw=true)
+![Test Case 3 Layout](https://github.com/netronome-support/IVG/blob/master/Vector%20Diagrams/Graphics/Test%20Case%203.png?raw=true)
 
 The following steps may be followed to setup DPDK-Pktgen inside a VM running on the first host and create a second instance of DPDK-Pktgen running inside a VM on the second host. Packets between the hosts will be encapsulated by **VXLAN**
 
