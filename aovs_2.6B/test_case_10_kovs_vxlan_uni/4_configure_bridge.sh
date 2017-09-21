@@ -40,7 +40,7 @@ ovs-vsctl del-port patch-bond-to-br
 
 ifconfig $BRIDGE_BOND $BONDBR_SRC_IP
 
-ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP
+ovs-vsctl add-port $BRIDGE vxlan01 -- set interface vxlan01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP
 
 
 ovs-vsctl set Open_vSwitch . other_config:max-idle=300000
