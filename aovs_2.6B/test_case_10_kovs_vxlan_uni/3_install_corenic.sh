@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Get Ubuntu Version
+UBUNTU_VERSION=$(lsb_release -a 2>/dev/null | grep Codename: | awk '{print $2}')
+
 ls agilio-ovs-2.6.B-r* 2>/dev/null
 
 if [ $? == 2 ]; then
@@ -19,8 +22,8 @@ else
    else
       cd xenial
    fi
-   dpkg -i nfp-bsp-6000-b0_2017.09.12.1114-1_amd64.deb || exit -1
-   dpkg -i ns-agilio-core-nic_1.1-360_all.deb || exit -1
+   dpkg -i nfp-bsp*.deb || exit -1
+   dpkg -i ns-agilio-core-nic*.deb || exit -1
    echo
    echo
    echo "CoreNIC has been installed!"
