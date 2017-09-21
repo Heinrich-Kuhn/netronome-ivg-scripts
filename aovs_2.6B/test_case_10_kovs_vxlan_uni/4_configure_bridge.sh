@@ -47,5 +47,7 @@ ovs-vsctl set Open_vSwitch . other_config:max-idle=300000
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
 ovs-appctl upcall/set-flow-limit 1000000
 
+ifconfig nfp_p0 up
+
 exit 0
 
