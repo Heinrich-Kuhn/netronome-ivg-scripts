@@ -90,7 +90,9 @@ if [[ $? -eq 0 ]]; then
   tk-devel texinfo dkms zip unzip pkgconfig wget patch minicom libusb \
   libusb-devel psmisc libnl3-devel libftdi pciutils \
   zeromq3 zeromq3-devel protobuf-c-compiler protobuf-compiler protobuf-python \
-  protobuf-c-devel python-six numactl-libs python-ethtool
+  protobuf-c-devel python-six numactl-libs python-ethtool kvm qemu-kvm \
+  python-virtinst libvirt libvirt-python virt-manager libguestfs-tools \
+  cloud-utils virt-install
   # guestfish
   yum -y install libguestfs-tools
 
