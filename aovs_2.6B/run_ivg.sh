@@ -398,7 +398,7 @@ else # else $TMUX is not empty, start test.
             #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
             #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
 
-            VM_BASE_NAME=netronome-sriov-vm
+            VM_BASE_NAME=netronome-xvio-vm
             VM_CPUS=4
             XVIO_CPUS=2
             
