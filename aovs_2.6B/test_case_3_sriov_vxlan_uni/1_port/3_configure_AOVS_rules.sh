@@ -42,12 +42,11 @@ ovs-ofctl dump-flows $BRIDGE
 #Delete patch
 #ovs-vsctl del-port patch-bond-to-br
 
-ifconfig nfp_p0 down
-ifconfig nfp_p0 $BONDBR_SRC_IP
-ifconfig nfp_p0 up
+ip link set nfp_p0 down
+ip addr add $BONDBR_SRC_IP/24 dev nfp_p0
+ip link set nfp_p0 up
 
 ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP
-
 
 ovs-vsctl set Open_vSwitch . other_config:max-idle=300000
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000

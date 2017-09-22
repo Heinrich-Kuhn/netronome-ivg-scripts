@@ -12,13 +12,6 @@ fi
 
 script_dir="$(dirname $(readlink -f $0))"
 
-#When running manually
-IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
-$IVG_dir/helper_scripts/vm_shutdown_all.sh > /dev/null
-
-#When running in auto mode
-/root/IVG_folder/helper_scripts/vm_shutdown_all.sh > /dev/null
-
 echo $VM_NAME
 echo $VM_CPU_COUNT
 
