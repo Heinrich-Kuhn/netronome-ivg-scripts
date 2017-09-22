@@ -163,10 +163,6 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
 
-            #Check pre-req for installing VM's
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/check_deps.sh" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/check_deps.sh" C-m         
-
             #Download cloud image to local machine
             echo "Downloading cloud image..."
             $IVG_dir/helper_scripts/download_cloud_image.sh

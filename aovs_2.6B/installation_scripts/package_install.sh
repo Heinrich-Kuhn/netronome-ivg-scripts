@@ -100,6 +100,10 @@ if [[ $? -eq 0 ]]; then
   systemctl disable firewalld.service
   systemctl stop firewalld.service
 
+  #Disable NetworkManager
+  systemctl disable NetworkManager.service
+  systemctl stop NetworkManager.service
+
 ls /root/agilio-ovs-2.6.B-r* 2>/dev/null
 if [ $? == 2 ]; then
    echo "Could not find Agilio-OVS .tar.gz file in root directory"

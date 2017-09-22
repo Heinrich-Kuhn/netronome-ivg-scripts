@@ -28,12 +28,25 @@ done
 
 xvio_cpus_string=$(IFS=',';echo "${xvio_cpus_list[*]}";IFS=$' \t\n')
 
+
+grep  ID_LIKE /etc/os-release | grep -q fedora
+if [[ $? -eq 0 ]]; then
+cat > /etc/netronome.conf << EOF
+SDN_VIRTIORELAY_ENABLE=y
+SDN_VIRTIORELAY_PARAM="--cpus=$xvio_cpus_string --enable-tso --enable-mrgbuf --vhost-username=qemu --vhost-groupname=kvm --huge-dir=/mnt/huge --ovsdb-sock=/var/run/openvswitch/db.sock"
+SDN_FIREWALL=n
+EOF
+fi
+
+
+grep ID_LIKE /etc/os-release | grep -q debian
+if [[ $? -eq 0 ]]; then
 cat > /etc/netronome.conf << EOF
 SDN_VIRTIORELAY_ENABLE=y
 SDN_VIRTIORELAY_PARAM="--cpus=$xvio_cpus_string --enable-tso --enable-mrgbuf --vhost-username=libvirt-qemu --vhost-groupname=kvm --huge-dir=/mnt/huge --ovsdb-sock=/var/run/openvswitch/db.sock"
 SDN_FIREWALL=n
 EOF
-
+fi
 echo "NEW configuration"
 cat /etc/netronome.conf
 
