@@ -22,6 +22,8 @@ done
 
 if [ -z "$IP" ] ; then IP=$DEFAULT_IP ; fi
 
+ovs-ctl start
+
 script_dir="$(dirname $(readlink -f $0))"
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 

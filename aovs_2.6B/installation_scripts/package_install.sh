@@ -92,7 +92,7 @@ if [[ $? -eq 0 ]]; then
   zeromq3 zeromq3-devel protobuf-c-compiler protobuf-compiler protobuf-python \
   protobuf-c-devel python-six numactl-libs python-ethtool kvm qemu-kvm \
   python-virtinst libvirt libvirt-python virt-manager libguestfs-tools \
-  cloud-utils virt-install
+  cloud-utils virt-install lvm2
   # guestfish
   yum -y install libguestfs-tools
 
@@ -104,6 +104,7 @@ if [ $? == 2 ]; then
 else
 
    LATEST_AOVS=$(ls /root/agilio-ovs-2.6.B-r* 2>/dev/null | grep .tar.gz | tail -n1)
+   cd /root/
    tar xf $LATEST_AOVS
    INSTALL_DIR=$(basename $LATEST_AOVS .tar.gz)
    cd $INSTALL_DIR

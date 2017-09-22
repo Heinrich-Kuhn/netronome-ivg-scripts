@@ -13,11 +13,17 @@ if [ -z "$1" ] && [ -z "$2" ] && [ -z "$3" ] && [ -z "$4" ] && [ -z "$5" ]; then
 
 fi
 
+ovs-ctl start
+
 script_dir="$(dirname $(readlink -f $0))"
 
+#When running manually
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
-$IVG_dir/helper_scripts/vm_shutdown_all.sh
-/root/IVG_folder/helper_scripts/vm_shutdown_all.sh
+$IVG_dir/helper_scripts/vm_shutdown_all.sh > /dev/null
+
+#When running in auto mode
+/root/IVG_folder/helper_scripts/vm_shutdown_all.sh > /dev/nullh
+
 echo $VM_NAME
 echo $VM_CPU_COUNT
 
