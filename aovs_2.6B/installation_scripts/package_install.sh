@@ -95,6 +95,10 @@ if [[ $? -eq 0 ]]; then
   cloud-utils virt-install lvm2
   # guestfish
   yum -y install libguestfs-tools
+  
+  #Disable firewall for vxlan tunnels  
+  systemctl disable firewalld.service
+  systemctl stop firewalld.service
 
 ls /root/agilio-ovs-2.6.B-r* 2>/dev/null
 if [ $? == 2 ]; then
