@@ -532,7 +532,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
             
             echo "Running test case 7 - VXIO VXLAN"
-            wait_text 3 "root@" > /dev/null
+            wait_text ALL "root@" > /dev/null
 
             tmux send-keys -t 2 "exit" C-m
             tmux send-keys -t 3 "exit" C-m
