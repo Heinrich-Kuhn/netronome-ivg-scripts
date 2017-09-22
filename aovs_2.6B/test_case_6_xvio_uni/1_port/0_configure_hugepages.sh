@@ -27,11 +27,23 @@ cat /proc/mounts | grep hugetlbfs
 printCol 7 "libvirt folders"
 mkdir -p /mnt/huge-1G/libvirt
 mkdir -p /mnt/huge/libvirt
-chown libvirt-qemu:kvm -R /mnt/huge-1G/libvirt
-chown libvirt-qemu:kvm -R /mnt/huge/libvirt
 
-service libvirt-bin restart
+grep ID_LIKE /etc/os-release | grep -q debian
+if [[ $? -eq 0 ]]; then
+    chown libvirt-qemu:kvm -R /mnt/huge-1G/libvirt || exit -1
+    chown libvirt-qemu:kvm -R /mnt/huge/libvirt || exit -1
+    service libvirt-bin restart || exit -1
+    echo 9096 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
+    echo "DONE($(basename $0))"
+    exit 0
+fi
 
-echo 9096 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
-
-echo "END"
+grep  ID_LIKE /etc/os-release | grep -q fedora
+if [[ $? -eq 0 ]]; then
+    chown qemu:qemu -R /mnt/huge-1G/libvirt || exit -1
+    chown qemu:qemu -R /mnt/huge/libvirt || exit -1
+    service libvirtd restart || exit -1
+    echo 9096 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
+    echo "DONE($(basename $0))"
+    exit 0
+fi
