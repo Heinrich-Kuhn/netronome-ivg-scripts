@@ -196,8 +196,8 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT2:/root/IVG_folder/
 
             #Setup test case 1
-            tmux send-keys -t 2 "./IVG_folder/test_case_1_ping/setup_test_case_1.sh 10.0.0.1" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_1_ping/setup_test_case_1.sh 10.0.0.2" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_1_ping/setup_test_case_1.sh -i 10.0.0.1" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_1_ping/setup_test_case_1.sh -i 10.0.0.2" C-m
 
             #Wait for test case 1 setup to complete
             wait_text ALL "DONE(setup_test_case_1.sh)"
