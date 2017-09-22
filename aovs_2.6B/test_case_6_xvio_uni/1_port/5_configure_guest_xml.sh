@@ -33,7 +33,8 @@ EDITOR='sed -i "/<memoryBacking>/,/<\/memoryBacking>/d"' virsh edit $VM_NAME
 virsh setvcpus $VM_NAME $VM_CPU --config --maximum
 virsh setvcpus $VM_NAME $VM_CPU --config
 # MemoryBacking
-EDITOR='sed -i "/<domain/a \<memoryBacking><hugepages><page size=\"2048\" unit=\"KiB\" nodeset=\"0\"\/><\/hugepages><\/memoryBacking>"' virsh edit $VM_NAME
+#EDITOR='sed -i "/<domain/a \<memoryBacking><hugepages><page size=\"2048\" unit=\"KiB\" nodeset=\"0\"\/><\/hugepages><\/memoryBacking>"' virsh edit $VM_NAME
+EDITOR='sed -i "/<domain/a \<memoryBacking><hugepages><page size=\"2048\" unit=\"KiB\"/hugepages><\/memoryBacking>"' virsh edit $VM_NAME
 # CPU
 echo max_memory: $max_memory
 echo VM_CPU: $VM_CPU

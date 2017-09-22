@@ -92,7 +92,7 @@ if [[ $? -eq 0 ]]; then
   zeromq3 zeromq3-devel protobuf-c-compiler protobuf-compiler protobuf-python \
   protobuf-c-devel python-six numactl-libs python-ethtool kvm qemu-kvm \
   python-virtinst libvirt libvirt-python virt-manager libguestfs-tools \
-  cloud-utils virt-install lvm2
+  cloud-utils virt-install lvm2 wget git net-tools
   # guestfish
   yum -y install libguestfs-tools
   
