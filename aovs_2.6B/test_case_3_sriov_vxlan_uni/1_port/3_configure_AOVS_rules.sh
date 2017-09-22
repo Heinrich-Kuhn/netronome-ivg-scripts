@@ -22,12 +22,12 @@ do
 done
 
 ovs-vsctl add-br $BRIDGE
-ovs-vsctl add-br $BRIDGE_BOND
+#ovs-vsctl add-br $BRIDGE_BOND
 
 #Add PF to br0
-ovs-vsctl add-port $BRIDGE_BOND nfp_p0 -- set interface nfp_p0 ofport_request=1
-ovs-vsctl add-port $BRIDGE_BOND patch-bond-to-br -- set interface patch-bond-to-br type=patch options:peer=patch-br-to-bond
-ovs-vsctl add-port $BRIDGE patch-br-to-bond -- set interface patch-br-to-bond type=patch options:peer=patch-bond-to-br
+#ovs-vsctl add-port $BRIDGE_BOND nfp_p0 -- set interface nfp_p0 ofport_request=1
+#ovs-vsctl add-port $BRIDGE_BOND patch-bond-to-br -- set interface patch-bond-to-br type=patch options:peer=patch-br-to-bond
+#ovs-vsctl add-port $BRIDGE patch-br-to-bond -- set interface patch-br-to-bond type=patch options:peer=patch-bond-to-br
 
 #Add VF's to br0 
 ovs-vsctl add-port $BRIDGE nfp_v0.10 -- set interface nfp_v0.10 ofport_request=10
@@ -37,12 +37,14 @@ ovs-vsctl show
 ovs-ofctl show $BRIDGE
 
 ovs-ofctl dump-flows $BRIDGE
-ovs-ofctl dump-flows $BRIDGE_BOND
+#ovs-ofctl dump-flows $BRIDGE_BOND
 
 #Delete patch
-ovs-vsctl del-port patch-bond-to-br
+#ovs-vsctl del-port patch-bond-to-br
 
-ifconfig $BRIDGE_BOND $BONDBR_SRC_IP
+ifconfig nfp_p0 down
+ifconfig nfp_p0 $BONDBR_SRC_IP
+ifconfig nfp_p0 up
 
 ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP
 
