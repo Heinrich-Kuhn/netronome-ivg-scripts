@@ -30,16 +30,24 @@ if [ $modification -eq 1 ]; then
   grub_setting="$grub_setting\""
   echo "new GRUB: $grub_setting"
 
-  while true; do
-      read -p "Do you wish to install this \"GRUB_CMDLINE_LINUX_DEFAULT\"? [y/n]" yn
-      case $yn in
-          [Yy]* ) sed -i "/GRUB_CMDLINE_LINUX_DEFAULT/d" /etc/default/grub; sed "/^GRUB_CMDLINE_LINUX/a${grub_setting}" -i /etc/default/grub ; break;;
-          [Nn]* ) exit;;
-          * ) echo "Please answer yes or no.";;
-      esac
-  done
-  printCol 5 "Remember to run platfrom-specific grub update"
-  printCol 7 "Debian: update-grub update-grub2"
-  printCol 7 "Fedora: grub2-mkconfig -o /boot/grub2/grub.cfg"
+#Write to etc default grub  
+sed -i "/GRUB_CMDLINE_LINUX_DEFAULT/d" /etc/default/grub; sed "/^GRUB_CMDLINE_LINUX/a${grub_setting}" -i /etc/default/grub
+  
+# Ubuntu
+grep ID_LIKE /etc/os-release | grep -q debian
+if [[ $? -eq 0 ]]; then
+update-grub
 fi
+
+grep  ID_LIKE /etc/os-release | grep -q fedora
+if [[ $? -eq 0 ]]; then
+grub2-mkconfig -o /boot/grub2/grub.cfg
+fi
+
+fi
+
+echo "Grub updated"
+exit 0
+
+
 

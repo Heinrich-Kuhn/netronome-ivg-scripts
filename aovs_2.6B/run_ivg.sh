@@ -76,24 +76,24 @@ else # else $TMUX is not empty, start test.
         tmux select-pane -t 0
         clear
         echo "Please choose a option"
-        echo "1) Connect to DUT's"
-        echo "2) Install/Re-install Agilio-OVS"
-        echo "3) Create backing image for test VM's (Only done once)"
-        echo "4) Test Case 1 (Simple ping between hosts)"
-        echo "5) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
-        echo "6) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
-        echo "7) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
-        echo "8) Test case 5 (Ixia Tx & Rx - VM L2FWD SR-IOV)"
-        echo "9) Test case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
-        echo "10) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO VXLAN)"
-        echo "11) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
-        echo "12) Test Case 8 (Ixia Tx & Rx - VM L2FWD XVIO)"
+        echo "a) Connect to DUT's"
+        echo "b) Install/Re-install Agilio-OVS"
+        echo "c) Create backing image for test VM's (Only done once)"
+        echo "1) Test Case 1 (Simple ping between hosts)"
+        echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
+        echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
+        echo "4) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
+        echo "5) Test case 5 (Ixia Tx & Rx - VM L2FWD SR-IOV)"
+        echo "6) Test case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
+        echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO VXLAN)"
+        echo "8) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
+        echo "9) Test Case 9 (Ixia Tx & Rx - VM L2FWD XVIO)"
         echo "r) Reboot host machines"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
         case "$OPT" in
         
-        1)  echo "1) Connect to DUT's"
+        a)  echo "a) Connect to DUT's"
             
             #Get IP's of DUT's
             read -p "Enter IP of first DUT: " IP_DUT1
@@ -113,27 +113,29 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
             ;;
 
-        2)  echo "2) Install/Re-install Agilio-OVS"
+        b)  echo "b) Install/Re-install Agilio-OVS"
             
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
             #Check if any agilio .tar files are in the folder
+            cd 
             ls agilio-ovs-2.6.B-r* 2>/dev/null
 
             if [ $? == 2 ]; then
                echo "Could not find Agilio-OVS .tar.gz file in folder"
-               echo "Please copy the Agilio-OVS .tar.gz file into the same folder as this script"
+               echo "Please copy the Agilio-OVS .tar.gz file into the root folder of this machine"
                sleep 10
             else
                tmux send-keys -t 2 "mkdir -p IVG_folder" C-m
                tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
                LATEST_AOVS=$(ls agilio-ovs-2.6.B-r* 2>/dev/null | grep .tar.gz | tail -n1)
-               scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT1:/root/IVG_folder/
-               scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT2:/root/IVG_folder/
+               
+               scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT1:/root/
+               scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT2:/root/
 
-               tmux send-keys -t 2 "./IVG_folder/helper_scripts/grub_setup.sh" C-m
-               tmux send-keys -t 3 "./IVG_folder/helper_scripts/grub_setup.sh" C-m
+               tmux send-keys -t 2 "./IVG_folder/helper_scripts/configure_grub.sh" C-m
+               tmux send-keys -t 3 "./IVG_folder/helper_scripts/configure_grub.sh" C-m
     
                wait_text 2 "Grub updated" > /dev/null
                wait_text 3 "Grub updated" > /dev/null
@@ -150,7 +152,7 @@ else # else $TMUX is not empty, start test.
             fi
             ;;
 
-        3)  echo "3) Create backing image for test VM's (Only done once)"
+        c)  echo "c) Create backing image for test VM's (Only done once)"
             
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -182,7 +184,7 @@ else # else $TMUX is not empty, start test.
             wait_text ALL "Base image created!"
             ;;
         
-        4)  echo "4) Test Case 1 (Simple ping between hosts)"
+        1)  echo "1) Test Case 1 (Simple ping between hosts)"
             
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -205,7 +207,7 @@ else # else $TMUX is not empty, start test.
 
             ;;
 
-        5)  echo "5) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
+        2)  echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
             
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -259,6 +261,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
             
             echo "Running test case 2 - SRIOV DPDK-pktgen"
+            sleep 5
             wait_text 3 "root@" > /dev/null
 
             tmux send-keys -t 2 "exit" C-m
@@ -289,7 +292,7 @@ else # else $TMUX is not empty, start test.
 
            ;;
 
-        6)  echo "6) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
+        3)  echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
             
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -374,11 +377,11 @@ else # else $TMUX is not empty, start test.
             
             ;;
 
-         7)  echo "7) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
+         4)  echo "4) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
             
             ;;
                 
-         8)  echo "8) Test case 5 (Ixia Tx & Rx - VM L2FWD SR-IOV)"
+         5)  echo "5) Test case 5 (Ixia Tx & Rx - VM L2FWD SR-IOV)"
             
            
 
@@ -386,7 +389,7 @@ else # else $TMUX is not empty, start test.
 
 
         
-         9)  echo "9) Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
+         6)  echo "6) Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
             
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -440,7 +443,7 @@ else # else $TMUX is not empty, start test.
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
             
-            echo "Running test case 2 - SRIOV DPDK-pktgen"
+            echo "6) Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
             wait_text 3 "root@" > /dev/null
 
             tmux send-keys -t 2 "exit" C-m
@@ -471,7 +474,7 @@ else # else $TMUX is not empty, start test.
             ;;
 
 
-        10)  echo "10) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO - VXLAN)"
+        7)  echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO - VXLAN)"
              
              tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -558,7 +561,7 @@ else # else $TMUX is not empty, start test.
 
             ;;
 
-        11)  echo "11) Test Case 8 (DPDK-pktgen VM-VM bi-directional SR-IOV)"
+        8)  echo "8) Test Case 8 (DPDK-pktgen VM-VM bi-directional SR-IOV)"
 
             tcname="test_case_8"
 

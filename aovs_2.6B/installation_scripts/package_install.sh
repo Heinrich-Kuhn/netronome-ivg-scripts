@@ -92,9 +92,8 @@ if [[ $? -eq 0 ]]; then
   zeromq3 zeromq3-devel protobuf-c-compiler protobuf-compiler protobuf-python \
   protobuf-c-devel python-six numactl-libs python-ethtool kvm qemu-kvm \
   python-virtinst libvirt libvirt-python virt-manager libguestfs-tools \
-  cloud-utils virt-install lvm2 wget git net-tools
-  # guestfish
-  yum -y install libguestfs-tools
+  cloud-utils virt-install lvm2 wget git net-tools centos-release-qemu-ev.noarch \
+  qemu-kvm-ev libvirt libvirt-python libguestfs-tools virt-install tmux
   
   #Disable firewall for vxlan tunnels  
   systemctl disable firewalld.service
@@ -103,6 +102,10 @@ if [[ $? -eq 0 ]]; then
   #Disable NetworkManager
   systemctl disable NetworkManager.service
   systemctl stop NetworkManager.service
+
+  #SELINUX config
+  setenforce 0
+  sed -E 's/(SELINUX=).*/\1disabled/g' -i /etc/sysconfig/selinux
 
 ls /root/agilio-ovs-2.6.B-r* 2>/dev/null
 if [ $? == 2 ]; then
