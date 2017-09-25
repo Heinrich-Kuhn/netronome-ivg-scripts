@@ -4,8 +4,6 @@ SESSIONNAME=IVG
 script_dir="$(dirname $(readlink -f $0))"
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 
-apt-get install -y tmux
-
 function wait_text {
     local pane="$1"
     local text="$2"

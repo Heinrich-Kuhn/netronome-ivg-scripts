@@ -19,6 +19,8 @@ else
    NS_SDN_REVISION=$(echo $NS_SDN_REVISION | cut -f1 -d":")
    #echo "Agilio-OVS $NS_SDN_VERSION Revision $NS_SDN_REVISION is installed"
    #echo "Uninstalling Agilio-OVS"
+   $script_dir/vm_shutdown_all.sh
+   rmmod vfio-pci
    /opt/netronome/bin/agilio-ovs-uninstall.sh -y
 
    #Check if uninstall script exited cleanly

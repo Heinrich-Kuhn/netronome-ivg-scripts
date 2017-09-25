@@ -11,9 +11,14 @@ if [ -z "$1" ]; then
    IP=$1
 fi
 
-#Locate the dpdk-devbind.py script
-updatedb
-DPDK_DEVBIND=$(locate dpdk-devbind.py | head -1)
+# Bind VF's using vfio-pci driver
+driver=vfio-pci
+
+DPDK_DEVBIND=$(find /opt/netronome -iname dpdk-devbind.py | head -1)
+if [ "$DPDK_DEVBIND" == "" ]; then
+  echo "ERROR: could not find dpdk-devbind.py tool"
+  exit -1
+fi
 
 #Grab the PCI address of VF nfp_v0.1
 PCIA="$(ethtool -i nfp_v0.1 | grep bus | cut -d ' ' -f 5)"
