@@ -344,8 +344,8 @@ else # else $TMUX is not empty, start test.
             
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
-            
-            echo "Running test case 2 - SRIOV DPDK-pktgen"
+            sleep 5
+            echo "Running test case 3 - XVIO DPDK-pktgen"
             wait_text 3 "root@" > /dev/null
 
             tmux send-keys -t 2 "exit" C-m
@@ -440,8 +440,8 @@ else # else $TMUX is not empty, start test.
             
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
-            
-            echo "6) Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
+            sleep 5
+            echo "Running Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
             wait_text 3 "root@" > /dev/null
 
             tmux send-keys -t 2 "exit" C-m
@@ -527,7 +527,7 @@ else # else $TMUX is not empty, start test.
             
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
-            
+            sleep 5
             echo "Running test case 7 - VXIO VXLAN"
             wait_text ALL "root@" > /dev/null
 
