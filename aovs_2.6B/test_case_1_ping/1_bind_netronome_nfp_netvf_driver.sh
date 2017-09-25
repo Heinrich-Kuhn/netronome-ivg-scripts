@@ -1,18 +1,9 @@
 #!/bin/bash
 
-#1_bind_netronome_nfp_netvf_driver.sh
-
-#Check if IP is passed
-if [ -z "$1" ]; then
-   echo "ERROR: No IP address was passed"
-   echo "Example: ./1_bind_netronome_nfp_netvf_driver.sh 10.10.10.1"
-   exit -1
-   else
-   IP=$1
-fi
+PCIA="$(ethtool -i nfp_v0.1 | grep bus | cut -d ' ' -f 5)"
 
 # Bind VF's using vfio-pci driver
-driver=vfio-pci
+driver=nfp_netvf
 
 DPDK_DEVBIND=$(find /opt/netronome -iname dpdk-devbind.py | head -1)
 if [ "$DPDK_DEVBIND" == "" ]; then
@@ -20,15 +11,19 @@ if [ "$DPDK_DEVBIND" == "" ]; then
   exit -1
 fi
 
-#Grab the PCI address of VF nfp_v0.1
-PCIA="$(ethtool -i nfp_v0.1 | grep bus | cut -d ' ' -f 5)"
-    
-  #Bind the VF to nfp_netvf
-  echo $DPDK_DEVBIND --bind nfp_netvf $PCIA
-  $DPDK_DEVBIND --bind nfp_netvf $PCIA
+echo "loading driver"
+modprobe $driver
+echo "DPDK_DEVBIND: $DPDK_DEVBIND"
+echo $DPDK_DEVBIND --bind $driver $PCIA
+$DPDK_DEVBIND --bind $driver $PCIA
 
-  echo $DPDK_DEVBIND --status
-  $DPDK_DEVBIND --status
+echo $DPDK_DEVBIND --bind $driver $PCIB
+$DPDK_DEVBIND --bind $driver $PCIB
+
+echo $DPDK_DEVBIND --status
+$DPDK_DEVBIND --status
+
+exit 0
 
 #Get netdev name
 ETH=$($DPDK_DEVBIND --status | grep $PCIA | cut -d ' ' -f 4 | cut -d '=' -f 2)
