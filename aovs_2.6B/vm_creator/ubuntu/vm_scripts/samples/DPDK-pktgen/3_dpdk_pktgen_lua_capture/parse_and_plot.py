@@ -137,4 +137,5 @@ parsed_data.write("Framesize, \tPackets/s, \tMbits/s \n")
 for i in range(0, len(f)-1):
 	parsed_data.write(str(f[i]) + ',\t' + str(p[i]) + ',\t' + str(m[i]) + '\n')
 
+parsed_data.close()
 print("Data parse complete!")
