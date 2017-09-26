@@ -298,16 +298,15 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
             
             #CPU meas start
-            tmux send-keys -t 2 "./IVG_folder/helper_scripts/cpu-measure.sh test_case_1" C-m
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/cpu-measure.sh test_case_1" C-m
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /IVG_folder/helper_scripts/cpu-measure.sh test_case_1
+            
 
             echo -e "${GREEN}* Running test case 2 - SRIOV DPDK-pktgen${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
             #CPU meas end
-
-            tmux send-keys -t 2 "./IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_1" C-m
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_1" C-m
+            sssh -i ~/.ssh/netronome_key root@$IP_DUT2 /IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_1
+            
             
             tmux send-keys -t 3 "./parse_and_plot.py" C-m
             wait_text 3 "Data parse complete!" > /dev/null
@@ -324,6 +323,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             sleep 2
 
+            
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             
