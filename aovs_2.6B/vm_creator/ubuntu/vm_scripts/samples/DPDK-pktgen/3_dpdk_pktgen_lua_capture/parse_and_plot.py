@@ -131,8 +131,8 @@ for i in range(0, len(frame_size)):
 #f.write("url %s" %url)
 #f.close()
 
-google_data = open("/root/parsed_data.txt", "w")
-google_data.write("Framesize, \tPackets/s, \tMbits/s \n")
+parsed_data = open("/root/parsed_data.txt", "w")
+parsed_data.write("Framesize, \tPackets/s, \tMbits/s \n")
 
 for i in range(0, len(f)-1):
 	parsed_data.write(str(f[i]) + ',\t' + str(p[i]) + ',\t' + str(m[i]) + '\n')
