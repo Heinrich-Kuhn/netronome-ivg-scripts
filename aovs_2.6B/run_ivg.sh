@@ -69,7 +69,7 @@ else # else $TMUX is not empty, start test.
         tmux split-window -h -t 0
         tmux split-window -v -t 0
         tmux split-window -v -t 1
-        DUT_CONNECT=1
+        DUT_CONNECT=0
 
     while :; do
         tmux select-pane -t 0
@@ -115,6 +115,12 @@ else # else $TMUX is not empty, start test.
 
         b)  echo "b) Install/Re-install Agilio-OVS"
             
+            if [ $DUT_CONNECT == 0 ]; then
+                echo "Please connect to DUT's first"
+                sleep 5
+                continue
+            fi
+
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
@@ -154,6 +160,12 @@ else # else $TMUX is not empty, start test.
 
         c)  echo "c) Create backing image for test VM's (Only done once)"
             
+            if [ $DUT_CONNECT == 0 ]; then
+                echo "Please connect to DUT's first"
+                sleep 5
+                continue
+            fi
+
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
@@ -191,7 +203,7 @@ else # else $TMUX is not empty, start test.
                 sleep 5
                 continue
             fi
-            
+
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
@@ -215,6 +227,12 @@ else # else $TMUX is not empty, start test.
 
         2)  echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
             
+            if [ $DUT_CONNECT == 0 ]; then
+                echo "Please connect to DUT's first"
+                sleep 5
+                continue
+            fi
+
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
@@ -300,6 +318,12 @@ else # else $TMUX is not empty, start test.
 
         3)  echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
             
+            if [ $DUT_CONNECT == 0 ]; then
+                echo "Please connect to DUT's first"
+                sleep 5
+                continue
+            fi
+
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
@@ -398,6 +422,12 @@ else # else $TMUX is not empty, start test.
         
          6)  echo "6) Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
             
+            if [ $DUT_CONNECT == 0 ]; then
+                echo "Please connect to DUT's first"
+                sleep 5
+                continue
+            fi
+
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
@@ -483,7 +513,13 @@ else # else $TMUX is not empty, start test.
 
         7)  echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO - VXLAN)"
              
-             tmux send-keys -t 3 "cd" C-m
+            if [ $DUT_CONNECT == 0 ]; then
+                echo "Please connect to DUT's first"
+                sleep 5
+                continue
+            fi
+
+            tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
             scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
@@ -621,6 +657,13 @@ else # else $TMUX is not empty, start test.
             ;;
 
         r)  echo "r) Reboot host machines"
+            
+            if [ $DUT_CONNECT == 0 ]; then
+                echo "Please connect to DUT's first"
+                sleep 5
+                continue
+            fi
+
             read -p "Are you sure you want to reboot DUT's (y/n): " REBOOT_ANS
 
             if [ $REBOOT_ANS == 'y' ]; then
