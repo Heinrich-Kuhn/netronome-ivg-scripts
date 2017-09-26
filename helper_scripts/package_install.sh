@@ -95,7 +95,7 @@ if [[ $? -eq 0 ]]; then
   protobuf-c-devel python-six numactl-libs python-ethtool kvm qemu-kvm \
   python-virtinst libvirt libvirt-python virt-manager libguestfs-tools \
   cloud-utils virt-install lvm2 wget git net-tools centos-release-qemu-ev.noarch \
-  qemu-kvm-ev libvirt libvirt-python libguestfs-tools virt-install tmux sysstat aha
+  qemu-kvm-ev libvirt libvirt-python libguestfs-tools virt-install tmux sysstat aha htop
   
   #Disable firewall for vxlan tunnels  
   systemctl disable firewalld.service
