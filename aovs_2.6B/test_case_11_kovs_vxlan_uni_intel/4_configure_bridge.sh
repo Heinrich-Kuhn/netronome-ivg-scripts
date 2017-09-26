@@ -12,6 +12,13 @@ else
     BONDBR_SRC_IP=$2
 fi
 
+#echo "Creating VF"
+intel_bus=$(lspci -d 8086:1583 | awk 'NR==1 {print $1}')
+#echo 1 > /sys/bus/pci/devices/0000\:$intel_bus/sriov_numvfs
+
+INTERFACE=$(ls /sys/bus/pci/devices/0000\:$intel_bus/net)
+echo "Intel interface: $INTERFACE"
+
 BRIDGE=br-fo
 BRIDGE_BOND=bondbr0
 
@@ -25,7 +32,7 @@ ovs-vsctl add-br $BRIDGE
 ovs-vsctl add-br $BRIDGE_BOND
 
 #Add PF to br0
-ovs-vsctl add-port $BRIDGE_BOND nfp_p0 -- set interface nfp_p0 ofport_request=1
+ovs-vsctl add-port $BRIDGE_BOND $INTERFACE -- set interface $INTERFACE ofport_request=1
 ovs-vsctl add-port $BRIDGE_BOND patch-bond-to-br -- set interface patch-bond-to-br type=patch options:peer=patch-br-to-bond
 ovs-vsctl add-port $BRIDGE patch-br-to-bond -- set interface patch-br-to-bond type=patch options:peer=patch-bond-to-br
 
@@ -47,7 +54,7 @@ ovs-vsctl set Open_vSwitch . other_config:max-idle=300000
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
 ovs-appctl upcall/set-flow-limit 1000000
 
-ifconfig nfp_p0 up
+ifconfig $INTERFACE up
 
 exit 0
 
