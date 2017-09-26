@@ -297,10 +297,18 @@ else # else $TMUX is not empty, start test.
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
             
+            #CPU meas start
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/cpu-measure.sh test_case_1" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/cpu-measure.sh test_case_1" C-m
+
             echo -e "${GREEN}* Running test case 2 - SRIOV DPDK-pktgen${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
+            #CPU meas end
 
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_1" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_1" C-m
+            
             tmux send-keys -t 3 "./parse_and_plot.py" C-m
             wait_text 3 "Data parse complete!" > /dev/null
             sleep 1

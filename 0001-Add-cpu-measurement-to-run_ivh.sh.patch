@@ -1,0 +1,42 @@
+From df75c44573b1880c26d9005beece4a878159345a Mon Sep 17 00:00:00 2001
+From: Sean Bartie <sean.bartie@netronome.com>
+Date: Thu, 21 Sep 2017 12:41:19 +0000
+Subject: [PATCH] Add cpu measurement to run_ivh.sh
+
+---
+ helper_scripts/cpu-measure.sh         | 7 +++++++
+ helper_scripts/cpu-parse-copy-data.sh | 6 ++++++
+ 2 files changed, 13 insertions(+)
+ create mode 100755 helper_scripts/cpu-measure.sh
+ create mode 100755 helper_scripts/cpu-parse-copy-data.sh
+
+diff --git a/helper_scripts/cpu-measure.sh b/helper_scripts/cpu-measure.sh
+new file mode 100755
+index 0000000..92c3329
+--- /dev/null
++++ b/helper_scripts/cpu-measure.sh
+@@ -0,0 +1,7 @@
++file_name=$1
++yum -y install sysstat
++apt-get -y install sysstat
++
++mpstat 2 > /tmp/$file_name &
++
++    
+\ No newline at end of file
+diff --git a/helper_scripts/cpu-parse-copy-data.sh b/helper_scripts/cpu-parse-copy-data.sh
+new file mode 100755
+index 0000000..c2f8abe
+--- /dev/null
++++ b/helper_scripts/cpu-parse-copy-data.sh
+@@ -0,0 +1,6 @@
++file_name=$1
++dest_dir=$2
++kill -9 $(pgrep mpstat) || true
++
++echo "time,$(sed '3q;d' /tmp/$file_name | tr -s ' ' ',' | cut -d ',' -f3-)" > ${dest_dir}
++tail -n +4 /tmp/$file_name | tr -s ' ' ',' | cut -d ',' -f1,3- >> ${dest_dir}
+\ No newline at end of file
+-- 
+1.8.3.1
+

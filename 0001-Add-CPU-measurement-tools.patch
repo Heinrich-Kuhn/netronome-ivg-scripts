@@ -1,0 +1,47 @@
+From 05a89bb04b0172c416fcb7f41e5d88d77e041b78 Mon Sep 17 00:00:00 2001
+From: Sean Bartie <sean.bartie@netronome.com>
+Date: Thu, 21 Sep 2017 13:35:57 +0000
+Subject: [PATCH 1/2] Add CPU measurement tools
+
+---
+ helper_scripts/cpu-measure.sh         | 3 +++
+ helper_scripts/cpu-parse-copy-data.sh | 6 ++++++
+ helper_scripts/cpu-screenshot.sh      | 3 +++
+ 3 files changed, 12 insertions(+)
+ create mode 100755 helper_scripts/cpu-measure.sh
+ create mode 100755 helper_scripts/cpu-parse-copy-data.sh
+ create mode 100755 helper_scripts/cpu-screenshot.sh
+
+diff --git a/helper_scripts/cpu-measure.sh b/helper_scripts/cpu-measure.sh
+new file mode 100755
+index 0000000..e7f78bf
+--- /dev/null
++++ b/helper_scripts/cpu-measure.sh
+@@ -0,0 +1,3 @@
++file_name=$1
++
++mpstat 2 > /tmp/${file_name} &   
+diff --git a/helper_scripts/cpu-parse-copy-data.sh b/helper_scripts/cpu-parse-copy-data.sh
+new file mode 100755
+index 0000000..9190811
+--- /dev/null
++++ b/helper_scripts/cpu-parse-copy-data.sh
+@@ -0,0 +1,6 @@
++file_name=$1
++
++kill -9 $(pgrep mpstat) || true
++
++echo "time,$(sed '3q;d' /tmp/${file_name} | tr -s ' ' ',' | cut -d ',' -f3-)" > /root/IVG_folder/${file_name}.csv
++tail -n +4 /tmp/${file_name} | tr -s ' ' ',' | cut -d ',' -f1,3- >> /root/IVG_folder/${file_name}.csv
+diff --git a/helper_scripts/cpu-screenshot.sh b/helper_scripts/cpu-screenshot.sh
+new file mode 100755
+index 0000000..ef807b2
+--- /dev/null
++++ b/helper_scripts/cpu-screenshot.sh
+@@ -0,0 +1,3 @@
++file_name=$1
++
++echo q | htop | aha --black --line-fix > /root/IVG_folder/${file_name}.html
+-- 
+1.8.3.1
+
