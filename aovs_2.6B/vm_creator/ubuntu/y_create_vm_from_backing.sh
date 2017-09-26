@@ -4,11 +4,11 @@ script_dir="$(dirname $(readlink -f $0))"
 
 #When running manually
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
-$IVG_dir/helper_scripts/vm_shutdown_all.sh > &>/dev/null
+$IVG_dir/helper_scripts/vm_shutdown_all.sh
 sleep 4
 
 #When running in auto mode
-/root/IVG_folder/helper_scripts/vm_shutdown_all.sh > &>/dev/null
+/root/IVG_folder/helper_scripts/vm_shutdown_all.sh
 
 LIBVIRT_DIR=/var/lib/libvirt/images
 basefile=$LIBVIRT_DIR/ubuntu-16.04-server-cloudimg-amd64-disk1.img
