@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
-import plotly.plotly as py
-import plotly.graph_objs as go
+#import plotly.plotly as py
+#import plotly.graph_objs as go
+
 import string
 import numpy as np
 
 # PLOTLY SIGN IN CREDENTIALS
-py.sign_in('netronome', 'hHtGeDBSS2ayTdCFTXO0')
+#py.sign_in('netronome', 'hHtGeDBSS2ayTdCFTXO0')
 
 #-FILE TO USE-#
 capture  = open("/root/capture.txt", "r")
@@ -86,46 +87,54 @@ for i in range(0, len(frame_size)):
 
 ### PLOTLY ###
 
-trace1 = go.Scatter(
-    x=f,
-    y=p,
-    mode='lines+markers',
-    name="'Pkts/s'",
-    hoverinfo='value',
-    line=dict(
-        color = ('rgb(22, 96, 167)'),
-        shape='spline'
-    )
-)
+#trace1 = go.Scatter(
+#    x=f,
+#    y=p,
+#    mode='lines+markers',
+#    name="'Pkts/s'",
+#    hoverinfo='value',
+#    line=dict(
+#        color = ('rgb(22, 96, 167)'),
+#        shape='spline'
+#    )
+#)
 
-trace2 = go.Scatter(
-    x=f,
-    y=m,
-    mode='lines+markers',
-    name="'Mbits/s'",
-    hoverinfo='value',
-    yaxis='y2',
-    line=dict(
-        color = ('rgb(205, 12, 24)'),
-        shape='spline'
-    )
-)
+#trace2 = go.Scatter(
+#    x=f,
+#    y=m,
+#    mode='lines+markers',
+#    name="'Mbits/s'",
+#    hoverinfo='value',
+#    yaxis='y2',
+#    line=dict(
+#        color = ('rgb(205, 12, 24)'),
+#        shape='spline'
+#    )
+#)
+#
+#
+#
+#data = [trace1, trace2]
+#
+#layout = dict(
+#                title = 'Netronome Performance Graph',
+#                xaxis = dict(title = 'Packet Size', showticklabels=True),
+#                yaxis = dict(title = 'Packets per second'),
+#                yaxis2 = dict(title = 'Mbits per second', overlaying='y', side='right')
+#        )
 
+#fig = dict(data=data, layout=layout)
+#url = py.plot(fig, filename='netronome')
+#print(url)
 
+#f = open("graphurl.txt","w")
+#f.write("url %s" %url)
+#f.close()
 
-data = [trace1, trace2]
+google_data = open("/root/parsed_data.txt", "w")
+google_data.write("Framesize, \tPackets/s, \tMbits/s \n")
 
-layout = dict(
-                title = 'Netronome Performance Graph',
-                xaxis = dict(title = 'Packet Size', showticklabels=True),
-                yaxis = dict(title = 'Packets per second'),
-                yaxis2 = dict(title = 'Mbits per second', overlaying='y', side='right')
-        )
+for i in range(0, len(f)-1):
+	parsed_data.write(str(f[i]) + ',\t' + str(p[i]) + ',\t' + str(m[i]) + '\n')
 
-fig = dict(data=data, layout=layout)
-url = py.plot(fig, filename='netronome')
-print(url)
-
-f = open("graphurl.txt","w")
-f.write("url %s" %url)
-f.close()
+print("Data parse complete!")

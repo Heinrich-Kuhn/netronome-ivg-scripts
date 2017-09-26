@@ -104,7 +104,7 @@ local function captureSample(filename)
     previous_framesize = average_framesize
   end
 
-  if (valid_capture_counter >= 2) 
+  if (valid_capture_counter >= 0) 
   then
     writeSample(filename, time_diff, pktgen.portCount(), average_framesize, total_pkts_rx, total_mbits_rx);
   end

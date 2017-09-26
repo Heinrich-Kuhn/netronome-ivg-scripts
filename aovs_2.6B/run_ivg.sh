@@ -295,8 +295,11 @@ else # else $TMUX is not empty, start test.
             
             echo -e "${GREEN}* Running test case 2 - SRIOV DPDK-pktgen${NC}"
             sleep 5
-            wait_text 3 "root@" > /dev/null
+            wait_text 3 "Test run complete" > /dev/null
 
+            tmux send-keys -t 3 "./parse_and_plot.py" C-m
+            wait_text 3 "Data parse complete!" > /dev/null
+            sleep 1
             tmux send-keys -t 2 "exit" C-m
             tmux send-keys -t 3 "exit" C-m
             
@@ -306,12 +309,23 @@ else # else $TMUX is not empty, start test.
             
             sleep 2
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             
             
+             if [[ ! -e "parsed_data.txt" ]]; then
+               mv parsed_data.txt SRIOV_test_run_parsed-0.txt
+            else
+            num=1
+            while [[ -e "SRIOV_test_run_parsed-$num.txt" ]]; do
+              (( num++ ))
+            done
+            mv parsed_data.txt "SRIOV_test_run_parsed-$num.txt" 
+            fi
+
             if [[ ! -e "capture.txt" ]]; then
                mv capture.txt SRIOV_test_run-0.txt
             else
@@ -320,7 +334,7 @@ else # else $TMUX is not empty, start test.
               (( num++ ))
             done
             mv capture.txt "SRIOV_test_run-$num.txt" 
-            fi 
+            fi
             
 
            ;;

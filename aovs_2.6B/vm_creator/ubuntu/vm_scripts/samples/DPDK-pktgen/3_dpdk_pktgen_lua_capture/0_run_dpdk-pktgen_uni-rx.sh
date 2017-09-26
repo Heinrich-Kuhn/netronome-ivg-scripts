@@ -51,3 +51,8 @@ echo "mapping: $mapping"
 /root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_receiver.lua
 
 reset
+
+echo "Test run complete"
+exit 0
+
+
