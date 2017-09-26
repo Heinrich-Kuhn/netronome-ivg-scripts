@@ -48,11 +48,11 @@ done
 echo "whitelist: $whitelist"
 echo "mapping: $mapping"
 
-if [ $VXLAN == "n" ]; then
+if [ $VXLAN == n ]; then
 /root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_transmitter.lua
 fi
 
-if [ $VXLAN == "y" ]; then
+if [ $VXLAN == y ]; then
 /root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_transmitter_vxlan.lua
 fi
 

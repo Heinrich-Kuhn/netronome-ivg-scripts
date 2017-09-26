@@ -134,7 +134,7 @@ for i in range(0, len(frame_size)):
 parsed_data = open("/root/parsed_data.txt", "w")
 parsed_data.write("Framesize, \tPackets/s, \tMbits/s \n")
 
-for i in range(0, len(f)-1):
+for i in range(0, len(f)):
 	parsed_data.write(str(f[i]) + ',\t' + str(p[i]) + ',\t' + str(m[i]) + '\n')
 
 parsed_data.close()
