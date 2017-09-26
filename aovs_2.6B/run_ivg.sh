@@ -87,11 +87,9 @@ else # else $TMUX is not empty, start test.
         echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
         echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
         echo "4) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
-        echo "5) Test case 5 (Ixia Tx & Rx - VM L2FWD SR-IOV)"
         echo "6) Test case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
         echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO VXLAN)"
         echo "8) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
-        echo "9) Test Case 9 (Ixia Tx & Rx - VM L2FWD XVIO)"
         echo "r) Reboot host machines"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
@@ -300,6 +298,7 @@ else # else $TMUX is not empty, start test.
             #CPU meas start
             echo -e "${GREEN}* Starting CPU measurement${NC}"
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_2
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_2
             
 
             echo -e "${GREEN}* Running test case 2 - SRIOV DPDK-pktgen${NC}"
@@ -324,6 +323,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.csv $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.html $script_dir
             sleep 2
 
             
@@ -423,8 +423,8 @@ else # else $TMUX is not empty, start test.
              #CPU meas start
             echo -e "${GREEN}* Starting CPU measurement${NC}"
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_3
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_3
             
-
             echo -e "${GREEN}* Running test case 3 - SRIOV VXLAN DPDK-pktgen${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
@@ -448,6 +448,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_3.csv $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_3.html $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
@@ -555,8 +556,8 @@ else # else $TMUX is not empty, start test.
              #CPU meas start
             echo -e "${GREEN}* Starting CPU measurement${NC}"
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_6
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_6
             
-
             echo -e "${GREEN}* Running test case 6 - XVIO DPDK-pktgen${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
@@ -579,6 +580,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_6.csv $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_6.html $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
@@ -676,6 +678,7 @@ else # else $TMUX is not empty, start test.
              #CPU meas start
             echo -e "${GREEN}* Starting CPU measurement${NC}"
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_7
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_7
             
 
             echo -e "${GREEN}* Running test case 7 - XVIO VXLAN DPDK-pktgen${NC}"
@@ -700,6 +703,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_7.csv $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_7.html $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
