@@ -295,7 +295,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
-            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
             
             echo -e "${GREEN}* Running test case 2 - SRIOV DPDK-pktgen${NC}"
             sleep 5
@@ -403,7 +403,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
-            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh y" C-m
             
             sleep 5
             echo -e "${GREEN}* Running test case 3 - XVIO DPDK-pktgen${NC}"
@@ -527,7 +527,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
-            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
             sleep 5
             echo -e "${GREEN}Running Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)${NC}"
             
@@ -638,7 +638,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
-            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh y" C-m
             sleep 5
             echo -e "${GREEN}* Running test case 7 - VXIO VXLAN${NC}"
             
