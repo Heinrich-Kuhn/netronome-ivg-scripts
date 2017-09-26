@@ -69,6 +69,7 @@ else # else $TMUX is not empty, start test.
         tmux split-window -h -t 0
         tmux split-window -v -t 0
         tmux split-window -v -t 1
+        DUT_CONNECT=1
 
     while :; do
         tmux select-pane -t 0
@@ -109,6 +110,7 @@ else # else $TMUX is not empty, start test.
             
             tmux send-keys -t 2 "mkdir -p IVG_folder" C-m
             tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
+            DUT_CONNECT=1
             ;;
 
         b)  echo "b) Install/Re-install Agilio-OVS"
@@ -183,6 +185,12 @@ else # else $TMUX is not empty, start test.
             ;;
         
         1)  echo "1) Test Case 1 (Simple ping between hosts)"
+            
+            if [ $DUT_CONNECT == 0 ]; then
+                echo "Please connect to DUT's first"
+                sleep 5
+                continue
+            fi
             
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -344,6 +352,7 @@ else # else $TMUX is not empty, start test.
             
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
+            
             sleep 5
             echo "Running test case 3 - XVIO DPDK-pktgen"
             wait_text 3 "root@" > /dev/null
