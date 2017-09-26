@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$VM_NAME=$1
+VM_NAME=$1
 
 ip=$(virsh net-dhcp-leases default | awk -v var="$VM_NAME" '$6 == var {print $5}' | cut -d"/" -f1)
 
