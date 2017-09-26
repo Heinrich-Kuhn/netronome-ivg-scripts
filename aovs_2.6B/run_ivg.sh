@@ -490,7 +490,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
-            echo "${GREEN}* Creating test VM from backing image${NC}"
+            echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
 
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_6_xvio_uni root@$IP_DUT1:/root/IVG_folder/
@@ -529,7 +529,7 @@ else # else $TMUX is not empty, start test.
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
             sleep 5
-            echo -e "${GREEN}Running Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)${NC}"
+            echo -e "${GREEN}* Running Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)${NC}"
             
             #Wait for test to finish
             wait_text 3 "Test run complete" > /dev/null
