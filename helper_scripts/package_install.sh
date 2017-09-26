@@ -92,9 +92,9 @@ if [[ $? -eq 0 ]]; then
   tk-devel texinfo dkms zip unzip pkgconfig wget patch minicom libusb \
   libusb-devel psmisc libnl3-devel libftdi pciutils \
   zeromq3 zeromq3-devel protobuf-c-compiler protobuf-compiler protobuf-python \
-  protobuf-c-devel python-six numactl-libs python-ethtool kvm qemu-kvm \
-  python-virtinst libvirt libvirt-python virt-manager libguestfs-tools \
-  cloud-utils virt-install lvm2 wget git net-tools centos-release-qemu-ev.noarch \
+  protobuf-c-devel python-six numactl-libs python-ethtool \
+  python-virtinst virt-manager libguestfs-tools \
+  cloud-utils lvm2 wget git net-tools centos-release-qemu-ev.noarch \
   qemu-kvm-ev libvirt libvirt-python libguestfs-tools virt-install tmux sysstat aha htop
   
   #Disable firewall for vxlan tunnels  
