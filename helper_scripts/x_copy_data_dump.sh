@@ -1,7 +1,9 @@
 #!/bin/bash
 
-ip=$(arp -an | grep $(virsh dumpxml $1 | awk -F\' '/mac address/ {print $2}')| egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}')
-echo test
+$VM_NAME=$1
+
+ip=$(virsh net-dhcp-leases default | awk -v var="$VM_NAME" '$6 == var {print $5}' | cut -d"/" -f1)
+
 scp root@$ip:/root/capture.txt /root/IVG_folder/
 scp root@$ip:/root/parsed_data.txt /root/IVG_folder/
 
