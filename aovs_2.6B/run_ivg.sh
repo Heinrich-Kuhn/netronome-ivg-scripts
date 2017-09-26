@@ -239,7 +239,7 @@ else # else $TMUX is not empty, start test.
         2)  echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
             
             if [ $DUT_CONNECT == 0 ]; then
-                echo "Please connect to DUT's first"
+                echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
@@ -346,7 +346,7 @@ else # else $TMUX is not empty, start test.
         3)  echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
             
             if [ $DUT_CONNECT == 0 ]; then
-                echo "Please connect to DUT's first"
+                echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
@@ -362,11 +362,11 @@ else # else $TMUX is not empty, start test.
             DST_IP="10.10.10.2"
             SRC_IP="10.10.10.1"
 
-            echo "VM's are called $VM_BASE_NAME"
+            echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
-            echo "Creating test VM from backing image"
+            echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
 
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_3_sriov_vxlan_uni root@$IP_DUT1:/root/IVG_folder/
@@ -375,6 +375,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./IVG_folder/test_case_3_sriov_vxlan_uni/1_port/setup_test_case_3.sh $VM_BASE_NAME $VM_CPUS $DST_IP $SRC_IP" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_3_sriov_vxlan_uni/1_port/setup_test_case_3.sh $VM_BASE_NAME $VM_CPUS $SRC_IP $DST_IP" C-m
             
+            echo -e "${GREEN}* Setting up test case 3${NC}"
             wait_text ALL "DONE(setup_test_case_3.sh)"
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
@@ -405,24 +406,44 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
             
             sleep 5
-            echo "Running test case 3 - XVIO DPDK-pktgen"
-            wait_text 3 "root@" > /dev/null
+            echo -e "${GREEN}* Running test case 3 - XVIO DPDK-pktgen${NC}"
+            sleep 5
+            
+            #Wait for test to finish
+            wait_text 3 "Test run complete" > /dev/null
+
+            #Run data parser
+            tmux send-keys -t 3 "./parse_and_plot.py" C-m
+            wait_text 3 "Data parse complete!" > /dev/null
 
             tmux send-keys -t 2 "exit" C-m
             tmux send-keys -t 3 "exit" C-m
             
-            echo "copy data..."
+            echo -e "${GREEN}* Copying data...${NC}"
             sleep 1
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
             
+            
             sleep 2
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             
             
+            if [[ ! -e "parsed_data.txt" ]]; then
+               mv parsed_data.txt SRIOV_vxlan_test_run_parsed-0.txt
+            else
+            num=1
+            while [[ -e "SRIOV_vxlan_test_run_parsed-$num.txt" ]]; do
+              (( num++ ))
+            done
+            mv parsed_data.txt "SRIOV_vxlan_test_run_parsed-$num.txt" 
+            fi
+
+
             if [[ ! -e "capture.txt" ]]; then
                mv capture.txt SRIOV_vxlan_test_run-0.txt
             else
@@ -450,7 +471,7 @@ else # else $TMUX is not empty, start test.
          6)  echo "6) Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
             
             if [ $DUT_CONNECT == 0 ]; then
-                echo "Please connect to DUT's first"
+                echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
@@ -465,11 +486,11 @@ else # else $TMUX is not empty, start test.
             VM_CPUS=4
             XVIO_CPUS=2
             
-            echo "VM's are called $VM_BASE_NAME"
+            echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
-            echo "Creating test VM from backing image"
+            echo "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
 
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_6_xvio_uni root@$IP_DUT1:/root/IVG_folder/
@@ -478,6 +499,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS" C-m
             
+            echo -e "${GREEN}* Setting up test case 6${NC}"
             wait_text ALL "DONE(setup_test_case_6.sh)"
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
@@ -507,24 +529,41 @@ else # else $TMUX is not empty, start test.
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
             sleep 5
-            echo "Running Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
-            wait_text 3 "root@" > /dev/null
+            echo -e "${GREEN}Running Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)${NC}"
+            
+            #Wait for test to finish
+            wait_text 3 "Test run complete" > /dev/null
 
+            #Run data parser
+            tmux send-keys -t 3 "./parse_and_plot.py" C-m
+            wait_text 3 "Data parse complete!" > /dev/null
+            
             tmux send-keys -t 2 "exit" C-m
             tmux send-keys -t 3 "exit" C-m
             
-            echo "copy data..."
+            echo -e "${GREEN}* Copying data...${NC}"
             sleep 1
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
             
             sleep 2
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             
             
+            if [[ ! -e "parsed_data.txt" ]]; then
+               mv parsed_data.txt XVIO_test_run_parsed-0.txt
+            else
+            num=1
+            while [[ -e "XVIO_test_run_parsed-$num.txt" ]]; do
+              (( num++ ))
+            done
+            mv parsed_data.txt "XVIO_test_run_parsed-$num.txt" 
+            fi
+
             if [[ ! -e "capture.txt" ]]; then
                mv capture.txt XVIO_test_run-0.txt
             else
@@ -541,7 +580,7 @@ else # else $TMUX is not empty, start test.
         7)  echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO - VXLAN)"
              
             if [ $DUT_CONNECT == 0 ]; then
-                echo "Please connect to DUT's first"
+                echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
@@ -558,11 +597,11 @@ else # else $TMUX is not empty, start test.
             DST_IP="10.10.10.2"
             SRC_IP="10.10.10.1"
 
-            echo "VM's are called $VM_BASE_NAME"
+            echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
-            echo "Creating test VM from backing image"
+            echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
 
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_7_xvio_vxlan_uni root@$IP_DUT1:/root/IVG_folder/
@@ -571,6 +610,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./IVG_folder/test_case_7_xvio_vxlan_uni/1_port/setup_test_case_7.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS $DST_IP $SRC_IP" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_7_xvio_vxlan_uni/1_port/setup_test_case_7.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS $SRC_IP $DST_IP" C-m
             
+            echo -e "${GREEN}* Setting up test case 7${NC}"
             wait_text ALL "DONE(setup_test_case_7.sh)"
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
@@ -600,24 +640,41 @@ else # else $TMUX is not empty, start test.
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh" C-m
             sleep 5
-            echo "Running test case 7 - VXIO VXLAN"
-            wait_text ALL "root@" > /dev/null
+            echo -e "${GREEN}* Running test case 7 - VXIO VXLAN${NC}"
+            
+            #Wait for test to finish
+            wait_text 3 "Test run complete" > /dev/null
 
+            #Run data parser
+            tmux send-keys -t 3 "./parse_and_plot.py" C-m
+            wait_text 3 "Data parse complete!" > /dev/null
+            
             tmux send-keys -t 2 "exit" C-m
             tmux send-keys -t 3 "exit" C-m
             
-            echo "copy data..."
+            echo -e "${GREEN}* Copying data...${NC}"
             sleep 1
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
             
             sleep 2
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             
             
+            if [[ ! -e "parsed_data.txt" ]]; then
+               mv parsed_data.txt XVIO_vxlan_test_run_parsed-0.txt
+            else
+            num=1
+            while [[ -e "XVIO_vxlan_test_run_parsed-$num.txt" ]]; do
+              (( num++ ))
+            done
+            mv parsed_data.txt "XVIO_vxlan_test_run_parsed-$num.txt" 
+            fi
+
             if [[ ! -e "capture.txt" ]]; then
                mv capture.txt XVIO_vxlan_test_run-0.txt
             else
