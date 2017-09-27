@@ -33,8 +33,8 @@ ovs-vsctl add-br $BRIDGE_BOND
 
 #Add PF to br0
 ovs-vsctl add-port $BRIDGE_BOND $INTERFACE -- set interface $INTERFACE ofport_request=1
-ovs-vsctl add-port $BRIDGE_BOND patch-bond-to-br -- set interface patch-bond-to-br type=patch options:peer=patch-br-to-bond
-ovs-vsctl add-port $BRIDGE patch-br-to-bond -- set interface patch-br-to-bond type=patch options:peer=patch-bond-to-br
+#ovs-vsctl add-port $BRIDGE_BOND patch-bond-to-br -- set interface patch-bond-to-br type=patch options:peer=patch-br-to-bond
+#ovs-vsctl add-port $BRIDGE patch-br-to-bond -- set interface patch-br-to-bond type=patch options:peer=patch-bond-to-br
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE
@@ -43,7 +43,7 @@ ovs-ofctl dump-flows $BRIDGE
 ovs-ofctl dump-flows $BRIDGE_BOND
 
 #Delete patch
-ovs-vsctl del-port patch-bond-to-br
+#ovs-vsctl del-port patch-bond-to-br
 
 ifconfig $BRIDGE_BOND $BONDBR_SRC_IP
 

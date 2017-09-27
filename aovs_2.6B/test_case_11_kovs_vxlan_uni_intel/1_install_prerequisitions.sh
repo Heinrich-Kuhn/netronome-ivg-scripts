@@ -36,20 +36,20 @@ if [[ $? -eq 0 ]]; then
   yum -y install epel-release
   yum -y install make autoconf automake libtool gcc gcc-c++ libpcap-devel \
   readline-devel jansson-devel libevent libevent-devel libtool openssl-devel \
-  bison flex gawk hwloc gettext texinfo kernel-devel-$(uname -r)  kernel-headers-$(uname -r) rpm-build \
+  bison flex gawk hwloc gettext texinfo rpm-build \
   redhat-rpm-config graphviz python-devel python python-devel tcl-devel \
   tk-devel texinfo dkms zip unzip pkgconfig wget patch minicom libusb \
   libusb-devel psmisc libnl3-devel libftdi pciutils \
   zeromq3 zeromq3-devel protobuf-c-compiler protobuf-compiler protobuf-python \
-  protobuf-c-devel python-six numactl-libs python-ethtool 
+  protobuf-c-devel python-six numactl-libs python-ethtool net-tools
   # MoonGen
-  yum -y install cmake
+  #yum -y install cmake
   # Framework tools
   yum -y install python python-dev python-pip bc sysstat htop
   # guestfish
   yum -y install libguestfs-tools
   # ovs
-  yum -y install libssl-dev iproute tcpdump linux-headers-$(uname -r)
+  yum -y install libssl-dev iproute tcpdump
   # Cloud config
   yum -y cloud-image-utils
 fi
