@@ -4,7 +4,7 @@
 script_dir="$(dirname $(readlink -f $0))"
 
 #Check and uninstall KOVS
-cd /usr/local/src/kovs
+cd /usr/local/src/kovs/ovs/
 make uninstall
 
 cd
