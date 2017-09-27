@@ -23,6 +23,8 @@ else
    cd kernel...
    rpm -i *.rpm
 
+   echo "New kernel has been installed - Please reboot machine"
+   exit 1
 fi 
 fi
 
