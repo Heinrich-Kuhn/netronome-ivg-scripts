@@ -23,8 +23,7 @@ else
    cd kernel...
    rpm -i *.rpm
 
-fi
-  exit 1
+fi 
 fi
 
 script_dir="$(dirname $(readlink -f $0))"
