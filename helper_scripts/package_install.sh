@@ -1,6 +1,32 @@
 #!/bin/bash
 #package_install.sh
 
+#check kernel
+
+kernel_test=$(setpci -d 19ee:4000 0xFFC.L)
+
+if [ $kernel_test == "ffffffff" ]; then
+  echo "Kernel is valid"
+else
+  echo "Kernel is invalid"
+  echo "Locating kernel installation files.."
+  cd /root/
+  ls kernelblablabla* 2>/dev/null
+
+if [ $? == 2 ]; then
+   echo "Unable to find patched kernel.tar.gz file in /root/"
+   echo -e "Please do the following \n 1) Download the required kernel archive from support.netronome.com \n 2) Place archive in /root/ and \n 3) Rerun this script"
+   exit 1
+else
+   echo "Installing new kernel.."
+   tar zxvf kernelblabla.tar.gz
+   cd kernel...
+   rpm -i *.rpm
+
+fi
+  exit 1
+fi
+
 script_dir="$(dirname $(readlink -f $0))"
 
 #Check and uninstall KOVS
