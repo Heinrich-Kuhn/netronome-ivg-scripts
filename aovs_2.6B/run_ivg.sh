@@ -161,6 +161,9 @@ else # else $TMUX is not empty, start test.
                
                wait_text 2 "root@" > /dev/null
                wait_text 3 "root@" > /dev/null
+
+               echo -e "${GREEN}Please reboot DUT's using the 'r' option${NC}"
+               sleep 10
                 
 
             fi

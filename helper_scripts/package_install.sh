@@ -113,6 +113,11 @@ if [[ $? -eq 0 ]]; then
 
   yum -y install centos-release-qemu-ev.noarch qemu-kvm-ev libvirt libvirt-python virt-install
 
+  #aha install
+  git clone https://github.com/theZiz/aha
+  cd aha
+  make install
+
 ls /root/agilio-ovs-2.6.B-r* 2>/dev/null
 if [ $? == 2 ]; then
    echo "Could not find Agilio-OVS .tar.gz file in root directory"
