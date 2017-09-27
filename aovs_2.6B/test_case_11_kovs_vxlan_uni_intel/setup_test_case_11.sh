@@ -1,10 +1,10 @@
 #!/bin/bash
 
 VM_NAME=$1
-INTERFACE1=$2
-INTERFACE2=$3
-BONDBR_DEST_IP=$4
-BONDBR_SRC_IP=$5
+INTERFACE1=a #So iets
+INTERFACE2=b
+BONDBR_DEST_IP=$2
+BONDBR_SRC_IP=$3
 
 script_dir="$(dirname $(readlink -f $0))"
 
@@ -19,7 +19,7 @@ exit -1
 fi
 
 $script_dir/4_configure_bridge.sh $BONDBR_DEST_IP $BONDBR_SRC_IP
-$script_dir/5_add_bridge_interface.sh $VM_NAME $INTERFACE1
+$script_dir/5_add_bridge_interface.sh $VM_NAME $INTERFACE1 
 $script_dir/5_add_bridge_interface.sh $VM_NAME $INTERFACE2
 $script_dir/6_fix_apparmor.sh
 
