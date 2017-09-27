@@ -117,6 +117,7 @@ if [[ $? -eq 0 ]]; then
   git clone https://github.com/theZiz/aha
   cd aha
   make install
+  cd
 
 ls /root/agilio-ovs-2.6.B-r* 2>/dev/null
 if [ $? == 2 ]; then
