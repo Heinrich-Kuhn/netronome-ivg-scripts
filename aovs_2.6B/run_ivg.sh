@@ -861,7 +861,7 @@ else # else $TMUX is not empty, start test.
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_11
             
 
-            echo -e "${GREEN}* Running test case 1 - DPDK-Pktgen KOVS Intel XL710${NC}"
+            echo -e "${GREEN}* Running test case 11 - DPDK-Pktgen KOVS Intel XL710${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
             #CPU meas end
@@ -923,13 +923,19 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
+
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT2:/root/IVG_folder/
+
             tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_install_11.sh" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_install_11.sh" C-m
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/configure_grub_kovs.sh" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/configure_grub_kovs.sh" C-m
 
-            echo -e "${GREEN}* Setting up test case 11${NC}"
+            echo -e "${GREEN}* Installing KOVS${NC}"
 
             wait_text ALL "DONE(setup_test_case_install_11.sh)"
 
