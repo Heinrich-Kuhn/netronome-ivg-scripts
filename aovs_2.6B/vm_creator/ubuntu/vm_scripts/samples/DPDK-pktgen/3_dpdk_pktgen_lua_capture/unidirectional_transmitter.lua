@@ -18,7 +18,7 @@ local pkt_sizes    = { 64, 128, 256, 512, 1024, 1280, 1518 };
 
 -- Time in seconds to transmit for
 local duration    = 10000;
-local confirmDuration = 60000;
+local confirmDuration = 20000;
 local pauseTime   = 5000;
 
 local initialRate = 1 ;
