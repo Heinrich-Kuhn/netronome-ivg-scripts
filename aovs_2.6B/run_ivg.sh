@@ -910,7 +910,7 @@ else # else $TMUX is not empty, start test.
             done
             mv capture.txt "KOVS_test_run-$num.txt" 
             fi
-
+            ;;
 
         k)  echo "k) Setup test case 11"
 
