@@ -91,6 +91,7 @@ else # else $TMUX is not empty, start test.
         echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO VXLAN)"
         echo "8) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
         echo "11) Test Case 11 (DPDK-pktgen VM-Vm uni-directional KOVS Intel XL710)"
+        echo "k) Setup test case 11"
         echo "r) Reboot host machines"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
@@ -820,7 +821,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_11.sh $VM_BASE_NAME $DST_IP $SRC_IP" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case__11.sh $VM_BASE_NAME $DST_IP $SRC_IP" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_11.sh $VM_BASE_NAME $SRC_IP $DST_IP" C-m
             
             echo -e "${GREEN}* Setting up test case 11${NC}"
@@ -909,6 +910,25 @@ else # else $TMUX is not empty, start test.
             done
             mv capture.txt "KOVS_test_run-$num.txt" 
             fi
+
+
+        k)  echo "k) Setup test case 11"
+
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
+
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
+            tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_install_11.sh" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_install_11.sh" C-m
+
+            echo -e "${GREEN}* Setting up test case 11${NC}"
+
+            wait_text ALL "DONE(setup_test_case_install_11.sh)"
 
 
             ;;
