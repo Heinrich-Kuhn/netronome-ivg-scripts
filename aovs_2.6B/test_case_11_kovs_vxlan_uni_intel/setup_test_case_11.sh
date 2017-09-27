@@ -11,7 +11,7 @@ script_dir="$(dirname $(readlink -f $0))"
 $script_dir/0_uninstall_aovs.sh
 $script_dir/1_install_prerequisitions.sh
 $script_dir/2_install_kovs.sh
-$script_dir/3_install_corenic.sh
+$script_dir/3_install_intel.sh
 
 if [ $? == 1 ]; then 
 echo "Could not install CoreNIC"
