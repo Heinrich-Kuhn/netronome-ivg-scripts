@@ -3,6 +3,7 @@
 PCIA="$(ethtool -i nfp_v0.1 | grep bus | cut -d ' ' -f 5)"
 
 # Bind VF using nfp
+IP=$1
 driver=nfp
 
 DPDK_DEVBIND=$(find /opt/netronome -iname dpdk-devbind.py | head -1)
@@ -22,8 +23,6 @@ $DPDK_DEVBIND --bind $driver $PCIB
 
 echo $DPDK_DEVBIND --status
 $DPDK_DEVBIND --status
-
-exit 0
 
 #Get netdev name
 ETH=$($DPDK_DEVBIND --status | grep $PCIA | cut -d ' ' -f 4 | cut -d '=' -f 2)
