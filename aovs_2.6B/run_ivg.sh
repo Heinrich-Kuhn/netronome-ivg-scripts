@@ -148,14 +148,14 @@ else # else $TMUX is not empty, start test.
                scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT1:/root/
                scp -i ~/.ssh/netronome_key $LATEST_AOVS root@$IP_DUT2:/root/
 
-               tmux send-keys -t 2 "./IVG_folder/helper_scripts/configure_grub.sh" C-m
-               tmux send-keys -t 3 "./IVG_folder/helper_scripts/configure_grub.sh" C-m
+               tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/configure_grub.sh" C-m
+               tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/configure_grub.sh" C-m
     
                wait_text 2 "Grub updated" > /dev/null
                wait_text 3 "Grub updated" > /dev/null
 
-               tmux send-keys -t 2 "./IVG_folder/helper_scripts/package_install.sh" C-m
-               tmux send-keys -t 3 "./IVG_folder/helper_scripts/package_install.sh" C-m
+               tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/package_install.sh" C-m
+               tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/package_install.sh" C-m
 
                echo -e "${GREEN}Installing Agilio-OVS on DUT's, please wait...${NC}"
                
