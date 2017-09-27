@@ -1,6 +1,7 @@
 #!/bin/bash
 D_BUS="01"
-D_SLOT=$2
+D_SLOT_1="a"
+D_SLOT_2="b"
 D_FUNCTION="0"
 VM_NAME=$1
 BRIDGE="br-fo"
@@ -41,9 +42,21 @@ cat > /tmp/interface << EOL
 <interface type='bridge'>
     <source bridge='$BRIDGE'/><virtualport type='openvswitch'/>
     <model type='virtio'/>
-    <address type='pci' domain='0x0000' bus='0x${D_BUS}' slot='0x${D_SLOT}' function='0x${D_FUNCTION}'/>
+    <address type='pci' domain='0x0000' bus='0x${D_BUS}' slot='0x${D_SLOT_1}' function='0x${D_FUNCTION}'/>
 </interface>
 EOL
+
+virsh attach-device $VM_NAME /tmp/interface --config
+sleep 2
+
+cat > /tmp/interface << EOL
+<interface type='bridge'>
+    <source bridge='$BRIDGE'/><virtualport type='openvswitch'/>
+    <model type='virtio'/>
+    <address type='pci' domain='0x0000' bus='0x${D_BUS}' slot='0x${D_SLOT_2}' function='0x${D_FUNCTION}'/>
+</interface>
+EOL
+
 
 virsh attach-device $VM_NAME /tmp/interface --config
 

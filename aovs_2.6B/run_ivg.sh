@@ -90,6 +90,7 @@ else # else $TMUX is not empty, start test.
         echo "6) Test case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
         echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO VXLAN)"
         echo "8) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
+        echo "11) Test Case 11 (DPDK-pktgen VM-Vm uni-directional KOVS Intel XL710)"
         echo "r) Reboot host machines"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
@@ -782,6 +783,130 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "cd DPDK-pktgen" C-m
             tmux send-keys -t 2 "./run-dpdk-pktgen-bi-directional.sh" C-m
+
+            ;;
+
+
+        11)  echo "11) Test Case 11 (DPDK-pktgen VM-Vm uni-directional KOVS Intel XL710)"
+
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
+
+            DST_IP="10.10.10.2"
+            SRC_IP="10.10.10.1"
+
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
+            #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
+            #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
+
+            VM_BASE_NAME=netronome-kovs-intel-vm
+            VM_CPUS=4
+            
+            echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
+            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            
+            echo -e "${GREEN}* Creating test VM from backing image${NC}"
+            wait_text ALL "VM has been created!"
+
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT2:/root/IVG_folder/
+
+            tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_11.sh $VM_BASE_NAME $DST_IP $SRC_IP" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_11.sh $VM_BASE_NAME $SRC_IP $DST_IP" C-m
+            
+            echo -e "${GREEN}* Setting up test case 11${NC}"
+
+            wait_text ALL "DONE(setup_test_case_11.sh)"
+
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
+        
+            #Pause tmux until VM boots up 
+            wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
+            
+            sleep 1
+            tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
+            tmux send-keys -t 3 "cd vm_scripts/samples/DPDK-pktgen" C-m
+
+            tmux send-keys -t 2 "./1_configure_hugepages.sh" C-m
+            tmux send-keys -t 3 "./1_configure_hugepages.sh" C-m
+
+            sleep 1
+
+            tmux send-keys -t 2 "./2_auto_bind_igb_uio.sh" C-m
+            tmux send-keys -t 3 "./2_auto_bind_igb_uio.sh" C-m
+
+            sleep 5
+
+            tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
+            tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+            tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
+            
+            sleep 5
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh y" C-m
+            
+            #CPU meas start
+            echo -e "${GREEN}* Starting CPU measurement${NC}"
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_11
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_11
+            
+
+            echo -e "${GREEN}* Running test case 1 - DPDK-Pktgen KOVS Intel XL710${NC}"
+            sleep 5
+            wait_text 3 "Test run complete" > /dev/null
+            #CPU meas end
+            echo -e "${GREEN}* Stopping CPU measurement${NC}"
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_2
+            
+            
+            tmux send-keys -t 3 "./parse_and_plot.py" C-m
+            wait_text 3 "Data parse complete!" > /dev/null
+            sleep 1
+            tmux send-keys -t 2 "exit" C-m
+            tmux send-keys -t 3 "exit" C-m
+            
+            echo -e "${GREEN}* Copying data...${NC}"
+            sleep 1
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
+            
+            sleep 2
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_11.csv $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_11.html $script_dir
+            sleep 2
+
+            
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+            
+            
+             if [[ ! -e "parsed_data.txt" ]]; then
+               mv parsed_data.txt KOVS_test_run_parsed-0.txt
+            else
+            num=1
+            while [[ -e "KOVS_test_run_parsed-$num.txt" ]]; do
+              (( num++ ))
+            done
+            mv parsed_data.txt "KOVS_test_run_parsed-$num.txt" 
+            fi
+
+            if [[ ! -e "capture.txt" ]]; then
+               mv capture.txt KOVS_test_run-0.txt
+            else
+            num=1
+            while [[ -e "KOVS_test_run-$num.txt" ]]; do
+              (( num++ ))
+            done
+            mv capture.txt "KOVS_test_run-$num.txt" 
+            fi
+
 
             ;;
 

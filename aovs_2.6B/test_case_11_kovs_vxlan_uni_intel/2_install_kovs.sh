@@ -102,3 +102,5 @@ else
     ln -s /usr/local/share/openvswitch/scripts/ovs-lib /usr/local/bin/ovs-lib
     ovs-ctl start
 fi
+
+exit 0

@@ -6,7 +6,7 @@ package.path = package.path ..";?.lua;test/?.lua;app/?.lua;../?.lua"
 require "Pktgen";
 
 --define packet sizes to test
-local pkt_sizes    = { 64, 128, 256, 512, 1024, 1280, 1518 };
+local pkt_sizes    = { 64, 128, 256, 512, 1024, 1280, 1450 };
 --local pkt_sizes = {};
 --for i=64,127,4 do ; table.insert(pkt_sizes, i); end
 --for i=128,255,8 do ; table.insert(pkt_sizes, i); end

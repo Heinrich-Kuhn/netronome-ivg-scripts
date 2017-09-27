@@ -95,7 +95,7 @@ if [[ $? -eq 0 ]]; then
   protobuf-c-devel python-six numactl-libs python-ethtool \
   python-virtinst virt-manager libguestfs-tools \
   cloud-utils lvm2 wget git net-tools centos-release-qemu-ev.noarch \
-  qemu-kvm-ev libvirt libvirt-python libguestfs-tools virt-install tmux sysstat aha htop
+  qemu-kvm-ev libvirt libvirt-python virt-install tmux sysstat aha htop
   
   #Disable firewall for vxlan tunnels  
   systemctl disable firewalld.service
@@ -104,6 +104,7 @@ if [[ $? -eq 0 ]]; then
   #Disable NetworkManager
   systemctl disable NetworkManager.service
   systemctl stop NetworkManager.service
+  service libvirtd restart
 
   #SELINUX config
   setenforce 0
