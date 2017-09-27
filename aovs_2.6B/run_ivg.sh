@@ -821,7 +821,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case__11.sh $VM_BASE_NAME $DST_IP $SRC_IP" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_11.sh $VM_BASE_NAME $DST_IP $SRC_IP" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_11.sh $VM_BASE_NAME $SRC_IP $DST_IP" C-m
             
             echo -e "${GREEN}* Setting up test case 11${NC}"
@@ -866,7 +866,7 @@ else # else $TMUX is not empty, start test.
             wait_text 3 "Test run complete" > /dev/null
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
-            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_2
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_11
             
             
             tmux send-keys -t 3 "./parse_and_plot.py" C-m
@@ -926,9 +926,14 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_install_11.sh" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_install_11.sh" C-m
 
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/configure_grub_kovs.sh" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/configure_grub_kovs.sh" C-m
+
             echo -e "${GREEN}* Setting up test case 11${NC}"
 
             wait_text ALL "DONE(setup_test_case_install_11.sh)"
+
+            echo -e "${GREEN}Grub has been configured. Please reboot DUT's with 'r'${NC}"
 
 
             ;;

@@ -49,12 +49,22 @@ ifconfig $BRIDGE_BOND $BONDBR_SRC_IP
 
 ovs-vsctl add-port $BRIDGE vxlan01 -- set interface vxlan01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP
 
-
 ovs-vsctl set Open_vSwitch . other_config:max-idle=300000
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
 ovs-appctl upcall/set-flow-limit 1000000
 
 ifconfig $INTERFACE up
+
+killall irqbalance
+script_dir="$(dirname $(readlink -f $0))"
+
+cd $script_dir
+tar xf i40e-2.1.26.tar.gz
+cd i40e-2.1.26/scripts
+./set_irq_affinity $INTERFACE local
+
+
+
 
 exit 0
 

@@ -3,6 +3,11 @@
 
 script_dir="$(dirname $(readlink -f $0))"
 
+#Check and uninstall KOVS
+cd /usr/local/src/kovs
+make uninstall
+
+cd
 #Checking AOVS version
 DATA_DIR=/opt/netronome/etc
 for SCRIPT in ns_sdn_revision.sh ns_sdn_version.sh ns_sdn_install_type.sh; do
