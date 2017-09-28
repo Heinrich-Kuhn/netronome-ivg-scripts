@@ -11,13 +11,13 @@ git clone https://github.com/netronome-support/IVG
 ```
 yum -y install tmux
 ```
-#### Run the TMUX script to start the guided IVG
+### Run the TMUX script to start the guided IVG
 ```
 cd /IVG/aovs2.6_B/
 ./run_ivg.sh
 ```
 
-#### The script menu
+### The script menu
 ```
 Please choose a option
 a) Connect to DUT's
@@ -37,13 +37,13 @@ x) Exit
 Enter choice:
 ```
 
-#### Execution
-##### a) Connect to DUT's 
+### Execution
+#### a) Connect to DUT's 
 
 >Select option a)  
 >Enter the two IP addresses of the test devices when prompted.  
 
-##### b) Download and install Agilio OVS
+#### b) Download and install Agilio OVS
 
 >Download the applicable file from the Netronome support site to the /root directory of the device executing the script.  
 >Select option b)  
@@ -51,13 +51,13 @@ Enter choice:
 
 >Please use option r) to reboot the devices after installing a new kernel and AOVS respectively  
 
-###### OPTIONAL
+##### OPTIONAL
 >Download the kernel packages to the /root directory of the device executing the script
 
-##### c) Create backing image 
+#### c) Create backing image 
 >Select option c) to create a backing image for the VM's that will be used in the test cases.
 
-##### Test cases
+#### Test cases
 >Execute the respective test cases. It is recommended that they be executed in order.  
 >They can also be run manually from the IVG directory.  
 >The test results will be stored on the device executing the script.  
