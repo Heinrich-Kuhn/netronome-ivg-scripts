@@ -65,7 +65,7 @@ Enter choice:
 
 >They can also be run manually from the IVG directory.  
 
->The test results will be stored on the device executing the script.  
+>The test results will be stored in /root/IVG/aovs_2.6B on the device executing the script.  
 
 ##### Test Case 11 - KOVS test
 >Before executing test case 11, run option k) to install and configure KOVS.  
