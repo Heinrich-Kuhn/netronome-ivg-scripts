@@ -40,31 +40,31 @@ Enter choice:
 #### Execution
 ##### a) Connect to DUT's 
 
-Select option a)  
-Enter the two IP addresses of the test devices when prompted.  
+>Select option a)  
+>Enter the two IP addresses of the test devices when prompted.  
 
 ##### b) Download and install Agilio OVS
 
-Download the applicable file from the Netronome support site to the /root directory of the device executing the script.  
-Select option b)  
-The srcipt will prompt the user if the incorrect kernel is loaded
+>Download the applicable file from the Netronome support site to the /root directory of the device executing the script.  
+>Select option b)  
+>The srcipt will prompt the user if the incorrect kernel is loaded
 
-Please use option r) to reboot the devices after installing a new kernel and AOVS respectively  
+>Please use option r) to reboot the devices after installing a new kernel and AOVS respectively  
 
 ###### OPTIONAL
-Download the kernel packages to the /root directory of the device executing the script
+>Download the kernel packages to the /root directory of the device executing the script
 
 ##### c) Create backing image 
-Select option c) to create a backing image for the VM's that will be used in the test cases.
+>Select option c) to create a backing image for the VM's that will be used in the test cases.
 
 ##### Test cases
-Execute the respective test cases. It is recommended that they be executed in order.  
-They can also be run manually from the IVG directory.  
-The test results will be stored on the device executing the script.  
+>Execute the respective test cases. It is recommended that they be executed in order.  
+>They can also be run manually from the IVG directory.  
+>The test results will be stored on the device executing the script.  
 
 ##### Test Case 11 - KOVS test
-Before executing test case 11, run option k) to install and configure KOVS.  
-Please use option r) to reboot the devices after installing KOVS.  
+>Before executing test case 11, run option k) to install and configure KOVS.  
+>Please use option r) to reboot the devices after installing KOVS.  
 
 
 
