@@ -8,46 +8,29 @@ function printCol {
 }
 nfp_cpulist=$(cat /sys/bus/pci/devices/$(lspci -d 19ee: | head -1 | awk '{print "0000:"$1}')/local_cpulist)
 echo "nfp_cpulist: $nfp_cpulist"
+
+
 grub_setting=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT" /etc/default/grub)
 echo "START: $grub_setting"
 
+sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT.*/c\GRUB_CMDLINE_LINUX_DEFAULT="intel_iommu=on iommu=pt intremap=on intel_idle.max_cstate=0 processor.max_cstate=0 idle=mwait intel_pstate=disable nohz_full=$nfp_cpulist rcu_nocbs=$nfp_cpulist transparent_hugepage=never"' /etc/default/grub
 
-sed '/GRUB_CMDLINE_LINUX_DEFAULT/s/.*/GRUB_CMDLINE_LINUX_DEFAULT=""/' -i /etc/default/grub
 
-check_list=( "intel_iommu=on" "iommu=pt" "intremap=on" "intel_idle.max_cstate=0" "processor.max_cstate=0" "idle=mwait" "intel_pstate=disable" "nohz_full=$nfp_cpulist" "rcu_nocbs=$nfp_cpulist" "transparent_hugepage=never")
-#pcie_asmp=off tsc=reliable 
-export modification=0
-for entry in ${check_list[@]};
-do
-  echo "$grub_setting" | grep -q $entry || { printCol 1 "$entry  - investigate host boot settings"; modification=1; }
-  grub_setting=$(echo $grub_setting | sed "s/\"$/ ${entry}\"/")
-done
-
-echo "modification: $modification"
-if [ $modification -eq 1 ]; then
-  grub_setting="GRUB_CMDLINE_LINUX_DEFAULT=\"${check_list[0]}"
-  for entry in ${check_list[@]:1};
-  do
-    grub_setting="$grub_setting $entry" 
-  done
-  grub_setting="$grub_setting\""
-  echo "new GRUB: $grub_setting"
-
-#Write to etc default grub  
-sed -i "/GRUB_CMDLINE_LINUX_DEFAULT/d" /etc/default/grub; sed "/^GRUB_CMDLINE_LINUX/a${grub_setting}" -i /etc/default/grub
+grub_setting=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT" /etc/default/grub)
+echo "NEW: $grub_setting"
   
 # Ubuntu
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
-update-grub
+  update-grub
 fi
 
 grep  ID_LIKE /etc/os-release | grep -q fedora
 if [[ $? -eq 0 ]]; then
-grub2-mkconfig -o /boot/grub2/grub.cfg
+  grub2-mkconfig -o /boot/grub2/grub.cfg
 fi
 
-fi
+
 
 echo "Grub updated"
 exit 0

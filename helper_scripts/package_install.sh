@@ -128,7 +128,7 @@ if [[ $? -eq 0 ]]; then
   python-virtinst virt-manager libguestfs-tools \
   cloud-utils lvm2 wget git net-tools centos-release-qemu-ev.noarch \
   qemu-kvm-ev libvirt libvirt-python virt-install tmux sysstat aha htop
-  numactl-devel
+  numactl-devel numactl-devel pearl
   
   #Disable firewall for vxlan tunnels  
   systemctl disable firewalld.service

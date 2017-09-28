@@ -937,7 +937,7 @@ else # else $TMUX is not empty, start test.
 
             echo -e "${GREEN}* Installing KOVS${NC}"
 
-            wait_text ALL "DONE(setup_test_case_install_11.sh)"
+            wait_text ALL "DONE(setup_test_case_11_install.sh)"
 
             echo -e "${GREEN}Grub has been configured. Please reboot DUT's with 'r'${NC}"
 

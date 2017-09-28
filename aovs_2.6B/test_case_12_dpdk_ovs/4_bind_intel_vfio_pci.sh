@@ -13,7 +13,7 @@ echo "loading driver"
 modprobe $driver
 echo "DPDK_DEVBIND: $DPDK_DEVBIND"
 echo $DPDK_DEVBIND --bind $driver $intel_pf
-$DPDK_DEVBIND --bind $driver $PCIA
+$DPDK_DEVBIND --bind $driver $intel_pf
 
 echo $DPDK_DEVBIND --status
 $DPDK_DEVBIND --status
