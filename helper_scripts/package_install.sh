@@ -11,16 +11,16 @@ else
   echo "Kernel is invalid"
   echo "Locating kernel installation files.."
   cd /root/
-  ls kernelblablabla* 2>/dev/null
+  ls AOVS_kernel*.tar.gz 2>/dev/null
 
 if [ $? == 2 ]; then
-   echo "Unable to find patched kernel.tar.gz file in /root/"
+   echo "Unable to find AOVS_kernel archive in /root/"
    echo -e "Please do the following \n 1) Download the required kernel archive from support.netronome.com \n 2) Place archive in /root/ and \n 3) Rerun this script"
    exit 1
 else
    echo "Installing new kernel.."
-   tar zxvf kernelblabla.tar.gz
-   cd kernel...
+   tar zxvf AOVS_kernel*.tar.gz
+   cd AOVS_ker*
    rpm -i *.rpm
 
    echo "New kernel has been installed - Please reboot machine"
