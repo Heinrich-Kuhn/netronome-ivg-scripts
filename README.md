@@ -52,7 +52,7 @@ Enter choice:
 >Please use option r) to reboot the devices after installing a new kernel and AOVS respectively  
 
 ##### OPTIONAL
->Download the kernel packages to the /root directory of the device executing the script
+>Download the kernel packages to the /root directory of the device executing the script and rerun option b)
 
 #### c) Create backing image 
 >Select option c) to create a backing image for the VM's that will be used in the test cases.
