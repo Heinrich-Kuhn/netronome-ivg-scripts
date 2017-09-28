@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export OVS_BASE_DIR=/root/ovs-dpdk
-export DPDK_BASE_DIR=/root/dpdk
+export OVS_BASE_DIR=/root/
+export DPDK_BASE_DIR=/root/
 export DPDK_VERSION=dpdk-16.11
 export OVS_VERSION=openvswitch-2.6.1
 export DPDK_TARGET=x86_64-native-linuxapp-gcc
