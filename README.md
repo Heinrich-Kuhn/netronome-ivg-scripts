@@ -47,7 +47,7 @@ Enter choice:
 
 >Download the applicable file from the Netronome support site to the /root directory of the device executing the script.  
 >Select option b)  
->The srcipt will prompt the user if the incorrect kernel is loaded
+>The script will prompt the user if the incorrect kernel is loaded
 
 >Please use option r) to reboot the devices after installing a new kernel and AOVS respectively  
 
