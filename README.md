@@ -9,8 +9,8 @@ git clone https://github.com/netronome-support/IVG
 ```
 ### Download AOVS packages and kernel packages from https://support.netronome.com/
 
-Download AOVS packages to /root of the device executing the script.  
-If the IVG script prompts for kernel packages, they can be downloaded form the Netronome support site.
+>Download AOVS packages to /root of the device executing the script.  
+>If the IVG script prompts for kernel packages, they can be downloaded form the Netronome support site.
 
 ### A TMUX script will help facilitate running the test cases, first make sure TMUX is installed
 ```
