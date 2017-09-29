@@ -1,15 +1,21 @@
 # Netronome Installation Verification Guide
 
-Various test cases are illustrated in this repo to demonstrate the advantage of smart NIC technology.  
+Various test cases are illustrated in this repo to demonstrate the advantage of Netronome Agilio smart NIC technology and Accelerated Agilio OVS (AOVS)
 The script can be run on one of the two devices connected back to back, or alternatively on a third device.
 
 ### To get started using this repo, first clone it:
 ```
 git clone https://github.com/netronome-support/IVG
 ```
+### Download AOVS packages and kernel packages from https://support.netronome.com/
+
+Download AOVS packages to /root of the device executing the script.  
+If the IVG script prompts for kernel packages, they can be downloaded form the Netronome support site.
+
 ### A TMUX script will help facilitate running the test cases, first make sure TMUX is installed
 ```
-yum -y install tmux
+yum -y install tmux  (CentOS)
+apt-get install tmux  (Ubuntu)
 ```
 ### Run the TMUX script to start the guided IVG
 ```
@@ -50,7 +56,7 @@ Enter choice:
 
 >Select option b)  
 
->The script will prompt the user if the incorrect kernel is loaded
+>If the hosts are running CentOS the script may prompt the user to download a compatible kernel.
 
 >Please use option r) to reboot the devices after installing a new kernel and AOVS respectively  
 
