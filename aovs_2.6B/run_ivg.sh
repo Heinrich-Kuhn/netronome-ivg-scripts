@@ -791,7 +791,7 @@ else # else $TMUX is not empty, start test.
             ;;
 
 
-        11)  echo "11) Test Case 11 (DPDK-pktgen VM-Vm uni-directional KOVS Intel XL710)"
+        10)  echo "10) Test Case 10 (DPDK-pktgen VM-Vm uni-directional KOVS Intel XL710)"
 
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -818,15 +818,15 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
 
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_10_kovs_vxlan_uni_intel root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_10_kovs_vxlan_uni_intel root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_11.sh $VM_BASE_NAME $DST_IP $SRC_IP" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_11.sh $VM_BASE_NAME $SRC_IP $DST_IP" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_10_kovs_vxlan_uni_intel/setup_test_case_10.sh $VM_BASE_NAME $DST_IP $SRC_IP" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_10_kovs_vxlan_uni_intel/setup_test_case_10.sh $VM_BASE_NAME $SRC_IP $DST_IP" C-m
             
-            echo -e "${GREEN}* Setting up test case 11${NC}"
+            echo -e "${GREEN}* Setting up test case 10${NC}"
 
-            wait_text ALL "DONE(setup_test_case_11.sh)"
+            wait_text ALL "DONE(setup_test_case_10.sh)"
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
@@ -857,16 +857,16 @@ else # else $TMUX is not empty, start test.
             
             #CPU meas start
             echo -e "${GREEN}* Starting CPU measurement${NC}"
-            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_11
-            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_11
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_10
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_10
             
 
-            echo -e "${GREEN}* Running test case 11 - DPDK-Pktgen KOVS Intel XL710${NC}"
+            echo -e "${GREEN}* Running test case 10 - DPDK-Pktgen KOVS Intel XL710${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
-            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_11
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_10
             
             
             tmux send-keys -t 3 "./parse_and_plot.py" C-m
@@ -882,8 +882,8 @@ else # else $TMUX is not empty, start test.
             sleep 2
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
-            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_11.csv $script_dir
-            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_11.html $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_10.csv $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_10.html $script_dir
             sleep 2
 
             
@@ -912,7 +912,7 @@ else # else $TMUX is not empty, start test.
             fi
             ;;
 
-        k)  echo "k) Setup test case 11"
+        k)  echo "k) Setup test case 10"
 
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -926,18 +926,18 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
 
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_10_kovs_vxlan_uni_intel root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_10_kovs_vxlan_uni_intel root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_install_11.sh" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_11_kovs_vxlan_uni_intel/setup_test_case_install_11.sh" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_10_kovs_vxlan_uni_intel/setup_test_case_install_10.sh" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_10_kovs_vxlan_uni_intel/setup_test_case_install_10.sh" C-m
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/configure_grub_kovs.sh" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/configure_grub_kovs.sh" C-m
 
             echo -e "${GREEN}* Installing KOVS${NC}"
 
-            wait_text ALL "DONE(setup_test_case_11_install.sh)"
+            wait_text ALL "DONE(setup_test_case_10_install.sh)"
 
             echo -e "${GREEN}Grub has been configured. Please reboot DUT's with 'r'${NC}"
 

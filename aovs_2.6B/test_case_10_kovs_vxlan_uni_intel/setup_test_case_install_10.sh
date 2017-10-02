@@ -18,7 +18,7 @@ echo "Could not install Intel driver"
 exit -1
 fi
 
-echo "DONE(setup_test_case_11_install.sh)"
+echo "DONE(setup_test_case_10_install.sh)"
 
 exit 0
 
