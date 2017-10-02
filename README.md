@@ -76,7 +76,9 @@ Enter choice:
 ##### Test Case 11 - KOVS test
 >Before executing test case 11, run option k) to install and configure KOVS.  
 
->Please use option r) to reboot the devices after installing KOVS.  
+>Please use option r) to reboot the devices after installing KOVS. 
+
+>Run test case 11. 
 
 
 
