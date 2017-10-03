@@ -91,7 +91,7 @@ else # else $TMUX is not empty, start test.
         echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO VXLAN)"
         echo "8) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
         echo "10) Test Case 10 (DPDK-pktgen VM-Vm uni-directional KOVS Intel XL710)"
-        echo "k) Setup test case 11"
+        echo "k) Setup test case 10"
         echo "r) Reboot host machines"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
