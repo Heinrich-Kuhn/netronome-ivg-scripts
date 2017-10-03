@@ -4,6 +4,18 @@ SESSIONNAME=IVG
 script_dir="$(dirname $(readlink -f $0))"
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 
+#Check if TMUX is installed
+
+grep ID_LIKE /etc/os-release | grep -q debian
+if [[ $? -eq 0 ]]; then
+apt-get install -y tmux
+fi
+
+grep  ID_LIKE /etc/os-release | grep -q fedora
+if [[ $? -eq 0 ]]; then
+yum -y install tmux
+fi
+
 #Some colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
