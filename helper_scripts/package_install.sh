@@ -3,7 +3,7 @@
 
 #check kernel
 
-kernel_test=$(setpci -d 19ee:4000 0xFFC.L)
+kernel_test=$(setpci -d 19ee:4000 0xFFC.L | sed '2,$d' )
 
 if [ $kernel_test == "ffffffff" ]; then
   echo "Kernel is valid"
