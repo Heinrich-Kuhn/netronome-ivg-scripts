@@ -6,15 +6,15 @@ PCIA="$(ethtool -i nfp_v0.1 | grep bus | cut -d ' ' -f 5)"
 # Bind VF using nfp
 IP=$1
 
-grep ID_LIKE /etc/os-release | grep -q debian
-if [[ $? -eq 0 ]]; then
-driver=nfp_netvf
-fi
+#grep ID_LIKE /etc/os-release | grep -q debian
+#if [[ $? -eq 0 ]]; then
+#driver=nfp_netvf
+#fi
 
-grep  ID_LIKE /etc/os-release | grep -q fedora
-if [[ $? -eq 0 ]]; then
+#grep  ID_LIKE /etc/os-release | grep -q fedora
+#if [[ $? -eq 0 ]]; then
 driver=nfp
-fi
+#fi
 
 DPDK_DEVBIND=$(find /opt/netronome -iname dpdk-devbind.py | head -1)
 if [ "$DPDK_DEVBIND" == "" ]; then
