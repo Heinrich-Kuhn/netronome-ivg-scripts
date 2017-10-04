@@ -115,6 +115,8 @@ else # else $TMUX is not empty, start test.
             read -p "Enter IP of first DUT: " IP_DUT1
             read -p "Enter IP of second DUT: " IP_DUT2
 
+            $IVG_dir/helper_scripts/copy_ssh_key.sh $IP_DUT1 $IP_DUT2
+
             scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
 
@@ -123,7 +125,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
 
             #Copy n new public key to DUT's
-            $IVG_dir/helper_scripts/copy_ssh_key.sh $IP_DUT1 $IP_DUT2
+            
             
             #SSH into DUT's
             tmux send-keys -t 2 "ssh -i ~/.ssh/netronome_key root@$IP_DUT1" C-m
