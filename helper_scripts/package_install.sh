@@ -71,7 +71,7 @@ if [[ $? -eq 0 ]]; then
   libnl-3-200 libnl-3-dev libnl-genl-3-200 libnl-genl-3-dev psmisc gawk \
   libzmq3-dev protobuf-c-compiler protobuf-compiler python-protobuf \
   libnuma1 libnuma-dev python-six python-ethtool install qemu-kvm libvirt-bin \
-  virtinst bridge-utils cpu-checker cloud-image-utils
+  virtinst bridge-utils cpu-checker cloud-image-utils numactl-devel
   # Clean-up
   apt -y autoremove
   # Fix dependencies
@@ -83,16 +83,15 @@ if [[ $? -eq 0 ]]; then
 UBUNTU_VERSION=$(lsb_release -a 2>/dev/null | grep Codename: | awk '{print $2}')
 
 #Check if any agilio .tar files are in the folder
-cd script_dir="$(dirname $(readlink -f $0))"
-ls agilio-ovs-2.6.B-r* 2>/dev/null
-
+ls /root/agilio-ovs-2.6.B-r* 2>/dev/null
 if [ $? == 2 ]; then
-   echo "Could not find Agilio-OVS .tar.gz file in folder"
-   echo "Please copy the Agilio-OVS .tar.gz file into the same folder as this script"
-   exit 1
+   echo "Could not find Agilio-OVS .tar.gz file in root directory"
+   echo "Please copy the Agilio-OVS .tar.gz file into /root/"
+   exit -1
 else
 
-   LATEST_AOVS=$(ls agilio-ovs-2.6.B-r* 2>/dev/null | grep .tar.gz | tail -n1)
+   LATEST_AOVS=$(ls /root/agilio-ovs-2.6.B-r* 2>/dev/null | grep .tar.gz | tail -n1)
+   cd /root/
    tar xf $LATEST_AOVS
    INSTALL_DIR=$(basename $LATEST_AOVS .tar.gz)
    cd $INSTALL_DIR
