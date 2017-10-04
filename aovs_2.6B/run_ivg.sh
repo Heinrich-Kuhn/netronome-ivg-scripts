@@ -118,13 +118,16 @@ else # else $TMUX is not empty, start test.
             #Copy n new public key to DUT's
             $IVG_dir/helper_scripts/copy_ssh_key.sh $IP_DUT1 $IP_DUT2
 
-            sleep 3
+            sleep 2
 
             #SSH into DUT's
             tmux send-keys -t 2 "ssh -i ~/.ssh/netronome_key root@$IP_DUT1" C-m
             tmux send-keys -t 3 "ssh -i ~/.ssh/netronome_key root@$IP_DUT2" C-m
             
-            sleep 3
+            sleep 2
+
+            tmux send-keys -t 2 "rm -r IVG_folder" C-m
+            tmux send-keys -t 3 "rm -r IVG_folder" C-m
 
             tmux send-keys -t 2 "mkdir -p IVG_folder" C-m
             tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
