@@ -117,8 +117,8 @@ else # else $TMUX is not empty, start test.
 
             $IVG_dir/helper_scripts/copy_ssh_key.sh $IP_DUT1 $IP_DUT2
 
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/helper_scripts/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/helper_scripts/
 
             #Copy VM creator script to DUT
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
@@ -196,8 +196,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "cd" C-m
 
             #Create working dir on DUT's
-            tmux send-keys -t 2 "mkdir -p IVG_folder" C-m
-            tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
+            #tmux send-keys -t 2 "mkdir -p IVG_folder" C-m
+            #tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
 
             #Copy VM creator script to DUT
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/

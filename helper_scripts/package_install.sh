@@ -71,7 +71,8 @@ if [[ $? -eq 0 ]]; then
   libnl-3-200 libnl-3-dev libnl-genl-3-200 libnl-genl-3-dev psmisc gawk \
   libzmq3-dev protobuf-c-compiler protobuf-compiler python-protobuf \
   libnuma1 libnuma-dev python-six python-ethtool install qemu-kvm libvirt-bin \
-  virtinst bridge-utils cpu-checker cloud-image-utils numactl-devel
+  virtinst bridge-utils cpu-checker cloud-image-utils numactl-devel libjansson-dev \
+  python-ethtool
   # Clean-up
   apt -y autoremove
   # Fix dependencies
