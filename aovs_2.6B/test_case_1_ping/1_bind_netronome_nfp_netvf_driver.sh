@@ -1,6 +1,5 @@
 #!/bin/bash
 
-ovs-ctl start
 
 PCIA="$(ethtool -i nfp_v0.1 | grep bus | cut -d ' ' -f 5)"
 
@@ -9,12 +8,12 @@ IP=$1
 
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
-driver=nfp
+driver=nfp_netvf
 fi
 
 grep  ID_LIKE /etc/os-release | grep -q fedora
 if [[ $? -eq 0 ]]; then
-driver=nfp_netvf
+driver=nfp
 fi
 
 DPDK_DEVBIND=$(find /opt/netronome -iname dpdk-devbind.py | head -1)
