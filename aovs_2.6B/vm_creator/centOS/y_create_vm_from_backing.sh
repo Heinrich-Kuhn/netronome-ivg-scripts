@@ -11,7 +11,7 @@ sleep 4
 /root/IVG_folder/helper_scripts/vm_shutdown_all.sh
 
 LIBVIRT_DIR=/var/lib/libvirt/images
-basefile=$LIBVIRT_DIR/ubuntu-16.04-server-cloudimg-amd64-disk1.img
+basefile=$LIBVIRT_DIR/CentOS-7-x86_64-GenericCloud-1706.qcow2
 
 #Check if VM name is passed
 if [ -z "$1" ]; then
@@ -57,7 +57,7 @@ echo "create domain"
     --debug \
     --accelerate \
     --os-type=linux \
-    --os-variant=ubuntu16.04 \
+    --os-variant=rhel7 \
     --noautoconsole \
     --noreboot \
     --import
