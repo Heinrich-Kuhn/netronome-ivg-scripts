@@ -5,7 +5,6 @@ script_dir="$(dirname $(readlink -f $0))"
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 
 #Check if TMUX is installed
-
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
 apt-get install -y tmux
@@ -21,6 +20,8 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
+
+#Pause TMUX function
 function wait_text {
     local pane="$1"
     local text="$2"
