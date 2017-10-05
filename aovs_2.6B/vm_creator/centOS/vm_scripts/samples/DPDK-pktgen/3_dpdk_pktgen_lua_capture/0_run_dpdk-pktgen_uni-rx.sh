@@ -1,20 +1,14 @@
 #!/bin/bash
 
 export DPDK_BASE_DIR=/root
-export PKTGEN=/root/pktgen-dpdk-pktgen-3.3.2
-script_dir="$(dirname $(readlink -f $0))"
+PKTGEN_VERSION=$(readlink /root/dpdk-pktgen | awk -F '/' '{print $3}')
+export PKTGEN=$DPDK_BASE_DIR/$PKTGEN_VERSION
 cd $PKTGEN
 
 CPU_COUNT=$(cat /proc/cpuinfo | grep processor | wc -l)
-
-#Check for virtIO-relay interfaces on bus 1, otherwise, it will be SR-IOV interfaces
-lspci | grep 01:
-if [ $? == 1 ]; then
-NETRONOME_VF_LIST=$(lspci -d 19ee: | awk '{print $1}')
-else
-NETRONOME_VF_LIST=$(lspci | grep 01: | awk '{print $1}')
-fi
-
+SRIOV_LIST=$(lspci -d 19ee: | awk '{print $1}')
+XVIO_LIST=$(lspci | awk '/Red Hat, Inc Virtio network device/ {print $1}' | tail -n +2)
+NETRONOME_VF_LIST="$SRIOV_LIST $XVIO_LIST"
 memory="--socket-mem 1024"
 lcores="-l 0-$((CPU_COUNT-1))"
 
@@ -34,12 +28,9 @@ for netronome_vf in ${NETRONOME_VF_LIST[@]};
 do
   echo "netronome_vf: $netronome_vf"
   mapping="${mapping}-m "
-  
-    cpu_counter=$((cpu_counter+1))
-    echo "cpu_counter: $cpu_counter"
-    mapping="${mapping}${cpu_counter}"
-    
-  mapping="${mapping}.${port_counter} "
+  cpu_counter=$((cpu_counter+1))
+  echo "cpu_counter: $cpu_counter"
+  mapping="${mapping}$cpu_counter.${port_counter} "
   port_counter=$((port_counter+1))
 done
 
@@ -48,11 +39,6 @@ echo "mapping: $mapping"
 
 #mapping="-m [1:2].0 -m [3:4].1 -m [5:6].2"
 
-/root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_receiver.lua
+/root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f unidirectional_receiver.lua
 
 reset
-
-echo "Test run complete"
-exit 0
-
-
