@@ -75,7 +75,7 @@ local function setupTraffic()
     pktgen.src_mac(tonumber(c), "start", "00:00:00:00:00:00");
     pktgen.src_mac(tonumber(c), "inc", "00:00:00:00:00:01");
     pktgen.src_mac(tonumber(c), "min", "00:00:00:00:00:00");
-    pktgen.src_mac(tonumber(c), "max", "00:00:00:00:0c:80");
+    pktgen.src_mac(tonumber(c), "max", "00:00:00:00:7d:00");
 
     -- Set destination IP
     pktgen.dst_ip(tonumber(c), "start", "10.10.10." .. tonumber(c) + 1);
