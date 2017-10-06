@@ -173,5 +173,7 @@ fi
 
 fi
 
+echo "DONE(package_install.sh)"
+
 exit 0
 

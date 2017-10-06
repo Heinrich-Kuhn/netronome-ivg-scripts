@@ -183,8 +183,7 @@ else # else $TMUX is not empty, start test.
 
                echo -e "${GREEN}Installing Agilio-OVS on DUT's, please wait...${NC}"
                
-               wait_text 2 "root@" > /dev/null
-               wait_text 3 "root@" > /dev/null
+               wait_text ALL "DONE(package_install.sh)"
 
                echo -e "${GREEN}Please reboot DUT's using the 'r' option${NC}"
                sleep 10
