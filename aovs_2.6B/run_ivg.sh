@@ -1105,7 +1105,7 @@ else # else $TMUX is not empty, start test.
 
             #Code if running from orch
 
-            ping -i 10 $IP_DUT1
+            sleep 10
 
             echo -e "${GREEN}Adding 5 min sleep while DUT's reboot${NC}"
             counter=0
