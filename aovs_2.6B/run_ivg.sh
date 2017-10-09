@@ -1102,6 +1102,34 @@ else # else $TMUX is not empty, start test.
                 echo "Rebooting DUT's"
                 tmux send-keys -t 2 "reboot" C-m
                 tmux send-keys -t 3 "reboot" C-m
+
+            #Code if running from orch
+
+            ping -i 10 $IP_DUT1
+
+            echo -e "${GREEN}Adding 5 min sleep while DUT's reboot${NC}"
+            counter=0
+            while [ $counter -lt 30 ];
+            do
+                sleep 10
+                counter=$((counter+1))
+                echo "counter: $counter"
+                ip=$IP_DUT1
+                echo "ip: $ip"
+                if [ ! -z "$ip" ]; then
+                    nc -w 2 -v $ip 22 </dev/null
+                    if [ $? -eq 0 ]; then
+                        counter=$((counter+30))
+                        echo "end"
+                    fi
+                fi
+            done
+            
+            echo -e "${GREEN} DUT's are back online. Connect to them using option 'a'${NC}"
+            sleep 5
+            DUT_CONNECT=0
+            
+
             fi
             ;;
 
