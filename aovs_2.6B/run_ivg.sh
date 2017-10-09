@@ -831,7 +831,7 @@ else # else $TMUX is not empty, start test.
             #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
             #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
 
-            VM_BASE_NAME=netronome-kovs-intel-vm
+            VM_BASE_NAME=netronome-kovs-vxlan-intel-vm
             VM_CPUS=4
             
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
@@ -961,8 +961,8 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
 
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs__uni_intel root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs__uni_intel root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_uni_intel root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_11_kovs_uni_intel root@$IP_DUT2:/root/IVG_folder/
 
             tmux send-keys -t 2 "./IVG_folder/test_case_11_kovs_uni_intel/setup_test_case_11.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/test_case_11_kovs_uni_intel/setup_test_case_11.sh $VM_BASE_NAME" C-m
@@ -996,7 +996,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
-            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh y" C-m
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
             
             #CPU meas start
             echo -e "${GREEN}* Starting CPU measurement${NC}"

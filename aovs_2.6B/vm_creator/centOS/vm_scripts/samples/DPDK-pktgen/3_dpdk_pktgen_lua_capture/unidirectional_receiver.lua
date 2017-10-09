@@ -117,13 +117,13 @@ local function captureSample(filename)
   end
 
 -- Need two or more consecutive valid samples before writing sample to file
-  if (valid_capture_counter >= 2) 
+  if (valid_capture_counter >= 0) 
   then
     writeSample(filename, time_diff, pktgen.portCount(), average_framesize, total_pkts_rx, total_mbits_rx);
   end
 
 -- Shutdown automatically after 60 seconds of inactivty
-  if (shutdown_counter > 60)
+  if (shutdown_counter > 30)
   then
     os.exit(0);
   end
