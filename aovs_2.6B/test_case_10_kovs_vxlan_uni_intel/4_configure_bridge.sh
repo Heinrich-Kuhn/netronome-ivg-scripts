@@ -63,8 +63,5 @@ tar xf i40e-2.1.26.tar.gz
 cd i40e-2.1.26/scripts
 ./set_irq_affinity $INTERFACE local
 
-
-
-
 exit 0
 
