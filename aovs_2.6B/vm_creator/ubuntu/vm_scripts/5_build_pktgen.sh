@@ -20,7 +20,7 @@ echo "Extracting.."
 tar xf $DPDK_BASE_DIR/$PKTGEN.tar.gz -C $DPDK_BASE_DIR
 
 #Change MAX_MBUFS_PER_PORT * 8 to 32 for more flows per port
-sed -i '/.*number of buffers to support per port.*/c\\tMAX_MBUFS_PER_PORT\t= (DEFAULT_TX_DESC * 32),/* number of buffers to support per port */' /root/pktgen-3.4.1/app/pktgen-constants.h
+sed -i '/.*number of buffers to support per port.*/c\\tMAX_MBUFS_PER_PORT\t= (DEFAULT_TX_DESC * 32),/* number of buffers to support per port */' /root/pktgen-*/app/pktgen-constants.h
 
 cd $DPDK_BASE_DIR/$PKTGEN
 make RTE_SDK=$DPDK_BASE_DIR/$DPDK_VERSION RTE_TARGET=$DPDK_TARGET
