@@ -64,24 +64,24 @@ function flows_config {
     
     local flows=$(cat /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt)
     
-    local skip=$((64000/flows))
+    flows=$(( $flows/1 ))
 
-    if [[ "$skip" -lt 1 ]]; then
+    if [[ "$flows" -lt 1 ]]; then
         skip=1
     fi
-    if [[ "$skip" -gt 64000 ]]; then
+    if [[ "$flows" -gt 64000 ]]; then
         skip=64000
     fi
 
-    hex_skip=$(echo "obase=16; $skip" | bc)
-    while [ ${#hex_skip} -lt 12 ]; do
-        hex_skip="0$hex_skip"
+    flows_tot=$(echo "obase=16; $flows" | bc)
+    while [ ${#flows_tot} -lt 12 ]; do
+        flows_tot="0$flows_tot"
     done
 
-    hex_skip="${hex_skip:0:2}:${hex_skip:2:2}:${hex_skip:4:2}:${hex_skip:6:2}:${hex_skip:8:2}:${hex_skip:10:2}"
+    flows_tot="${flows_tot:0:2}:${flows_tot:2:2}:${flows_tot:4:2}:${flows_tot:6:2}:${flows_tot:8:2}:${flows_tot:10:2}"
 
-    tmux send-keys -t 2 "sed -i '/.*pktgen.src_mac(tonumber(c).*inc.*/c\    pktgen.src_mac(tonumber(c), \"inc\", \"$hex_skip\");' /root/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/unidirectional_transmitter.lua" C-m
-    tmux send-keys -t 2 "sed -i '/.*pktgen.src_mac(tonumber(c).*inc.*/c\    pktgen.src_mac(tonumber(c), \"inc\", \"$hex_skip\");' /root/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/unidirectional_transmitter_vxlan.lua" C-m
+    tmux send-keys -t 2 "sed -i '/.*pktgen.src_mac(tonumber(c).*max.*/c\    pktgen.src_mac(tonumber(c), \"max\", \"$flows_tot\");' /root/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/unidirectional_transmitter.lua" C-m
+    tmux send-keys -t 2 "sed -i '/.*pktgen.src_mac(tonumber(c).*max.*/c\    pktgen.src_mac(tonumber(c), \"max\", \"$flows_tot\");' /root/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/unidirectional_transmitter_vxlan.lua" C-m
     
     return 0
 
