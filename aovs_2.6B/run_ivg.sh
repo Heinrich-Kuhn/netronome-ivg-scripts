@@ -56,6 +56,38 @@ function rsync_duts {
     return 0
 }
 
+function flows_config {
+
+    if [ ! -f /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt ]; then
+        return 0
+    fi
+    
+    local flows=$(cat /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt)
+    
+    local skip=$((64000/flows))
+
+    if [[ "$skip" -lt 1 ]]; then
+        skip=1
+    fi
+    if [[ "$skip" -gt 64000 ]]; then
+        skip=64000
+    fi
+
+    hex_skip=$(echo "obase=16; $skip" | bc)
+    while [ ${#hex_skip} -lt 12 ]; do
+        hex_skip="0$hex_skip"
+    done
+
+    hex_skip="${hex_skip:0:2}:${hex_skip:2:2}:${hex_skip:4:2}:${hex_skip:6:2}:${hex_skip:8:2}:${hex_skip:10:2}"
+
+    tmux send-keys -t 2 "sed -i '/.*pktgen.src_mac(tonumber(c).*inc.*/c\    pktgen.src_mac(tonumber(c), \"inc\", \"$hex_skip\");' /root/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/unidirectional_transmitter.lua" C-m
+    tmux send-keys -t 2 "sed -i '/.*pktgen.src_mac(tonumber(c).*inc.*/c\    pktgen.src_mac(tonumber(c), \"inc\", \"$hex_skip\");' /root/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/unidirectional_transmitter_vxlan.lua" C-m
+    
+    return 0
+
+        
+}
+
 #######################################################################
 ######################### Main function ###############################
 #######################################################################
@@ -107,6 +139,7 @@ else # else $TMUX is not empty, start test.
         echo "10) Test Case 10 (DPDK-pktgen VM-VM uni-directional KOVS VXLAN Intel XL710)"
         echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
         echo "r) Reboot host machines"        
+        echo "f) Set amount of flows"
         echo "x) Exit"
         read -p "Enter choice: " OPT
         case "$OPT" in
@@ -298,7 +331,7 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
-	    
+        
             #Pause tmux until VM boots up 
             wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
             
@@ -318,6 +351,9 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
             tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+
+            flows_config
+
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
@@ -332,6 +368,11 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Running test case 2 - SRIOV DPDK-pktgen${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
+
+
+            # Ouput flow count to text file
+            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_2
@@ -352,6 +393,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.csv $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.html $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2_flow_count.txt $script_dir
             sleep 2
 
             
@@ -359,24 +401,24 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             
             
-             if [[ ! -e "parsed_data.txt" ]]; then
-               mv parsed_data.txt SRIOV_test_run_parsed-0.txt
+            if [[ ! -e "parsed_data.txt" ]]; then
+               mv parsed_data.txt "SRIOV_test_run_parsed-0-f$flow_count.txt"
             else
-            num=1
-            while [[ -e "SRIOV_test_run_parsed-$num.txt" ]]; do
-              (( num++ ))
-            done
-            mv parsed_data.txt "SRIOV_test_run_parsed-$num.txt" 
+               num=1
+               while [[ -e "SRIOV_test_run_parsed-$num-f*.txt" ]]; do
+                  (( num++ ))
+               done
+               mv parsed_data.txt "SRIOV_test_run_parsed-$num-f$flow_count.txt" 
             fi
 
             if [[ ! -e "capture.txt" ]]; then
-               mv capture.txt SRIOV_test_run-0.txt
+               mv capture.txt "SRIOV_test_run-0-f$flow_count.txt"
             else
-            num=1
-            while [[ -e "SRIOV_test_run-$num.txt" ]]; do
-              (( num++ ))
-            done
-            mv capture.txt "SRIOV_test_run-$num.txt" 
+               num=1
+               while [[ -e "SRIOV_test_run-$num-f*.txt" ]]; do
+                  (( num++ ))
+               done
+               mv capture.txt "SRIOV_test_run-$num-f$flow_count.txt" 
             fi
             
 
@@ -439,6 +481,9 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
             tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+
+            flows_config
+
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
@@ -456,6 +501,11 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Running test case 3 - SRIOV VXLAN DPDK-pktgen${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
+
+            # Ouput flow count to text file
+            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+
+
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_3
@@ -477,6 +527,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_3.csv $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_3.html $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_3_flow_count.txt $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
@@ -484,24 +535,24 @@ else # else $TMUX is not empty, start test.
             
             
             if [[ ! -e "parsed_data.txt" ]]; then
-               mv parsed_data.txt SRIOV_vxlan_test_run_parsed-0.txt
+               mv parsed_data.txt "SRIOV_vxlan_test_run_parsed-0-f$flow_count.txt"
             else
             num=1
-            while [[ -e "SRIOV_vxlan_test_run_parsed-$num.txt" ]]; do
+            while [[ -e "SRIOV_vxlan_test_run_parsed-$num-f$flow_count.txt" ]]; do
               (( num++ ))
             done
-            mv parsed_data.txt "SRIOV_vxlan_test_run_parsed-$num.txt" 
+            mv parsed_data.txt "SRIOV_vxlan_test_run_parsed-$num-f$flow_count.txt" 
             fi
 
 
             if [[ ! -e "capture.txt" ]]; then
-               mv capture.txt SRIOV_vxlan_test_run-0.txt
+               mv capture.txt "SRIOV_vxlan_test_run-0-f$flow_count.txt"
             else
             num=1
-            while [[ -e "SRIOV_vxlan_test_run-$num.txt" ]]; do
+            while [[ -e "SRIOV_vxlan_test_run-$num-f$flow_count.txt" ]]; do
               (( num++ ))
             done
-            mv capture.txt "SRIOV_vxlan_test_run-$num.txt" 
+            mv capture.txt "SRIOV_vxlan_test_run-$num-f$flow_count.txt" 
             fi 
             
             ;;
@@ -574,6 +625,9 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
             tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+
+            flows_config
+
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
@@ -589,6 +643,10 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Running test case 6 - XVIO DPDK-pktgen${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
+
+            # Ouput flow count to text file
+            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_6
@@ -609,6 +667,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_6.csv $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_6.html $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_6_flow_count.txt $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
@@ -616,23 +675,23 @@ else # else $TMUX is not empty, start test.
             
             
             if [[ ! -e "parsed_data.txt" ]]; then
-               mv parsed_data.txt XVIO_test_run_parsed-0.txt
+               mv parsed_data.txt "XVIO_test_run_parsed-0-f$flow_count.txt"
             else
             num=1
-            while [[ -e "XVIO_test_run_parsed-$num.txt" ]]; do
+            while [[ -e "XVIO_test_run_parsed-$num-f$flow_count.txt" ]]; do
               (( num++ ))
             done
-            mv parsed_data.txt "XVIO_test_run_parsed-$num.txt" 
+            mv parsed_data.txt "XVIO_test_run_parsed-$num-f$flow_count.txt" 
             fi
 
             if [[ ! -e "capture.txt" ]]; then
-               mv capture.txt XVIO_test_run-0.txt
+               mv capture.txt "XVIO_test_run-0-f$flow_count.txt"
             else
             num=1
-            while [[ -e "XVIO_test_run-$num.txt" ]]; do
+            while [[ -e "XVIO_test_run-$num-f$flow_count.txt" ]]; do
               (( num++ ))
             done
-            mv capture.txt "XVIO_test_run-$num.txt" 
+            mv capture.txt "XVIO_test_run-$num-f$flow_count.txt" 
             fi 
             
             ;;
@@ -696,6 +755,9 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
             tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+
+            flows_config
+
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
@@ -712,6 +774,10 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Running test case 7 - XVIO VXLAN DPDK-pktgen${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
+
+            # Ouput flow count to text file
+            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_7
@@ -732,6 +798,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_7.csv $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_7.html $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_7_flow_count.txt $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
@@ -739,23 +806,23 @@ else # else $TMUX is not empty, start test.
             
             
             if [[ ! -e "parsed_data.txt" ]]; then
-               mv parsed_data.txt XVIO_vxlan_test_run_parsed-0.txt
+               mv parsed_data.txt "XVIO_vxlan_test_run_parsed-0-f$flow_count.txt"
             else
             num=1
-            while [[ -e "XVIO_vxlan_test_run_parsed-$num.txt" ]]; do
+            while [[ -e "XVIO_vxlan_test_run_parsed-$num-f$flow_count.txt" ]]; do
               (( num++ ))
             done
-            mv parsed_data.txt "XVIO_vxlan_test_run_parsed-$num.txt" 
+            mv parsed_data.txt "XVIO_vxlan_test_run_parsed-$num-f$flow_count.txt" 
             fi
 
             if [[ ! -e "capture.txt" ]]; then
-               mv capture.txt XVIO_vxlan_test_run-0.txt
+               mv capture.txt "XVIO_vxlan_test_run-0-f$flow_count.txt"
             else
             num=1
-            while [[ -e "XVIO_vxlan_test_run-$num.txt" ]]; do
+            while [[ -e "XVIO_vxlan_test_run-$num-f$flow_count.txt" ]]; do
               (( num++ ))
             done
-            mv capture.txt "XVIO_vxlan_test_run-$num.txt" 
+            mv capture.txt "XVIO_vxlan_test_run-$num-f$flow_count.txt" 
             fi 
           
 
@@ -873,6 +940,9 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
             tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+
+            flows_config
+
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
@@ -887,6 +957,10 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Running test case 10 - DPDK-Pktgen KOVS VXLAN Intel XL710${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
+
+            # Ouput flow count to text file
+            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_10
@@ -907,6 +981,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_10.csv $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_10.html $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_10_flow_count.txt $script_dir
             sleep 2
 
             
@@ -915,23 +990,23 @@ else # else $TMUX is not empty, start test.
             
             
              if [[ ! -e "parsed_data.txt" ]]; then
-               mv parsed_data.txt KOVS_vxlan_test_run_parsed-0.txt
+               mv parsed_data.txt "KOVS_vxlan_test_run_parsed-0-f$flow_count.txt"
             else
             num=1
-            while [[ -e "KOVS_test_vxlan_run_parsed-$num.txt" ]]; do
+            while [[ -e "KOVS_test_vxlan_run_parsed-$num-f$flow_count.txt" ]]; do
               (( num++ ))
             done
-            mv parsed_data.txt "KOVS_test_vxlan_run_parsed-$num.txt" 
+            mv parsed_data.txt "KOVS_test_vxlan_run_parsed-$num-f$flow_count.txt" 
             fi
 
             if [[ ! -e "capture.txt" ]]; then
-               mv capture.txt KOVS_vxlan_test_run-0.txt
+               mv capture.txt "KOVS_vxlan_test_run-0-f$flow_count.txt"
             else
             num=1
-            while [[ -e "KOVS_vxlan_test_run-$num.txt" ]]; do
+            while [[ -e "KOVS_vxlan_test_run-$num-f$flow_count.txt" ]]; do
               (( num++ ))
             done
-            mv capture.txt "KOVS_vxlan_test_run-$num.txt" 
+            mv capture.txt "KOVS_vxlan_test_run-$num-f$flow_count.txt" 
             fi
             ;;
 
@@ -993,6 +1068,10 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
             tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+
+
+            flows_config
+            
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
             sleep 5
@@ -1007,6 +1086,10 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Running test case 11 - DPDK-Pktgen KOVS Intel XL710${NC}"
             sleep 5
             wait_text 3 "Test run complete" > /dev/null
+
+            # Ouput flow count to text file
+            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
             ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_11
@@ -1027,6 +1110,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_11.csv $script_dir
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_11.html $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_11_flow_count.txt $script_dir
             sleep 2
 
             
@@ -1035,23 +1119,23 @@ else # else $TMUX is not empty, start test.
             
             
              if [[ ! -e "parsed_data.txt" ]]; then
-               mv parsed_data.txt KOVS_test_run_parsed-0.txt
+               mv parsed_data.txt "KOVS_test_run_parsed-0-f$flow_count.txt"
             else
             num=1
-            while [[ -e "KOVS_test_run_parsed-$num.txt" ]]; do
+            while [[ -e "KOVS_test_run_parsed-$num-f$flow_count.txt" ]]; do
               (( num++ ))
             done
-            mv parsed_data.txt "KOVS_test_run_parsed-$num.txt" 
+            mv parsed_data.txt "KOVS_test_run_parsed-$num-f$flow_count.txt" 
             fi
 
             if [[ ! -e "capture.txt" ]]; then
-               mv capture.txt KOVS_test_run-0.txt
+               mv capture.txt "KOVS_test_run-0-f$flow_count.txt"
             else
             num=1
-            while [[ -e "KOVS_test_run-$num.txt" ]]; do
+            while [[ -e "KOVS_test_run-$num-f$flow_count.txt" ]]; do
               (( num++ ))
             done
-            mv capture.txt "KOVS_test_run-$num.txt" 
+            mv capture.txt "KOVS_test_run-$num-f$flow_count.txt" 
             fi
             ;;
     
@@ -1087,6 +1171,18 @@ else # else $TMUX is not empty, start test.
 
 
             ;;
+
+
+        f)  echo "f) Set amount of flows" 
+            read -p "Enter amount of flows for next test: " FLOW_COUNT
+        
+            echo $FLOW_COUNT > /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt
+            echo "Flows set to $FLOW_COUNT"
+            echo "Closest factor of 64K will be used"
+            sleep 3
+        ;;
+
+
 
         r)  echo "r) Reboot host machines"
             
