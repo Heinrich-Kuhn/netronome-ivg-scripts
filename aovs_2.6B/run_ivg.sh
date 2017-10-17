@@ -64,7 +64,7 @@ function flows_config {
     
     local flows=$(cat /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt)
     
-    flows=$(( $flows/1 ))
+    flows=$(( $flows/2 ))
 
     if [[ "$flows" -lt 1 ]]; then
         skip=1
