@@ -39,7 +39,7 @@ next(capture)
 for line in capture:
     line = line.replace(",","")
     data = line.split()
-    if data[2] != '-nan' and int(data[4]) > 1000:
+    if data[2] != '-nan' and int(data[4]) > 100:
         time_plot.append(data[0])
         frame_size.append(data[2])
         pkts_rx.append(data[3])
