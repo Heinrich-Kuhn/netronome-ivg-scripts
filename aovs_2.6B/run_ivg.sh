@@ -138,7 +138,9 @@ else # else $TMUX is not empty, start test.
         echo "k) Setup KOVS"
         echo "10) Test Case 10 (DPDK-pktgen VM-VM uni-directional KOVS VXLAN Intel XL710)"
         echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
-        echo "r) Reboot host machines"        
+        echo "r) Reboot host machines"
+        echo "d) Set up DPDK OVS"
+        echo "k) Set up KOVS"        
         echo "f) Set amount of flows"
         echo "x) Exit"
         read -p "Enter choice: " OPT
@@ -1012,7 +1014,7 @@ else # else $TMUX is not empty, start test.
 
 
 
-         11)  echo "11) Test Case 10 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
+         11)  echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
 
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -1139,6 +1141,132 @@ else # else $TMUX is not empty, start test.
             fi
             ;;
     
+         12)  echo "12) Test Case 12 (DPDK-pktgen VM-VM uni-directional DPDK OVS Intel XL710)"
+
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
+
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
+            #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
+            #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
+
+            VM_BASE_NAME=netronome-dpdk-ovs-intel-vm
+            VM_CPUS=4
+            
+            echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
+            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            
+            echo -e "${GREEN}* Creating test VM from backing image${NC}"
+            wait_text ALL "VM has been created!"
+
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_12_dpdk_ovs_uni_intel root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_12_dpdk_ovs_uni_intel root@$IP_DUT2:/root/IVG_folder/
+
+            tmux send-keys -t 2 "./IVG_folder/test_case_12_dpdk_ovs_uni_intel/setup_test_case_12.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_12_dpdk_ovs_uni_intel/setup_test_case_12.sh $VM_BASE_NAME" C-m
+            
+            echo -e "${GREEN}* Setting up test case 12${NC}"
+
+            wait_text ALL "DONE(setup_test_case_12.sh)"
+
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
+        
+            #Pause tmux until VM boots up 
+            wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
+            
+            sleep 1
+            tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
+            tmux send-keys -t 3 "cd vm_scripts/samples/DPDK-pktgen" C-m
+
+            tmux send-keys -t 2 "./1_configure_hugepages.sh" C-m
+            tmux send-keys -t 3 "./1_configure_hugepages.sh" C-m
+
+            sleep 1
+
+            tmux send-keys -t 2 "./2_auto_bind_igb_uio.sh" C-m
+            tmux send-keys -t 3 "./2_auto_bind_igb_uio.sh" C-m
+
+            sleep 5
+
+            tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
+            tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+
+
+            flows_config
+            
+            tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
+            
+            sleep 5
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
+            
+            #CPU meas start
+            echo -e "${GREEN}* Starting CPU measurement${NC}"
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_12
+            ssh -tt -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_12
+            
+
+            echo -e "${GREEN}* Running test case 11 - DPDK-Pktgen KOVS Intel XL710${NC}"
+            sleep 5
+            wait_text 3 "Test run complete" > /dev/null
+
+            # Ouput flow count to text file
+            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+
+            #CPU meas end
+            echo -e "${GREEN}* Stopping CPU measurement${NC}"
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_12
+            
+            
+            tmux send-keys -t 3 "./parse_and_plot.py" C-m
+            wait_text 3 "Data parse complete!" > /dev/null
+            sleep 1
+            tmux send-keys -t 2 "exit" C-m
+            tmux send-keys -t 3 "exit" C-m
+            
+            echo -e "${GREEN}* Copying data...${NC}"
+            sleep 1
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
+            
+            sleep 2
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_12.csv $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_12.html $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_12_flow_count.txt $script_dir
+            sleep 2
+
+            
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+            
+            
+             if [[ ! -e "parsed_data.txt" ]]; then
+               mv parsed_data.txt "DPDK_OVS_test_run_parsed-0-f$flow_count.txt"
+            else
+            num=1
+            while [[ -e "DPDK_OVS_test_run_parsed-$num-f$flow_count.txt" ]]; do
+              (( num++ ))
+            done
+            mv parsed_data.txt "DPDK_OVS_test_run_parsed-$num-f$flow_count.txt" 
+            fi
+
+            if [[ ! -e "capture.txt" ]]; then
+               mv capture.txt "DPDK_OVS_test_run-0-f$flow_count.txt"
+            else
+            num=1
+            while [[ -e "DPDK_OVS_test_run-$num-f$flow_count.txt" ]]; do
+              (( num++ ))
+            done
+            mv capture.txt "DPDK_OVS_test_run-$num-f$flow_count.txt" 
+            fi
+            ;;
 
         k)  echo "k) Setup KOVS"
 
@@ -1171,6 +1299,36 @@ else # else $TMUX is not empty, start test.
 
 
             ;;
+
+        d)  echo "d) Setup DPDK OVS"
+           
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
+
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
+
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_12_dpdk_ovs_uni_intel root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_12_dpdk_ovs_uni_intel root@$IP_DUT2:/root/IVG_folder/
+
+            tmux send-keys -t 2 "./IVG_folder/test_case_12_dpdk_ovs_uni_intel/setup_test_case_install_12.sh" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_12_dpdk_ovs_uni_intel/setup_test_case_install_12.sh" C-m
+
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/configure_grub_kovs.sh" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/configure_grub_kovs.sh" C-m
+
+            echo -e "${GREEN}* Installing DPDK-OVS${NC}"
+
+            wait_text ALL "DONE(setup_test_case_12_install.sh)"
+
+            echo -e "${GREEN}Grub has been configured. Please reboot DUT's with 'r'${NC}" 
+		;;	
 
 
         f)  echo "f) Set amount of flows" 
