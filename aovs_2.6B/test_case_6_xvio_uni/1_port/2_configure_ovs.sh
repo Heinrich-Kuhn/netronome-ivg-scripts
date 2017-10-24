@@ -33,7 +33,7 @@ grep  ID_LIKE /etc/os-release | grep -q fedora
 if [[ $? -eq 0 ]]; then
 cat > /etc/netronome.conf << EOF
 SDN_VIRTIORELAY_ENABLE=y
-SDN_VIRTIORELAY_PARAM="--cpus=$xvio_cpus_string --enable-tso --enable-mrgbuf --vhost-username=qemu --vhost-groupname=kvm --huge-dir=/mnt/huge --ovsdb-sock=/var/run/openvswitch/db.sock"
+SDN_VIRTIORELAY_PARAM="--cpus=$xvio_cpus_string --vhost-username=qemu --vhost-groupname=kvm --huge-dir=/mnt/huge --ovsdb-sock=/var/run/openvswitch/db.sock"
 SDN_FIREWALL=n
 EOF
 fi
