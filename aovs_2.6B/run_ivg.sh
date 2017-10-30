@@ -58,11 +58,11 @@ function rsync_duts {
 
 function flows_config {
 
-    if [ ! -f /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt ]; then
+    if [ ! -f /root/IVG/aovs_2.6B/flow_setting.txt ]; then
         return 0
     fi
     
-    local flows=$(cat /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt)
+    local flows=$(cat /root/IVG/aovs_2.6B/flow_setting.txt)
     
     flows=$(( $flows/2 ))
 
@@ -177,6 +177,8 @@ else # else $TMUX is not empty, start test.
             #Copy VM creator script to DUT
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
+
+            echo "64000" > /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/
             
             DUT_CONNECT=1
             ;;
@@ -1334,9 +1336,9 @@ else # else $TMUX is not empty, start test.
         f)  echo "f) Set amount of flows" 
             read -p "Enter amount of flows for next test: " FLOW_COUNT
         
-            echo $FLOW_COUNT > /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt
+            echo $FLOW_COUNT > /root/IVG/aovs_2.6B/flow_setting.txt
             echo "Flows set to $FLOW_COUNT"
-            echo "Closest factor of 64K will be used"
+
             sleep 3
         ;;
 
