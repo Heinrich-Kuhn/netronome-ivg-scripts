@@ -39,7 +39,7 @@ if [ $modification -eq 1 ]; then
 #Write to etc default grub  
 sed -i "/GRUB_CMDLINE_LINUX_DEFAULT/d" /etc/default/grub; sed "/^GRUB_CMDLINE_LINUX/a${grub_setting}" -i /etc/default/grub
 
-sed -i "/^GRUB_CMDLINE_LINUX=.*/c\$grub_setting2" /etc/default/grub
+sed -i "/GRUB_CMDLINE_LINUX=/d" /etc/default/grub; sed "/^GRUB_CMDLINE_LINUX/a${grub_setting2}" -i /etc/default/grub
   
 # Ubuntu
 grep ID_LIKE /etc/os-release | grep -q debian
