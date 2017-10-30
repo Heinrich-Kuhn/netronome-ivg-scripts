@@ -111,6 +111,7 @@ then # $TMUX is empty, create/enter tmux session.
     tmux a -t $SESSIONNAME 
 else # else $TMUX is not empty, start test.
 
+    flow=$(cat /root/IVG/aovs_2.6B/flow_setting.txt)
     # Recreate all panes
     if [ $(tmux list-panes | wc -l) -gt 1 ] 
     then
@@ -125,6 +126,9 @@ else # else $TMUX is not empty, start test.
         tmux select-pane -t 0
         clear
         echo "Please choose a option"
+        echo ""
+        echo "Flow count currently set for tests: $flow"
+        echo ""
         echo "a) Connect to DUT's"
         echo "b) Install/Re-install Agilio-OVS"
         echo "c) Create backing image for test VM's (Only done once)"
@@ -143,6 +147,7 @@ else # else $TMUX is not empty, start test.
         echo "k) Set up KOVS"        
         echo "f) Set amount of flows"
         echo "x) Exit"
+        echo ""
         read -p "Enter choice: " OPT
         case "$OPT" in
         
@@ -178,7 +183,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
 
-            echo "64000" > /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/
+            echo "64000" > /root/IVG/aovs_2.6B/flow_setting.txt
             
             DUT_CONNECT=1
             ;;
