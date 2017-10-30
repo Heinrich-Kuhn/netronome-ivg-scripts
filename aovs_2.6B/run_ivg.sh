@@ -4,6 +4,8 @@ SESSIONNAME=IVG
 script_dir="$(dirname $(readlink -f $0))"
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 
+echo "64000" > /root/IVG/aovs_2.6B/flow_setting.txt
+
 #Check if TMUX is installed
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
@@ -127,7 +129,7 @@ else # else $TMUX is not empty, start test.
         clear
 
         flow=$(cat /root/IVG/aovs_2.6B/flow_setting.txt)
-        
+
         echo "Please choose a option"
         echo ""
         echo "Flow count currently set for tests: $flow"
@@ -186,7 +188,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
 
-            echo "64000" > /root/IVG/aovs_2.6B/flow_setting.txt
+            
             
             DUT_CONNECT=1
             ;;
