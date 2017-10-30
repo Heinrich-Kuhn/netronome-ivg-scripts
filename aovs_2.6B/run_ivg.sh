@@ -111,7 +111,7 @@ then # $TMUX is empty, create/enter tmux session.
     tmux a -t $SESSIONNAME 
 else # else $TMUX is not empty, start test.
 
-    flow=$(cat /root/IVG/aovs_2.6B/flow_setting.txt)
+    
     # Recreate all panes
     if [ $(tmux list-panes | wc -l) -gt 1 ] 
     then
@@ -125,6 +125,9 @@ else # else $TMUX is not empty, start test.
     while :; do
         tmux select-pane -t 0
         clear
+
+        flow=$(cat /root/IVG/aovs_2.6B/flow_setting.txt)
+        
         echo "Please choose a option"
         echo ""
         echo "Flow count currently set for tests: $flow"
