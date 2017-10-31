@@ -7,7 +7,7 @@ cpu_model=$(virsh capabilities | grep -o '<model>.*</model>' | head -1 | sed 's/
 virsh undefine $VM_NAME > /dev/null 2>&1
 virt-install \
   --name $VM_NAME \
-  --disk path=/var/lib/libvirt/images/CentOS-7-x86_64-GenericCloud-1706.qcow2,format=qcow2,bus=virtio,cache=none \
+  --disk path=/var/lib/libvirt/images/CentOS-7-x86_64-GenericCloud-1708.qcow2,format=qcow2,bus=virtio,cache=none \
   --disk /var/lib/libvirt/images/user_data_1.img,device=cdrom \
   --ram 4012 \
   --vcpus 8 \
