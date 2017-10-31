@@ -5,13 +5,13 @@ package.path = package.path ..";?.lua;test/?.lua;app/?.lua;../?.lua"
 
 require "Pktgen";
 
--- define packet sizes to test
--- local pkt_sizes    = { 64, 128, 256, 512, 1024, 1280, 1518 };
-local pkt_sizes = {};
-for i=64,127,4 do ; table.insert(pkt_sizes, i); end
-for i=128,255,8 do ; table.insert(pkt_sizes, i); end
-for i=256,511,16 do ; table.insert(pkt_sizes, i); end
-for i=512,1518,32 do ; table.insert(pkt_sizes, i); end
+--define packet sizes to test
+local pkt_sizes    = { 64, 128, 256, 512, 1024, 1280, 1518 };
+--local pkt_sizes = {};
+--for i=64,127,4 do ; table.insert(pkt_sizes, i); end
+--for i=128,255,8 do ; table.insert(pkt_sizes, i); end
+--for i=256,511,16 do ; table.insert(pkt_sizes, i); end
+--for i=512,1518,32 do ; table.insert(pkt_sizes, i); end
 
 
 -- local pkt_sizes   = { 64 };
@@ -24,7 +24,8 @@ local pauseTime   = 5000;
 local initialRate = 1 ;
 
 local function setupTraffic()
-  -- Single-packet mode configuration
+ 
+-- Single-packet mode configuration
   for c=0, pktgen.portCount()-1, 1
   do
     pktgen.set_ipaddr(tonumber(c), "dst", "10.10.10." ..  tonumber(c) + 1); 
@@ -41,7 +42,7 @@ local function setupTraffic()
   for c=0, 10, 1
   do
     pktgen.send_arp("all","r");
-    pktgen.delay(100);
+    pktgen.delay(10);
   end 
 
   -- Send ICMP requests
@@ -57,7 +58,8 @@ local function setupTraffic()
   pktgen.stop("all");
   for c=0, pktgen.portCount()-1, 1
   do
-    -- Search exported configuration file for single-packet mode entries
+  
+-- Search exported configuration file for single-packet mode entries
     file = io.open("/root/temp.txt", "r");
     str = file:read"*a";
     mac = string.match(str, "set " .. tonumber(c) .. " dst mac (%w+:%w+:%w+:%w+:%w+:%w+)");
@@ -68,6 +70,12 @@ local function setupTraffic()
     pktgen.dst_mac(tonumber(c), "inc", "00:00:00:00:00:00");
     pktgen.dst_mac(tonumber(c), "min", "00:00:00:00:00:00");
     pktgen.dst_mac(tonumber(c), "max", "00:00:00:00:00:00");
+
+    -- Set src MAC
+    pktgen.src_mac(tonumber(c), "start", "00:00:00:00:00:00");
+    pktgen.src_mac(tonumber(c), "inc", "00:00:00:00:00:01");
+    pktgen.src_mac(tonumber(c), "min", "00:00:00:00:00:00");
+    pktgen.src_mac(tonumber(c), "max", "00:00:00:00:7d:00");
 
     -- Set destination IP
     pktgen.dst_ip(tonumber(c), "start", "10.10.10." .. tonumber(c) + 1);
@@ -118,7 +126,7 @@ function main()
     pktgen.set("all", "rate", 100);
     pktgen.pkt_size("all", "start", size);
     pktgen.start("all");
-    pktgen.delay(15000);
+    pktgen.delay(20000);
   end
 end
 
