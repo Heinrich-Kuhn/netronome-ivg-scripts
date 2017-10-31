@@ -4,6 +4,8 @@ SESSIONNAME=IVG
 script_dir="$(dirname $(readlink -f $0))"
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 
+echo "64000" > /root/IVG/aovs_2.6B/flow_setting.txt
+
 #Check if TMUX is installed
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
@@ -58,11 +60,11 @@ function rsync_duts {
 
 function flows_config {
 
-    if [ ! -f /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt ]; then
+    if [ ! -f /root/IVG/aovs_2.6B/flow_setting.txt ]; then
         return 0
     fi
     
-    local flows=$(cat /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt)
+    local flows=$(cat /root/IVG/aovs_2.6B/flow_setting.txt)
     
     flows=$(( $flows/2 ))
 
@@ -111,6 +113,7 @@ then # $TMUX is empty, create/enter tmux session.
     tmux a -t $SESSIONNAME 
 else # else $TMUX is not empty, start test.
 
+    
     # Recreate all panes
     if [ $(tmux list-panes | wc -l) -gt 1 ] 
     then
@@ -124,7 +127,13 @@ else # else $TMUX is not empty, start test.
     while :; do
         tmux select-pane -t 0
         clear
+
+        flow=$(cat /root/IVG/aovs_2.6B/flow_setting.txt)
+
         echo "Please choose a option"
+        echo ""
+        echo "Flow count currently set for tests: $flow"
+        echo ""
         echo "a) Connect to DUT's"
         echo "b) Install/Re-install Agilio-OVS"
         echo "c) Create backing image for test VM's (Only done once)"
@@ -143,6 +152,7 @@ else # else $TMUX is not empty, start test.
         echo "k) Set up KOVS"        
         echo "f) Set amount of flows"
         echo "x) Exit"
+        echo ""
         read -p "Enter choice: " OPT
         case "$OPT" in
         
@@ -177,6 +187,8 @@ else # else $TMUX is not empty, start test.
             #Copy VM creator script to DUT
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
+
+            
             
             DUT_CONNECT=1
             ;;
@@ -1334,9 +1346,9 @@ else # else $TMUX is not empty, start test.
         f)  echo "f) Set amount of flows" 
             read -p "Enter amount of flows for next test: " FLOW_COUNT
         
-            echo $FLOW_COUNT > /root/IVG/aovs_2.6B/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/flow_setting.txt
+            echo $FLOW_COUNT > /root/IVG/aovs_2.6B/flow_setting.txt
             echo "Flows set to $FLOW_COUNT"
-            echo "Closest factor of 64K will be used"
+
             sleep 3
         ;;
 
