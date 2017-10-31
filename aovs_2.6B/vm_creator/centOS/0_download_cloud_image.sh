@@ -7,7 +7,7 @@ GREEN='\033[0;32m'
 NC='\033[0m'
 RED='\033[0;31m'
 
-CENTOS_CLOUD_IMAGE=CentOS-7-x86_64-GenericCloud-1706.qcow2
+CENTOS_CLOUD_IMAGE=CentOS-7-x86_64-GenericCloud-1708.qcow2
 CENTOS_CLOUD_IMAGE_URL=https://cloud.centos.org/centos/7/images/$CENTOS_CLOUD_IMAGE
 LIBVIRT_DIR=/var/lib/libvirt/images
 
@@ -25,7 +25,7 @@ if [ -f $CENTOS_CLOUD_IMAGE.copy ]; then
         fi
 else
     cd /var/lib/libvirt/images/
-	echo -e "${GREEN}CentOS-7-x86_64-GenericCloud-1706.qcow2 to /var/lib/libvirt/images/${NC}"
+	echo -e "${GREEN}CentOS-7-x86_64-GenericCloud-1708.qcow2 to /var/lib/libvirt/images/${NC}"
     wget --timestamping $CENTOS_CLOUD_IMAGE_URL
     echo -e "${GREEN}Creating copy of centos-cloud-image${NC}"
 	cp  $CENTOS_CLOUD_IMAGE $CENTOS_CLOUD_IMAGE.copy
@@ -33,7 +33,7 @@ fi
 
 
 USERNAME=root
-CENTOS_CLOUD_IMAGE=CentOS-7-x86_64-GenericCloud-1706.qcow2
+CENTOS_CLOUD_IMAGE=CentOS-7-x86_64-GenericCloud-1708.qcow2
 CENTOS_CLOUD_IMAGE_URL=https://cloud.centos.org/centos/7/images/$CENTOS_CLOUD_IMAGE
 LIBVIRT_DIR=/var/lib/libvirt/images
 

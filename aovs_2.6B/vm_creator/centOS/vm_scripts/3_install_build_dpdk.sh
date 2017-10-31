@@ -1,8 +1,8 @@
 #!/bin/bash
 export DPDK_BASE_DIR=/root/
 export DPDK_TARGET=x86_64-native-linuxapp-gcc
-export DPDK_VERSION=dpdk-17.05.2
-export DPDK_EXTRACTED_NAME=dpdk-stable-17.05.2
+export DPDK_VERSION=dpdk-16.11.3
+export DPDK_EXTRACTED_NAME=dpdk-stable-16.11.3
 export DPDK_BUILD=$DPDK_BASE_DIR/$DPDK_VERSION/$DPDK_TARGET
 
 NUM_CPUS=$(cat /proc/cpuinfo | grep "processor\\s: " | wc -l)
@@ -33,6 +33,11 @@ sed 's/SPEED_10G/SPEED_100G/g' -i drivers/net/virtio/virtio_ethdev.c
 sed '/SPEED_10G/a#define SPEED_100G       100000' -i drivers/net/virtio/virtio_ethdev.h
 # Modify SRIOV default virtual speed
 sed "s/link.link_speed = ETH_SPEED_NUM_NONE/link.link_speed = ETH_SPEED_NUM_100G/g" -i drivers/net/nfp/nfp_net.c
+
+# Remove KNI (DPDK v16.11.3 does not build on CentOS 7.4)
+sed 's/CONFIG_RTE_KNI_KMOD=y/CONFIG_RTE_KNI_KMOD=n/' -i config/common_linuxapp
+sed 's/CONFIG_RTE_LIBRTE_KNI=y/CONFIG_RTE_LIBRTE_KNI=n/' -i config/common_linuxapp
+sed 's/CONFIG_RTE_LIBRTE_PMD_KNI=y/CONFIG_RTE_LIBRTE_PMD_KNI=n/' -i config/common_linuxapp
 
 make config T=x86_64-native-linuxapp-gcc
 make -j $NUM_CPUS install DESTDIR=dpdk-install T=$DPDK_TARGET
