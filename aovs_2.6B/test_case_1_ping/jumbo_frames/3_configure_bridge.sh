@@ -12,7 +12,8 @@ done
 ovs-vsctl add-br $BRIDGE
 
 # Add physical ports
-ovs-vsctl add-port $BRIDGE nfp_p0 -- set interface nfp_p0 ofport_request=1
+$IVG_dir/helper_scripts/attach-physical-ports.sh $BRIDGE \
+  || exit -1
 
 # Add VF ports
 ovs-vsctl add-port $BRIDGE nfp_v0.1 -- set interface nfp_v0.1 ofport_request=1

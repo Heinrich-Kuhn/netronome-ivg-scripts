@@ -9,13 +9,20 @@ do
 done
 
 # Create a new bridge
-ovs-vsctl add-br $BRIDGE
+ovs-vsctl add-br $BRIDGE \
+  || exit -1
 
-ovs-vsctl add-port $BRIDGE nfp_p0 -- set interface nfp_p0 ofport_request=1
+# Add physical ports
+$HOME/IVG_folder/helper_scripts/attach-physical-ports.sh $BRIDGE \
+  || exit -1
 
 # Add VF ports
-ovs-vsctl add-port $BRIDGE nfp_v0.41 -- set interface nfp_v0.41 ofport_request=41
-ovs-vsctl add-port $BRIDGE nfp_v0.42 -- set interface nfp_v0.42 ofport_request=42
+ovs-vsctl \
+  -- add-port $BRIDGE nfp_v0.41 \
+  -- set interface nfp_v0.41 ofport_request=41 \
+  -- add-port $BRIDGE nfp_v0.42 \
+  -- set interface nfp_v0.42 ofport_request=42 \
+  || exit -1
 
 #Add NORMAL RULE
 ovs-ofctl del-flows br0
@@ -29,3 +36,5 @@ ovs-appctl upcall/set-flow-limit 1000000
 ovs-vsctl show
 ovs-ofctl show $BRIDGE
 ovs-ofctl dump-flows $BRIDGE
+
+exit 0
