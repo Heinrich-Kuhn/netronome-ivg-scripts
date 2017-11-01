@@ -179,6 +179,18 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "mkdir -p IVG_folder" C-m
             tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
 
+            tmux send-keys -t 2 "cd IVG_folder" C-m
+            tmux send-keys -t 3 "cd IVG_folder" C-m
+
+            tmux send-keys -t 2 "mkdir -p aovs_2.6B" C-m
+            tmux send-keys -t 3 "mkdir -p aovs_2.6B" C-m
+
+            tmux send-keys -t 2 "cd aovs_2.6B" C-m
+            tmux send-keys -t 3 "cd aovs_2.6B" C-m
+
+            tmux send-keys -t 2 "mkdir -p logs" C-m
+            tmux send-keys -t 3 "mkdir -p logs" C-m
+
             sleep 1
 
             scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT1:/root/IVG_folder/
@@ -188,6 +200,15 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
 
+            sleep 1
+
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/inventory.sh > /root/IVG_folder/aovs_2.6B/logs/dut_1.log" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/inventory.sh > /root/IVG_folder/aovs_2.6B/logs/dut_2.log" C-m
+
+            sleep 1
+
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/dut_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/dut_2.log $IVG_dir/aovs_2.6B/logs/
             
             
             DUT_CONNECT=1
@@ -195,12 +216,16 @@ else # else $TMUX is not empty, start test.
 
         b)  echo "b) Install/Re-install Agilio-OVS"
             
+            #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Installation_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Installation_DUT_2.log" C-m           
+
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
-
+          
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
@@ -235,12 +260,23 @@ else # else $TMUX is not empty, start test.
 
                echo -e "${GREEN}Please reboot DUT's using the 'r' option${NC}"
                sleep 10
-                
 
             fi
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Installation_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Installation_DUT_2.log $IVG_dir/aovs_2.6B/logs/
+
             ;;
 
         c)  echo "c) Create backing image for test VM's (Only done once)"
+
+            #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_2.log" C-m
             
             if [ $DUT_CONNECT == 0 ]; then
                 echo "Please connect to DUT's first"
@@ -276,9 +312,22 @@ else # else $TMUX is not empty, start test.
                
             #Wait until base image is completed
             wait_text ALL "Base image created!"
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_2.log $IVG_dir/aovs_2.6B/logs/
+
             ;;
         
         1)  echo "1) Test Case 1 (Simple ping between hosts)"
+
+
+            #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Test_case_1_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Test_case_1_DUT_2.log" C-m
             
             if [ $DUT_CONNECT == 0 ]; then
                 echo "Please connect to DUT's first"
@@ -307,9 +356,23 @@ else # else $TMUX is not empty, start test.
             #Ping form one host
             tmux send-keys -t 2 "ping 10.0.0.2 -c 5" C-m
 
+            sleep 6
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_2.log $IVG_dir/aovs_2.6B/logs/
+
             ;;
 
         2)  echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
+
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Test_case_2_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Test_case_2_DUT_2.log" C-m
             
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -434,11 +497,24 @@ else # else $TMUX is not empty, start test.
                done
                mv capture.txt "SRIOV_test_run-$num-f$flow_count.txt" 
             fi
+
+            sleep 1
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_2.log $IVG_dir/aovs_2.6B/logs/
             
 
            ;;
 
         3)  echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Test_case_3_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Test_case_3_DUT_2.log" C-m
             
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -568,6 +644,13 @@ else # else $TMUX is not empty, start test.
             done
             mv capture.txt "SRIOV_vxlan_test_run-$num-f$flow_count.txt" 
             fi 
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_2.log $IVG_dir/aovs_2.6B/logs/
             
             ;;
 
@@ -584,6 +667,11 @@ else # else $TMUX is not empty, start test.
 
         
          6)  echo "6) Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
+
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Test_case_6_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Test_case_6_DUT_2.log" C-m
             
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -707,11 +795,23 @@ else # else $TMUX is not empty, start test.
             done
             mv capture.txt "XVIO_test_run-$num-f$flow_count.txt" 
             fi 
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_2.log $IVG_dir/aovs_2.6B/logs/
             
             ;;
 
 
         7)  echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO - VXLAN)"
+
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Test_case_7_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Test_case_7_DUT_2.log" C-m
              
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -838,11 +938,22 @@ else # else $TMUX is not empty, start test.
             done
             mv capture.txt "XVIO_vxlan_test_run-$num-f$flow_count.txt" 
             fi 
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_2.log $IVG_dir/aovs_2.6B/logs/
           
 
             ;;
 
         8)  echo "8) Test Case 8 (DPDK-pktgen VM-VM bi-directional SR-IOV)"
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Test_case_8_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Test_case_8_DUT_2.log" C-m
 
             tcname="test_case_8"
 
@@ -892,10 +1003,22 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "cd DPDK-pktgen" C-m
             tmux send-keys -t 2 "./run-dpdk-pktgen-bi-directional.sh" C-m
 
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_8_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_8_DUT_2.log $IVG_dir/aovs_2.6B/logs/
+
             ;;
 
 
         10)  echo "10) Test Case 10 (DPDK-pktgen VM-Vm uni-directional KOVS VXLAN Intel XL710)"
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Test_case_10_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Test_case_10_DUT_2.log" C-m
 
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -1022,11 +1145,23 @@ else # else $TMUX is not empty, start test.
             done
             mv capture.txt "KOVS_vxlan_test_run-$num-f$flow_count.txt" 
             fi
+
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_10_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_10_DUT_2.log $IVG_dir/aovs_2.6B/logs/
             ;;
 
 
 
          11)  echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Test_case_11_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Test_case_11_DUT_2.log" C-m
 
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -1151,9 +1286,20 @@ else # else $TMUX is not empty, start test.
             done
             mv capture.txt "KOVS_test_run-$num-f$flow_count.txt" 
             fi
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_11_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_11_DUT_2.log $IVG_dir/aovs_2.6B/logs/
             ;;
     
          12)  echo "12) Test Case 12 (DPDK-pktgen VM-VM uni-directional DPDK OVS Intel XL710)"
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Test_case_12_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Test_case_12_DUT_2.log" C-m
 
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -1278,9 +1424,21 @@ else # else $TMUX is not empty, start test.
             done
             mv capture.txt "DPDK_OVS_test_run-$num-f$flow_count.txt" 
             fi
+
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_2.log $IVG_dir/aovs_2.6B/logs/
             ;;
 
         k)  echo "k) Setup KOVS"
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Setup_KOVS_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Setup_KOVS_DUT_2.log" C-m
 
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -1309,10 +1467,21 @@ else # else $TMUX is not empty, start test.
 
             echo -e "${GREEN}Grub has been configured. Please reboot DUT's with 'r'${NC}"
 
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Setup_KOVS_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Setup_KOVS_DUT_2.log $IVG_dir/aovs_2.6B/logs/
+
 
             ;;
 
         d)  echo "d) Setup DPDK OVS"
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs2.6B/logs/Setup_DPDK_OVS_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs2.6B/logs/Setup_DPDK_OVS_DUT_2.log" C-m
            
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
@@ -1340,6 +1509,15 @@ else # else $TMUX is not empty, start test.
             wait_text ALL "DONE(setup_test_case_12_install.sh)"
 
             echo -e "${GREEN}Grub has been configured. Please reboot DUT's with 'r'${NC}" 
+
+            sleep 1
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+            sleep 1
+            scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Setup_DPDK_OVS_DUT_1.log $IVG_dir/aovs_2.6B/logs/
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Setup_DPDK_OVS_DUT_2.log $IVG_dir/aovs_2.6B/logs/
 		;;	
 
 
