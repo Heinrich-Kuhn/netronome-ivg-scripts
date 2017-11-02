@@ -1,25 +1,41 @@
 #!/bin/bash
 
-#Install scripts on VM
-VM_NAME=centos_backing
+VM_NAME="centos_backing"
 
-echo -e "${GREEN}Installing prerequisites${NC}"
-ssh root@"$(arp -an | grep $(virsh dumpxml $VM_NAME  | awk -F\' '/mac address/ {print $2}')| egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}')" "/root/vm_scripts/0_setup.sh"
+vm_mac_addr=$(virsh dumpxml $VM_NAME \
+    | awk -F\' '/mac address/ {print $2}')
+
+ipaddr=$(arp -an \
+    | sed -rn 's/^.*\((\S+)\)\sat\s(\S+)\s.*$/\1 \2/p' \
+    | grep " $vm_mac_addr" \
+    | cut -d ' ' -f 1 )
+
+sshopts=()
+sshopts+=( "-l" "root" )
+sshopts+=( "-o" "StrictHostKeyChecking=no" )
+sshopts+=( "-o" "UserKnownHostsFile=/dev/null" )
+sshcmd="ssh ${sshopts[@]}"
+
+echo -e "Installing prerequisites"
+
+$sshcmd $ipaddr "/root/vm_scripts/0_setup.sh" \
+    || exit -1
 
 virsh shutdown $VM_NAME
 
-#wait for VM to shutdown
+# Wait for VM to shutdown
 while [ "$(virsh list --all | grep $VM_NAME | awk '{print $3}')" == "running" ]; do
-  echo "VM is still running"
-  sleep 2
+    sleep 1
 done
+
+echo "VM shutdown"
+
 sleep 1
+
 virsh undefine $VM_NAME
 
-#Cleanup user_data files
-rm /var/lib/libvirt/images/user_data
-rm /var/lib/libvirt/images/user_data_1.img
+echo
+echo -e "Base image created!"
+echo
 
-echo
-echo -e "${GREEN}Base image created!${NC}"
-echo
+exit 0

@@ -2,17 +2,11 @@
 
 #Cloud init script
 
-script_dir="$(dirname $(readlink -f $0))"
-VM_NAME=ubuntu_backing
-
-GREEN='\033[0;32m'
-NC='\033[0m'
-RED='\033[0;31m'
-
+VM_NAME="ubuntu_backing"
 
 #Generate ssh keypair, if no existing keypair is found, a new keypair will be created
 if [ ! -f ~/.ssh/id_rsa ]; then
-      echo -e "${GREEN}Generating SSH keypair...${NC}"
+      echo -e "Generating SSH keypair..."
       ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -P ""
 fi
 
@@ -37,7 +31,7 @@ write_files:
        path: /root/README 
 
 runcmd:
-- mkdir /root/.ssh/
+- mkdir -p /root/.ssh
 - sed -i -e '/^Port/s/^.*$/Port 22/' /etc/ssh/sshd_config
 - sed -i -e '/^PermitRootLogin/s/^.*$/PermitRootLogin yes/' /etc/ssh/sshd_config
 - sed -i -e '$aAllowUsers root' /etc/ssh/sshd_config
@@ -45,15 +39,24 @@ runcmd:
 - yum -y remove cloud-init
 - poweroff
 EOL
-  
+
 # Check for package install
 if [ -f /etc/redhat-release ]; then
-  rpm -qa cloud-image-utils | grep -q cloud-utils || yum install cloud-utils -y
+    rpm -qa cloud-image-utils | grep -q cloud-utils
+    if [ $? -ne 0 ]; then
+        yum install cloud-utils -y
+    fi
 fi
 
 if [ -f /etc/lsb-release ]; then
-  dpkg -l cloud-image-utils | grep -q cloud-image-utils || apt-get install cloud-image-utils -y
+    dpkg -l cloud-image-utils | grep -q cloud-image-utils
+    if [ $? -ne 0 ]; then
+        apt-get install cloud-image-utils -y
+    fi
 fi
 
 #Generate tmp cloud-init data
-cloud-localds user_data_1.img user_data
+cloud-localds user_data_1.img user_data \
+    || exit -1
+
+exit 0
