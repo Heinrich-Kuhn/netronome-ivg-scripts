@@ -2,7 +2,7 @@
 
 SESSIONNAME=IVG
 script_dir="$(dirname $(readlink -f $0))"
-IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
+export IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 
 echo "64000" > /root/IVG/aovs_2.6B/flow_setting.txt
 
@@ -162,6 +162,8 @@ else # else $TMUX is not empty, start test.
             read -p "Enter IP of first DUT: " IP_DUT1
             read -p "Enter IP of second DUT: " IP_DUT2
 
+            export IVG_SERVERS_IPADDR_LIST="$IP_DUT1 $IP_DUT2"
+
             #Copy n new public key to DUT's
             $IVG_dir/helper_scripts/copy_ssh_key.sh $IP_DUT1 $IP_DUT2
 
@@ -287,30 +289,22 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
-            #Create working dir on DUT's
-            #tmux send-keys -t 2 "mkdir -p IVG_folder" C-m
-            #tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
+            # Copy VM creator script to DUT
+            $IVG_dir/helper_scripts/rsync-servers.sh \
+                $IVG_dir/aovs_2.6B/vm_creator \
+                /root/IVG_folder \
+                || exit -1
 
-            #Copy VM creator script to DUT
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/vm_creator root@$IP_DUT2:/root/IVG_folder/
+            # Download cloud image to local machine and update DUTs
+            $IVG_dir/helper_scripts/download_cloud_image.sh \
+                || exit -1
 
-            #Download cloud image to local machine
-            echo -e "${GREEN}Downloading cloud image...${NC}"
-            $IVG_dir/helper_scripts/download_cloud_image.sh
-            
-            #Copy downloaded image to DUT's
-            echo "Copying image to DUT's"
-            scp -i ~/.ssh/netronome_key /root/ubuntu-16.04-server-cloudimg-amd64-disk1.img root@$IP_DUT1:/var/lib/libvirt/images/
-            scp -i ~/.ssh/netronome_key /root/ubuntu-16.04-server-cloudimg-amd64-disk1.img root@$IP_DUT2:/var/lib/libvirt/images/
-
-            #Create backing image
+            # Create backing image
             tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh" C-m
             tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh" C-m
-            
+
             echo -e "${GREEN}Creating base image for test VM's, please wait...${NC}"
-               
-            #Wait until base image is completed
+
             wait_text ALL "Base image created!"
 
             #_#_#_#_#_END LOG_#_#_#_#_#
@@ -321,7 +315,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_2.log $IVG_dir/aovs_2.6B/logs/
 
             ;;
-        
+
         1)  echo "1) Test Case 1 (Simple ping between hosts)"
 
 
