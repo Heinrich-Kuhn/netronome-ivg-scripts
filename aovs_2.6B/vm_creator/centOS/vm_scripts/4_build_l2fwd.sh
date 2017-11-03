@@ -1,15 +1,25 @@
 #!/bin/bash
 
-export DPDK_BASE_DIR=/root
-export DPDK_VERSION=dpdk-stable-17.05.2
-export DPDK_TARGET=x86_64-native-linuxapp-gcc
+. /etc/dpdk.conf || exit -1
 
-cd $DPDK_BASE_DIR/$DPDK_VERSION/examples/l2fwd
-sed 's/#define RTE_TEST_RX_DESC_DEFAULT 128/#define RTE_TEST_RX_DESC_DEFAULT 1024/' -i main.c
-sed 's/#define RTE_TEST_TX_DESC_DEFAULT 512/#define RTE_TEST_TX_DESC_DEFAULT 1024/' -i main.c
-sed -E 's/(#define NB_MBUF   )8192/\116384/g' -i main.c
+cd $RTE_SDK/examples/l2fwd \
+    || exit -1
 
-make RTE_SDK=$DPDK_BASE_DIR/$DPDK_VERSION 
+ss=""
+ss="${ss}s/^(#define RTE_TEST_RX_DESC_DEFAULT)\s.*$/\1 1024/;"
+ss="${ss}s/^(#define RTE_TEST_RTX_DESC_DEFAULT)\s.*$/\1 1024/;"
+ss="${ss}s/^(#define NB_MBUF)\s.*$/\1 16384/;"
 
-rm -f $DPDK_BASE_DIR/dpdk-l2fwd
-ln -s $DPDK_BASE_DIR/$DPDK_VERSION/examples/l2fwd/build/app/l2fwd $DPDK_BASE_DIR/dpdk-l2fwd
+sed -r "$ss" -i $RTE_SDK/examples/l2fwd/main.c \
+    || exit -1
+
+make || exit -1
+
+if [ -f $RTE_SDK/dpdk-l2fwd ]; then
+    rm -f $RTE_SDK/dpdk-l2fwd
+fi
+
+ln -s $RTE_SDK/examples/l2fwd/build/app/l2fwd $RTE_SDK/dpdk-l2fwd \
+    || exit -1
+
+exit 0

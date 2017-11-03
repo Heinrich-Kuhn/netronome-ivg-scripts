@@ -36,11 +36,6 @@ BOOTPROTO="dhcp"
 TYPE="Ethernet"
 EOF
 
-if [ ! -f "$basefile" ]; then
-    echo "ERROR: missing base image $basefile"
-    exit -1
-fi
-
 if [ -f /etc/redhat-release ]; then
     yum -y install libguestfs-tools \
         || exit -1

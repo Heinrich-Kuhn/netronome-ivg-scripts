@@ -20,3 +20,5 @@ yum -y install make gcc gcc-c++ libxml2 glibc libpcap-devel python wget pciutils
 
 # Disable SElinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+
+exit 0

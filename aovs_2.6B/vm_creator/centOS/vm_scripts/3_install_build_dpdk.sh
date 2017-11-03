@@ -48,3 +48,10 @@ cp $igb_ko  /lib/modules/$(uname -r)/extra/
 depmod -a
 modprobe igb_uio
 
+# Save DPDK settings to file
+cat <<EOF > /etc/dpdk.conf
+export RTE_SDK="$DPDK_BASE_DIR/$DPDK_EXTRACTED_NAME"
+export RTE_TARGET="$DPDK_TARGET"
+EOF
+
+exit 0
