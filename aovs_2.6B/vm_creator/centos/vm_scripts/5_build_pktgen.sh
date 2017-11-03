@@ -8,6 +8,9 @@ mkdir -p $srcdir $pkgdir || exit -1
 
 PKTGEN="pktgen-dpdk-pktgen-3.3.2"
 
+export RTE_OUTPUT="/root/pktgen"
+mkdir -p $RTE_OUTPUT
+
 if [ ! -f "$pkgdir/$PKTGEN.tar.gz" ]; then
     echo "Downloading $PKTGEN"
     wget http://dpdk.org/browse/apps/pktgen-dpdk/snapshot/$PKTGEN.tar.gz \
@@ -26,8 +29,9 @@ sed -i '/.*number of buffers to support per port.*/c\\tMAX_MBUFS_PER_PORT\t= (DE
 make -C $srcdir/$PKTGEN \
     || exit -1
 
-ln -s $srcdir/$PKTGEN/app/app/x86_64-native-linuxapp-gcc/pktgen \
-    $RTE_SDK/dpdk-pktgen \
-    || exit -1
+cat <<EOF > /etc/dpdk-pktgen-settings.sh
+export DPDK_PKTGEN_DIR=$srcdir/$PKTGEN
+export DPDK_PKTGEN_EXEC=$srcdir/$PKTGEN/app/app/$RTE_TARGET/pktgen
+EOF
 
 exit 0
