@@ -90,6 +90,16 @@ function flows_config {
         
 }
 
+case "$CLOUD_IMAGE_OS" in
+  "centos")
+    VM_MGMT_DIR="\$HOME/IVG_folder/vm_creator/centos"
+    ;;
+  *)
+    # Ubuntu is the default
+    VM_MGMT_DIR="\$HOME/IVG_folder/vm_creator/ubuntu"
+    ;;
+esac
+
 #######################################################################
 ######################### Main function ###############################
 #######################################################################
@@ -300,8 +310,8 @@ else # else $TMUX is not empty, start test.
                 || exit -1
 
             # Create backing image
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh" C-m
+            tmux send-keys -t 2 "$VM_MGMT_DIR/x_create_backing_image.sh" C-m
+            tmux send-keys -t 3 "$VM_MGMT_DIR/x_create_backing_image.sh" C-m
 
             echo -e "${GREEN}Creating base image for test VM's, please wait...${NC}"
 
@@ -384,8 +394,8 @@ else # else $TMUX is not empty, start test.
             VM_CPUS=4
             
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
             echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
@@ -528,8 +538,8 @@ else # else $TMUX is not empty, start test.
             SRC_IP="10.10.10.1"
 
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
             echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
@@ -547,7 +557,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
         
             #Pause tmux until VM boots up 
-            wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
+            wait_text ALL "WELCOME"
             
             sleep 1
             tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
@@ -684,8 +694,8 @@ else # else $TMUX is not empty, start test.
             XVIO_CPUS=2
             
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
             echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
@@ -703,7 +713,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
         
             #Pause tmux until VM boots up 
-            wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
+            wait_text ALL "WELCOME"
             
             sleep 1
             tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
@@ -826,8 +836,8 @@ else # else $TMUX is not empty, start test.
             SRC_IP="10.10.10.1"
 
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
             echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
@@ -845,7 +855,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
         
             #Pause tmux until VM boots up 
-            wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
+            wait_text ALL "WELCOME"
             
             sleep 1
             tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
@@ -958,8 +968,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-1" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME-2" C-m
+            tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME-1" C-m
+            tmux send-keys -t 3 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME-2" C-m
 
             wait_text ALL "VM has been created!"
 
@@ -1033,8 +1043,8 @@ else # else $TMUX is not empty, start test.
             VM_CPUS=4
             
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
             echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
@@ -1053,7 +1063,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
         
             #Pause tmux until VM boots up 
-            wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
+            wait_text ALL "WELCOME"
             
             sleep 1
             tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
@@ -1173,8 +1183,8 @@ else # else $TMUX is not empty, start test.
             VM_CPUS=4
             
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
             echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
@@ -1193,7 +1203,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
         
             #Pause tmux until VM boots up 
-            wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
+            wait_text ALL "WELCOME"
             
             sleep 1
             tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
@@ -1311,8 +1321,8 @@ else # else $TMUX is not empty, start test.
             VM_CPUS=4
             
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
-            tmux send-keys -t 2 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             
             echo -e "${GREEN}* Creating test VM from backing image${NC}"
             wait_text ALL "VM has been created!"
@@ -1331,7 +1341,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
         
             #Pause tmux until VM boots up 
-            wait_text ALL "* Documentation:  https://help.ubuntu.com" > /dev/null
+            wait_text ALL "WELCOME"
             
             sleep 1
             tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
