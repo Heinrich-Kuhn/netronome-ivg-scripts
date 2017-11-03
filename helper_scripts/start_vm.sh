@@ -2,23 +2,38 @@
 
 VM_NAME=$1
 
-virsh start $VM_NAME
-echo "Adding 60 second sleep while VM boots up"
+virsh start $VM_NAME \
+    || exit -1
+
+echo -n "Booting up VM "
+
+sleep 3
+
 counter=0
-while [ $counter -lt 12 ];
-do
-  sleep 5
-  counter=$((counter+1))
-  echo "counter: $counter"
-  ip=$(virsh net-dhcp-leases default | awk -v var="$VM_NAME" '$6 == var {print $5}' | cut -d"/" -f1)
-  echo "ip: $ip"
-  if [ ! -z "$ip" ]; then
-      nc -w 2 -v $ip 22 </dev/null
-      if [ $? -eq 0 ]; then
-      counter=$((counter+12))
-      echo "end"
+while : ; do
+    # The DHCP lease list may contain multiple entries out
+    # of which some may be stale
+    ipaddr_list=$(virsh net-dhcp-leases default \
+        | sed -rn 's#^.*\sipv4\s+(\S+)/\S+\s+(\S+)\s.*$#\2 \1#p' \
+        | grep -E "^$VM_NAME " \
+        | cut -d ' ' -f 2 )
+    # Try each IP address
+    for ipaddr in $ipaddr_list ; do
+        nc -w 1 $ipaddr 22 < /dev/null > /dev/null 2>&1
+        if [ $? -eq 0 ]; then
+            echo
+            # Exist out of the (2) nested loops
+            break 2
+        fi
+    done
+    counter=$((counter + 1))
+    if [ $counter -gt 60 ]; then
+        echo
+        echo "ERROR: failed to access VM"
+        exit -1
     fi
-  fi
+    echo -n "."
+    sleep 1
 done
 
-ssh -o StrictHostKeyChecking=no root@$ip
+exec ssh -o StrictHostKeyChecking=no root@$ipaddr
