@@ -15,8 +15,15 @@ systemctl start avahi-daemon
 # CentOS 7.3 - 3.10.0-514.26.1
 #yum -y install ftp://fr2.rpmfind.net/linux/centos/7.3.1611/updates/x86_64/Packages/kernel-devel-3.10.0-514.26.1.el7.x86_64.rpm
 # CentOS 7.4
-yum -y install kernel-devel-$(uname -r)
-yum -y install make gcc gcc-c++ libxml2 glibc libpcap-devel python wget pciutils
+
+pkglist=()
+pkglist+=( "kernel-devel-$(uname -r)" )
+pkglist+=( make gcc gcc-c++ libxml2 glibc )
+pkglist+=( libpcap-devel python wget pciutils )
+pkglist+=( numpy )
+
+yum -y install ${pkglist[@]} \
+    || exit -1
 
 # Disable SElinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
