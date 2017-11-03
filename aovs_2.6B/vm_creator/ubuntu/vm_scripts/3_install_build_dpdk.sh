@@ -29,3 +29,11 @@ igb_ko=$(readlink -f $(find . -name "igb_uio.ko" | head -1))
 cp $igb_ko  /lib/modules/$(uname -r)/
 depmod -a
 modprobe igb_uio
+
+# Save DPDK settings to file
+cat <<EOF > /etc/dpdk.conf
+export RTE_SDK="$DPDK_BASE_DIR/$DPDK_VERSION"
+export RTE_TARGET="$DPDK_TARGET"
+EOF
+
+exit 0
