@@ -23,8 +23,8 @@ fi
 # Extract the MAC address of the management interface from XML
 vm_mgmt_iface_mac_addr=$(virsh dumpxml $vmname \
     | tr -d '\n' \
-    | sed -r 's/(<interface)/\n\1/' \
-    | sed -r 's/(\/interface>)/\1\n/' \
+    | sed -r 's/(<interface)/\n\1/g' \
+    | sed -r 's/(\/interface>)/\1\n/g' \
     | grep -E "^<interface type='network'" \
     | grep -E "network='default'" \
     | sed -rn "s/^.*mac\saddress='(\S+)'.*\$/\1/p" \
