@@ -29,3 +29,10 @@ make RTE_SDK=$DPDK_BASE_DIR/$DPDK_VERSION RTE_TARGET=$DPDK_TARGET
 
 rm -f /root/dpdk-pktgen
 ln -s $DPDK_BASE_DIR/$PKTGEN/app/app/x86_64-native-linuxapp-gcc/pktgen /root/dpdk-pktgen
+
+cat <<EOF > /etc/dpdk-pktgen-settings.sh
+export DPDK_PKTGEN_DIR=$srcdir/$PKTGEN
+export DPDK_PKTGEN_EXEC=$srcdir/$PKTGEN/app/app/$RTE_TARGET/pktgen
+EOF
+
+exit 0

@@ -16,9 +16,12 @@ sshopts+=( "-o" "StrictHostKeyChecking=no" )
 sshopts+=( "-o" "UserKnownHostsFile=/dev/null" )
 sshcmd="ssh ${sshopts[@]}"
 
+mkdir -p /var/log/ivg || exit -1
+
 echo -e "Installing prerequisites"
 
 $sshcmd $ipaddr "/root/vm_scripts/0_setup.sh" \
+    | tee /var/log/ivg/setup-centos-vm-base.log \
     || exit -1
 
 virsh shutdown $VM_NAME

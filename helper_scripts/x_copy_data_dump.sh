@@ -2,9 +2,17 @@
 
 VM_NAME=$1
 
-ip=$(virsh net-dhcp-leases default | awk -v var="$VM_NAME" '$6 == var {print $5}' | cut -d"/" -f1)
+get_tool="/root/IVG_folder/helper_scripts/get-vm-ipaddr.sh"
+msg=$($get_tool $VM_NAME)
+if [ $? -ne 0 ]; then
+    echo "$msg"
+    exit -1
+fi
+ipaddr="$msg"
 
-scp root@$ip:/root/capture.txt /root/IVG_folder/
-scp root@$ip:/root/parsed_data.txt /root/IVG_folder/
+scp root@$ipaddr:/root/capture.txt /root/IVG_folder \
+    || exit -1
+scp root@$ipaddr:/root/parsed_data.txt /root/IVG_folder \
+    || exit -1
 
-
+exit 0

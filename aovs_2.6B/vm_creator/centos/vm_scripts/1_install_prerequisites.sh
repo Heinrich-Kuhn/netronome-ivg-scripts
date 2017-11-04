@@ -19,11 +19,15 @@ systemctl start avahi-daemon
 pkglist=()
 pkglist+=( "kernel-devel-$(uname -r)" )
 pkglist+=( make gcc gcc-c++ libxml2 glibc )
-pkglist+=( libpcap-devel python wget pciutils )
+pkglist+=( libpcap-devel wget pciutils )
+pkglist+=( python python-pip )
 pkglist+=( numpy )
 
 yum -y install ${pkglist[@]} \
     || exit -1
+
+pip install numpy
+pip install plotly
 
 # Disable SElinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
