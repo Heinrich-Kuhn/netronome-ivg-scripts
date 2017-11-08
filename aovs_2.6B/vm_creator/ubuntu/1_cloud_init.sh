@@ -29,7 +29,7 @@ ssh_authorized_keys:
   - $SSH_KEY
 chpasswd:
   list: |
-    root:changeme
+    root:netronome
   expire: false
 runcmd:
 - sed -i -e '/^Port/s/^.*$/Port 22/' /etc/ssh/sshd_config
