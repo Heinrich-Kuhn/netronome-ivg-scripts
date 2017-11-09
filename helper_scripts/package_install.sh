@@ -6,33 +6,41 @@
 kernel_test=$(setpci -d 19ee:4000 0xFFC.L | sed '2,$d' )
 
 if [ $kernel_test == "ffffffff" ]; then
-  echo "Kernel is valid"
+    echo "Kernel is valid"
 else
-  echo "Kernel is invalid"
-  echo "Locating kernel installation files.."
-  cd /root/
-  ls AOVS_kernel*.tar.gz 2>/dev/null
+    echo "The installed kernel is missing a required patch"
+    echo "Locating kernel installation files.."
+    cd /root
+    ls AOVS_kernel*.tar.gz 2>/dev/null
 
-if [ $? == 2 ]; then
-   echo "Unable to find AOVS_kernel archive in /root/"
-   echo -e "Please do the following \n 1) Download the required kernel archive from support.netronome.com \n 2) Place archive in /root/ and \n 3) Rerun this script"
-   exit 1
-else
-   echo "Installing new kernel.."
-   tar zxvf AOVS_kernel*.tar.gz
-   cd AOVS_ker*
-   rpm -i *.rpm
+    if [ $? == 2 ]; then
+        echo "Unable to find AOVS_kernel archive in /root/"
+        echo "Please do the following"
+        echo " 1) Download the required kernel archive from support.netronome.com"
+        echo " 2) Place archive in /root/"
+        echo " 3) Rerun this script"
+        exit -1
+    else
+        echo "Installing new kernel.."
+        tar zxvf AOVS_kernel*.tar.gz \
+            || exit -1
+        cd AOVS_ker* \
+            || exit -1
+        rpm -i *.rpm
 
-   echo "New kernel has been installed - Please reboot machine"
-   exit 1
-fi 
+        echo "New kernel has been installed - Please reboot machine"
+        exit 0
+    fi 
 fi
 
 script_dir="$(dirname $(readlink -f $0))"
 
-#Check and uninstall KOVS
-cd /usr/local/src/kovs/ovs/
-make uninstall
+kovs_dir="/usr/local/src/kovs/ovs"
+if [ -d $kovs_dir ]; then
+    echo "Uninstall Kernel-OVS"
+    make -C $kovs_dir uninstall \
+        || exit -1
+fi
 
 cd
 #Checking AOVS version
