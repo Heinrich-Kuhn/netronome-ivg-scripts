@@ -140,8 +140,8 @@ else # else $TMUX is not empty, start test.
             
             sleep 2
 
-            tmux send-keys -t 2 "rm -r IVG_folder" C-m
-            tmux send-keys -t 3 "rm -r IVG_folder" C-m
+            tmux send-keys -t 2 "rm -rf IVG_folder" C-m
+            tmux send-keys -t 3 "rm -rf IVG_folder" C-m
 
             tmux send-keys -t 2 "mkdir -p IVG_folder" C-m
             tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
