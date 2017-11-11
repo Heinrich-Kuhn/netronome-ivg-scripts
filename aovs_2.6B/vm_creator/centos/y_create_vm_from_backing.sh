@@ -19,7 +19,10 @@ fi
 
 # When running manually
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
-$IVG_dir/helper_scripts/vm_shutdown_all.sh
+scr="$IVG_dir/helper_scripts/vm_shutdown_all.sh"
+if [ -x $scr ]; then
+    $scr
+fi
 sleep 4
 
 # When running in auto mode

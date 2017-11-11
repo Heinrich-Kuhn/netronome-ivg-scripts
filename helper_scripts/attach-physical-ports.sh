@@ -42,6 +42,16 @@ else
         -- set port $bondname bond_mode=$bondmode \
         -- set port $bondname lacp=$lacpmode \
         || exit -1
+    echo -n "Wait for bond to become active "
+    while : ; do
+        sleep 1
+        enbcnt=$(ovs-appctl bond/show $bondname \
+            | grep -E '^slave nfp.*enabled' \
+            | wc -l)
+        [ $enbcnt -eq ${#iflist[@]} ] && break;
+        echo -n "."
+    done
+    echo " UP"
 fi
 
 exit 0

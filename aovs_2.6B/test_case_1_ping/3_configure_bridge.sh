@@ -12,13 +12,13 @@ done
 ovs-vsctl add-br $BRIDGE \
   || exit -1
 
-# Add physical ports
-$HOME/IVG_folder/helper_scripts/attach-physical-ports.sh $BRIDGE \
-  || exit -1
-
 # Add VF ports
 ovs-vsctl add-port $BRIDGE nfp_v0.1 \
   -- set interface nfp_v0.1 ofport_request=1 \
+  || exit -1
+
+# Add physical ports
+$HOME/IVG_folder/helper_scripts/attach-physical-ports.sh $BRIDGE \
   || exit -1
 
 ovs-vsctl set Open_vSwitch . other_config:max-idle=300000

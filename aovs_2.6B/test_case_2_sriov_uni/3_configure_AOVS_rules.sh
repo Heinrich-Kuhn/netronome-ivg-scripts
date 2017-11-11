@@ -12,16 +12,16 @@ done
 ovs-vsctl add-br $BRIDGE \
   || exit -1
 
-# Add physical ports
-$HOME/IVG_folder/helper_scripts/attach-physical-ports.sh $BRIDGE \
-  || exit -1
-
 # Add VF ports
 ovs-vsctl \
   -- add-port $BRIDGE nfp_v0.41 \
   -- set interface nfp_v0.41 ofport_request=41 \
   -- add-port $BRIDGE nfp_v0.42 \
   -- set interface nfp_v0.42 ofport_request=42 \
+  || exit -1
+
+# Add physical ports
+$HOME/IVG_folder/helper_scripts/attach-physical-ports.sh $BRIDGE \
   || exit -1
 
 #Add NORMAL RULE

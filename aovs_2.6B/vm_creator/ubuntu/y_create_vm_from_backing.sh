@@ -2,18 +2,21 @@
 
 script_dir="$(dirname $(readlink -f $0))"
 
-#When running manually
+# When running manually
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
-$IVG_dir/helper_scripts/vm_shutdown_all.sh
+scr="$IVG_dir/helper_scripts/vm_shutdown_all.sh"
+if [ -x $scr ]; then
+    $scr
+fi
 sleep 4
 
-#When running in auto mode
+# When running in auto mode
 /root/IVG_folder/helper_scripts/vm_shutdown_all.sh
 
 LIBVIRT_DIR=/var/lib/libvirt/images
 basefile=$LIBVIRT_DIR/ubuntu-16.04-server-cloudimg-amd64-disk1.img
 
-#Check if VM name is passed
+# Check if VM name is passed
 if [ -z "$1" ]; then
    echo "ERROR: Please pass a VM name as the first parameter of this script..."
    exit -1
@@ -30,24 +33,32 @@ TYPE="Ethernet"
 EOF
 
 if [ -f /etc/redhat-release ]; then
-  yum -y install libguestfs-tools
+    yum -y install libguestfs-tools \
+        || exit -1
 fi
 
 if [ -f /etc/lsb-release ]; then
-  apt-get -y install libguestfs-tools
+    apt-get -y install libguestfs-tools \
+        || exit -1
 fi
 
 echo "create overlay image"
-overlay=$LIBVIRT_DIR/$VM_NAME.qcow2
-qemu-img create -b $basefile -f qcow2 $overlay
+overlay="$LIBVIRT_DIR/$VM_NAME.qcow2"
+qemu-img create -b $basefile -f qcow2 $overlay \
+    || exit -1
 sleep 5
-guestfish --rw -i -a $overlay write /etc/hostname $VM_NAME
+guestfish --rw -i -a $overlay write /etc/hostname $VM_NAME \
+    || exit -1
+
 echo "create domain"
 
-  cpu_model=$(virsh capabilities | grep -o '<model>.*</model>' | head -1 | sed 's/\(<model>\|<\/model>\)//g')
-  name=$VM_NAME
-  virt-install \
-    --name $name \
+cpu_model=$(virsh capabilities \
+    | grep -o '<model>.*</model>' \
+    | head -1 \
+    | sed 's/\(<model>\|<\/model>\)//g')
+
+virt-install \
+    --name "$VM_NAME" \
     --disk path=${overlay},format=qcow2,bus=virtio,cache=none \
     --ram 4096 \
     --vcpus 4 \
@@ -60,7 +71,8 @@ echo "create domain"
     --os-variant=ubuntu16.04 \
     --noautoconsole \
     --noreboot \
-    --import
+    --import \
+    || exit -1
 
 echo "VM has been created!"
-
+exit 0

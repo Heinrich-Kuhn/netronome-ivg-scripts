@@ -13,16 +13,16 @@ done
 ovs-vsctl add-br $BRIDGE \
   || exit -1
 
-# Add physical ports
-$HOME/IVG_folder/helper_scripts/attach-physical-ports.sh $BRIDGE \
-  || exit -1
-
 #Add VF's
 ovs-vsctl \
   -- add-port $BRIDGE nfp_v0.39 \
   -- set interface nfp_v0.39 ofport_request=39 external_ids:virtio_relay=39 \
   -- add-port $BRIDGE nfp_v0.40 \
   -- set interface nfp_v0.40 ofport_request=40 external_ids:virtio_relay=40 \
+  || exit -1
+
+# Add physical ports
+$HOME/IVG_folder/helper_scripts/attach-physical-ports.sh $BRIDGE \
   || exit -1
 
 ovs-ofctl del-flows $BRIDGE
