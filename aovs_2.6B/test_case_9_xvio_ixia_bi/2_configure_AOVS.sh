@@ -8,9 +8,6 @@ if [ -z "$1" ]; then
    XVIO_CPU_COUNT=$1
 fi
 
-echo "CURRENT configuration"
-cat /etc/netronome.conf
-
 card_node=$(cat /sys/bus/pci/drivers/nfp/0*/numa_node | head -n1 | cut -d " " -f1)
 nfp_cpu_list=$(lscpu -a -p | awk -F',' -v var="$card_node" '$4 == var {printf "%s%s",sep,$1; sep=" "} END{print ""}')
 xvio_cpus_list=()
@@ -50,7 +47,8 @@ fi
 echo "NEW configuration"
 cat /etc/netronome.conf
 
-ovs-ctl status
 ovs-ctl stop
 ovs-ctl start
 ovs-ctl status
+
+exit 0
