@@ -56,15 +56,10 @@ function rsync_duts {
     return 0
 }
 
-case "$CLOUD_IMAGE_OS" in
-  "centos")
-    VM_MGMT_DIR="\$HOME/IVG_folder/vm_creator/centos"
-    ;;
-  *)
+if [ "$CLOUD_IMAGE_OS" == "" ]; then
     # Ubuntu is the default
-    VM_MGMT_DIR="\$HOME/IVG_folder/vm_creator/ubuntu"
-    ;;
-esac
+    CLOUD_IMAGE_OS="ubuntu"
+fi
 
 #######################################################################
 ######################### Main function ###############################
@@ -100,6 +95,8 @@ else # else $TMUX is not empty, start test.
         DUT_CONNECT=0
 
     while :; do
+        # Set the VM creator path
+        VM_MGMT_DIR="\$HOME/IVG_folder/vm_creator/$CLOUD_IMAGE_OS"
         tmux select-pane -t 0
         clear
         echo "Please choose a option"
@@ -116,6 +113,7 @@ else # else $TMUX is not empty, start test.
         echo "k) Setup KOVS"
         echo "10) Test Case 10 (DPDK-pktgen VM-VM uni-directional KOVS VXLAN Intel XL710)"
         echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
+        echo "o) Toggle between VM operating systems (currently $CLOUD_IMAGE_OS)"
         echo "r) Reboot host machines"        
         echo "x) Exit"
         read -p "Enter choice: " OPT
@@ -1058,8 +1056,18 @@ else # else $TMUX is not empty, start test.
             mv capture.txt "KOVS_test_run-$num.txt" 
             fi
             ;;
-    
 
+
+        o)  echo "o) Toggle VM OS"
+
+            case "$CLOUD_IMAGE_OS" in
+                "ubuntu") CLOUD_IMAGE_OS="centos" ;;
+                "centos") CLOUD_IMAGE_OS="ubuntu" ;;
+            esac
+
+            ;;
+
+    
         k)  echo "k) Setup KOVS"
 
             if [ $DUT_CONNECT == 0 ]; then
