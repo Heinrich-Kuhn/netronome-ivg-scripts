@@ -3,7 +3,7 @@
 VXLAN=$1
 
 export DPDK_BASE_DIR=/root
-export PKTGEN=/root/pktgen-dpdk-pktgen-3.3.2
+export PKTGEN=/root/pktgen-3.4.2
 script_dir="$(dirname $(readlink -f $0))"
 cd $PKTGEN
 
