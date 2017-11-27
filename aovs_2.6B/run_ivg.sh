@@ -1529,6 +1529,9 @@ else # else $TMUX is not empty, start test.
             read -p "Enter amount of flows for next test: " FLOW_COUNT
         
             echo $FLOW_COUNT > /root/IVG/aovs_2.6B/flow_setting.txt
+            sleep 1
+            scp -i ~/.ssh/netronome_key /root/IVG/aovs_2.6B/flow_setting.txt root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/
+            scp -i ~/.ssh/netronome_key /root/IVG/aovs_2.6B/flow_setting.txt root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/
             echo "Flows set to $FLOW_COUNT"
 
             sleep 3
