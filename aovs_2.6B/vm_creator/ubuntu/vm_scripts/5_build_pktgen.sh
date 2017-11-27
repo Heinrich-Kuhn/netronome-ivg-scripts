@@ -25,6 +25,11 @@ sed '/DEFAULT_TX_DESC         =/d' -i ./app/pktgen-constants.h
 sed -i "/DEFAULT_PKT_BURST/aDEFAULT_RX_DESC = 512," ./app/pktgen-constants.h
 sed -i "/DEFAULT_PKT_BURST/aDEFAULT_TX_DESC = 1024," ./app/pktgen-constants.h
 
+#Change MAX_MBUFS_PER_PORT * 8 to 32 for more flows per port
+sed -i '/.*number of buffers to support per port.*/c\\tMAX_MBUFS_PER_PORT\t= (DEFAULT_TX_DESC * 32),/* number of buffers to support per port */' /root/$PKTGEN/app/pktgen-constants.h
+
+sleep 1
+
 make RTE_SDK=$DPDK_BASE_DIR/$DPDK_VERSION RTE_TARGET=$DPDK_TARGET
 
 rm -f /root/dpdk-pktgen
