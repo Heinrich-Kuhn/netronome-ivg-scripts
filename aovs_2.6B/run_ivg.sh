@@ -221,6 +221,7 @@ else # else $TMUX is not empty, start test.
                 || exit -1
 
             # Download cloud image to local machine and update DUTs
+            export CLOUD_IMAGE_OS
             $IVG_dir/helper_scripts/download_cloud_image.sh \
                 || exit -1
 
@@ -303,7 +304,7 @@ else # else $TMUX is not empty, start test.
 	    
             #Pause tmux until VM boots up 
             wait_text ALL "WELCOME"
-            
+
             sleep 1
             tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
             tmux send-keys -t 3 "cd vm_scripts/samples/DPDK-pktgen" C-m

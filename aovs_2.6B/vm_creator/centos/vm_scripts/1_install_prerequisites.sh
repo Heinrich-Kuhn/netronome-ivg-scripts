@@ -22,6 +22,7 @@ pkglist+=( make gcc gcc-c++ libxml2 glibc )
 pkglist+=( libpcap-devel wget pciutils )
 pkglist+=( python python-pip )
 pkglist+=( numpy )
+pkglist+=( git )
 
 yum -y install ${pkglist[@]} \
     || exit -1

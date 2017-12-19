@@ -9,6 +9,7 @@
 #/root/vm_scripts/8_build_moongen.sh || exit -1
 /root/vm_scripts/09_setup-hugepages.sh || exit -1
 /root/vm_scripts/10_update_centos_vm.sh || exit -1
+/root/vm_scripts/11_install_nfp_drv_kmods.sh || exit -1
 
 # Use this keyword to identify when the VM has spawned and the
 # scripts have successfully logged into the VM.
