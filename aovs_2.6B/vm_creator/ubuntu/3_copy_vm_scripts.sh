@@ -29,6 +29,14 @@ do
     echo -n "."
 done
 
+sleep 5
+
+if [ ! -z "$ipaddr" ]; then
+    ipaddr=$(arp -an | grep $(virsh dumpxml $VM_NAME | awk -F\' '/mac address/ {print $2}') | egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}')
+fi
+
+sleep 5
+
 echo
 echo "VM IP address: $ipaddr"
 
@@ -36,6 +44,8 @@ echo "Copying setup scripts to VM..."
 
 #Remove VM IP from known Hosts if present
 ssh-keygen -R $ipaddr
+
+sleep 10
 
 #Copy Setup scripts to VM
 scp -o StrictHostKeyChecking=no \

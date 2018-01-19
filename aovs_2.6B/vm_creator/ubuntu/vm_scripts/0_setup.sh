@@ -13,6 +13,14 @@ sed -i '/exit 0/d' /etc/rc.local
 echo "/vm_scripts/samples/2_auto_bind_igb_uio.sh || exit 1" >> /etc/rc.local
 echo "exit 0" >> /etc/rc.local
 
+sed -i 's/.*set.*//g' /etc/netplan/50-cloud-init.yaml
+sed -i 's/.*match.*//g' /etc/netplan/50-cloud-init.yaml
+sed -i 's/.*mac.*//g' /etc/netplan/50-cloud-init.yaml
+
+netplan apply
+
+sleep 1
+
 # Use this keyword to identify when the VM has spawned and the
 # scripts have successfully logged into the VM.
 echo "WELCOME" > /etc/motd
