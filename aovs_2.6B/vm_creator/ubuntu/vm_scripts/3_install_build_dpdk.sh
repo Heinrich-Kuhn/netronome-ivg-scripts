@@ -1,8 +1,8 @@
 #!/bin/bash
 export DPDK_BASE_DIR=/root/
 export DPDK_TARGET=x86_64-native-linuxapp-gcc
-export DPDK_VERSION=dpdk-16.11.3
-export DPDK_EXTRACTED_NAME=dpdk-stable-16.11.3
+export DPDK_VERSION=dpdk-17.05
+export DPDK_EXTRACTED_NAME=dpdk-17.05
 export DPDK_BUILD=$DPDK_BASE_DIR/$DPDK_VERSION/$DPDK_TARGET
 
 NUM_CPUS=$(cat /proc/cpuinfo | grep "processor\\s: " | wc -l)

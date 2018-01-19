@@ -1,10 +1,10 @@
 #!/bin/bash
 
 export DPDK_BASE_DIR=/root
-export DPDK_VERSION=dpdk-stable-16.11.3
+export DPDK_VERSION=dpdk-17.05
 export DPDK_TARGET=x86_64-native-linuxapp-gcc
 export DPDK_BUILD=$DPDK_BASE_DIR/$DPDK_VERSION/$DPDK_TARGET
-export PKTGEN=pktgen-3.4.2
+export PKTGEN=pktgen-3.4.1
 
 echo "Cleaning.."
 if [ -d "$DPDK_BASE_DIR/$PKTGEN" ]; then
@@ -33,7 +33,7 @@ sleep 1
 make RTE_SDK=$DPDK_BASE_DIR/$DPDK_VERSION RTE_TARGET=$DPDK_TARGET
 
 rm -f /root/dpdk-pktgen
-ln -s $DPDK_BASE_DIR/$PKTGEN/app/app/x86_64-native-linuxapp-gcc/pktgen /root/dpdk-pktgen
+ln -s $DPDK_BASE_DIR/$PKTGEN/app/x86_64-native-linuxapp-gcc/pktgen /root/$PKTGEN/dpdk-pktgen
 
 cat <<EOF > /etc/dpdk-pktgen-settings.sh
 export DPDK_PKTGEN_DIR=$srcdir/$PKTGEN

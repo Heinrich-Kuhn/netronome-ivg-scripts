@@ -32,3 +32,6 @@ ovs-ofctl -O Openflow13 replace-flows --bundle $BRIDGE $new_file
 sleep 1
 
 ovs-ofctl -O Openflow13 add-flow $BRIDGE dl_type=0x0806,actions=NORMAL
+
+ovs-ofctl -O Openflow13 add-flow $BRIDGE in_port=41,actions=1
+ovs-ofctl -O Openflow13 add-flow $BRIDGE in_port=42,actions=1
