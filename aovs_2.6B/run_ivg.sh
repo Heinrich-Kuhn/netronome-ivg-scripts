@@ -105,6 +105,7 @@ case "$CLOUD_IMAGE_OS" in
 esac
 
 SOFTWARE="OVS_TC"
+CLOUD_IMAGE_OS="ubuntu"
 
 #######################################################################
 ######################### Main function ###############################
@@ -151,10 +152,9 @@ else # else $TMUX is not empty, start test.
 
         echo "Please choose a option"
         echo ""
-        echo "O) Toggle between AOVS / OVS_TC \t Setting: $SOFTWARE)"
-        echo "o) Toggle between VM operating systems \t Setting: $CLOUD_IMAGE_OS)"
-        echo "Flow count currently set for tests: $flow"
-        echo "f) Change amount of flows"
+        echo -e "O) Toggle between AOVS / OVS_TC \t Setting: $SOFTWARE"
+        echo -e "o) Toggle between VM operating systems \t Setting: $CLOUD_IMAGE_OS"
+        echo -e "f) Change flow count set for tests: \t Setting: $flow"
         echo ""
         echo "a) Connect to DUT's"
         echo "b) Install/Re-install Agilio-OVS"
