@@ -23,3 +23,5 @@ rm /var/lib/libvirt/images/user_data_1.img
 echo
 echo -e "${GREEN}Base image created!${NC}"
 echo
+
+exit 0

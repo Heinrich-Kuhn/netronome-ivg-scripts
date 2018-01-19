@@ -1,38 +1,46 @@
 #!/bin/bash
 
 #Start VM
-VM_NAME=ubuntu_backing
-script_dir="$(dirname $(readlink -f $0))"
-virsh start $VM_NAME
-echo -e "${GREEN}VM is starting...${NC}"
 
-echo "Adding 60 second sleep while VM boots up"
+VM_NAME="ubuntu_backing"
+script_dir="$(dirname $(readlink -f $0))"
+
+virsh start $VM_NAME \
+    || exit -1
+
+echo -n "Waiting for VM to boot "
 counter=0
 while [ $counter -lt 12 ];
 do
-  sleep 5
-  counter=$((counter+1))
-  echo "counter: $counter"
-  ip=$(arp -an | grep $(virsh dumpxml $VM_NAME | awk -F\' '/mac address/ {print $2}')| egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}')
-  echo "ip: $ip"
-  if [ ! -z "$ip" ]; then
-      nc -w 2 -v $ip 22 </dev/null
-      if [ $? -eq 0 ]; then
-      counter=$((counter+12))
-      echo "end"
+    if [ $counter -gt 60 ]; then
+        echo "ERROR: VM did not boot up"
+        exit -1
     fi
-  fi
+    ipaddr=$(arp -an \
+        | grep $(virsh dumpxml $VM_NAME \
+            | awk -F\' '/mac address/ {print $2}') \
+        | egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}')
+    if [ ! -z "$ipaddr" ]; then
+        nc -w 2 -v $ipaddr 22 < /dev/null > /dev/null 2>&1 \
+            && break
+    fi
+    sleep 1
+    counter=$((counter+1))
+    echo -n "."
 done
-sleep 2
+
+echo
+echo "VM IP address: $ipaddr"
 
 echo "Copying setup scripts to VM..."
 
-#Get VM IP
-ip=$(arp -an | grep $(virsh dumpxml $VM_NAME | awk -F\' '/mac address/ {print $2}')| egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}')
-
 #Remove VM IP from known Hosts if present
-ssh-keygen -R $ip
+ssh-keygen -R $ipaddr
 
 #Copy Setup scripts to VM
-scp -o StrictHostKeyChecking=no -r $script_dir/vm_scripts root@$ip:/root/
+scp -o StrictHostKeyChecking=no \
+    -r $script_dir/vm_scripts \
+    root@$ipaddr:/root/ \
+    || exit -1
 
+exit 0

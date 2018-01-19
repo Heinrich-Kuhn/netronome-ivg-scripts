@@ -8,8 +8,8 @@ NC='\033[0m'
 RED='\033[0;31m'
 
 
-UBUNTU_CLOUD_IMAGE=ubuntu-16.04-server-cloudimg-amd64-disk1.img
-UBUNTU_CLOUD_IMAGE_URL=https://cloud-images.ubuntu.com/releases/16.04/release/$UBUNTU_CLOUD_IMAGE
+UBUNTU_CLOUD_IMAGE=ubuntu-17.10-server-cloudimg-amd64.img
+UBUNTU_CLOUD_IMAGE_URL=https://cloud-images.ubuntu.com/releases/17.10/release/$UBUNTU_CLOUD_IMAGE
 cd /var/lib/libvirt/images/
 
 if [ -f $UBUNTU_CLOUD_IMAGE.copy ]; then
@@ -24,10 +24,10 @@ if [ -f $UBUNTU_CLOUD_IMAGE.copy ]; then
         fi
 else
 	cd /var/lib/libvirt/images/
-	echo -e "${GREEN}Downloading ubuntu-16.04-server-cloudimg-amd64-disk1.img to /var/lib/libvirt/images/${NC}"
+	echo -e "${GREEN}Downloading ubuntu-17.10-server-cloudimg-amd64.img to /var/lib/libvirt/images/${NC}"
 	wget --timestamping $UBUNTU_CLOUD_IMAGE_URL
 	echo -e "${GREEN}Creating copy of ubuntu-cloud-image${NC}"
-	cp ubuntu-16.04-server-cloudimg-amd64-disk1.img ubuntu-16.04-server-cloudimg-amd64-disk1.img.copy
+	cp ubuntu-17.10-server-cloudimg-amd64.img ubuntu-17.10-server-cloudimg-amd64.img.copy
 fi
 
 
