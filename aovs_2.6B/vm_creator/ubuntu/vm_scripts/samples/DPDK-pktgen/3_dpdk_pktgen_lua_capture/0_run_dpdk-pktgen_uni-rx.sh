@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export DPDK_BASE_DIR=/root
-export PKTGEN=/root/pktgen-3.4.2
+export PKTGEN=/root/pktgen-3.4.1
 script_dir="$(dirname $(readlink -f $0))"
 cd $PKTGEN
 
@@ -48,7 +48,7 @@ echo "mapping: $mapping"
 
 #mapping="-m [1:2].0 -m [3:4].1 -m [5:6].2"
 
-/root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_receiver.lua
+$PKTGEN/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_receiver.lua
 
 reset
 

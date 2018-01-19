@@ -1,5 +1,7 @@
 #!/bin/bash
 
+WAIT_AFTER_CONFIG=$1
+
 SESSIONNAME=IVG
 script_dir="$(dirname $(readlink -f $0))"
 export IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
@@ -10,11 +12,13 @@ echo "64000" > /root/IVG/aovs_2.6B/flow_setting.txt
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
 apt-get install -y tmux
+apt-get install -y bc
 fi
 
 grep  ID_LIKE /etc/os-release | grep -q fedora
 if [[ $? -eq 0 ]]; then
 yum -y install tmux
+yum -y install bc
 fi
 
 #Some colors
@@ -69,10 +73,10 @@ function flows_config {
     flows=$(( $flows/2 ))
 
     if [[ "$flows" -lt 1 ]]; then
-        skip=1
+        flows=1
     fi
     if [[ "$flows" -gt 64000 ]]; then
-        skip=64000
+        flows=64000
     fi
 
     flows_tot=$(echo "obase=16; $flows" | bc)
@@ -99,6 +103,8 @@ case "$CLOUD_IMAGE_OS" in
     VM_MGMT_DIR="\$HOME/IVG_folder/vm_creator/ubuntu"
     ;;
 esac
+
+SOFTWARE="OVS_TC"
 
 #######################################################################
 ######################### Main function ###############################
@@ -138,14 +144,21 @@ else # else $TMUX is not empty, start test.
         tmux select-pane -t 0
         clear
 
+        #Set Vm Creator path
+        VM_MGMT_DIR="\$HOME/IVG_folder/vm_creator/$CLOUD_IMAGE_OS"
+        #Set flow count for tests
         flow=$(cat /root/IVG/aovs_2.6B/flow_setting.txt)
 
         echo "Please choose a option"
         echo ""
+        echo "O) Toggle between AOVS / OVS_TC \t Setting: $SOFTWARE)"
+        echo "o) Toggle between VM operating systems \t Setting: $CLOUD_IMAGE_OS)"
         echo "Flow count currently set for tests: $flow"
+        echo "f) Change amount of flows"
         echo ""
         echo "a) Connect to DUT's"
         echo "b) Install/Re-install Agilio-OVS"
+        echo "B) Install OVS-TC"
         echo "c) Create backing image for test VM's (Only done once)"
         echo "1) Test Case 1 (Simple ping between hosts)"
         echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
@@ -154,13 +167,12 @@ else # else $TMUX is not empty, start test.
         echo "6) Test case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
         echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO VXLAN)"
         echo "8) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
-        echo "k) Setup KOVS"
+        echo ""
         echo "10) Test Case 10 (DPDK-pktgen VM-VM uni-directional KOVS VXLAN Intel XL710)"
         echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
         echo "r) Reboot host machines"
         echo "d) Set up DPDK OVS"
         echo "k) Set up KOVS"        
-        echo "f) Set amount of flows"
         echo "x) Exit"
         echo ""
         read -p "Enter choice: " OPT
@@ -221,7 +233,15 @@ else # else $TMUX is not empty, start test.
 
             scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/dut_1.log $IVG_dir/aovs_2.6B/logs/
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/dut_2.log $IVG_dir/aovs_2.6B/logs/
-            
+
+            sleep 1
+
+            echo 64000 > $IVG_dir/aovs_2.6B/flow_setting.txt
+
+            sleep 1
+
+            scp -i ~/.ssh/netronome_key $IVG_dir/aovs_2.6B/flow_setting.txt root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/
+            scp -i ~/.ssh/netronome_key $IVG_dir/aovs_2.6B/flow_setting.txt root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/
             
             DUT_CONNECT=1
             ;;
@@ -284,6 +304,15 @@ else # else $TMUX is not empty, start test.
 
             ;;
 
+        B)  echo "B) Install OVS-TC"
+
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh" C-m
+
+            wait_text 2 "OVS_TC installation complete"
+            wait_text 3 "OVS_TC installation complete"
+            ;;
+
         c)  echo "c) Create backing image for test VM's (Only done once)"
 
             #_#_#_#_#_START LOG_#_#_#_#_#
@@ -306,6 +335,7 @@ else # else $TMUX is not empty, start test.
                 || exit -1
 
             # Download cloud image to local machine and update DUTs
+            export CLOUD_IMAGE_OS
             $IVG_dir/helper_scripts/download_cloud_image.sh \
                 || exit -1
 
@@ -435,71 +465,77 @@ else # else $TMUX is not empty, start test.
 
             flows_config
 
-            tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
+            if [ -z "$WAIT_AFTER_CONFIG" ]; then
+
+                tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
-            sleep 5
-            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
+                sleep 5
+                tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
             
-            #CPU meas start
-            echo -e "${GREEN}* Starting CPU measurement${NC}"
-            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_2
-            ssh -tt -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_2
+                #CPU meas start
+                echo -e "${GREEN}* Starting CPU measurement${NC}"
+                ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_2
+                ssh -tt -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_2
             
 
-            echo -e "${GREEN}* Running test case 2 - SRIOV DPDK-pktgen${NC}"
-            sleep 5
-            wait_text 3 "Test run complete" > /dev/null
+                echo -e "${GREEN}* Running test case 2 - SRIOV DPDK-pktgen${NC}"
+                sleep 5
+                wait_text 3 "Test run complete" > /dev/null
 
 
-            # Ouput flow count to text file
-            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+                # Ouput flow count to text file
+                flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
 
-            #CPU meas end
-            echo -e "${GREEN}* Stopping CPU measurement${NC}"
-            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_2
+                #CPU meas end
+                echo -e "${GREEN}* Stopping CPU measurement${NC}"
+                ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_2
+                
             
+                tmux send-keys -t 3 "./parse_and_plot.py" C-m
+                wait_text 3 "Data parse complete!" > /dev/null
+                sleep 1
+                tmux send-keys -t 2 "exit" C-m
+                tmux send-keys -t 3 "exit" C-m
             
-            tmux send-keys -t 3 "./parse_and_plot.py" C-m
-            wait_text 3 "Data parse complete!" > /dev/null
-            sleep 1
-            tmux send-keys -t 2 "exit" C-m
-            tmux send-keys -t 3 "exit" C-m
+                echo -e "${GREEN}* Copying data...${NC}"
+                sleep 1
+                tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
             
-            echo -e "${GREEN}* Copying data...${NC}"
-            sleep 1
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
-            
-            sleep 2
-            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
-            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
-            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.csv $script_dir
-            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.html $script_dir
-            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2_flow_count.txt $script_dir
-            sleep 2
+                sleep 2
+                scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
+                scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
+                scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.csv $script_dir
+                scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.html $script_dir
+                scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2_flow_count.txt $script_dir
+                sleep 2
 
             
-            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+                tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+                tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+                
             
-            
-            if [[ ! -e "parsed_data.txt" ]]; then
-               mv parsed_data.txt "SRIOV_test_run_parsed-0-f$flow_count.txt"
+                if [[ ! -e "parsed_data.txt" ]]; then
+                    mv parsed_data.txt "SRIOV_test_run_parsed-0-f$flow_count.txt"
+                else
+                    num=1
+                    while [[ -e "SRIOV_test_run_parsed-$num-f*.txt" ]]; do
+                        (( num++ ))
+                    done
+                    mv parsed_data.txt "SRIOV_test_run_parsed-$num-f$flow_count.txt" 
+                fi
+
+                if [[ ! -e "capture.txt" ]]; then
+                    mv capture.txt "SRIOV_test_run-0-f$flow_count.txt"
+                else
+                    num=1
+                    while [[ -e "SRIOV_test_run-$num-f*.txt" ]]; do
+                        (( num++ ))
+                    done
+                    mv capture.txt "SRIOV_test_run-$num-f$flow_count.txt" 
+                fi
+
             else
-               num=1
-               while [[ -e "SRIOV_test_run_parsed-$num-f*.txt" ]]; do
-                  (( num++ ))
-               done
-               mv parsed_data.txt "SRIOV_test_run_parsed-$num-f$flow_count.txt" 
-            fi
-
-            if [[ ! -e "capture.txt" ]]; then
-               mv capture.txt "SRIOV_test_run-0-f$flow_count.txt"
-            else
-               num=1
-               while [[ -e "SRIOV_test_run-$num-f*.txt" ]]; do
-                  (( num++ ))
-               done
-               mv capture.txt "SRIOV_test_run-$num-f$flow_count.txt" 
+                echo "Test Configured"
             fi
 
             sleep 1
@@ -1438,6 +1474,26 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_2.log $IVG_dir/aovs_2.6B/logs/
             ;;
 
+
+        o)  echo "o) Toggle VM OS"
+
+            case "$CLOUD_IMAGE_OS" in
+                "ubuntu") CLOUD_IMAGE_OS="centos" ;;
+                "centos") CLOUD_IMAGE_OS="ubuntu" ;;
+            esac
+
+            ;;
+
+        O)  echo "O) Toggle Host Software"
+
+            case "$SOFTWARE" in
+                "OVS_TC") SOFTWARE="AOVS" ;;
+                "AOVS") SOFTWARE="OVS_TC" ;;
+                "None") SOFTWARE="OVS_TC" ;;
+            esac
+
+            ;;
+
         k)  echo "k) Setup KOVS"
 
              #_#_#_#_#_START LOG_#_#_#_#_#
@@ -1532,6 +1588,7 @@ else # else $TMUX is not empty, start test.
             sleep 1
             scp -i ~/.ssh/netronome_key /root/IVG/aovs_2.6B/flow_setting.txt root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/
             scp -i ~/.ssh/netronome_key /root/IVG/aovs_2.6B/flow_setting.txt root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/
+            sleep 1
             echo "Flows set to $FLOW_COUNT"
 
             sleep 3
