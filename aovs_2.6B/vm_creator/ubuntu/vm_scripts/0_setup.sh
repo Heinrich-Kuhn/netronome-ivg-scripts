@@ -8,6 +8,7 @@
 #/root/vm_scripts/7_install_netperf.sh
 #/root/vm_scripts/8_build_moongen.sh
 #/root/vm_scripts/11_install_nfp_drv_kmods.sh || exit -1
+/root/vm_scripts/10_build_l3fwd.sh
 
 sed -i '/exit 0/d' /etc/rc.local
 echo "/vm_scripts/samples/2_auto_bind_igb_uio.sh || exit 1" >> /etc/rc.local
