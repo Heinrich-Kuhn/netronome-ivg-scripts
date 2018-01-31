@@ -106,7 +106,7 @@ sleep 1
 for (( c=1; c<=$VM_COUNT; c++ ))
 do
 
-    VM_NAME="$VM_BASE_NAME-$c"
+    VM_NAME="$VM_BASE_NAME$c"
     echo $VM_NAME
     echo $i
 
@@ -125,7 +125,7 @@ do
     echo -e "VF $VF_NUM_2 \t $VF_2 \t $VF_NAME_2"
 
     # Create VM instance c
-    $base_dir/vm_creator/$VM_OS/y_create_vm_from_backing.sh  $VM_NAME
+    $base_dir/aovs_2.6B/vm_creator/$VM_OS/y_create_vm_from_backing.sh  $VM_NAME
 
 
 
