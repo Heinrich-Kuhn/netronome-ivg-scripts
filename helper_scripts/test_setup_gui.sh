@@ -75,6 +75,10 @@ function general-ovs-config()
 
 #--------------------------------------------------------------
 
+$base_dir/helper_scripts/configure_hugepages.sh
+
+sleep 1
+
 $base_dir/helper_scripts/stop_ovs_tc.sh
 
 sleep 1
@@ -178,7 +182,7 @@ do
 
     virsh start $VM_NAME || exit -1
 
-    /root/IVG/helper_scripts/await-vm-ipaddr.sh $VM_NAME || exit -1
+    /root/IVG/helper_scripts/await-vm-ipaddr_gui.sh $VM_NAME || exit -1
 
     ipaddr=$(/root/IVG/helper_scripts/get-vm-ipaddr.sh $VM_NAME)
 
