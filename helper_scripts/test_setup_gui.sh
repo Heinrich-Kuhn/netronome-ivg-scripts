@@ -191,7 +191,9 @@ do
 
     ssh -o StrictHostKeyChecking=no $ipaddr poweroff
 
-    /root/IVG/helper_scripts/vm_shutdown_all.sh
+    while [[ -z $(virsh list --all | grep "$VM_NAME" | grep "shut off") ]]; do
+        sleep 1
+    done
 
     sleep 10
 
