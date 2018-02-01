@@ -207,7 +207,12 @@ for (( c=1; c<=$VM_COUNT; c++ ))
 do
 
     VM_NAME="$VM_BASE_NAME$c"
+    
+    virsh shutdown $VM_NAME || true
+    sleep 5
     sed ':again;$!N;$!b again; s/{[^}]*'$VM_NAME'[^}]*},*//g' -i /var/lib/libvirt/dnsmasq/virbr0.status
+    sleep 3
+
     echo $VM_NAME
     echo $i
 
