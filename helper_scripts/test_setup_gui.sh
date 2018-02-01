@@ -195,7 +195,17 @@ do
         sleep 1
     done
 
-    sleep 10
+done
+
+rm /var/lib/libvirt/dnsmasq/virbr0.status
+touch /var/lib/libvirt/dnsmasq/virbr0.status
+
+for (( c=1; c<=$VM_COUNT; c++ ))
+do
+
+    VM_NAME="$VM_BASE_NAME$c"
+    echo $VM_NAME
+    echo $i
 
     virsh start $VM_NAME || exit -1
 
@@ -212,7 +222,6 @@ do
 
 
     echo "VM $c setup done"
-
 
 done
 
