@@ -114,7 +114,10 @@ do
     echo $VM_NAME
     echo $i
 
+    virsh shutdown $VM_NAME || true
     virsh undefine $VM_NAME || true
+
+    sed ':again;$!N;$!b again; s/{[^}]*'$VM_NAME'[^}]*},*//g' -i /var/lib/libvirt/dnsmasq/virbr0.status
 
     let "VF_NUM_1 = $c * 2"
     let "VF_NUM_2 = ( $c * 2 ) + 1"
