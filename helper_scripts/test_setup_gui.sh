@@ -200,8 +200,8 @@ do
 
 done
 
-#rm /var/lib/libvirt/dnsmasq/virbr0.status
-#touch /var/lib/libvirt/dnsmasq/virbr0.status
+rm /var/lib/libvirt/dnsmasq/virbr0.status
+touch /var/lib/libvirt/dnsmasq/virbr0.status
 
 for (( c=1; c<=$VM_COUNT; c++ ))
 do
