@@ -106,8 +106,8 @@ fi
 ovs-vsctl add-br $BRIDGE_NAME
 sleep 1
 
-#virsh net-destory default
-#virsh net-start default
+virsh net-destory default
+virsh net-start default
 
 for (( c=1; c<=$VM_COUNT; c++ ))
 do
