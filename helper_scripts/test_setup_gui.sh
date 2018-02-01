@@ -106,6 +106,8 @@ fi
 ovs-vsctl add-br $BRIDGE_NAME
 sleep 1
 
+#virsh net-destory default
+#virsh net-start default
 
 for (( c=1; c<=$VM_COUNT; c++ ))
 do
@@ -202,6 +204,9 @@ done
 
 rm /var/lib/libvirt/dnsmasq/virbr0.status
 touch /var/lib/libvirt/dnsmasq/virbr0.status
+
+virsh net-destroy default
+virsh net-start default
 
 for (( c=1; c<=$VM_COUNT; c++ ))
 do
