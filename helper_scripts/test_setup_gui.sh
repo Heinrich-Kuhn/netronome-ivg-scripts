@@ -197,13 +197,14 @@ do
 
 done
 
-rm /var/lib/libvirt/dnsmasq/virbr0.status
-touch /var/lib/libvirt/dnsmasq/virbr0.status
+#rm /var/lib/libvirt/dnsmasq/virbr0.status
+#touch /var/lib/libvirt/dnsmasq/virbr0.status
 
 for (( c=1; c<=$VM_COUNT; c++ ))
 do
 
     VM_NAME="$VM_BASE_NAME$c"
+    sed ':again;$!N;$!b again; s/{[^}]*'$VM_NAME'[^}]*},*//g' -i /var/lib/libvirt/dnsmasq/virbr0.status
     echo $VM_NAME
     echo $i
 
