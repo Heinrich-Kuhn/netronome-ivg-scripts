@@ -186,17 +186,14 @@ do
 
     ipaddr=$(/root/IVG/helper_scripts/get-vm-ipaddr.sh $VM_NAME)
 
-    sleep 1
-
-    ssh -o StrictHostKeyChecking=no $ipaddr /root/vm_scripts/samples/DPDK-pktgen/1_configure_hugepages.sh
-    ssh -o StrictHostKeyChecking=no $ipaddr /root/vm_scripts/samples/DPDK-pktgen/2_auto_bind_igb_uio.sh
-
     ssh -o StrictHostKeyChecking=no $ipaddr rm /etc/machine-id
     ssh -o StrictHostKeyChecking=no $ipaddr systemd-machine-id-setup
 
     ssh -o StrictHostKeyChecking=no $ipaddr poweroff
 
-    sleep 5
+    /root/IVG/helper_scripts/vm_shutdown_all.sh
+
+    sleep 10
 
     virsh start $VM_NAME || exit -1
 
@@ -205,6 +202,11 @@ do
     ipaddr=$(/root/IVG/helper_scripts/get-vm-ipaddr.sh $VM_NAME)
 
     sleep 1
+
+    sleep 1
+
+    ssh -o StrictHostKeyChecking=no $ipaddr /root/vm_scripts/samples/DPDK-pktgen/1_configure_hugepages.sh
+    ssh -o StrictHostKeyChecking=no $ipaddr /root/vm_scripts/samples/DPDK-pktgen/2_auto_bind_igb_uio.sh
 
 
     echo "VM $c setup done"
