@@ -23,7 +23,7 @@ cd $DPDK_BASE_DIR/$DPDK_EXTRACTED_NAME
 # disable shared libraries
 sed 's/CONFIG_RTE_BUILD_SHARED_LIB=y/CONFIG_RTE_BUILD_SHARED_LIB=n/' -i config/common_base
 # disable all PMD
-sed -E "s/(CONFIG.*PMD=)(.)/\1n/g" -i config/common_base
+#sed -E "s/(CONFIG.*PMD=)(.)/\1n/g" -i config/common_base
 # enable only NFP and VIRTIO PMD
 sed 's/CONFIG_RTE_LIBRTE_NFP_PMD=n/CONFIG_RTE_LIBRTE_NFP_PMD=y/' -i config/common_base
 sed 's/CONFIG_RTE_LIBRTE_VIRTIO_PMD=n/CONFIG_RTE_LIBRTE_VIRTIO_PMD=y/' -i config/common_base

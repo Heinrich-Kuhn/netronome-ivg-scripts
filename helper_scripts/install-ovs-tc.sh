@@ -12,8 +12,8 @@ if [[ $cur_kernel_1 -gt 3 ]] && [[ $cur_kernel_2 -gt 12 ]] && [[ $cur_kernel_3 -
 else
     echo "Old Kernel"
     echo "Please update kernel with the appropriate script:"
-    echo "/root/IVG_folder/helper_scripts/kernel_install-4.13.12-ubuntu.sh"
-    echo "/root/IVG_folder/helper_scripts/kernel_install-4.14.13-ubuntu.sh"
+    echo "/root/IVG/helper_scripts/kernel_install-4.13.12-ubuntu.sh"
+    echo "/root/IVG/helper_scripts/kernel_install-4.14.13-ubuntu.sh"
     sleep 3
     kernel_pass=0
 fi
@@ -82,7 +82,7 @@ if [[ $kernel_pass -eq 1 ]]; then
     fi
 
     #CONFIGURE GRUB
-    /root/IVG_folder/helper_scripts/configure_grub.sh
+    /root/IVG/helper_scripts/configure_grub.sh
 
     #KERNEL OVS INSTALL
     cd /root

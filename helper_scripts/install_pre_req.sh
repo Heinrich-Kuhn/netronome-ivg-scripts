@@ -23,6 +23,7 @@ if [[ $? -eq 0 ]]; then
   #VM pre-req
   apt-get -y install libguestfs-tools qemu-kvm libvirt-bin qemu-kvm libvirt-bin
 
+fi
 
 grep  ID_LIKE /etc/os-release | grep -q fedora
 if [[ $? -eq 0 ]]; then
@@ -58,3 +59,5 @@ if [[ $? -eq 0 ]]; then
   sed -E 's/(SELINUX=).*/\1disabled/g' -i /etc/selinux/config
 
   yum -y install centos-release-qemu-ev.noarch qemu-kvm-ev libvirt libvirt-python virt-install
+
+fi
