@@ -14,6 +14,7 @@ VM_CPUS=$1          # amount of cpus per vm
 VM_COUNT=$2         # amount of vms on each host
 VM_BASE_NAME=$3     # base name for vms
 VM_OS=$4            # centos or ubuntu
+DUT_NUM=$5          # to specify IPs to assign to VMs
 
 #-------------------------------------------------------------
 
@@ -94,6 +95,8 @@ sleep 1
 general-ovs-config
 clean-ovs-bridges
 
+
+
 PCI=$(lspci -d 19ee: | grep 4000 | cut -d ' ' -f1)
 
 if [[ "$PCI" == *":"*":"*"."* ]]; then
@@ -105,6 +108,27 @@ fi
 
 ovs-vsctl add-br $BRIDGE_NAME
 sleep 1
+
+
+# Set PF up
+
+repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
+echo "pf0 = $repr_pf0"
+ip link set $repr_pf0 up
+
+repr_p0=$(find_repr p0 | rev | cut -d "/" -f 1 | rev)
+echo "p0 = $repr_p0"
+ip link set $repr_p0 up
+
+ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
+
+ovs-ofctl del-flows $BRIDGE_NAME
+#ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
+ovs-ofctl -O Openflow13 add-flow $BRIDGE dl_type=0x0806,actions=NORMAL
+
+ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
+
+
 
 virsh net-destory default
 virsh net-start default
@@ -145,6 +169,19 @@ do
     echo "Add $temp_repr_vf1 & temp_repr_vf2 to $BRIDGE_NAME"
     ovs-vsctl add-port $BRIDGE_NAME $temp_repr_vf1 -- set interface $temp_repr_vf1 ofport_request=$VF_NUM_1
     ovs-vsctl add-port $BRIDGE_NAME $temp_repr_vf2 -- set interface $temp_repr_vf2 ofport_request=$VF_NUM_2
+
+    if [[ DUT_NUM == 0 ]]; then
+      ovs-ofctl add-flow $BRIDGE_NAME dl_type=0x0800,nw_dst=10.10.$c.1,actions=$VF_NUM_1 
+      ovs-ofctl add-flow $BRIDGE_NAME dl_type=0x0800,nw_dst=10.10.$c.2,actions=$VF_NUM_2 
+    elif [[ DUT_NUM == 1 ]]; then
+      ovs-ofctl add-flow $BRIDGE_NAME dl_type=0x0800,nw_dst=10.10.$c.3,actions=$VF_NUM_1 
+      ovs-ofctl add-flow $BRIDGE_NAME dl_type=0x0800,nw_dst=10.10.$c.4,actions=$VF_NUM_2 
+
+    fi
+
+    ovs-ofctl add-flow $BRIDGE_NAME in_port=$VF_NUM_1,actions=1
+    ovs-ofctl add-flow $BRIDGE_NAME in_port=$VF_NUM_2,actions=1
+
 
     ip link set $temp_repr_vf1 up
     ip link set $temp_repr_vf2 up
@@ -240,19 +277,24 @@ do
 done
 
 # Set PF up
+#
+#repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
+#echo "pf0 = $repr_pf0"
+#ip link set $repr_pf0 up
 
-repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
-echo "pf0 = $repr_pf0"
-ip link set $repr_pf0 up
+#repr_p0=$(find_repr p0 | rev | cut -d "/" -f 1 | rev)
+#echo "p0 = $repr_p0"
+#ip link set $repr_p0 up
 
-repr_p0=$(find_repr p0 | rev | cut -d "/" -f 1 | rev)
-echo "p0 = $repr_p0"
-ip link set $repr_p0 up
+#ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
 
-ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
+#ovs-ofctl del-flows $BRIDGE_NAME
+#ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
+#ovs-ofctl -O Openflow13 add-flow $BRIDGE dl_type=0x0806,actions=NORMAL
 
-ovs-ofctl del-flows $BRIDGE_NAME
-ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
+
+
+
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME
