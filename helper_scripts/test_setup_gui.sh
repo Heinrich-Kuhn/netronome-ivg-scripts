@@ -124,10 +124,7 @@ ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_reques
 
 ovs-ofctl del-flows $BRIDGE_NAME
 #ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
-ovs-ofctl -O Openflow13 add-flow $BRIDGE dl_type=0x0806,actions=NORMAL
-
-ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
-
+#ovs-ofctl -O Openflow13 add-flow $BRIDGE_NAME dl_type=0x0806,actions=NORMAL
 
 
 virsh net-destory default
@@ -171,8 +168,13 @@ do
     ovs-vsctl add-port $BRIDGE_NAME $temp_repr_vf2 -- set interface $temp_repr_vf2 ofport_request=$VF_NUM_2
 
     if [[ DUT_NUM == 0 ]]; then
-      ovs-ofctl add-flow $BRIDGE_NAME dl_type=0x0800,nw_dst=10.10.$c.1,actions=$VF_NUM_1 
-      ovs-ofctl add-flow $BRIDGE_NAME dl_type=0x0800,nw_dst=10.10.$c.2,actions=$VF_NUM_2 
+
+      ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0800,nw_dst=10.10.$c.1,actions=$VF_NUM_1
+      ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0806,nw_dst=10.10.$c.1,actions=$VF_NUM_1
+    
+      ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0800,nw_dst=10.10.$c.2,actions=$VF_NUM_2
+      ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0806,nw_dst=10.10.$c.2,actions=$VF_NUM_2
+
     elif [[ DUT_NUM == 1 ]]; then
       ovs-ofctl add-flow $BRIDGE_NAME dl_type=0x0800,nw_dst=10.10.$c.3,actions=$VF_NUM_1 
       ovs-ofctl add-flow $BRIDGE_NAME dl_type=0x0800,nw_dst=10.10.$c.4,actions=$VF_NUM_2 

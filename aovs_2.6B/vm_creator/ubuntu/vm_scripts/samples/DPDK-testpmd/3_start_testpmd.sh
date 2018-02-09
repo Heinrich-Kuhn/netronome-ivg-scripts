@@ -4,6 +4,8 @@ DPDK_VERSION=dpdk-17.05
 
 DIRECTORY=$HOME/$DPDK_VERSION/x86_64-native-linuxapp-gcc/app
 
+pkill testpmd -9
+
 ln -s $DIRECTORY/testpmd $HOME
 
 cd
