@@ -27,6 +27,8 @@ if [[ "$5" == "AOVS" ]]; then
 elif [[ "$5" == "OVS_TC" ]]; then
     $script_dir/1_bind_VFIO-PCI_driver_TC.sh $VM_NAME $VM_CPU_COUNT $BONDBR_DEST_IP $BONDBR_SRC_IP
 
+fi
+
 $script_dir/5_vm_pinning.sh $VM_NAME $VM_CPU_COUNT
 
 echo "DONE($(basename $0))"
