@@ -57,7 +57,7 @@ echo "VF2_PCI_ADDRESS: $VF2_PCI_ADDRESS"
 
 #------------------------------------------------------------------------------------------------------
 
-sed -e -i "s#^VIRTIOFWD_STATIC_VFS=.*#VIRTIOFWD_STATIC_VFS=($VF1_PCI_ADDRESS=21 $VF2_PCI_ADDRESS=22)"
+sed "s#^VIRTIOFWD_STATIC_VFS=.*#VIRTIOFWD_STATIC_VFS=($VF1_PCI_ADDRESS=1 $VF2_PCI_ADDRESS=2)" -i /etc/default/virtio-forarder
 
 ## BIND IGB_UIO DRIVER
 interface_list=(${VF1_PCI_ADDRESS} ${VF2_PCI_ADDRESS})
