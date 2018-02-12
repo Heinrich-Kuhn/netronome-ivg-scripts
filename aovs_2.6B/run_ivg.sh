@@ -1,7 +1,5 @@
 #!/bin/bash
 
-WAIT_AFTER_CONFIG=$1
-
 SESSIONNAME=IVG
 script_dir="$(dirname $(readlink -f $0))"
 export IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
@@ -465,77 +463,73 @@ else # else $TMUX is not empty, start test.
 
             flows_config
 
-            if [ -z "$WAIT_AFTER_CONFIG" ]; then
+        
 
-                tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
+            tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
             
-                sleep 5
-                tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
+            sleep 5
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
             
-                #CPU meas start
-                echo -e "${GREEN}* Starting CPU measurement${NC}"
-                ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_2
-                ssh -tt -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_2
+            #CPU meas start
+            echo -e "${GREEN}* Starting CPU measurement${NC}"
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-measure.sh test_case_2
+            ssh -tt -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-screenshot.sh test_case_2
             
 
-                echo -e "${GREEN}* Running test case 2 - SRIOV DPDK-pktgen${NC}"
-                sleep 5
-                wait_text 3 "Test run complete" > /dev/null
+            echo -e "${GREEN}* Running test case 2 - SRIOV DPDK-pktgen${NC}"
+            sleep 5
+            wait_text 3 "Test run complete" > /dev/null
 
 
-                # Ouput flow count to text file
-                flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+            # Ouput flow count to text file
+            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
 
-                #CPU meas end
-                echo -e "${GREEN}* Stopping CPU measurement${NC}"
-                ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_2
+            #CPU meas end
+            echo -e "${GREEN}* Stopping CPU measurement${NC}"
+            ssh -i ~/.ssh/netronome_key root@$IP_DUT2 /root/IVG_folder/helper_scripts/cpu-parse-copy-data.sh test_case_2
                 
             
-                tmux send-keys -t 3 "./parse_and_plot.py" C-m
-                wait_text 3 "Data parse complete!" > /dev/null
-                sleep 1
-                tmux send-keys -t 2 "exit" C-m
-                tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 3 "./parse_and_plot.py" C-m
+            wait_text 3 "Data parse complete!" > /dev/null
+            sleep 1
+            tmux send-keys -t 2 "exit" C-m
+            tmux send-keys -t 3 "exit" C-m
             
-                echo -e "${GREEN}* Copying data...${NC}"
-                sleep 1
-                tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
+            echo -e "${GREEN}* Copying data...${NC}"
+            sleep 1
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
             
-                sleep 2
-                scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
-                scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
-                scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.csv $script_dir
-                scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.html $script_dir
-                scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2_flow_count.txt $script_dir
-                sleep 2
+            sleep 2
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.csv $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2.html $script_dir
+            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_2_flow_count.txt $script_dir
+            sleep 2
 
             
-                tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-                tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
                 
             
-                if [[ ! -e "parsed_data.txt" ]]; then
-                    mv parsed_data.txt "SRIOV_test_run_parsed-0-f$flow_count.txt"
-                else
-                    num=1
-                    while [[ -e "SRIOV_test_run_parsed-$num-f*.txt" ]]; do
-                        (( num++ ))
-                    done
-                    mv parsed_data.txt "SRIOV_test_run_parsed-$num-f$flow_count.txt" 
-                fi
-
-                if [[ ! -e "capture.txt" ]]; then
-                    mv capture.txt "SRIOV_test_run-0-f$flow_count.txt"
-                else
-                    num=1
-                    while [[ -e "SRIOV_test_run-$num-f*.txt" ]]; do
-                        (( num++ ))
-                    done
-                    mv capture.txt "SRIOV_test_run-$num-f$flow_count.txt" 
-                fi
-
+            if [[ ! -e "parsed_data.txt" ]]; then
+                mv parsed_data.txt "SRIOV_test_run_parsed-0-f$flow_count.txt"
             else
-                echo "Test Configured"
+                num=1
+                while [[ -e "SRIOV_test_run_parsed-$num-f*.txt" ]]; do
+                    (( num++ ))
+                done
+                mv parsed_data.txt "SRIOV_test_run_parsed-$num-f$flow_count.txt" 
+            fi
+
+            if [[ ! -e "capture.txt" ]]; then
+                mv capture.txt "SRIOV_test_run-0-f$flow_count.txt"
+            else
+                num=1
+                while [[ -e "SRIOV_test_run-$num-f*.txt" ]]; do
+                    (( num++ ))
+                done
+                mv capture.txt "SRIOV_test_run-$num-f$flow_count.txt" 
             fi
 
             sleep 1
@@ -583,8 +577,8 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_3_sriov_vxlan_uni root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_3_sriov_vxlan_uni root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_3_sriov_vxlan_uni/1_port/setup_test_case_3.sh $VM_BASE_NAME $VM_CPUS $DST_IP $SRC_IP" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_3_sriov_vxlan_uni/1_port/setup_test_case_3.sh $VM_BASE_NAME $VM_CPUS $SRC_IP $DST_IP" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_3_sriov_vxlan_uni/1_port/setup_test_case_3.sh $VM_BASE_NAME $VM_CPUS $DST_IP $SRC_IP $SOFTWARE" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_3_sriov_vxlan_uni/1_port/setup_test_case_3.sh $VM_BASE_NAME $VM_CPUS $SRC_IP $DST_IP $SOFTWARE" C-m
             
             echo -e "${GREEN}* Setting up test case 3${NC}"
             wait_text ALL "DONE(setup_test_case_3.sh)"
