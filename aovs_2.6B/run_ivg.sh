@@ -104,6 +104,7 @@ esac
 
 SOFTWARE="OVS_TC"
 CLOUD_IMAGE_OS="ubuntu"
+DPDK_VER = "17.05"
 
 #######################################################################
 ######################### Main function ###############################
@@ -303,6 +304,12 @@ else # else $TMUX is not empty, start test.
             ;;
 
         B)  echo "B) Install OVS-TC"
+
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-dpdk.sh $DPDK_VER" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-dpdk.sh $DPDK_VER" C-m
+
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-virtio-forwarder.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-virtio-forwarder.sh" C-m
 
             tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh" C-m
             tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh" C-m
@@ -733,8 +740,8 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_6_xvio_uni root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_6_xvio_uni root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS $SOFTWARE" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS $SOFTWARE" C-m
             
             echo -e "${GREEN}* Setting up test case 6${NC}"
             wait_text ALL "DONE(setup_test_case_6.sh)"
@@ -782,6 +789,7 @@ else # else $TMUX is not empty, start test.
 
             # Ouput flow count to text file
             flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+            echo flow_count >> /root/IVG_folder/test_case_6_flow_count.txt
 
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
@@ -809,6 +817,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             
+            flow_count=$(echo /root/IVG_folder/test_case_6_flow_count.txt)
             
             if [[ ! -e "parsed_data.txt" ]]; then
                mv parsed_data.txt "XVIO_test_run_parsed-0-f$flow_count.txt"

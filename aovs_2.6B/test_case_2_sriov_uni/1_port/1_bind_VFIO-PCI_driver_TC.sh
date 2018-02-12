@@ -3,11 +3,11 @@
 VM_NAME=$1
 VM_CPU_COUNT=$2
 
-VF_NAME_1="virtfn39"
-VF_NAME_2="virtfn40"
+VF_NAME_1="virtfn41"
+VF_NAME_2="virtfn42"
 
-VF1="pf0vf39"
-VF2="pf0vf40"
+VF1="pf0vf41"
+VF2="pf0vf42"
 
 BRIDGE_NAME=br0
 
@@ -89,8 +89,8 @@ sleep 1
 
 repr_vf1=$(find_repr $VF1 | rev | cut -d '/' -f 1 | rev)
 echo "Add $repr_vf1 to $BRIDGE_NAME"
-echo "ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=39"
-ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=39
+echo "ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=41"
+ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=41
 ip link set $repr_vf1 up
 VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | cut -d '/' -f1 | rev)
 echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
@@ -102,8 +102,8 @@ echo "FIRST VF DONE"
 
 repr_vf2=$(find_repr $VF2 | rev | cut -d '/' -f 1 | rev)
 echo "Add $repr_vf2 to $BRIDGE_NAME"
-echo "ovs-vsctl add-port $BRIDGE_NAME $repr_vf2 -- set interface $repr_vf2 ofport_request=40"
-ovs-vsctl add-port $BRIDGE_NAME $repr_vf2 -- set interface $repr_vf2 ofport_request=40
+echo "ovs-vsctl add-port $BRIDGE_NAME $repr_vf2 -- set interface $repr_vf2 ofport_request=42"
+ovs-vsctl add-port $BRIDGE_NAME $repr_vf2 -- set interface $repr_vf2 ofport_request=42
 ip link set $repr_vf2 up
 VF2_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_2} | rev | cut -d '/' -f1 | rev)
 echo "VF2_PCI_ADDRESS: $VF2_PCI_ADDRESS"
