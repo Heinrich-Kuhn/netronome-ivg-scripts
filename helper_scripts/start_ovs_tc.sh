@@ -4,7 +4,7 @@ path_ovs=$(find / -name "ovs-ctl" | sed -n 1p | sed 's=/ovs-ctl==g')
 
 export PATH=$PATH:$path_ovs
 echo $PATH
-echo "PATH=\"$PATH\""" > /etc/environment
+echo "PATH=\"$PATH\"" > /etc/environment
 
 NR_VFS=50
 

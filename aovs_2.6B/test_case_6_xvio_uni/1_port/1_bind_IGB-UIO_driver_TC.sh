@@ -56,6 +56,9 @@ VF2_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_2} | rev | c
 echo "VF2_PCI_ADDRESS: $VF2_PCI_ADDRESS"
 
 #------------------------------------------------------------------------------------------------------
+
+sed -e -i "s#^VIRTIOFWD_STATIC_VFS=.*#VIRTIOFWD_STATIC_VFS=($VF1_PCI_ADDRESS=21 $VF2_PCI_ADDRESS=22)"
+
 ## BIND IGB_UIO DRIVER
 interface_list=(${VF1_PCI_ADDRESS} ${VF2_PCI_ADDRESS})
 driver=igb_uio
