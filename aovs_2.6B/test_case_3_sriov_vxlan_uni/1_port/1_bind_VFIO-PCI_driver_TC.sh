@@ -124,11 +124,18 @@ repr_p0=$(find_repr p0 | rev | cut -d "/" -f 1 | rev)
 echo "p0 = $repr_p0"
 ip link set $repr_p0 up
 
-ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP ofport_request=1
+
+
+ip link set $repr_p0 down
+ip addr add $BONDBR_SRC_IP/24 dev $repr_p0
+ip link set $repr_p0 up
+
+
+ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP
 
 #Add NORMAL RULE
-ovs-ofctl del-flows $BRIDGE_NAME
-ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
+#ovs-ofctl del-flows $BRIDGE_NAME
+#ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME
