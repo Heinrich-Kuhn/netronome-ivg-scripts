@@ -37,9 +37,9 @@ elif [[ "$4" == "OVS_TC" ]]; then
       sleep 10
 elif [[ "$4" == "CLEAN" ]]; then
       $script_dir/clean.sh $VM_NAME
-      echo "Resetting Vitioforwarder ..."
+      echo "Stopping Vitioforwarder ..."
       sleep 2
-      systemctl restart virtio-forwarder
+      systemctl stop virtio-forwarder
       sleep 10
       echo "Virtioforwarder cleaned"
 
