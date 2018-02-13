@@ -11,7 +11,7 @@ dpkg -i linux-image-4.14.13-041413-generic_4.14.13-041413.201801101001_amd64.deb
 
 apt-get -f install
 
-$script_dir/configure_gub.sh
+$script_dir/configure_grub.sh
 
 update-grub2
 

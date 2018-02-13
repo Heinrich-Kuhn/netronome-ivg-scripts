@@ -22,7 +22,7 @@ dpkg -i linux-headers-4.13.12-041312_4.13.12-041312.201711080535_all.deb
 
 apt-get -f install
 
-$script_dir/configure_gub.sh
+$script_dir/configure_grub.sh
 
 update-grub2
 
