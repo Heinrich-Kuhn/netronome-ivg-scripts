@@ -32,11 +32,11 @@ done
 
 repr_vf1=$(find_repr $VF1 | rev | cut -d '/' -f 1 | rev)
 echo "vf1 = $repr_vf1"
-ip link set repr_vf1 up
+ip link set $repr_vf1 up
 
 repr_vf2=$(find_repr $VF2 | rev | cut -d '/' -f 1 | rev)
 echo "vf2 = $repr_vf2"
-ip link set repr_vf2 up
+ip link set $repr_vf2 up
 
 repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
 echo "pf0 = $repr_pf0"

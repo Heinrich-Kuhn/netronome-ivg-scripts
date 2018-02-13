@@ -32,6 +32,9 @@ elif [[ "$4" == "OVS_TC" ]]; then
       $script_dir/5_configure_guest_xml_TC.sh $VM_NAME
       $script_dir/6_vm_pinning.sh $VM_NAME $VM_CPU_COUNT $XVIO_CPU_COUNT
       systemctl restart virtio-forwarder
+      sleep 5
+      systemctl restart virtio-forwarder
+
 fi
 
 
