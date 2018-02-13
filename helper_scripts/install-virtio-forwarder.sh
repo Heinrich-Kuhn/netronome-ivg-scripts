@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# REMOVE VIRTIO-FORWARDER
+rm -rf /opt/src/virtio-forwarder
+systemctl stop virtio-forwarder
+systemctl disable virtio-forwarder
+rm /etc/systemd/system/virtio-forwarder.service
+rm /etc/systemd/system/virtio-forwarder.*
+rm /etc/default/virtioforwarder
+systemctl daemon-reload
+systemctl reset-failed
 
 
 grep  ID_LIKE /etc/os-release | grep -q fedora
