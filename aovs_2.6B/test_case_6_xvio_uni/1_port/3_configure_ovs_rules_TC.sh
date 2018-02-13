@@ -59,9 +59,12 @@ ovs-ofctl del-flows $BRIDGE
 
 ovs-ofctl -O OpenFlow13 add-flow $BRIDGE actions=NORMAL
 
-ovs-vsctl set Open_vSwitch . other_config:max-idle=300000
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
 ovs-appctl upcall/set-flow-limit 1000000
+ovs-vsctl --no-wait set Open_vSwitch . other_config:hw-offload=true
+ovs-vsctl --no-wait set Open_vSwitch . other_config:tc-policy=none 
+ovs-vsctl --no-wait set Open_vSwitch . other_config:max-idle=60000
+
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE
