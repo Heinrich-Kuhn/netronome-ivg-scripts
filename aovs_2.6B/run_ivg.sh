@@ -305,14 +305,8 @@ else # else $TMUX is not empty, start test.
 
         B)  echo "B) Install OVS-TC"
 
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-dpdk.sh $DPDK_VER" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-dpdk.sh $DPDK_VER" C-m
-
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-virtio-forwarder.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-virtio-forwarder.sh" C-m
-
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh" C-m
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh $DPDK_VER" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh $DPDK_VER" C-m
 
             wait_text 2 "OVS_TC installation complete"
             wait_text 3 "OVS_TC installation complete"

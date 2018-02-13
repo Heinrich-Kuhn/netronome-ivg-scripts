@@ -1,5 +1,7 @@
 #!/bin/bash
 
+script_dir="$(dirname $(readlink -f $0))"
+
 cur_kernel_1=$(uname -r | cut -d '-' -f1 | cut -d '.' -f1 )
 cur_kernel_2=$(uname -r | cut -d '-' -f1 | cut -d '.' -f2 )
 cur_kernel_3=$(uname -r | cut -d '-' -f1 | cut -d '.' -f3 )
@@ -84,6 +86,8 @@ if [[ $kernel_pass -eq 1 ]]; then
     #CONFIGURE GRUB
     /root/IVG/helper_scripts/configure_grub.sh
 
+	$script_dir/install-dpdk.sh $1
+
     #KERNEL OVS INSTALL
     cd /root
     git clone https://github.com/openvswitch/ovs.git
@@ -100,6 +104,7 @@ if [[ $kernel_pass -eq 1 ]]; then
     tar xvf disa-2.8.A-r5625-2017-10-25_firmware.tar.gz
     /tmp/disa-2.8.A-r5625-2017-10-25_firmware/install.sh
 
+	$script_dir/install-virtio-forwarder.sh
 
     echo "OVS_TC installation complete"
 fi
