@@ -228,6 +228,9 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/inventory.sh > /root/IVG_folder/aovs_2.6B/logs/dut_1.log" C-m
             tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/inventory.sh > /root/IVG_folder/aovs_2.6B/logs/dut_2.log" C-m
 
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/configure_hugepages.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/configure_hugepages.sh" C-m
+
             sleep 1
 
             scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/dut_1.log $IVG_dir/aovs_2.6B/logs/
