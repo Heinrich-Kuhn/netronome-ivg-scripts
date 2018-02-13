@@ -785,7 +785,7 @@ else # else $TMUX is not empty, start test.
             wait_text 3 "Test run complete" > /dev/null
 
             # Ouput flow count to text file
-            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2 | cut -d ' ' -f2' )
             echo "FLOW_COUNT: $flow_count"
 
             #CPU meas end
