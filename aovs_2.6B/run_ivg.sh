@@ -786,7 +786,7 @@ else # else $TMUX is not empty, start test.
 
             # Ouput flow count to text file
             flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
-            echo flow_count >> /root/IVG_folder/test_case_6_flow_count.txt
+            echo "FLOW_COUNT: $flow_count"
 
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
@@ -805,16 +805,17 @@ else # else $TMUX is not empty, start test.
             
             sleep 2
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/capture.txt $script_dir
+            sleep 1
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/parsed_data.txt $script_dir
+            sleep 1
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_6.csv $script_dir
+            sleep 1
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_6.html $script_dir
-            scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/test_case_6_flow_count.txt $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             
-            flow_count=$(echo /root/IVG_folder/test_case_6_flow_count.txt)
             
             if [[ ! -e "parsed_data.txt" ]]; then
                mv parsed_data.txt "XVIO_test_run_parsed-0-f$flow_count.txt"
