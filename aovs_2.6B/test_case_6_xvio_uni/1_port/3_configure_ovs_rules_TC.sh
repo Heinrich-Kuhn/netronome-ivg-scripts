@@ -65,7 +65,7 @@ ovs-ofctl del-flows $BRIDGE
 script=$(find / -name of_rules.sh | grep IVG_folder)
 num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
 sleep 1
-$script $num_flows 41 42 $BRIDGE
+$script $num_flows 21 22 $BRIDGE
 sleep 1
 #------------------------------------------------------------------
 
