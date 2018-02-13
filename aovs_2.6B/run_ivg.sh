@@ -785,7 +785,7 @@ else # else $TMUX is not empty, start test.
             wait_text 3 "Test run complete" > /dev/null
 
             # Ouput flow count to text file
-            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2 | cut -d ' ' -f2' )
+            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 "ovs-dpctl show | grep flows: | cut -d ':' -f2 | cut -d ' ' -f2" )
             echo "FLOW_COUNT: $flow_count"
 
             #CPU meas end
@@ -848,8 +848,8 @@ else # else $TMUX is not empty, start test.
 
             sleep 5
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS CLEAN" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS CLEAN" C-m
+            tmux send-keys -t 2 "/root/IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS CLEAN" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS CLEAN" C-m
             
             ;;
 
