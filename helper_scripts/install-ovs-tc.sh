@@ -85,6 +85,8 @@ if [[ $kernel_pass -eq 1 ]]; then
 
     #CONFIGURE GRUB
     /root/IVG/helper_scripts/configure_grub.sh
+	/root/IVG/helper_scripts/configure_hugepages.sh
+
 
 	$script_dir/install-dpdk.sh $1
 
@@ -105,6 +107,16 @@ if [[ $kernel_pass -eq 1 ]]; then
     /tmp/disa-2.8.A-r5625-2017-10-25_firmware/install.sh
 
 	$script_dir/install-virtio-forwarder.sh
+
+	path_ovs=$(find / -name "ovs-ctl" | sed -n 1p | sed 's=/ovs-ctl==g')
+
+	test=$(cat /etc/environment | grep $path_ovs)
+
+	if [[ -z "$test" ]];then
+	    export PATH=$PATH:$path_ovs
+	    echo $PATH
+	    echo "PATH=\"$PATH\"" > /etc/environment
+	fi
 
     echo "OVS_TC installation complete"
 fi
