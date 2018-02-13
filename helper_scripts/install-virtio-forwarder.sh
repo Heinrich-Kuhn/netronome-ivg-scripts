@@ -24,13 +24,16 @@ if [[ $? -eq 0 ]]; then
     make config T=x86_64-native-linuxapp-gcc
     make -j8
 
+    apt-get -y install python-sphinx
+    dpkg --purge virtio-forwarder
+
     cd /opt/src/
     git clone https://github.com/Netronome/virtio-forwarder
-    export RTE_SDK=/opt/src/dpdk-17.05
     cd /opt/src/virtio-forwarder
-    apt-get install python-sphinx
-    dpkg --purge virtio-forwarder
-    make
+    export RTE_SDK=/opt/src/dpdk-17.05
+    export RTE_TARGET=x86_64-native-linuxapp-gcc
+
+    make 
     make install
 
 
