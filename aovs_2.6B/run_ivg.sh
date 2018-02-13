@@ -840,6 +840,9 @@ else # else $TMUX is not empty, start test.
             #_#_#_#_#_END LOG_#_#_#_#_#
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
+
+            tmux send-keys -t 2 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS CLEAN" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_6_xvio_uni/1_port/setup_test_case_6.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS CLEAN" C-m
             sleep 1
             scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_1.log $IVG_dir/aovs_2.6B/logs/
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_2.log $IVG_dir/aovs_2.6B/logs/
