@@ -2,9 +2,13 @@
 
 path_ovs=$(find / -name "ovs-ctl" | sed -n 1p | sed 's=/ovs-ctl==g')
 
-export PATH=$PATH:$path_ovs
-echo $PATH
-echo "PATH=\"$PATH\"" > /etc/environment
+test=$(ls /etc/environment | grep $path_ovs)
+
+if [[ -z "$test" ]];then
+    export PATH=$PATH:$path_ovs
+    echo $PATH
+    echo "PATH=\"$PATH\"" > /etc/environment
+fi
 
 NR_VFS=50
 
