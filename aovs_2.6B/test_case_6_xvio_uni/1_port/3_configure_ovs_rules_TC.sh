@@ -57,7 +57,8 @@ ovs-vsctl add-port $BRIDGE $repr_vf2 -- set interface $repr_vf2 ofport_request=2
 
 ovs-ofctl del-flows $BRIDGE
 
-ovs-ofctl -O OpenFlow13 add-flow $BRIDGE actions=NORMAL
+#ovs-ofctl -O OpenFlow13 add-flow $BRIDGE actions=NORMAL
+ovs-ofctl add-flow $BRIDGE actions=NORMAL
 
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
 ovs-appctl upcall/set-flow-limit 1000000
