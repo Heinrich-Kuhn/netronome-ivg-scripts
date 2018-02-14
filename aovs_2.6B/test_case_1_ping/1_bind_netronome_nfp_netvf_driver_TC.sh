@@ -2,9 +2,9 @@
 
 IP=$1
 
-VF_NAME_1="virtfn1"
+VF_NAME_1="virtfn4"
 
-VF1="pf0vf1"
+VF1="pf0vf4"
 
 BRIDGE_NAME="br0"
 
