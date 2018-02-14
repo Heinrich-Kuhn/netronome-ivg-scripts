@@ -102,7 +102,7 @@ echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
 sleep 1
 bind_nfp_netvf ${VF1_PCI_ADDRESS}
 
-ip a add $IP/24 dev repr_vf1
+ip a add $IP/24 dev $repr_vf1
 
 repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
 echo "pf0 = $repr_pf0"
