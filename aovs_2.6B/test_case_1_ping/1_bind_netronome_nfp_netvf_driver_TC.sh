@@ -6,7 +6,7 @@ VF_NAME_1="virtfn01"
 
 VF1="pf0vf01"
 
-BRIDGE="br0"
+BRIDGE_NAME="br0"
 
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
@@ -34,6 +34,24 @@ function find_repr()
     fi
   done
 }
+
+function clean-ovs-bridges()
+{
+  ovs-vsctl list-br | while read BRIDGE;
+  do
+    echo "Deleting: $BRIDGE"
+    ovs-vsctl del-br $BRIDGE
+  done
+}
+
+function general-ovs-config()
+{
+  ovs-vsctl --no-wait set Open_vSwitch . other_config:hw-offload=true
+  ovs-vsctl --no-wait set Open_vSwitch . other_config:tc-policy=none
+  ovs-vsctl --no-wait set Open_vSwitch . other_config:max-idle=60000
+  ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
+}
+
 
 function bind_nfp_netvf()
 {
@@ -69,11 +87,12 @@ elif [[ "$PCI" == *":"*"."* ]]; then
     echo "PCI corrected"
     PCI="0000:$PCI"
 fi
+echo $PCI
 
 repr_vf1=$(find_repr $VF1 | rev | cut -d '/' -f 1 | rev)
 VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | cut -d '/' -f1 | rev)
 echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
-bind_vfio ${VF1_PCI_ADDRESS}
+bind_nfp_netvf ${VF1_PCI_ADDRESS}
 
 ip l set $repr_vf1 up
 ip a add $IP/24 dev repr_vf1
