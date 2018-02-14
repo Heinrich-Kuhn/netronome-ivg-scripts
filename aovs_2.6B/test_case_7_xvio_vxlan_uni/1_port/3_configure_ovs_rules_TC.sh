@@ -64,13 +64,13 @@ ovs-ofctl del-flows $BRIDGE
 #ovs-ofctl add-flow $BRIDGE actions=NORMAL
 
 # Implement flow via OF rules
-#-----------------------------------------------------------------
-script=$(find / -name of_rules.sh | grep IVG_folder)
-num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
-sleep 1
-$script $num_flows 25 26 $BRIDGE
-sleep 1
-#------------------------------------------------------------------
+# #-----------------------------------------------------------------
+# script=$(find / -name of_rules.sh | grep IVG_folder)
+# num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
+# sleep 1
+# $script $num_flows 25 26 $BRIDGE
+# sleep 1
+# #------------------------------------------------------------------
 
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
 ovs-appctl upcall/set-flow-limit 1000000
