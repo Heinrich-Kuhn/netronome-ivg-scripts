@@ -8,6 +8,8 @@ VF1="pf0vf1"
 
 BRIDGE_NAME="br0"
 
+DRIVER="vfio-pci"
+
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
   DRIVER=nfp_netvf
@@ -53,7 +55,7 @@ function general-ovs-config()
 }
 
 
-function bind_nfp_netvf()
+function bind_driver()
 {
   lsmod | grep --silent $DRIVER || modprobe $DRIVER
   INTERFACE_PCI=$1
@@ -100,7 +102,7 @@ VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | c
 sleep 1
 echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
 sleep 1
-bind_nfp_netvf ${VF1_PCI_ADDRESS}
+bind_driver ${VF1_PCI_ADDRESS}
 
 ip a add $IP/24 dev $repr_vf1
 
@@ -116,12 +118,15 @@ ip link set $repr_p0 up
 ethtool -C $repr_vf1 rx-usecs 1
 
 ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
-ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=1
+ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=2
 
 
 #Add NORMAL RULE
 ovs-ofctl del-flows $BRIDGE_NAME
-ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
+#ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
+
+ovs-ofctl add-flow $BRIDGE_NAME in_port=1,actions=2
+ovs-ofctl add-flow $BRIDGE_NAME in_port=2,actions=1
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME
