@@ -2,7 +2,7 @@
 
 IP=$1
 
-VF_NAME_1="virtfn01"
+VF_NAME_1="virtfn1"
 
 VF1="pf0vf01"
 
@@ -96,10 +96,26 @@ echo "repr_vf1 = $repr_vf1"
 ip l set $repr_vf1 up
 
 echo "readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1}"
+sleep 1
 echo $(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1})
+sleep 1
 VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | cut -d '/' -f1 | rev)
+sleep 1
 echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
+sleep 1
 bind_nfp_netvf ${VF1_PCI_ADDRESS}
+
+
+
+# repr_vf1=$(find_repr $VF1 | rev | cut -d '/' -f 1 | rev)
+# echo "Add $repr_vf1 to $BRIDGE_NAME"
+# echo "ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=41"
+# ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=41
+# ip link set $repr_vf1 up
+# VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | cut -d '/' -f1 | rev)
+# echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
+# bind_vfio ${VF1_PCI_ADDRESS}
+
 
 
 ip a add $IP/24 dev repr_vf1
