@@ -104,7 +104,25 @@ echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
 sleep 1
 bind_driver ${VF1_PCI_ADDRESS}
 
-ip a add $IP/24 dev $repr_vf1
+
+###################################################################################################
+
+
+DPDK_DEVBIND=$(find /opt -iname dpdk-devbind.py | head -1)
+if [ "$DPDK_DEVBIND" == "" ]; then
+  echo "ERROR: could not find dpdk-devbind.py tool"
+  exit -1
+fi
+
+ETH=$($DPDK_DEVBIND --status | grep $VF1_PCI_ADDRESS | cut -d ' ' -f 4 | cut -d '=' -f 2)
+
+ip l set $ETH up
+ip a add $IP/24 dev $ETH
+
+###################################################################################################
+
+
+
 
 repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
 echo "pf0 = $repr_pf0"
