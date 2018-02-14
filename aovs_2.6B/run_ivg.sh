@@ -993,6 +993,10 @@ else # else $TMUX is not empty, start test.
             sleep 1
             scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_1.log $IVG_dir/aovs_2.6B/logs/
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_2.log $IVG_dir/aovs_2.6B/logs/
+
+            sleep 2 
+            tmux send-keys -t 2 "./IVG_folder/test_case_7_xvio_vxlan_uni/1_port/setup_test_case_7.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS $DST_IP $SRC_IP CLEAN" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_7_xvio_vxlan_uni/1_port/setup_test_case_7.sh $VM_BASE_NAME $VM_CPUS $XVIO_CPUS $SRC_IP $DST_IP CLEAN" C-m
           
 
             ;;

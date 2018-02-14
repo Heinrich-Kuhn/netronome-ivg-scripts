@@ -32,6 +32,8 @@ elif [[ "$6" == "OVS_TC" ]]; then
       echo "Stoppping virtio-forwarder"
       systemctl stop virtio-forwarder
       sleep 10
+      systemctl stop virtio-forwarder
+      sleep 2
       $script_dir/0_configure_hugepages.sh
       $script_dir/1_bind_IGB-UIO_driver_TC.sh
       $script_dir/2_configure_ovs_TC.sh $XVIO_CPU_COUNT
