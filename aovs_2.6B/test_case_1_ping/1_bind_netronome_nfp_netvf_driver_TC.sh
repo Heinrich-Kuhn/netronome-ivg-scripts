@@ -79,6 +79,8 @@ function bind_nfp_netvf()
 general-ovs-config
 clean-ovs-bridges
 
+ovs-vsctl add-br $BRIDGE_NAME
+
 PCI=$(lspci -d 19ee: | grep 4000 | cut -d ' ' -f1)
 
 if [[ "$PCI" == *":"*":"*"."* ]]; then
@@ -90,13 +92,17 @@ fi
 echo $PCI
 
 repr_vf1=$(find_repr $VF1 | rev | cut -d '/' -f 1 | rev)
+echo "repr_vf1 = $repr_vf1"
+ip l set $repr_vf1 up
+
+echo "readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1}"
+echo $(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1})
 VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | cut -d '/' -f1 | rev)
 echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
 bind_nfp_netvf ${VF1_PCI_ADDRESS}
 
-ip l set $repr_vf1 up
-ip a add $IP/24 dev repr_vf1
 
+ip a add $IP/24 dev repr_vf1
 
 repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
 echo "pf0 = $repr_pf0"

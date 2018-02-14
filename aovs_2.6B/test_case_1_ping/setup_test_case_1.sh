@@ -42,7 +42,6 @@ elif [[ "$SOFTWARE" == "OVS_TC" ]];then
 
     echo "Setting up ping for OVS-TC"
 
-    $script_dir/../helper_scripts/start-ovs-tc.sh
     $script_dir/1_bind_netronome_nfp_netvf_driver_TC.sh $IP
     sleep 3
 fi
