@@ -26,10 +26,11 @@ echo "SOFTWARE: $SOFTWARE"
 
 if [ -z "$IP" ] ; then IP=$DEFAULT_IP ; fi
 
-    script_dir="$(dirname $(readlink -f $0))"
-    IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
+script_dir="$(dirname $(readlink -f $0))"
+IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 
-if [[ "$SOFTWARE"=="AOVS" ]];then
+if [[ "$SOFTWARE" == "AOVS" ]];then
+    echo "Setting up ping for AOVS"
     ovs-ctl start
 
     $script_dir/1_bind_netronome_nfp_netvf_driver.sh $IP
@@ -37,9 +38,13 @@ if [[ "$SOFTWARE"=="AOVS" ]];then
     $script_dir/3_configure_bridge.sh
     $script_dir/4_configure_ovs_rules.sh
 
-elif [[ "$SOFTWARE"=="OVS_TC" ]];then
+elif [[ "$SOFTWARE" == "OVS_TC" ]];then
 
+    echo "Setting up ping for OVS-TC"
+
+    $script_dir/../helper_scripts/start-ovs-tc.sh
     $script_dir/1_bind_netronome_nfp_netvf_driver_TC.sh $IP
+    sleep 3
 fi
 
 echo "DONE($(basename $0))"
