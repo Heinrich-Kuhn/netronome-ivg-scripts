@@ -8,17 +8,17 @@ VF1="pf0vf4"
 
 BRIDGE_NAME="br0"
 
-DRIVER="vfio-pci"
+#DRIVER="vfio-pci"
 
-# grep ID_LIKE /etc/os-release | grep -q debian
-# if [[ $? -eq 0 ]]; then
-#   DRIVER=nfp_netvf
-# fi
+grep ID_LIKE /etc/os-release | grep -q debian
+if [[ $? -eq 0 ]]; then
+  DRIVER=nfp_netvf
+fi
 
-# grep  ID_LIKE /etc/os-release | grep -q fedora
-# if [[ $? -eq 0 ]]; then
-#   DRIVER=nfp
-# fi
+grep  ID_LIKE /etc/os-release | grep -q fedora
+if [[ $? -eq 0 ]]; then
+  DRIVER=nfp
+fi
 
 ##############################################################################################################
 
