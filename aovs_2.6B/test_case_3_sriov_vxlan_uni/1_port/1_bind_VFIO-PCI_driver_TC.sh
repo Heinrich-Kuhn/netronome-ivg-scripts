@@ -132,11 +132,17 @@ ip addr add $BONDBR_SRC_IP/24 dev $repr_p0
 ip link set $repr_p0 up
 
 
-ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP
+ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP ofport_request=1
 
 #Add NORMAL RULE
 #ovs-ofctl del-flows $BRIDGE_NAME
 #ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
+
+script=$(find / -name of_rules.sh | grep IVG_folder)
+num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
+sleep 1
+$script $num_flows 10 11 $BRIDGE
+sleep 1
 
 ovs-vsctl set Open_vSwitch . other_config:n-handler-threads=1
 ovs-vsctl set Open_vSwitch . other_config:n-revalidator-threads=1
