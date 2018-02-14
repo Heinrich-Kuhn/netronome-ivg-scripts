@@ -67,6 +67,7 @@ function general-ovs-config()
   ovs-vsctl --no-wait set Open_vSwitch . other_config:hw-offload=true
   ovs-vsctl --no-wait set Open_vSwitch . other_config:tc-policy=none
   ovs-vsctl --no-wait set Open_vSwitch . other_config:max-idle=60000
+  ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
 }
 
 ##############################################################################################################
