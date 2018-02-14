@@ -121,7 +121,7 @@ ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_requ
 
 #Add NORMAL RULE
 ovs-ofctl del-flows $BRIDGE_NAME
-ovs-ofctl add-flow $BRIDGE_NAME actions=NORMAL
+ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME
