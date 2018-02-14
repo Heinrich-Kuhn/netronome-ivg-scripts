@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEFAULT_IP="10.10.10.1"
+IP=$1
 
 VF_NAME_1="virtfn01"
 
@@ -71,13 +71,12 @@ elif [[ "$PCI" == *":"*"."* ]]; then
 fi
 
 repr_vf1=$(find_repr $VF1 | rev | cut -d '/' -f 1 | rev)
-ip l set $repr_vf1 up
-echo "Add $repr_vf1 to $BRIDGE_NAME"
-echo "ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=2"
-
 VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | cut -d '/' -f1 | rev)
 echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
 bind_vfio ${VF1_PCI_ADDRESS}
+
+ip l set $repr_vf1 up
+ip a add $IP/24 dev repr_vf1
 
 
 repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
@@ -88,13 +87,16 @@ repr_p0=$(find_repr p0 | rev | cut -d "/" -f 1 | rev)
 echo "p0 = $repr_p0"
 ip link set $repr_p0 up
 
+#Change default Coalesce setting
+ethtool -C $repr_vf1 rx-usecs 1
 
 ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
+ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=2
 
 
 #Add NORMAL RULE
 ovs-ofctl del-flows $BRIDGE_NAME
-ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
+ovs-ofctl add-flow $BRIDGE_NAME actions=NORMAL
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME

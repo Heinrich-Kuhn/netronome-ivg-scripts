@@ -16,7 +16,7 @@ do
         # Help
         -h|--help) print_usage; exit 1;;
         -i|--ip) IP="$2"; shift 2;;
-        -s|--software) SOFTWARE="$3"; shift 2;;
+        -s|--software) SOFTWARE="$2"; shift 2;;
         *) echo "Unkown argument: \"$argument\""; print_usage; exit 1;;
     esac
 done
@@ -26,17 +26,21 @@ echo "SOFTWARE: $SOFTWARE"
 
 if [ -z "$IP" ] ; then IP=$DEFAULT_IP ; fi
 
+    script_dir="$(dirname $(readlink -f $0))"
+    IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 
+if [[ "$SOFTWARE"=="AOVS" ]];then
+    ovs-ctl start
 
-# ovs-ctl start
+    $script_dir/1_bind_netronome_nfp_netvf_driver.sh $IP
+    $script_dir/2_configure_AOVS.sh
+    $script_dir/3_configure_bridge.sh
+    $script_dir/4_configure_ovs_rules.sh
 
-# script_dir="$(dirname $(readlink -f $0))"
-# IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
+elif [[ "$SOFTWARE"=="OVS_TC" ]];then
 
-# $script_dir/1_bind_netronome_nfp_netvf_driver.sh $IP
-# $script_dir/2_configure_AOVS.sh
-# $script_dir/3_configure_bridge.sh
-# $script_dir/4_configure_ovs_rules.sh
+    $script_dir/1_bind_netronome_nfp_netvf_driver_TC.sh $IP
+fi
 
-# echo "DONE($(basename $0))"
-# exit 0
+echo "DONE($(basename $0))"
+exit 0
