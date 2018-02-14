@@ -116,7 +116,7 @@ ip link set $repr_p0 up
 ethtool -C $repr_vf1 rx-usecs 1
 
 ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
-ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=2
+ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=1
 
 
 #Add NORMAL RULE
