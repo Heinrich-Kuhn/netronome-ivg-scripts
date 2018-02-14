@@ -141,7 +141,7 @@ ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:remot
 script=$(find / -name of_rules.sh | grep IVG_folder)
 num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
 sleep 1
-$script $num_flows 10 11 $BRIDGE
+$script $num_flows 10 11 br0
 sleep 1
 
 ovs-vsctl set Open_vSwitch . other_config:n-handler-threads=1
