@@ -49,6 +49,11 @@ repr_p0=$(find_repr p0 | rev | cut -d "/" -f 1 | rev)
 echo "p0 = $repr_p0"
 ip link set $repr_p0 up
 
+ip link set $repr_p0 down
+ip addr add $BONDBR_SRC_IP/24 dev $repr_p0
+ip link set $repr_p0 up
+
+
 # Create a new bridge
 ovs-vsctl add-br $BRIDGE
 
