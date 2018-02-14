@@ -138,6 +138,9 @@ ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:remot
 #ovs-ofctl del-flows $BRIDGE_NAME
 #ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
 
+ovs-vsctl set Open_vSwitch . other_config:n-handler-threads=1
+ovs-vsctl set Open_vSwitch . other_config:n-revalidator-threads=1
+
 ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME
 ovs-ofctl dump-flows $BRIDGE_NAME
