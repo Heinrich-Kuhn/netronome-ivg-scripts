@@ -8,9 +8,14 @@ cur_kernel_3=$(uname -r | cut -d '-' -f1 | cut -d '.' -f3 )
 
 echo "KERNEL VERSION: $cur_kernel_1.$cur_kernel_2.$cur_kernel_3"
 
-if [[ $cur_kernel_1 -gt 3 ]] && [[ $cur_kernel_2 -gt 12 ]] && [[ $cur_kernel_3 -gt 11 ]]; then
-    echo "Kernel up to date"
-    kernel_pass=1
+if [[ $cur_kernel_1 -gt 3 ]]; then
+	if [[ $cur_kernel_1 -eq 4 ]] && [[ $cur_kernel_2 -gt 14 ]]; then
+    	echo "Kernel up to date"
+    	kernel_pass=1
+	elif [[ $cur_kernel_1 -gt 4 ]]; then
+		echo "Kernel up to date"
+    	kernel_pass=1
+	fi
 else
     echo "Old Kernel"
     echo "Please update kernel with the appropriate script:"
