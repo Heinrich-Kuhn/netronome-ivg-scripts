@@ -141,7 +141,7 @@ ovs-vsctl set Open_vSwitch . other_config:n-revalidator-threads=1
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME
-ovs-ofctl dump-flows $BRIDGE_NAME
+ovs-ofctl dump-flows $BRIDGE_NAME | wc -l
 
 
 #### ----- XML EDIT ------ ####

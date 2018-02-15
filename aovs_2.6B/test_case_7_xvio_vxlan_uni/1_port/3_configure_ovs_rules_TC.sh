@@ -89,4 +89,4 @@ ovs-vsctl --no-wait set Open_vSwitch . other_config:max-idle=60000
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE
-ovs-ofctl dump-flows $BRIDGE
+ovs-ofctl dump-flows $BRIDGE | wc -l
