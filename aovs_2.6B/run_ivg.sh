@@ -876,8 +876,8 @@ else # else $TMUX is not empty, start test.
             VM_BASE_NAME=netronome-xvio-vxlan-vm
             VM_CPUS=4
             XVIO_CPUS=2
-            DST_IP="100.1.0.2"
-            SRC_IP="100.2.0.2"
+            DST_IP="10.10.10.1"
+            SRC_IP="10.10.20.1"
 
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
             tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
