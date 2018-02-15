@@ -1007,6 +1007,12 @@ else # else $TMUX is not empty, start test.
 
         8)  echo "8) Test Case 8 (DPDK-pktgen VM-VM bi-directional SR-IOV)"
 
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
+
              #_#_#_#_#_START LOG_#_#_#_#_#
             tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_8_DUT_1.log" C-m
             tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_8_DUT_2.log" C-m
@@ -1072,15 +1078,15 @@ else # else $TMUX is not empty, start test.
 
         10)  echo "10) Test Case 10 (DPDK-pktgen VM-Vm uni-directional KOVS VXLAN Intel XL710)"
 
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_10_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_10_DUT_2.log" C-m
-
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_10_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_10_DUT_2.log" C-m
 
             DST_IP="10.10.10.2"
             SRC_IP="10.10.10.1"
@@ -1215,15 +1221,16 @@ else # else $TMUX is not empty, start test.
 
          11)  echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
 
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_11_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_11_DUT_2.log" C-m
-
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_11_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_11_DUT_2.log" C-m
+
 
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -1353,15 +1360,15 @@ else # else $TMUX is not empty, start test.
     
          12)  echo "12) Test Case 12 (DPDK-pktgen VM-VM uni-directional DPDK OVS Intel XL710)"
 
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_2.log" C-m
-
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_2.log" C-m
 
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -1512,15 +1519,16 @@ else # else $TMUX is not empty, start test.
 
         k)  echo "k) Setup KOVS"
 
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Setup_KOVS_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Setup_KOVS_DUT_2.log" C-m
-
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Setup_KOVS_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Setup_KOVS_DUT_2.log" C-m
+
 
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
