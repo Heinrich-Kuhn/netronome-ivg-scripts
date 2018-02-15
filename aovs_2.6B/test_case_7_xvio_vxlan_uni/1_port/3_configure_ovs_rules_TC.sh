@@ -57,7 +57,7 @@ ip link set $repr_p0 up
 # Create a new bridge
 ovs-vsctl add-br $BRIDGE
 
-ovs-vsctl add-port $BRIDGE $repr_p0 -- set interface $repr_p0 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP ofport_request=1
+ovs-vsctl add-port $BRIDGE $repr_p0 -- set interface $repr_p0 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP
 #ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP
 #Add VF's
 ovs-vsctl add-port $BRIDGE $repr_vf1 -- set interface $repr_vf1 ofport_request=25 external_ids:virtio_forwarder=25
@@ -73,11 +73,11 @@ ovs-vsctl set Open_vSwitch . other_config:n-revalidator-threads=1
 
 # Implement flow via OF rules
 # #-----------------------------------------------------------------
-script=$(find / -name of_rules.sh | grep IVG_folder)
-num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
-sleep 1
-$script $num_flows 25 26 $BRIDGE
-sleep 1
+# script=$(find / -name of_rules.sh | grep IVG_folder)
+# num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
+# sleep 1
+# $script $num_flows 25 26 $BRIDGE
+# sleep 1
 # #------------------------------------------------------------------
 
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
