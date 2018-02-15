@@ -57,7 +57,7 @@ ip link set $repr_p0 up
 # Create a new bridge
 ovs-vsctl add-br $BRIDGE
 
-ovs-vsctl add-port $BRIDGE $repr_p0 -- set interface $repr_p0 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP ofport_request=1
+ovs-vsctl add-port $BRIDGE vxlan_01 -- set interface vxlan_01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP ofport_request=1
 #ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:remote_ip=$BONDBR_DEST_IP  options:local_ip=$BONDBR_SRC_IP
 #Add VF's
 ovs-vsctl add-port $BRIDGE $repr_vf1 -- set interface $repr_vf1 ofport_request=25 external_ids:virtio_forwarder=25
