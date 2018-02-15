@@ -132,7 +132,7 @@ ip addr add $BONDBR_SRC_IP/24 dev $repr_p0
 ip link set $repr_p0 up
 
 
-ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:key=flow options:remote_ip=$BONDBR_DEST_IP
+ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:key=flow options:remote_ip=$BONDBR_DEST_IP ofport_request=1
 #  options:local_ip=$BONDBR_SRC_IP ofport_request=1
 
 #Add NORMAL RULE
