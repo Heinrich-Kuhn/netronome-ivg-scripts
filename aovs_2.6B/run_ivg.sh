@@ -250,16 +250,15 @@ else # else $TMUX is not empty, start test.
 
         b)  echo "b) Install/Re-install Agilio-OVS"
             
-            #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Installation_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Installation_DUT_2.log" C-m           
-
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
-          
+            #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Installation_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Installation_DUT_2.log" C-m           
+
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
@@ -307,7 +306,12 @@ else # else $TMUX is not empty, start test.
             ;;
 
         B)  echo "B) Install OVS-TC"
-
+            
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
             tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh $DPDK_VER" C-m
             tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh $DPDK_VER" C-m
 
@@ -316,17 +320,16 @@ else # else $TMUX is not empty, start test.
             ;;
 
         c)  echo "c) Create backing image for test VM's (Only done once)"
-
+            
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
             #_#_#_#_#_START LOG_#_#_#_#_#
             tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_1.log" C-m
             tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_2.log" C-m
             
-            if [ $DUT_CONNECT == 0 ]; then
-                echo "Please connect to DUT's first"
-                sleep 5
-                continue
-            fi
-
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
@@ -359,18 +362,17 @@ else # else $TMUX is not empty, start test.
             ;;
 
         1)  echo "1) Test Case 1 (Simple ping between hosts)"
-
+            
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
 
             #_#_#_#_#_START LOG_#_#_#_#_#
             tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_1.log" C-m
             tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_2.log" C-m
             
-            if [ $DUT_CONNECT == 0 ]; then
-                echo "Please connect to DUT's first"
-                sleep 5
-                continue
-            fi
-
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
@@ -406,15 +408,15 @@ else # else $TMUX is not empty, start test.
         2)  echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
 
 
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_2.log" C-m
-            
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_2.log" C-m            
 
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -550,15 +552,16 @@ else # else $TMUX is not empty, start test.
 
         3)  echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
 
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_2.log" C-m
-            
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_2.log" C-m
+            
+
 
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -705,17 +708,17 @@ else # else $TMUX is not empty, start test.
 
         
          6)  echo "6) Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
-
-
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_2.log" C-m
             
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_2.log" C-m
+            
 
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -856,16 +859,17 @@ else # else $TMUX is not empty, start test.
 
         7)  echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO - VXLAN)"
 
-
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_2.log" C-m
-             
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
+
+             #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_2.log" C-m
+             
+ 
 
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
