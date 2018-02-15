@@ -102,9 +102,9 @@ if [[ $kernel_pass -eq 1 ]]; then
 
     #DISA INSTALL
     cd /tmp
-    wget --timestamp http://pahome.netronome.com/releases-intern/disa/firmware/disa-2.8.A-r5625-2017-10-25_firmware.tar.gz
-    tar xvf disa-2.8.A-r5625-2017-10-25_firmware.tar.gz
-    /tmp/disa-2.8.A-r5625-2017-10-25_firmware/install.sh
+    wget --timestamp http://pahome.netronome.com/releases-intern/disa/firmware/disa-2.8.A-r5642-2017-11-24_firmware.tar.gz
+    tar xvf disa-2.8.A-r5642-2017-11-24_firmware.tar.gz
+    /tmp/disa-2.8.A-r5642-2017-11-24_firmware/install.sh
 
 	$script_dir/install-virtio-forwarder.sh
 
