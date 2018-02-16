@@ -39,41 +39,6 @@ elif [[ "$PCI" == *":"*"."* ]]; then
     PCI="0000:$PCI"
 fi
 
-
-#------------------------------------------------------------------------------------------------------
-
-repr_vf1=$(find_repr $VF1 | rev | cut -d '/' -f 1 | rev)
-VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | cut -d '/' -f1 | rev)
-echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
-
-#------------------------------------------------------------------------------------------------------
-
-repr_vf2=$(find_repr $VF2 | rev | cut -d '/' -f 1 | rev)
-VF2_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_2} | rev | cut -d '/' -f1 | rev)
-echo "VF2_PCI_ADDRESS: $VF2_PCI_ADDRESS"
-
-#------------------------------------------------------------------------------------------------------
-
-## BIND IGB_UIO DRIVER
-interface_list=(${VF1_PCI_ADDRESS} ${VF2_PCI_ADDRESS})
-driver=igb_uio
-mp=uio
-# updatedb
-DPDK_DEVBIND=$(find /opt/ -iname dpdk-devbind.py | head -1)
-DRKO=$(find /opt/ -iname 'igb_uio.ko' | head -1 )
-echo "unloading driver"
-modprobe $mp 
-insmod $DRKO
-echo "DPDK_DEVBIND: $DPDK_DEVBIND"
-for interface in ${interface_list[@]};
-do
-  echo $DPDK_DEVBIND --unbind $driver $interface
-  $DPDK_DEVBIND --unbind $driver $interface
-done
-echo $DPDK_DEVBIND --status
-$DPDK_DEVBIND --status
-
-
 /root/IVG_folder/helper_scripts/start_ovs_tc.sh
 
 PCI=$(lspci -d 19ee: | grep 4000 | cut -d ' ' -f1)

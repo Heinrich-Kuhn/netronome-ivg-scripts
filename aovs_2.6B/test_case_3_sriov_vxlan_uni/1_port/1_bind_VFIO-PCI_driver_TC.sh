@@ -135,9 +135,7 @@ ip link set $repr_p0 up
 ovs-vsctl add-port br0 vxlan01 -- set interface vxlan01 type=vxlan options:key=flow options:remote_ip=$BONDBR_DEST_IP ofport_request=1
 #  options:local_ip=$BONDBR_SRC_IP ofport_request=1
 
-#Add NORMAL RULE
 ovs-ofctl del-flows $BRIDGE_NAME
-#ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
 
 
 #ADD OPENFLOW RULES

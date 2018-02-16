@@ -74,6 +74,8 @@ function general-ovs-config()
 general-ovs-config
 clean-ovs-bridges
 
+# FIND PCI ADDR OF CARD
+#------------------------------------------------------------------------------------------------------
 PCI=$(lspci -d 19ee: | grep 4000 | cut -d ' ' -f1)
 
 if [[ "$PCI" == *":"*":"*"."* ]]; then
@@ -86,8 +88,8 @@ fi
 ovs-vsctl add-br $BRIDGE_NAME
 sleep 1
 
+# FIND VF1 REPR
 #------------------------------------------------------------------------------------------------------
-
 repr_vf1=$(find_repr $VF1 | rev | cut -d '/' -f 1 | rev)
 echo "Add $repr_vf1 to $BRIDGE_NAME"
 echo "ovs-vsctl add-port $BRIDGE_NAME $repr_vf1 -- set interface $repr_vf1 ofport_request=41"
@@ -96,11 +98,10 @@ ip link set $repr_vf1 up
 VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | cut -d '/' -f1 | rev)
 echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
 bind_vfio ${VF1_PCI_ADDRESS}
-
 echo "FIRST VF DONE"
 
+# FIND VF2 REPR
 #------------------------------------------------------------------------------------------------------
-
 repr_vf2=$(find_repr $VF2 | rev | cut -d '/' -f 1 | rev)
 echo "Add $repr_vf2 to $BRIDGE_NAME"
 echo "ovs-vsctl add-port $BRIDGE_NAME $repr_vf2 -- set interface $repr_vf2 ofport_request=42"
@@ -109,11 +110,11 @@ ip link set $repr_vf2 up
 VF2_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_2} | rev | cut -d '/' -f1 | rev)
 echo "VF2_PCI_ADDRESS: $VF2_PCI_ADDRESS"
 bind_vfio ${VF2_PCI_ADDRESS}
-
 echo "SECOND VF DONE"
-
 #------------------------------------------------------------------------------------------------------
 
+#FIND PHY REPR
+#------------------------------------------------------------------------------------------------------
 repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
 echo "pf0 = $repr_pf0"
 ip link set $repr_pf0 up
@@ -121,14 +122,13 @@ ip link set $repr_pf0 up
 repr_p0=$(find_repr p0 | rev | cut -d "/" -f 1 | rev)
 echo "p0 = $repr_p0"
 ip link set $repr_p0 up
+#------------------------------------------------------------------------------------------------------
 
-
+# CONFIG OVS
+#------------------------------------------------------------------------------------------------------
 ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
 
-
-#Add NORMAL RULE
 ovs-ofctl del-flows $BRIDGE_NAME
-#ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
 
 # ADD OPENFLOW RULES
 #########################################################################
