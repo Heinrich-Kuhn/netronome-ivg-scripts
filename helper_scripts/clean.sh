@@ -2,8 +2,6 @@
 
 script_dir="$(dirname $(readlink -f $0))"
 
-$script_dir/vm_shutdown_all.sh
-
 sleep 2
 
 DPDK_DEVBIND=$(find /opt/ -iname dpdk-devbind.py | head -1)
