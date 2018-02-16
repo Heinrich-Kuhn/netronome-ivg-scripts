@@ -31,6 +31,9 @@ do
 done
 
 sed "s#^VIRTIOFWD_STATIC_VFS=.*#VIRTIOFWD_STATIC_VFS=#g" -i /etc/default/virtioforwarder
+echo "Stop openvswitch ..."
+
+ovs-ctl stop
 
 echo "Stop Virtioforwarder ..."
 
