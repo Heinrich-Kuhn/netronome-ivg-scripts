@@ -2,7 +2,7 @@
 
 script_dir="$(dirname $(readlink -f $0))"
 
-$script_dir/vm-shutdown-all.shutdown
+$script_dir/vm-shutdown-all.sh
 
 sleep 2
 
