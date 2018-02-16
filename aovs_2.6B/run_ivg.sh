@@ -153,7 +153,7 @@ else # else $TMUX is not empty, start test.
         echo ""
         echo -e "O) Toggle between AOVS / OVS_TC \t Setting: $SOFTWARE"
         echo -e "o) Toggle between VM operating systems \t Setting: $CLOUD_IMAGE_OS"
-        echo -e "f) Change flow count set for tests: \t Setting: $flow"
+        echo -e "f) Change number of Openflow rules to install: \t Setting: $flow"
         echo ""
         echo "a) Connect to DUT's"
         echo "b) Install/Re-install Agilio-OVS"
@@ -488,7 +488,8 @@ else # else $TMUX is not empty, start test.
 
 
             # Ouput flow count to text file
-            flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+            #flow_count=$(ssh -i ~/.ssh/netronome_key root@$IP_DUT2 'ovs-dpctl show | grep flows: | cut -d ':' -f2')
+            flow_count=$flow
 
             #CPU meas end
             echo -e "${GREEN}* Stopping CPU measurement${NC}"
