@@ -30,14 +30,6 @@ function find_repr()
 
 
 ##############################################################################################################
-PCI=$(lspci -d 19ee: | grep 4000 | cut -d ' ' -f1)
-
-if [[ "$PCI" == *":"*":"*"."* ]]; then
-    echo "PCI correct format"
-elif [[ "$PCI" == *":"*"."* ]]; then
-    echo "PCI corrected"
-    PCI="0000:$PCI"
-fi
 
 /root/IVG_folder/helper_scripts/start_ovs_tc.sh
 
@@ -49,7 +41,6 @@ elif [[ "$PCI" == *":"*"."* ]]; then
     echo "PCI corrected"
     PCI="0000:$PCI"
 fi
-
 
 #------------------------------------------------------------------------------------------------------
 

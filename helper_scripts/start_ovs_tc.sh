@@ -41,7 +41,7 @@ for ndev in $(ls /sys/bus/pci/devices/$pci/net); do
     ifconfig $ndev up
     ethtool -K $ndev hw-tc-offload on
 done
-
+echo "Start OVS"
 ovs-ctl start
 echo "AOVS-TC started"
 
