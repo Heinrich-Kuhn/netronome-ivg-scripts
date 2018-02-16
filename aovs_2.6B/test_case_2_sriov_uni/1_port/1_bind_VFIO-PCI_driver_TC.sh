@@ -130,11 +130,14 @@ ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_reques
 ovs-ofctl del-flows $BRIDGE_NAME
 #ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
 
+# ADD OPENFLOW RULES
+#########################################################################
 script=$(find / -name of_rules.sh | grep IVG_folder)
 num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
 sleep 1
 $script $num_flows 41 42 $BRIDGE_NAME
 sleep 1
+#########################################################################
 
 ovs-vsctl set Open_vSwitch . other_config:n-handler-threads=1
 ovs-vsctl set Open_vSwitch . other_config:n-revalidator-threads=1
