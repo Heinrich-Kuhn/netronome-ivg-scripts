@@ -1,4 +1,5 @@
 #!/bin/bash
+script_dir="$(dirname $(readlink -f $0))"
 
 path_ovs=$(find / -name "ovs-ctl" | sed -n 1p | sed 's=/ovs-ctl==g')
 
@@ -12,6 +13,8 @@ fi
 
 NR_VFS=50
 
+$script_dir/clean.sh
+
 echo "Reloading nfp module"
 rmmod nfp
 modprobe nfp nfp_dev_cpp=1
@@ -23,8 +26,15 @@ dev="0000:"$(lspci -d 19ee:4000 | cut -d ' ' -f 1)
 echo "$NR_VFS" > /sys/bus/pci/devices/$dev/sriov_numvfs
 echo "Creating VF's done"
 
-pci=$(lspci -d 19ee:4000 | cut -d ' ' -f 1)
-pci="0000:$pci"
+pci=$(lspci -d 19ee: | grep 4000 | cut -d ' ' -f1)
+
+if [[ "$pci" == *":"*":"*"."* ]]; then
+    echo "PCI correct format"
+elif [[ "$pci" == *":"*"."* ]]; then
+    echo "PCI corrected"
+    pci="0000:$pci"
+fi
+
 echo $pci
 for ndev in $(ls /sys/bus/pci/devices/$pci/net); do
     echo $ndev
