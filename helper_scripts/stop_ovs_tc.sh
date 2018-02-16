@@ -1,4 +1,7 @@
 #!/bin/bash
+script_dir="$(dirname $(readlink -f $0))"
+
+$script_dir/clean.sh
 
 ovs-ctl stop
 for dp in $(ovs-dpctl dump-dps)
