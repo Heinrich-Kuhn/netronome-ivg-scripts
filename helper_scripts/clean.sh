@@ -1,8 +1,28 @@
 #!/bin/bash
 
+
+function find_repr()
+{
+  local REPR=$1
+  for i in /sys/class/net/*;
+  do
+    phys_port_name=$(cat $i/phys_port_name 2>&1 /dev/null)
+    #echo "test: ${phys_port_name}"
+    #echo "REPR: $REPR"
+    if [ "$phys_port_name" == "$REPR" ];
+    then
+      echo "$i"
+    fi
+  done
+}
+
 script_dir="$(dirname $(readlink -f $0))"
 
 sleep 2
+
+repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
+repr_p0=$(find_repr p0 | rev | cut -d "/" -f 1 | rev)
+ip link set $repr_p0 down
 
 DPDK_DEVBIND=$(find /opt/ -iname dpdk-devbind.py | head -1)
 
