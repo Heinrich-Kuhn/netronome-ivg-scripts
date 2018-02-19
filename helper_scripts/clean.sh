@@ -16,6 +16,10 @@ function find_repr()
   done
 }
 
+$script_dir/vm_shutdown_all.sh
+
+sleep 3
+
 echo "Stop openvswitch ..."
 ovs-ctl stop
 
