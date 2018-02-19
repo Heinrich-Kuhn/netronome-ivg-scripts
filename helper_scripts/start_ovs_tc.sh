@@ -15,8 +15,13 @@ NR_VFS=50
 
 $script_dir/clean.sh
 
+sleep 3
+
 echo "Reloading nfp module"
 rmmod nfp
+
+sleep 3
+
 modprobe nfp nfp_dev_cpp=1
 echo "nfp module loaded"
 
