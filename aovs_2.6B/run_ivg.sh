@@ -425,7 +425,7 @@ else # else $TMUX is not empty, start test.
             #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
 
             VM_BASE_NAME=netronome-sriov-vm
-            VM_CPUS=4
+            VM_CPUS=5
             
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
             tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m

@@ -6,10 +6,12 @@ VM_CPU_COUNT=$2
 VF_NAME_1="virtfn41"
 VF_NAME_2="virtfn42"
 VF_NAME_3="virtfn43"
+VF_NAME_4="virtfn44"
 
 VF1="pf0vf41"
 VF2="pf0vf42"
 VF3="pf0vf43"
+VF4="pf0vf44"
 
 BRIDGE_NAME=br0
 
@@ -127,11 +129,27 @@ echo "ovs-vsctl add-port $BRIDGE_NAME $repr_vf3 -- set interface $repr_vf3 ofpor
 ovs-vsctl add-port $BRIDGE_NAME $repr_vf3 -- set interface $repr_vf3 ofport_request=43
 ip link set $repr_vf3 up
 VF3_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_3} | rev | cut -d '/' -f1 | rev)
-echo "VF2_PCI_ADDRESS: $VF3_PCI_ADDRESS"
+echo "VF3_PCI_ADDRESS: $VF3_PCI_ADDRESS"
 bind_vfio ${VF3_PCI_ADDRESS}
 echo "THIRD VF DONE"
 
 sleep 2
+
+#------------------------------------------------------------------------------------------------------
+# FIND VF4 REPR
+#------------------------------------------------------------------------------------------------------
+repr_vf4=$(find_repr $VF4 | rev | cut -d '/' -f 1 | rev)
+echo "Add $repr_vf4 to $BRIDGE_NAME"
+echo "ovs-vsctl add-port $BRIDGE_NAME $repr_vf4 -- set interface $repr_vf4 ofport_request=44"
+ovs-vsctl add-port $BRIDGE_NAME $repr_vf4 -- set interface $repr_vf4 ofport_request=44
+ip link set $repr_vf4 up
+VF4_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_4} | rev | cut -d '/' -f1 | rev)
+echo "VF4_PCI_ADDRESS: $VF4_PCI_ADDRESS"
+bind_vfio ${VF4_PCI_ADDRESS}
+echo "FOURTH VF DONE"
+
+sleep 2
+
 
 #------------------------------------------------------------------------------------------------------
 #FIND PHY REPR
@@ -186,9 +204,11 @@ bus=$(echo $VF2_PCI_ADDRESS | cut -d ':' -f2 )
 slot_1=$(echo $VF1_PCI_ADDRESS | cut -d ':' -f3 | cut -d '.' -f1 )
 slot_2=$(echo $VF2_PCI_ADDRESS | cut -d ':' -f3 | cut -d '.' -f1 )
 slot_3=$(echo $VF3_PCI_ADDRESS | cut -d ':' -f3 | cut -d '.' -f1 )
+slot_4=$(echo $VF4_PCI_ADDRESS | cut -d ':' -f3 | cut -d '.' -f1 )
 func_1=$(echo $VF1_PCI_ADDRESS | cut -d '.' -f2 )
 func_2=$(echo $VF2_PCI_ADDRESS | cut -d '.' -f2 )
 func_3=$(echo $VF3_PCI_ADDRESS | cut -d '.' -f2 )
+func_4=$(echo $VF4_PCI_ADDRESS | cut -d '.' -f2 )
 
 
 
@@ -197,6 +217,8 @@ EDITOR='sed -i "/<devices/a \<hostdev mode=\"subsystem\" type=\"pci\" managed=\"
 EDITOR='sed -i "/<devices/a \<hostdev mode=\"subsystem\" type=\"pci\" managed=\"yes\">  <source> <address domain=\"0x0000\" bus=\"0x'${bus}'\" slot=\"0x'$slot_2'\" function=\"0x'$func_2'\"\/> <\/source>  <address type=\"pci\" domain=\"0x0000\" bus=\"0x00\" slot=\"0x0b\" function=\"0x0\"\/> <\/hostdev>"' virsh edit $VM_NAME
 
 EDITOR='sed -i "/<devices/a \<hostdev mode=\"subsystem\" type=\"pci\" managed=\"yes\">  <source> <address domain=\"0x0000\" bus=\"0x'${bus}'\" slot=\"0x'$slot_3'\" function=\"0x'$func_3'\"\/> <\/source>  <address type=\"pci\" domain=\"0x0000\" bus=\"0x00\" slot=\"0x0c\" function=\"0x0\"\/> <\/hostdev>"' virsh edit $VM_NAME
+
+EDITOR='sed -i "/<devices/a \<hostdev mode=\"subsystem\" type=\"pci\" managed=\"yes\">  <source> <address domain=\"0x0000\" bus=\"0x'${bus}'\" slot=\"0x'$slot_4'\" function=\"0x'$func_4'\"\/> <\/source>  <address type=\"pci\" domain=\"0x0000\" bus=\"0x00\" slot=\"0x0d\" function=\"0x0\"\/> <\/hostdev>"' virsh edit $VM_NAME
 
 EDITOR='sed -i "/<cpu/,/<\/cpu>/d"' virsh edit $VM_NAME
 EDITOR='sed -i "/<memoryBacking>/,/<\/memoryBacking>/d"' virsh edit $VM_NAME
