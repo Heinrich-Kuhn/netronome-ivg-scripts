@@ -68,7 +68,7 @@ function flows_config {
     
     local flows=$(cat /root/IVG/aovs_2.6B/flow_setting.txt)
     
-    flows=$(( $flows/2 ))
+    #flows=$(( $flows/2 ))
 
     if [[ "$flows" -lt 1 ]]; then
         flows=1
