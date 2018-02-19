@@ -60,8 +60,8 @@ cpu_model=$(virsh capabilities \
 virt-install \
     --name "$VM_NAME" \
     --disk path=${overlay},format=qcow2,bus=virtio,cache=none \
-    --ram 4096 \
-    --vcpus 4 \
+    --ram 6144 \
+    --vcpus 5 \
     --cpu $cpu_model \
     --network network=default \
     --nographics \
