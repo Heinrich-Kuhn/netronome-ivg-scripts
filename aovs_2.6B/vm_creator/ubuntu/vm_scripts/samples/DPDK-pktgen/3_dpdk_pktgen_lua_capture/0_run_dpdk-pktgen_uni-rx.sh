@@ -15,7 +15,7 @@ else
 NETRONOME_VF_LIST=$(lspci | grep 01: | awk '{print $1}')
 fi
 
-memory="--socket-mem 1024"
+memory="--socket-mem 1440"
 lcores="-l 0-$((CPU_COUNT-1))"
 
 # whitelist
