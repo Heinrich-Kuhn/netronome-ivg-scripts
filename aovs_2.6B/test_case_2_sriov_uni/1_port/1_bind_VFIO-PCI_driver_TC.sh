@@ -9,7 +9,7 @@ VF_NAME_2="virtfn43"
 
 VF1="pf0vf41"
 VF2="pf0vf42"
-VF2="pf0vf42"
+VF2="pf0vf43"
 
 BRIDGE_NAME=br0
 
