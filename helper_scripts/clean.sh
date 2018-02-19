@@ -20,6 +20,9 @@ function find_repr()
 echo "Stop openvswitch ..."
 ovs-ctl stop
 
+dev="0000:"$(lspci -d 19ee:4000 | cut -d ' ' -f 1)
+echo 0 > /sys/bus/pci/devices/$dev/sriov_numvfs
+
 sleep 2
 
 repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)

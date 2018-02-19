@@ -28,6 +28,10 @@ echo "nfp module loaded"
 echo "Creating VF's ..."
 ##TODO: Add check for sf and/or multiple cards later on
 dev="0000:"$(lspci -d 19ee:4000 | cut -d ' ' -f 1)
+echo 0 > /sys/bus/pci/devices/$dev/sriov_numvfs
+
+sleep 3
+
 echo "$NR_VFS" > /sys/bus/pci/devices/$dev/sriov_numvfs
 echo "Creating VF's done"
 
