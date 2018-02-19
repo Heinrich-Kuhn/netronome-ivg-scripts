@@ -517,6 +517,10 @@ else # else $TMUX is not empty, start test.
             
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/vm_shutdown_all.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/y_vm_shutdown_all.sh" C-m
+  
                 
             
             if [[ ! -e "parsed_data.txt" ]]; then
@@ -670,6 +674,10 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/vm_shutdown_all.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/y_vm_shutdown_all.sh" C-m
+
             
             
             if [[ ! -e "parsed_data.txt" ]]; then
@@ -984,6 +992,10 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/vm_shutdown_all.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/y_vm_shutdown_all.sh" C-m
+
             
             
             if [[ ! -e "parsed_data.txt" ]]; then
