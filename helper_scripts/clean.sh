@@ -16,6 +16,9 @@ function find_repr()
   done
 }
 
+echo "Stop openvswitch ..."
+ovs-ctl stop
+
 script_dir="$(dirname $(readlink -f $0))"
 
 sleep 2
@@ -46,14 +49,10 @@ pci_list=$($DPDK_DEVBIND -s | grep $PCI | cut -d ' ' -f1 )
 echo "Unbinding VFs"
 for item in $pci_list
 do
-    
     $DPDK_DEVBIND -u $item 2>/dev/null
 done
 
 sed "s#^VIRTIOFWD_STATIC_VFS=.*#VIRTIOFWD_STATIC_VFS=#g" -i /etc/default/virtioforwarder
-echo "Stop openvswitch ..."
-
-ovs-ctl stop
 
 echo "Stop Virtioforwarder ..."
 
