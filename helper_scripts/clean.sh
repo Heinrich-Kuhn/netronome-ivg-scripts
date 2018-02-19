@@ -1,5 +1,6 @@
 #!/bin/bash
 
+script_dir="$(dirname $(readlink -f $0))"
 
 function find_repr()
 {
@@ -22,8 +23,6 @@ sleep 3
 
 echo "Stop openvswitch ..."
 ovs-ctl stop
-
-script_dir="$(dirname $(readlink -f $0))"
 
 sleep 2
 
