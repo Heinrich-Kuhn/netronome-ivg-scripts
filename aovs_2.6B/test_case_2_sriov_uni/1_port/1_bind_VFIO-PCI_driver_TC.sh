@@ -5,11 +5,11 @@ VM_CPU_COUNT=$2
 
 VF_NAME_1="virtfn41"
 VF_NAME_2="virtfn42"
-VF_NAME_2="virtfn40"
+VF_NAME_3="virtfn43"
 
 VF1="pf0vf41"
 VF2="pf0vf42"
-VF2="pf0vf40"
+VF3="pf0vf43"
 
 BRIDGE_NAME=br0
 
