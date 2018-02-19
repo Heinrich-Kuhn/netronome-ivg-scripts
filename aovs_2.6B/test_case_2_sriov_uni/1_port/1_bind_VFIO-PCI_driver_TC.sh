@@ -5,11 +5,11 @@ VM_CPU_COUNT=$2
 
 VF_NAME_1="virtfn41"
 VF_NAME_2="virtfn42"
-VF_NAME_2="virtfn43"
+VF_NAME_2="virtfn40"
 
 VF1="pf0vf41"
 VF2="pf0vf42"
-VF2="pf0vf43"
+VF2="pf0vf40"
 
 BRIDGE_NAME=br0
 
@@ -44,7 +44,7 @@ function bind_vfio()
     #echo "DPDK_DEVBIND: $DPDK_DEVBIND"
     #$DPDK_DEVBIND --bind $DRIVER $INTERFACE_PCI
     if [ "$current" != "" ]; then
-      echo "testing: unbind $current on ${INTERFACE_PCI}"
+      echo "testing: bind $current on ${INTERFACE_PCI}"
       echo ${INTERFACE_PCI} > /sys/bus/pci/devices/${INTERFACE_PCI}/driver/unbind
       echo ${DRIVER} > /sys/bus/pci/devices/${INTERFACE_PCI}/driver_override
       echo ${INTERFACE_PCI} > /sys/bus/pci/drivers/vfio-pci/bind
@@ -102,6 +102,8 @@ echo "VF1_PCI_ADDRESS: $VF1_PCI_ADDRESS"
 bind_vfio ${VF1_PCI_ADDRESS}
 echo "FIRST VF DONE"
 
+sleep 2
+
 # FIND VF2 REPR
 #------------------------------------------------------------------------------------------------------
 repr_vf2=$(find_repr $VF2 | rev | cut -d '/' -f 1 | rev)
@@ -113,6 +115,9 @@ VF2_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_2} | rev | c
 echo "VF2_PCI_ADDRESS: $VF2_PCI_ADDRESS"
 bind_vfio ${VF2_PCI_ADDRESS}
 echo "SECOND VF DONE"
+
+sleep 2
+
 #------------------------------------------------------------------------------------------------------
 # FIND VF3 REPR
 #------------------------------------------------------------------------------------------------------
@@ -125,8 +130,10 @@ VF3_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_3} | rev | c
 echo "VF2_PCI_ADDRESS: $VF3_PCI_ADDRESS"
 bind_vfio ${VF3_PCI_ADDRESS}
 echo "THIRD VF DONE"
-#------------------------------------------------------------------------------------------------------
 
+sleep 2
+
+#------------------------------------------------------------------------------------------------------
 #FIND PHY REPR
 #------------------------------------------------------------------------------------------------------
 repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
@@ -136,8 +143,8 @@ ip link set $repr_pf0 up
 repr_p0=$(find_repr p0 | rev | cut -d "/" -f 1 | rev)
 echo "p0 = $repr_p0"
 ip link set $repr_p0 up
-#------------------------------------------------------------------------------------------------------
 
+#------------------------------------------------------------------------------------------------------
 # CONFIG OVS
 #------------------------------------------------------------------------------------------------------
 ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
