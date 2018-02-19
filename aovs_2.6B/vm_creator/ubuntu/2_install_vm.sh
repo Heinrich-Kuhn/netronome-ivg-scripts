@@ -12,8 +12,8 @@ virt-install \
   --name $VM_NAME \
   --disk path=/var/lib/libvirt/images/ubuntu-17.10-server-cloudimg-amd64.img,format=qcow2,bus=virtio,cache=none \
   --disk /var/lib/libvirt/images/user_data_1.img,device=cdrom \
-  --ram 4012 \
-  --vcpus 8 \
+  --ram 6144 \
+  --vcpus 10 \
   --cpu $cpu_model \
   --network bridge=virbr0,model=virtio \
   --nographics \
