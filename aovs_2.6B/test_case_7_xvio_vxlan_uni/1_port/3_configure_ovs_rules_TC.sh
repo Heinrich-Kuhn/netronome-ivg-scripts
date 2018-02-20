@@ -8,9 +8,13 @@ BONDBR_SRC_IP=$2
 
 VF_NAME_1="virtfn25"
 VF_NAME_2="virtfn26"
+VF_NAME_3="virtfn27"
+VF_NAME_4="virtfn28"
 
 VF1="pf0vf25"
 VF2="pf0vf26"
+VF3="pf0vf27"
+VF4="pf0vf28"
 
 function find_repr()
 {
