@@ -121,7 +121,7 @@ function main()
   setupTraffic()
   pktgen.delay(1000);
   pktgen.set("all", "rate", 100);
-  pktgen.pkt_size("all", "start", size);
+  pktgen.pkt_size("all", "start", 64);
   pktgen.start("all");
   pktgen.delay(2000);
 
