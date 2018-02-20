@@ -17,6 +17,12 @@ function find_repr()
   done
 }
 
+# Delete all bridges
+for br in $(ovs-vsctl list-br);
+do
+  ovs-vsctl --if-exists del-br $br
+done
+
 echo "Stop openvswitch ..."
 ovs-ctl stop
 

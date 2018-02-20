@@ -52,5 +52,5 @@ for ndev in $(ls /sys/bus/pci/devices/$pci/net); do
 done
 echo "Start OVS"
 ovs-ctl start
-echo "AOVS-TC started"
+echo "OVS-TC started"
 

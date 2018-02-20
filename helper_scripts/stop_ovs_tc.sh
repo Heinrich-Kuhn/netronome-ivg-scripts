@@ -12,5 +12,5 @@ do
 done
 rmmod openvswitch 2>/dev/null
 rmmod nfp 2>/dev/null
-echo "AOVS-TC stopped"
+echo "OVS-TC stopped"
 
