@@ -37,14 +37,31 @@ fi
 
 ########################################################################
 hwinfo="/opt/netronome/bin/nfp-hwinfo"
+nfp_present="unknown"
 if [ -x $hwinfo ]; then
-  model=$(  $hwinfo | sed -rn 's/^assembly.model=(.*)$/\1/p')
-  partno=$( $hwinfo | sed -rn 's/^assembly.partno=(.*)$/\1/p')
-  rev=$(    $hwinfo | sed -rn 's/^assembly.revision=(.*)$/\1/p')
-  sn=$(     $hwinfo | sed -rn 's/^assembly.serial=(.*)$/\1/p')
-  bsp=$(    $hwinfo | sed -rn 's/^board.setup.version=(.*)$/\1/p')
-  printf "%-10s %s (%s)\n" "NFP" "$model" "$partno rev=$rev sn=$sn"
-  printf "%-10s %s %s\n" "BSP" "$bsp"
+  fn="/tmp/nfp-hwinfo.txt"
+  $hwinfo > $fn 2> /dev/null
+  if [ $? -ne 0 ]; then
+    printf "%-10s %s\n" "NFP" "MISSING!!"
+    nfp_present="missing"
+  else
+    nfp_present="yes"
+    model=$(  sed -rn 's/^assembly.model=(.*)$/\1/p' $fn)
+    partno=$( sed -rn 's/^assembly.partno=(.*)$/\1/p' $fn)
+    rev=$(    sed -rn 's/^assembly.revision=(.*)$/\1/p' $fn)
+    sn=$(     sed -rn 's/^assembly.serial=(.*)$/\1/p' $fn)
+    bsp=$(    sed -rn 's/^board.setup.version=(.*)$/\1/p' $fn)
+    printf "%-10s %s (%s)\n" "NFP" "$model" "$partno rev=$rev sn=$sn"
+    printf "%-10s %s %s\n" "BSP" "$bsp"
+  fi
+fi
+
+########################################################################
+if [ -x /opt/netronome/bin/nfp-media ] && [ "$nfp_present" == "yes" ]; then
+  phymode=$(/opt/netronome/bin/nfp-media \
+    | tr '\n' ' ' \
+    | sed -r 's/\s+\(\S+\)\s*/ /g')
+  printf "%-10s %s\n" "Media" "$phymode"
 fi
 
 ########################################################################
@@ -55,7 +72,9 @@ nfpsys="/sys/bus/pci/drivers/nfp"
 nfpnuma="UNKNOWN"
 nfpbdf="UNKNOWN"
 if [ -d "$nfpsys" ]; then
-  nfpbdf=$(find $nfpsys -name '00*' | sed -r 's#^.*/##')
+  nfpbdf=$(find $nfpsys -name '00*' \
+    | sed -r 's#^.*/##' \
+    | head -1)
   if [ -h "$nfpsys/$nfpbdf" ]; then
     nfpnuma="$(cat $nfpsys/$nfpbdf/numa_node)"
   fi
