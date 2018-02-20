@@ -168,8 +168,27 @@ ip link set $repr_p0 up
 ovs-vsctl add-port $BRIDGE_NAME $repr_p0 -- set interface $repr_p0 ofport_request=1
 
 ovs-ofctl del-flows $BRIDGE_NAME
-ovs-ofctl add-flow $BRIDGE_NAME actions=normal
+#ovs-ofctl add-flow $BRIDGE_NAME actions=normal
 
+
+#ADD IN OUT RULES
+################################################
+ovs-ofctl add-flow $BRIDGE_NAME in_port=41,actions=1
+ovs-ofctl add-flow $BRIDGE_NAME in_port=42,actions=1
+ovs-ofctl add-flow $BRIDGE_NAME in_port=43,actions=1
+ovs-ofctl add-flow $BRIDGE_NAME in_port=44,actions=1
+
+ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0800,nw_dst=10.10.10.1,actions=41
+ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0800,nw_dst=10.10.10.2,actions=42
+ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0800,nw_dst=10.10.10.3,actions=43
+ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0800,nw_dst=10.10.10.4,actions=44
+
+ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0806,actions=41,42,43,44
+
+
+
+
+################################################
 
 # # ADD OPENFLOW RULES
 # #########################################################################
