@@ -16,15 +16,15 @@ if [ ! -f ~/.ssh/id_rsa ]; then
       ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -P ""
 fi
 
-if [ "$IVG_HTTP_PROXY" == "" ]; then
-   utils="/root/IVG_folder/helper_scripts"
-   IVG_HTTP_PROXY=$($utils/get-server-proxy-settings.sh)
-fi
+#if [ "$IVG_HTTP_PROXY" == "" ]; then
+#   utils="/root/IVG_folder/helper_scripts"
+#   IVG_HTTP_PROXY=$($utils/get-server-proxy-settings.sh)
+#fi
 
-if [ "$IVG_HTTP_PROXY" != "" ]; then
-    IVG_APT_PROXY_LINE="Acquire::http::proxy \"$IVG_HTTP_PROXY\";"
-    IVG_PROXY_EXPORT="export http_proxy=$IVG_HTTP_PROXY"
-fi
+#if [ "$IVG_HTTP_PROXY" != "" ]; then
+#    IVG_APT_PROXY_LINE="Acquire::http::proxy \"$IVG_HTTP_PROXY\";"
+#   IVG_PROXY_EXPORT="export http_proxy=$IVG_HTTP_PROXY"
+#fi
 
 SSH_KEY=$(cat ~/.ssh/id_rsa.pub)
 
