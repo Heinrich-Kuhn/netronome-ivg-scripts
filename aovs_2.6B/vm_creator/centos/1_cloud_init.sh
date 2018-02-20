@@ -2,12 +2,21 @@
 
 #Cloud init script
 
-VM_NAME="ubuntu_backing"
+VM_NAME="centos_backing"
 
 #Generate ssh keypair, if no existing keypair is found, a new keypair will be created
 if [ ! -f ~/.ssh/id_rsa ]; then
       echo -e "Generating SSH keypair..."
       ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -P ""
+fi
+
+if [ "$IVG_HTTP_PROXY" == "" ]; then
+   utils="/root/IVG_folder/helper_scripts"
+   IVG_HTTP_PROXY=$($utils/get-server-proxy-settings.sh)
+fi
+
+if [ "$IVG_HTTP_PROXY" != "" ]; then
+    IVG_PROXY_EXPORT="export http_proxy=$IVG_HTTP_PROXY"
 fi
 
 SSH_KEY=$(cat ~/.ssh/id_rsa.pub)
