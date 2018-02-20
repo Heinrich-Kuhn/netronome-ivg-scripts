@@ -41,6 +41,14 @@ repr_vf2=$(find_repr $VF2 | rev | cut -d '/' -f 1 | rev)
 echo "vf2 = $repr_vf2"
 ip link set $repr_vf2 up
 
+repr_vf3=$(find_repr $VF3 | rev | cut -d '/' -f 1 | rev)
+echo "vf3 = $repr_vf3"
+ip link set $repr_vf3 up
+
+repr_vf4=$(find_repr $VF4 | rev | cut -d '/' -f 1 | rev)
+echo "vf4 = $repr_vf4"
+ip link set $repr_vf4 up
+
 repr_pf0=$(find_repr pf0 | rev | cut -d "/" -f 1 | rev)
 echo "pf0 = $repr_pf0"
 ip link set $repr_pf0 up
@@ -62,6 +70,8 @@ ovs-vsctl add-port $BRIDGE vxlan_01 -- set interface vxlan_01 type=vxlan options
 #Add VF's
 ovs-vsctl add-port $BRIDGE $repr_vf1 -- set interface $repr_vf1 ofport_request=25 external_ids:virtio_forwarder=25
 ovs-vsctl add-port $BRIDGE $repr_vf2 -- set interface $repr_vf2 ofport_request=26 external_ids:virtio_forwarder=26
+ovs-vsctl add-port $BRIDGE $repr_vf3 -- set interface $repr_vf3 ofport_request=27 external_ids:virtio_forwarder=27
+ovs-vsctl add-port $BRIDGE $repr_vf4 -- set interface $repr_vf4 ofport_request=28 external_ids:virtio_forwarder=28
 
 ovs-ofctl del-flows $BRIDGE
 
@@ -69,15 +79,15 @@ ovs-vsctl set Open_vSwitch . other_config:n-handler-threads=1
 ovs-vsctl set Open_vSwitch . other_config:n-revalidator-threads=1
 
 #ovs-ofctl -O OpenFlow13 add-flow $BRIDGE actions=NORMAL
-#ovs-ofctl add-flow $BRIDGE actions=NORMAL
+ovs-ofctl add-flow $BRIDGE actions=NORMAL
 
 # Implement flow via OF rules
 # #-----------------------------------------------------------------
-script=$(find / -name of_rules.sh | grep IVG_folder)
-num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
-sleep 1
-$script $num_flows 25 26 $BRIDGE
-sleep 1
+#script=$(find / -name of_rules.sh | grep IVG_folder)
+#num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
+#sleep 1
+#$script $num_flows 25 26 $BRIDGE
+#sleep 1
 #------------------------------------------------------------------
 
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
