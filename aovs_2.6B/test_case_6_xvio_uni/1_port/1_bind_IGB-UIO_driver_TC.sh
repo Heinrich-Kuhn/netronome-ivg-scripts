@@ -5,9 +5,13 @@ VM_CPU_COUNT=$2
 
 VF_NAME_1="virtfn21"
 VF_NAME_2="virtfn22"
+VF_NAME_3="virtfn23"
+VF_NAME_4="virtfn24"
 
 VF1="pf0vf21"
 VF2="pf0vf22"
+VF3="pf0vf23"
+VF4="pf0vf24"
 
 BRIDGE_NAME=br0
 
@@ -55,11 +59,25 @@ VF2_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_2} | rev | c
 echo "VF2_PCI_ADDRESS: $VF2_PCI_ADDRESS"
 
 #------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------
 
-sed "s#^VIRTIOFWD_STATIC_VFS=.*#VIRTIOFWD_STATIC_VFS=($VF1_PCI_ADDRESS=21 $VF2_PCI_ADDRESS=22)#g" -i /etc/default/virtioforwarder
+repr_vf3=$(find_repr $VF3 | rev | cut -d '/' -f 1 | rev)
+VF3_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_3} | rev | cut -d '/' -f1 | rev)
+echo "VF3_PCI_ADDRESS: $VF3_PCI_ADDRESS"
+
+#------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------
+
+repr_vf4=$(find_repr $VF4 | rev | cut -d '/' -f 1 | rev)
+VF4_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_4} | rev | cut -d '/' -f1 | rev)
+echo "VF4_PCI_ADDRESS: $VF4_PCI_ADDRESS"
+
+#------------------------------------------------------------------------------------------------------
+
+sed "s#^VIRTIOFWD_STATIC_VFS=.*#VIRTIOFWD_STATIC_VFS=($VF1_PCI_ADDRESS=21 $VF2_PCI_ADDRESS=22 $VF3_PCI_ADDRESS=23 $VF4_PCI_ADDRESS=24)#g" -i /etc/default/virtioforwarder
 
 ## BIND IGB_UIO DRIVER
-interface_list=(${VF1_PCI_ADDRESS} ${VF2_PCI_ADDRESS})
+interface_list=(${VF1_PCI_ADDRESS} ${VF2_PCI_ADDRESS} ${VF3_PCI_ADDRESS} {$VF4_PCI_ADDRESS})
 driver=igb_uio
 mp=uio
 # updatedb

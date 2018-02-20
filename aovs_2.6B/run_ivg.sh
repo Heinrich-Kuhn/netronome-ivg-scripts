@@ -580,7 +580,7 @@ else # else $TMUX is not empty, start test.
             #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
 
             VM_BASE_NAME=netronome-sriov-vxlan-vm
-            VM_CPUS=4
+            VM_CPUS=5
             DST_IP="10.10.10.2"
             SRC_IP="10.10.10.1"
 
@@ -747,7 +747,7 @@ else # else $TMUX is not empty, start test.
             #scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
 
             VM_BASE_NAME=netronome-xvio-vm
-            VM_CPUS=4
+            VM_CPUS=5
             XVIO_CPUS=2
             
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
@@ -900,7 +900,7 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/helper_scripts root@$IP_DUT2:/root/IVG_folder/
 
             VM_BASE_NAME=netronome-xvio-vxlan-vm
-            VM_CPUS=4
+            VM_CPUS=5
             XVIO_CPUS=2
             DST_IP="10.10.10.2"
             SRC_IP="10.10.10.3"
