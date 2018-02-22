@@ -330,6 +330,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install_pre_req.sh" C-m
             tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install_pre_req.sh" C-m
 
+            wait_text ALL "PreReq Installed!"
+            
             #_#_#_#_#_START LOG_#_#_#_#_#
             tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_1.log" C-m
             tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_2.log" C-m
