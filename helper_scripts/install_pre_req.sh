@@ -61,3 +61,5 @@ if [[ $? -eq 0 ]]; then
   yum -y install centos-release-qemu-ev.noarch qemu-kvm-ev libvirt libvirt-python virt-install
 
 fi
+
+echo "PreReq Installed!"
