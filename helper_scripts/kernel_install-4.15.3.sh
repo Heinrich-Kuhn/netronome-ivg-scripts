@@ -32,6 +32,8 @@ if [[ $? -eq 0 ]]; then
 
     yum --enablerepo=elrepo-kernel -y install kernel-ml
 
+    sed -i 's#^GRUB_DEFAULT=.*#GRUB_DEFAULT=0#g' /etc/default/grub
+
     $script_dir/configure_grub.sh
 
     grub2-mkconfig -o /boot/grub2/grub.cfg
