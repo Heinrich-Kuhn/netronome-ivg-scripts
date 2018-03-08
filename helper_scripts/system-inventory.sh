@@ -71,7 +71,7 @@ function run () {
     if [ -x $cmd ]; then
         $cmd $args > $capdir/$fname 2>&1
     else
-        tool=$(which $cmd)
+        tool=$(which $cmd 2> /dev/null)
         if [ -x "$tool" ]; then
             $tool $args > $capdir/$fname 2>&1
         else
@@ -96,7 +96,7 @@ run "route" "-n"                "route-n.txt"
 run "netstat" "-s"              "netstat-s.txt"
 run "lsmod" ""                  "lsmod.txt"
 run "ps" "aux"                  "ps-aux.txt"
-run "dmidecode" "--type system" "dmidecode.txt"
+run "dmidecode" ""              "dmidecode.txt"
 run "lshw" ""                   "lshw.txt"
 run "printenv" ""               "printenv.txt"
 
@@ -119,9 +119,9 @@ run "ovs-dpctl" "dump-flows -m" "ovs-dpctl-flows.txt"
 run "ovs-ctl" "status troubleshoot -C" "ovs-ctl-status-troubleshoot.txt"
 
 run "nfp" "-m mac show port info 0 0" "nfp-mac-0-0-first.txt"
-run "nfp" "-m mac show port info 0 4" "nfp-mac-0-0-first.txt"
+run "nfp" "-m mac show port info 0 4" "nfp-mac-0-4-first.txt"
 run "nfp" "-m mac show port info 0 0" "nfp-mac-0-0-second.txt"
-run "nfp" "-m mac show port info 0 4" "nfp-mac-0-0-second.txt"
+run "nfp" "-m mac show port info 0 4" "nfp-mac-0-4-second.txt"
 
 run "ovs-appctl" "bond/list" "bond-list.txt"
 
