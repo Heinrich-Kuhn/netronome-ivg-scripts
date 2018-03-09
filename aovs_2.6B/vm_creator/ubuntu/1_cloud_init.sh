@@ -39,7 +39,7 @@ ssh_authorized_keys:
   - $SSH_KEY
 chpasswd:
   list: |
-    root:changeme
+    root:netronome
   expire: false
 write_files:
   - path: /etc/apt/apt.conf.d/01proxy

@@ -25,9 +25,17 @@ $HOME/IVG_folder/helper_scripts/attach-physical-ports.sh $BRIDGE \
   || exit -1
 
 #Add NORMAL RULE
-ovs-ofctl del-flows br0
-ovs-ofctl -O OpenFlow13 add-flow $BRIDGE actions=NORMAL
+#ovs-ofctl del-flows br0
+#ovs-ofctl -O OpenFlow13 add-flow $BRIDGE actions=NORMAL
 
+script=$(find / -name of_rules.sh | grep IVG_folder)
+num_flows=$(cat /root/IVG_folder/aovs_2.6B/flow_setting.txt)
+
+sleep 1
+
+$script $num_flows 41 42 $BRIDGE
+
+sleep 1
 
 ovs-vsctl set Open_vSwitch . other_config:max-idle=300000
 ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000

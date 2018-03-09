@@ -41,4 +41,7 @@ ETH=$($DPDK_DEVBIND --status | grep $PCIA | cut -d ' ' -f 4 | cut -d '=' -f 2)
 ip a add $IP/24 dev $ETH
 ip link set dev $ETH up
 
+#Change default Coalesce setting
+ethtool -C $ETH rx-usecs 1
+
 exit 0

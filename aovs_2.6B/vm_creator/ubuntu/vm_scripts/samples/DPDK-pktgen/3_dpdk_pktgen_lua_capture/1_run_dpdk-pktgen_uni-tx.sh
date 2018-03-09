@@ -3,7 +3,7 @@
 VXLAN=$1
 
 export DPDK_BASE_DIR=/root
-export PKTGEN=/root/pktgen-dpdk-pktgen-3.3.2
+export PKTGEN=/root/pktgen-3.4.1
 script_dir="$(dirname $(readlink -f $0))"
 cd $PKTGEN
 
@@ -17,7 +17,7 @@ else
 NETRONOME_VF_LIST=$(lspci | grep 01: | awk '{print $1}')
 fi
 
-memory="--socket-mem 1024"
+memory="--socket-mem 1440"
 lcores="-l 0-$((CPU_COUNT-1))"
 
 # whitelist
@@ -49,11 +49,11 @@ echo "whitelist: $whitelist"
 echo "mapping: $mapping"
 
 if [ "$VXLAN" == "n" ]; then
-/root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_transmitter.lua
+$PKTGEN/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_transmitter.lua
 fi
 
 if [ "$VXLAN" == "y" ]; then
-/root/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_transmitter_vxlan.lua
+$PKTGEN/dpdk-pktgen $lcores --proc-type auto $memory -n 4 --log-level=7 $whitelist --file-prefix=dpdk0_ -- $mapping -N -f $script_dir/unidirectional_transmitter_vxlan.lua
 fi
 
 reset

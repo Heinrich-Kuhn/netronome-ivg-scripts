@@ -8,6 +8,7 @@ pkgs+=( "libpcap-dev" )
 pkgs+=( "python" )
 pkgs+=( "unzip" )
 pkgs+=( "python-scapy" "python-pip" )
+pkgs+=( "numactl" "libnuma-dev" )
 
 apt-get update \
     || exit -1

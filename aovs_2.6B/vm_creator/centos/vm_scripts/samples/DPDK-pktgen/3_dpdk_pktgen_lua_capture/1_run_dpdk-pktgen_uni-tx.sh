@@ -49,7 +49,7 @@ ealargs+=( "--file-prefix" "dpdk0_" )
 ealargs+=( "--log-level" "7" )
 ealargs+=( "--proc-type" "auto" )
 ealargs+=( "-n" "4" )
-ealargs+=( "--socket-mem" "1024" )
+ealargs+=( "--socket-mem" "1440" )
 ealargs+=( "-l" "0-$((CPU_COUNT - 1))" )
 
 appargs+=( "-N" )

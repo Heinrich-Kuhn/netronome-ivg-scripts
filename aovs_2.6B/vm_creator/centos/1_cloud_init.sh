@@ -2,6 +2,8 @@
 
 #Cloud init script
 
+VM_NAME="centos_backing"
+
 #Generate ssh keypair, if no existing keypair is found, a new keypair will be created
 if [ ! -f ~/.ssh/id_rsa ]; then
       echo -e "Generating SSH keypair..."
@@ -26,19 +28,17 @@ cat > user_data << EOL
 debug: True
 ssh_pwauth: True
 disable_root: false
-ssh_authorized_keys:
-  - $SSH_KEY
 chpasswd:
   list: |
     root:changeme
   expire: false
+
 write_files:
-  - path: /root/README 
-    content: "Netronome performance VM"
-  - path: /etc/profile.d/netronome-ivg.sh
-    content: |
-        # Optional Variables added by the Netronome IVG
-        $IVG_PROXY_EXPORT
+   -   content: ${SSH_KEY}
+       path: /root/.ssh/authorized_keys
+   -   content: "Netronome performance VM"
+       path: /root/README 
+
 runcmd:
 - mkdir -p /root/.ssh
 - sed -i -e '/^Port/s/^.*$/Port 22/' /etc/ssh/sshd_config

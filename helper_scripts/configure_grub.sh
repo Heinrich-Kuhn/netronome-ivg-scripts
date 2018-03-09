@@ -12,6 +12,7 @@ grub_setting=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT" /etc/default/grub)
 echo "START: $grub_setting"
 
 check_list=( "intel_iommu=on" "iommu=pt" "intremap=on" "isolcpus=$nfp_cpulist" "intel_idle.max_cstate=0" "processor.max_cstate=0" "idle=mwait" "intel_pstate=disable" "nohz_full=$nfp_cpulist" "rcu_nocbs=$nfp_cpulist" "transparent_hugepage=never")
+
 #pcie_asmp=off tsc=reliable 
 export modification=0
 for entry in ${check_list[@]};
@@ -23,15 +24,22 @@ done
 echo "modification: $modification"
 if [ $modification -eq 1 ]; then
   grub_setting="GRUB_CMDLINE_LINUX_DEFAULT=\"${check_list[0]}"
+  grub_setting2="GRUB_CMDLINE_LINUX=\"${check_list[0]}"
   for entry in ${check_list[@]:1};
   do
-    grub_setting="$grub_setting $entry" 
+    grub_setting="$grub_setting $entry"
+    grub_setting2="$grub_setting2 $entry"
   done
   grub_setting="$grub_setting\""
+  grub_setting2="$grub_setting2\""
+
   echo "new GRUB: $grub_setting"
+  echo "new GRUB2: $grub_setting2"
 
 #Write to etc default grub  
 sed -i "/GRUB_CMDLINE_LINUX_DEFAULT/d" /etc/default/grub; sed "/^GRUB_CMDLINE_LINUX/a${grub_setting}" -i /etc/default/grub
+
+sed -i "/GRUB_CMDLINE_LINUX=/d" /etc/default/grub; sed "/^GRUB_CMDLINE_LINUX/a${grub_setting2}" -i /etc/default/grub
   
 # Ubuntu
 grep ID_LIKE /etc/os-release | grep -q debian

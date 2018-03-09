@@ -22,6 +22,7 @@ list+=( "/etc/irqbalance" )
 list+=( "/etc/libvirt-bin" )
 list+=( "/etc/rc.local" )
 
+
 list+=( "/boot/grub/grub.cfg" )
 list+=( "/boot/grub2/grub.cfg" )
 list+=( "/boot/grub/grubenv" )
@@ -96,7 +97,7 @@ run "route" "-n"                "route-n.txt"
 run "netstat" "-s"              "netstat-s.txt"
 run "lsmod" ""                  "lsmod.txt"
 run "ps" "aux"                  "ps-aux.txt"
-run "dmidecode" ""              "dmidecode.txt"
+run "dmidecode" "--type system" "dmidecode.txt"
 run "lshw" ""                   "lshw.txt"
 run "printenv" ""               "printenv.txt"
 
@@ -119,9 +120,9 @@ run "ovs-dpctl" "dump-flows -m" "ovs-dpctl-flows.txt"
 run "ovs-ctl" "status troubleshoot -C" "ovs-ctl-status-troubleshoot.txt"
 
 run "nfp" "-m mac show port info 0 0" "nfp-mac-0-0-first.txt"
-run "nfp" "-m mac show port info 0 4" "nfp-mac-0-4-first.txt"
+run "nfp" "-m mac show port info 0 4" "nfp-mac-0-0-first.txt"
 run "nfp" "-m mac show port info 0 0" "nfp-mac-0-0-second.txt"
-run "nfp" "-m mac show port info 0 4" "nfp-mac-0-4-second.txt"
+run "nfp" "-m mac show port info 0 4" "nfp-mac-0-0-second.txt"
 
 run "ovs-appctl" "bond/list" "bond-list.txt"
 

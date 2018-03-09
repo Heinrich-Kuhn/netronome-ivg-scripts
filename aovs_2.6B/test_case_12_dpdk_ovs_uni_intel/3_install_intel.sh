@@ -3,7 +3,7 @@
 echo "Installing Intel driver - i40e"
 
 rm -rf /usr/local/src/i40e
-wget https://github.com/netronome-support/IVG/raw/master/aovs_2.6B/test_case_11_kovs_vxlan_uni_intel/i40e-2.1.26.tar.gz -P /usr/local/src/i40e
+wget https://github.com/netronome-support/IVG/raw/master/aovs_2.6B/test_case_11_kovs_uni_intel/i40e-2.1.26.tar.gz -P /usr/local/src/i40e
 cd /usr/local/src/i40e
 
 tar zxf i40e*.tar.gz

@@ -13,7 +13,8 @@ echo "nfp_cpulist: $nfp_cpulist"
 grub_setting=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT" /etc/default/grub)
 echo "START: $grub_setting"
 
-sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT.*/c\GRUB_CMDLINE_LINUX_DEFAULT="intel_iommu=on iommu=pt intremap=on intel_idle.max_cstate=0 processor.max_cstate=0 idle=mwait intel_pstate=disable nohz_full=$nfp_cpulist rcu_nocbs=$nfp_cpulist transparent_hugepage=never"' /etc/default/grub
+sed -i '/^GRUB_CMDLINE_LINUX_DEFAULT=.*/c\GRUB_CMDLINE_LINUX_DEFAULT="intel_iommu=on iommu=pt intremap=on intel_idle.max_cstate=0 processor.max_cstate=0 idle=mwait intel_pstate=disable nohz_full=$nfp_cpulist rcu_nocbs=$nfp_cpulist transparent_hugepage=never"' /etc/default/grub
+sed -i '/^GRUB_CMDLINE_LINUX=.*/c\GRUB_CMDLINE_LINUX="intel_iommu=on iommu=pt intremap=on intel_idle.max_cstate=0 processor.max_cstate=0 idle=mwait intel_pstate=disable nohz_full=$nfp_cpulist rcu_nocbs=$nfp_cpulist transparent_hugepage=never"' /etc/default/grub
 
 
 grub_setting=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT" /etc/default/grub)

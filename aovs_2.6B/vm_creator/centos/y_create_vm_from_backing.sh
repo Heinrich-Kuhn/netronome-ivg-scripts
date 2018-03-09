@@ -19,10 +19,7 @@ fi
 
 # When running manually
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
-scr="$IVG_dir/helper_scripts/vm_shutdown_all.sh"
-if [ -x $scr ]; then
-    $scr
-fi
+$IVG_dir/helper_scripts/vm_shutdown_all.sh
 sleep 4
 
 # When running in auto mode
@@ -67,8 +64,8 @@ cpu_model=$(virsh capabilities \
 virt-install \
     --name "$VM_NAME" \
     --disk path=${overlay},format=qcow2,bus=virtio,cache=none \
-    --ram 4096 \
-    --vcpus 4 \
+    --ram 6144 \
+    --vcpus 5 \
     --cpu $cpu_model \
     --network network=default \
     --nographics \

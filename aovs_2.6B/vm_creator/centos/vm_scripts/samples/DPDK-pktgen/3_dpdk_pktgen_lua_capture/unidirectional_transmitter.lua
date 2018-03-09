@@ -90,10 +90,10 @@ local function setupTraffic()
     pktgen.src_ip(tonumber(c), "max", "0.0.0.0");
 
     -- Set source port
-    pktgen.src_port(tonumber(c), "start", 1024*(tonumber(c)+1));
-    pktgen.src_port(tonumber(c), "min",   0);
-    pktgen.src_port(tonumber(c), "max",   0);
-    pktgen.src_port(tonumber(c), "inc",   0);
+    pktgen.src_port(tonumber(c), "start", 2048*(tonumber(c)+1));
+    pktgen.src_port(tonumber(c), "min",   2048*(tonumber(c)+1));
+    pktgen.src_port(tonumber(c), "max",   2048*(tonumber(c)+10));
+    pktgen.src_port(tonumber(c), "inc",   3);
 
     -- Set destination port
     pktgen.dst_port(tonumber(c), "start", 1024*(tonumber(c)+1));
@@ -116,7 +116,14 @@ function main()
   -- pktgen.screen("off");
   printf("Port Count %d\n", pktgen.portCount());
   printf("Total port Count %d\n", pktgen.totalPorts());
-
+  
+  pktgen.stop("all");
+  setupTraffic()
+  pktgen.delay(1000);
+  pktgen.set("all", "rate", 100);
+  pktgen.pkt_size("all", "start", 64);
+  pktgen.start("all");
+  pktgen.delay(2000);
 
   for _, size in pairs(pkt_sizes)
   do

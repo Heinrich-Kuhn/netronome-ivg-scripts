@@ -14,7 +14,7 @@ sleep 4
 /root/IVG_folder/helper_scripts/vm_shutdown_all.sh
 
 LIBVIRT_DIR=/var/lib/libvirt/images
-basefile=$LIBVIRT_DIR/ubuntu-16.04-server-cloudimg-amd64-disk1.img
+basefile=$LIBVIRT_DIR/ubuntu-17.10-server-cloudimg-amd64.img
 
 # Check if VM name is passed
 if [ -z "$1" ]; then
@@ -60,8 +60,8 @@ cpu_model=$(virsh capabilities \
 virt-install \
     --name "$VM_NAME" \
     --disk path=${overlay},format=qcow2,bus=virtio,cache=none \
-    --ram 4096 \
-    --vcpus 4 \
+    --ram 6144 \
+    --vcpus 5 \
     --cpu $cpu_model \
     --network network=default \
     --nographics \

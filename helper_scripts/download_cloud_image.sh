@@ -5,9 +5,9 @@
 # By default, it will download an Ubuntu image and store it in /root
 
 # Default Image location (can be overruled below)
-DEFAULT_UBUNTU_URL="https://cloud-images.ubuntu.com/releases/16.04/release"
+DEFAULT_UBUNTU_URL="https://cloud-images.ubuntu.com/releases/17.10/release"
 DEFAULT_CENTOS_URL="https://cloud.centos.org/centos/7/images"
-DEFAULT_UBUNTU_FILE="ubuntu-16.04-server-cloudimg-amd64-disk1.img"
+DEFAULT_UBUNTU_FILE="ubuntu-17.10-server-cloudimg-amd64.img"
 DEFAULT_CENTOS_FILE="CentOS-7-x86_64-GenericCloud-1708.qcow2"
 
 # This variable selects the OS of the VM image, and defaults to Ubuntu.
