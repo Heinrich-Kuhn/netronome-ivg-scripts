@@ -36,7 +36,7 @@ repr_p0=$(find_repr p0 | rev | cut -d "/" -f 1 | rev)
 ip link set $repr_p0 down
 ip link set $repr_pf0 down
 
-DPDK_DEVBIND=$(find /opt/ -iname dpdk-devbind.py | head -1)
+DPDK_DEVBIND=$(find / -iname dpdk-devbind.py | head -1)
 
 PCI=$(lspci -d 19ee: | grep 4000 | cut -d ' ' -f1)
 
