@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "SETTING "
+
 IP=$1
 
 VF_NAME_1="virtfn4"
@@ -64,9 +66,6 @@ function bind_driver()
   echo "current driver: $current"
   echo "expected driver: $DRIVER"
   if [ "$current" != "$DRIVER" ]; then
-    #DPDK_DEVBIND=$(find /opt/netronome -iname dpdk-devbind.py | head -1)
-    #echo "DPDK_DEVBIND: $DPDK_DEVBIND"
-    #$DPDK_DEVBIND --bind $DRIVER $INTERFACE_PCI
     if [ "$current" != "" ]; then
       echo "testing: unbind $current on ${INTERFACE_PCI}"
       echo ${INTERFACE_PCI} > /sys/bus/pci/devices/${INTERFACE_PCI}/driver/unbind
