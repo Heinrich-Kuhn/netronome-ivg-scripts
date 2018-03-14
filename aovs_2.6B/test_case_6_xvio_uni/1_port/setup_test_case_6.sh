@@ -44,5 +44,6 @@ elif [[ "$4" == "OVS_TC" ]]; then
 fi
 
 
+sleep 3
 echo "DONE($(basename $0))"
 exit 0
