@@ -39,8 +39,8 @@ ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'cd /root/IVG_folder/BIFF/Board-Inst
 
 
 # Launch Minions on RX_DUT
-ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP sed -i 's@<Alias stingray=".*"/>@<Alias stingray=\"'$RX_DUT_IP'\"/>@g' /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml
-ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP python3 /root/IVG/BIFF/Board-Instrumentation-Framework/Minion/Minion.py -i /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml
+ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'sed -i "s#Alias stingray=".*"#Alias stingray=\"$RX_DUT_IP\"#g" /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml'
+ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP python3 /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/Minion.py -i /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml
 
 
 
