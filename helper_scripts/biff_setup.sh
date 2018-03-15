@@ -39,12 +39,13 @@ ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'cd /root/IVG_folder/BIFF/Board-Inst
 
 
 # Launch Minions on RX_DUT
-ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'sed -i "s#Alias stingray=".*"#Alias stingray=\"$RX_DUT_IP\"#g" /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml'
-ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP python3 /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/Minion.py -i /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml
+ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'sed -i "s#Alias stingray=\".*\"/>#Alias stingray=\"$RX_DUT_IP\"/>#g" /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml'
+ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'cd /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/; python3 Minion.py -i pktgenCapture.xml'
 
 
 
 #Edit Marvin
-sed -i "s@<Network IP=\".*\" PORT=\".*\" @<Network IP=\"$MY_IP\" PORT=\"50123\"@g"  /root/BIFF/Board-Instrumentation-Framework/Marvin/build/libs/Application.xml
+sed -i "s@<Network IP=\".*\" PORT=\".*\"@<Network IP=\"$MY_IP\" PORT=\"50123\"@g"  /root/BIFF/Board-Instrumentation-Framework/Marvin/build/libs/Application.xml
 #Launch Marvin on Local
-java -jar /root/BIFF/Board-Instrumentation-Framework/Marvin/build/libs/BIFF.Marvin.jar &
+cd /root/BIFF/Board-Instrumentation-Framework/Marvin/build/libs
+java -jar BIFF.Marvin.jar &
