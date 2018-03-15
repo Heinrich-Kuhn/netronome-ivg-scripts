@@ -429,6 +429,15 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
+            ##############################################
+            # BIFF
+
+            echo -e "${GREEN}* Setting up BIFF 1${NC}"
+
+            /root/IVG/helper_scripts/biff_setup.sh $IP_DUT2
+            ##############################################
+
+
             #Copy test case 1 to DUT's
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT2:/root/IVG_folder/

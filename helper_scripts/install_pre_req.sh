@@ -14,6 +14,10 @@ if [[ $? -eq 0 ]]; then
   # CPU-meas pre-req
   apt-get -y install aha htop sysstat
 
+  # Install java 
+  apt-get -y install default-jdk
+  apt-get -y install default-jre
+
   # Clean-up
   apt -y autoremove
 
@@ -48,6 +52,13 @@ if [[ $? -eq 0 ]]; then
   #Disable firewall for vxlan tunnels
   systemctl disable firewalld.service
   systemctl stop firewalld.service
+
+  # Install java 
+  yum -y install default-jdk
+  yum -y install default-jre
+  yum -y install openjfx
+
+
 
   #Disable NetworkManager
   systemctl disable NetworkManager.service
