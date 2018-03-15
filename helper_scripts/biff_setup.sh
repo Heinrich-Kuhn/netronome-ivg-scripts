@@ -34,6 +34,7 @@ MY_IP=$(ip route get $RX_DUT_IP | egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}' | grep 
 echo "MY IP: $MY_IP"
 
 # Launch Oscar on RX_DUT
+echo "sed -i 's@TargetConnection IP=".*" PORT=".*"@TargetConnection IP=\"'$MY_IP'\" PORT=\"50123\"@g'"
 ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP sed -i 's@TargetConnection IP=".*" PORT=".*"@TargetConnection IP=\"'$MY_IP'\" PORT=\"50123\"@g' /root/IVG/BIFF/Board-Instrumentation-Framework/Oscar/OscarConfig.xml
 ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP python3 /root/IVG/BIFF/Board-Instrumentation-Framework/Oscar/Oscar.py &
 
@@ -43,5 +44,6 @@ sed -i 's@<Network IP=".*" PORT=".*" @<Network IP=\"'$MY_IP'\" PORT=\"50123\"@g'
 java -jar /root/BIFF/Board-Instrumentation-Framework/Marvin/build/libs/BIFF.Marvin.jar &
 
 # Launch Minions on RX_DUT
+ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP sed -i 's@<Alias stingray=".*"/>@<Alias stingray=\"'$RX_DUT_IP'\"/>@g' /root/IVG/BIFF/Board-Instrumentation-Framework/Oscar/OscarConfig.xml
 
 ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP python3 /root/IVG/BIFF/Board-Instrumentation-Framework/Minion/Minion.py -i /root/IVG/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml
