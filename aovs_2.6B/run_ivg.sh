@@ -162,6 +162,7 @@ else # else $TMUX is not empty, start test.
         echo "B) Install OVS-TC"
         echo "c) Create backing image for test VM's (Only done once)"
         echo "1) Test Case 1 (Simple ping between hosts)"
+        echo "1a)Test Case 1a (Pktgen between hosts)"
         echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
         echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
         echo "4) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
@@ -410,6 +411,95 @@ else # else $TMUX is not empty, start test.
             sleep 1
             scp -i ~/.ssh/netronome_key root@$IP_DUT1:/root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_1.log $IVG_dir/aovs_2.6B/logs/
             scp -i ~/.ssh/netronome_key root@$IP_DUT2:/root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_2.log $IVG_dir/aovs_2.6B/logs/
+
+            ;;
+
+        1a) echo "1) Test Case 1 (Simple ping between hosts)"
+            
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
+
+            #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_2.log" C-m
+            
+            tmux send-keys -t 3 "cd" C-m
+            tmux send-keys -t 2 "cd" C-m
+
+            #Copy test case 1 to DUT's
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT2:/root/IVG_folder/
+
+            #Setup test case 1
+            tmux send-keys -t 2 "./IVG_folder/test_case_1a_pktgen/setup_test_case_1a.sh -s $SOFTWARE" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_1a_pktgen/setup_test_case_1a.sh -s $SOFTWARE" C-m
+
+            echo -e "${GREEN}* Setting up test case 1${NC}"
+            
+            #Wait for test case 1 setup to complete
+            wait_text ALL "DONE(setup_test_case_1a.sh)"
+
+            sleep 1
+            tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
+            tmux send-keys -t 3 "cd vm_scripts/samples/DPDK-pktgen" C-m
+
+            tmux send-keys -t 2 "./1_configure_hugepages.sh" C-m
+            tmux send-keys -t 3 "./1_configure_hugepages.sh" C-m
+
+            sleep 1
+
+            tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
+            tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
+
+            tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
+            sleep 5
+            tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh n" C-m
+
+
+            echo -e "${GREEN}* Running test case 1a - Host pktgen${NC}"
+            sleep 5
+            wait_text 3 "Test run complete" > /dev/null
+
+            tmux send-keys -t 3 "./parse_and_plot.py" C-m
+            wait_text 3 "Data parse complete!" > /dev/null
+
+            sleep 2
+            cp /root/capture.txt $script_dir
+            cp /root/parsed_data.txt $script_dir
+            sleep 2
+
+             if [[ ! -e "parsed_data.txt" ]]; then
+                mv parsed_data.txt "Host_pktgen_test_run_parsed-0-f$flow_count.txt"
+            else
+                num=1
+                while [[ -e "Host_pktgen_test_run_parsed-$num-f*.txt" ]]; do
+                    (( num++ ))
+                done
+                mv parsed_data.txt "Host_pktgenV_test_run_parsed-$num-f$flow_count.txt" 
+            fi
+
+            if [[ ! -e "capture.txt" ]]; then
+                mv capture.txt "Host_pktgen_test_run-0-f$flow_count.txt"
+            else
+                num=1
+                while [[ -e "Host_pktgen_test_run-$num-f*.txt" ]]; do
+                    (( num++ ))
+                done
+                mv capture.txt "Host_pktgen_test_run-$num-f$flow_count.txt" 
+            fi
+            
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+
+            sleep 1
+
+            # CLEAN
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
 
             ;;
 
