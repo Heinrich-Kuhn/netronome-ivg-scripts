@@ -439,8 +439,8 @@ else # else $TMUX is not empty, start test.
 
 
             #Copy test case 1 to DUT's
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT1:/root/IVG_folder/
-            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1_ping root@$IP_DUT2:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1a_pktgen root@$IP_DUT1:/root/IVG_folder/
+            scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_1a_pktgen root@$IP_DUT2:/root/IVG_folder/
 
             #Setup test case 1
             tmux send-keys -t 2 "./IVG_folder/test_case_1a_pktgen/setup_test_case_1a.sh -s $SOFTWARE" C-m
