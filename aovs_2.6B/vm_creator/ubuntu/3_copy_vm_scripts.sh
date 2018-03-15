@@ -28,8 +28,8 @@ do
     counter=$((counter+1))
     echo -n "."
 done
-
-sleep 5
+echo "$ipaddr"
+sleep 10
 
 if [ ! -z "$ipaddr" ]; then
     ipaddr=$(arp -an | grep $(virsh dumpxml $VM_NAME | awk -F\' '/mac address/ {print $2}') | egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}')
