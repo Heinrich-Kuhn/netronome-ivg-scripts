@@ -74,11 +74,11 @@ echo $PCI
 
 repr_vf1=$(find_repr $VF1 | rev | cut -d '/' -f 1 | rev)
 echo "repr_vf1 = $repr_vf1"
-ip l set repr_vf1 up
+ip l set $repr_vf1 up
 
 repr_vf2=$(find_repr $VF2 | rev | cut -d '/' -f 1 | rev)
 echo "repr_vf2 = $repr_vf2"
-ip l set repr_vf2 up
+ip l set $repr_vf2 up
 
 
 VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | cut -d '/' -f1 | rev)
