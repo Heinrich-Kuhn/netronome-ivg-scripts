@@ -28,7 +28,7 @@ IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 BIFF_dir=$(find /root -name "BIFF")
 
 # Copy BIFF to DUT
-#scp -i ~/.ssh/netronome_key -r $BIFF_dir root@$RX_DUT_IP:/root/IVG_folder
+scp -i ~/.ssh/netronome_key -r $BIFF_dir root@$RX_DUT_IP:/root/IVG_folder
 MY_IP=$(ip route get $RX_DUT_IP | egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}' | grep -v $RX_DUT_IP)
 echo "MY IP: $MY_IP"
 
@@ -39,7 +39,7 @@ ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'cd /root/IVG_folder/BIFF/Board-Inst
 
 
 # Launch Minions on RX_DUT
-ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'sed -i "s#Alias stingray=\".*\"/>#Alias stingray=\"$RX_DUT_IP\"/>#g" /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml'
+ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'sed -i "s#Alias stingray=\".*\"#Alias stingray=\"$RX_DUT_IP\"#g" /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml'
 ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'cd /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/; python3 Minion.py -i pktgenCapture.xml'
 
 

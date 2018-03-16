@@ -1,10 +1,10 @@
 #!/bin/bash
 
 VF_NAME_1="virtfn5"
-VF_NAME_1="virtfn6"
+VF_NAME_2="virtfn6"
 
 VF1="pf0vf5"
-VF1="pf0vf6"
+VF2="pf0vf6"
 
 BRIDGE_NAME="br0"
 

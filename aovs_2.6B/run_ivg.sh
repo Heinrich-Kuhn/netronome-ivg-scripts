@@ -199,8 +199,8 @@ else # else $TMUX is not empty, start test.
             
             sleep 2
 
-            tmux send-keys -t 2 "rm -rf IVG_folder" C-m
-            tmux send-keys -t 3 "rm -rf IVG_folder" C-m
+            #tmux send-keys -t 2 "rm -rf IVG_folder" C-m
+            #tmux send-keys -t 3 "rm -rf IVG_folder" C-m
 
             tmux send-keys -t 2 "mkdir -p IVG_folder" C-m
             tmux send-keys -t 3 "mkdir -p IVG_folder" C-m
@@ -449,11 +449,11 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Setting up test case 1${NC}"
             
             #Wait for test case 1 setup to complete
-            wait_text ALL "DONE(setup_test_case_1a.sh)"
+            wait_text ALL "DONE(setup_test_case_1a.sh)"s
 
             sleep 1
-            tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
-            tmux send-keys -t 3 "cd vm_scripts/samples/DPDK-pktgen" C-m
+            tmux send-keys -t 2 "cd /root/IVG_folder/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen" C-m
+            tmux send-keys -t 3 "cd /root/IVG_folder/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen" C-m
 
             tmux send-keys -t 2 "./1_configure_hugepages.sh" C-m
             tmux send-keys -t 3 "./1_configure_hugepages.sh" C-m
