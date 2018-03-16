@@ -34,13 +34,13 @@ echo "MY IP: $MY_IP"
 
 # Launch Oscar on RX_DUT
 echo "sed -i 's#TargetConnection IP=".*" PORT=".*"#TargetConnection IP=\"'$MY_IP'\" PORT=\"50123\"#g'"
-ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'sed -i "s@TargetConnection IP=\".*\" PORT=\".*\"@TargetConnection IP=\"$MY_IP\" PORT=\"50123\"@g" /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Oscar/OscarConfig.xml'
+ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'sed -i "s@TargetConnection IP=\".*\" PORT=\".*\"@TargetConnection IP=\"'$MY_IP'\" PORT=\"50123\"@g" /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Oscar/OscarConfig.xml'
 ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'cd /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Oscar/; python3 Oscar.py &'
 
 
 # Launch Minions on RX_DUT
-ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'sed -i "s#Alias stingray=\".*\"#Alias stingray=\"$RX_DUT_IP\"#g" /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml'
-ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'cd /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/; python3 Minion.py -i pktgenCapture.xml'
+ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'sed -i "s@<Alias stingray=.*>@Alias stingray=\"'$RX_DUT_IP'\"@g" /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/pktgenCapture.xml'
+ssh -i ~/.ssh/netronome_key root@$RX_DUT_IP 'cd /root/IVG_folder/BIFF/Board-Instrumentation-Framework/Minion/; python3 Minion.py -i pktgenCapture.xml &'
 
 
 
