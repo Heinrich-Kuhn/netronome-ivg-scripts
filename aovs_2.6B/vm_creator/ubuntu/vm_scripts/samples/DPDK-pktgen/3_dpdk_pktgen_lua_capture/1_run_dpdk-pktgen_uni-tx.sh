@@ -40,10 +40,11 @@ do
   
   cpu_counter=$((cpu_counter+1))
   echo "cpu_counter: $cpu_counter"
-  mapping="${mapping}${cpu_counter}.${port_counter} "
+  mapping="${mapping}${cpu_counter}.${port_counter},"
     
   port_counter=$((port_counter+1))
 done
+mapping=${mapping::-1}
 
 echo "whitelist: $whitelist"
 echo "mapping: $mapping"

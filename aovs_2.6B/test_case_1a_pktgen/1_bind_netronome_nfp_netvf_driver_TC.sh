@@ -74,9 +74,11 @@ echo $PCI
 
 repr_vf1=$(find_repr $VF1 | rev | cut -d '/' -f 1 | rev)
 echo "repr_vf1 = $repr_vf1"
+ip l set repr_vf1 up
 
 repr_vf2=$(find_repr $VF2 | rev | cut -d '/' -f 1 | rev)
 echo "repr_vf2 = $repr_vf2"
+ip l set repr_vf2 up
 
 
 VF1_PCI_ADDRESS=$(readlink -f /sys/bus/pci/devices/${PCI}/${VF_NAME_1} | rev | cut -d '/' -f1 | rev)
@@ -142,9 +144,6 @@ ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0800,nw_dst=10.10.10.2,actio
 
 ovs-ofctl add-flow $BRIDGE_NAME in_port=1,dl_type=0x0806,actions=5,6
 ################################################
-
-#ovs-ofctl add-flow $BRIDGE_NAME in_port=1,actions=2
-#ovs-ofctl add-flow $BRIDGE_NAME in_port=2,actions=1
 
 ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME
