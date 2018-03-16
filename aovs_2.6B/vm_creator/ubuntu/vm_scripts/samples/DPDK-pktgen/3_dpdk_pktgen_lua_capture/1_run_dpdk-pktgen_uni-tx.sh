@@ -17,7 +17,7 @@ else
 NETRONOME_VF_LIST=$(lspci | grep 01: | awk '{print $1}')
 fi
 
-memory="--socket-mem 1440"
+memory="--socket-mem 1440,1440"
 lcores="-l 0-$((CPU_COUNT-1))"
 
 # whitelist
@@ -25,23 +25,21 @@ whitelist=""
 for netronome_vf in ${NETRONOME_VF_LIST[@]};
 do
   echo "netronome_vf: $netronome_vf"
-  whitelist="$whitelist $netronome_vf"
+  whitelist="$whitelist -w $netronome_vf"
 done
 
 # cpumapping
 cpu_counter=0
 port_counter=0
-mapping=""
+mapping="-m "
 for netronome_vf in ${NETRONOME_VF_LIST[@]};
 do
   echo "netronome_vf: $netronome_vf"
-  mapping="${mapping}-m "
   
-    cpu_counter=$((cpu_counter+1))
-    echo "cpu_counter: $cpu_counter"
-    mapping="${mapping}${cpu_counter}"
+  cpu_counter=$((cpu_counter+1))
+  echo "cpu_counter: $cpu_counter"
+  mapping="${mapping}${cpu_counter}.${port_counter} "
     
-  mapping="${mapping}.${port_counter} "
   port_counter=$((port_counter+1))
 done
 
