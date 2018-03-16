@@ -449,7 +449,7 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Setting up test case 1${NC}"
             
             #Wait for test case 1 setup to complete
-            wait_text ALL "DONE(setup_test_case_1a.sh)"s
+            wait_text ALL "DONE(setup_test_case_1a.sh)"
 
             sleep 1
             tmux send-keys -t 2 "cd /root/IVG_folder/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen" C-m
