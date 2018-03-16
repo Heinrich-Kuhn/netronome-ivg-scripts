@@ -14,7 +14,7 @@ lspci | grep 01:
 if [ $? == 1 ]; then
 NETRONOME_VF_LIST=$(lspci -d 19ee: | awk '{print $1}')
 else
-NETRONOME_VF_LIST=$(lspci | grep 01: | awk '{print $1}')
+NETRONOME_VF_LIST=$(ls /sys/bus/pci/drivers/igb_uio/ | grep 000)
 fi
 
 memory="--socket-mem 1440,1440"
