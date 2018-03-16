@@ -8,12 +8,14 @@ cd $PKTGEN
 CPU_COUNT=$(cat /proc/cpuinfo | grep processor | wc -l)
 
 #Check for virtIO-relay interfaces on bus 1, otherwise, it will be SR-IOV interfaces
-lspci | grep 01:
-if [ $? == 1 ]; then
-NETRONOME_VF_LIST=$(lspci -d 19ee: | awk '{print $1}')
-else
+#lspci | grep 01:
+#if [ $? == 1 ]; then
+#NETRONOME_VF_LIST=$(ls /sys/bus/pci/drivers/igb_uio/ | grep 000)
+#lse
+#NETRONOME_VF_LIST=$(lspci -d 19ee: | awk '{print $1}')
+#i
+
 NETRONOME_VF_LIST=$(ls /sys/bus/pci/drivers/igb_uio/ | grep 000)
-fi
 
 memory="--socket-mem 1440,1440"
 lcores="-l 0-$((CPU_COUNT-1))"
