@@ -9,7 +9,7 @@ fi
 echo "1 - Configure br0"
 #oet Interface dpdk0 s-vsctl del-br br0
 ovs-vsctl add-br br0 -- set bridge br0 datapath_type=netdev
-ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk ofport_request=1 -- set Interface dpdk0 options:n_rxq=dpdk-devargs=$intel_pf
+ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk ofport_request=1 -- set Interface dpdk0 options:dpdk-devargs=$intel_pf
 #ovs-vsctl add-port br0 dpdk1 -- set Interface dpdk1 type=dpdk ofport_request=2 -- set Interface dpdk1 options:n_rxq=1
 
 
