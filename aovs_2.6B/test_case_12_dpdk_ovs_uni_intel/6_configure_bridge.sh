@@ -1,15 +1,21 @@
 #!/bin/bash
-intel_pf=$(lspci -d 8086:1583 | awk 'NR==1 {print $1}')
-if [ -z "$intel_pf" ]
+PCI=$(lspci -d 8086:1583 | awk 'NR==1 {print $1}')
+if [ -z "$PCI" ]
 then
-    intel_pf=$(lspci -d 8086:1584 | awk 'NR==1 {print $1}')
+    PCI=$(lspci -d 8086:1584 | awk 'NR==1 {print $1}')
 fi
-
+if [[ "$PCI" == *":"*":"*"."* ]]; then
+    echo "PCI correct format"
+elif [[ "$PCI" == *":"*"."* ]]; then
+    echo "PCI corrected"
+    PCI="0000:$PCI"
+fi
+echo $PCI
 
 echo "1 - Configure br0"
 #oet Interface dpdk0 s-vsctl del-br br0
 ovs-vsctl add-br br0 -- set bridge br0 datapath_type=netdev
-ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk ofport_request=1 -- set Interface dpdk0 options:dpdk-devargs=$intel_pf
+ovs-vsctl add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk ofport_request=1 -- set Interface dpdk0 options:dpdk-devargs=$PCI
 #ovs-vsctl add-port br0 dpdk1 -- set Interface dpdk1 type=dpdk ofport_request=2 -- set Interface dpdk1 options:n_rxq=1
 
 

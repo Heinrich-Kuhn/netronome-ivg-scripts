@@ -1,10 +1,17 @@
 #!/bin/bash
 
-intel_pf=$(lspci -d 8086:1583 | awk 'NR==1 {print $1}')
-if [ -z "$intel_pf" ]
+PCI=$(lspci -d 8086:1583 | awk 'NR==1 {print $1}')
+if [ -z "$PCI" ]
 then
-    intel_pf=$(lspci -d 8086:1584 | awk 'NR==1 {print $1}')
+    PCI=$(lspci -d 8086:1584 | awk 'NR==1 {print $1}')
 fi
+if [[ "$PCI" == *":"*":"*"."* ]]; then
+    echo "PCI correct format"
+elif [[ "$PCI" == *":"*"."* ]]; then
+    echo "PCI corrected"
+    PCI="0000:$PCI"
+fi
+echo $PCI
 
 
 BONDBR_DEST_IP=$1
