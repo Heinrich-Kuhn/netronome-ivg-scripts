@@ -1710,7 +1710,7 @@ else # else $TMUX is not empty, start test.
             ;;
 
         d)  echo "d) Setup DPDK OVS"
-            DPDK_VER=17.05
+            DPDK_VER=dpdk-17.05
             OVS_VER=openvswitch-2.8.1
 
              #_#_#_#_#_START LOG_#_#_#_#_#

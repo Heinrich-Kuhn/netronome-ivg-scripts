@@ -1,7 +1,7 @@
 #!/bin/bash
+OVS_VER=$1
 
-
-OVS_INSTALL=/root/ovs-dpdk/openvswitch-2.6.1
+OVS_INSTALL=/root/$OVS_VER
 
 echo "1 - Exit applications"
 ovs-appctl -t ovs-vswitchd exit
