@@ -24,7 +24,7 @@ do
         nc -w 2 -v $ipaddr 22 < /dev/null > /dev/null 2>&1 \
             && break
     fi
-    sleep 1
+    sleep 2
     counter=$((counter+1))
     echo -n "."
 done

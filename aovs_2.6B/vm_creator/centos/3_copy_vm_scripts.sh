@@ -14,7 +14,7 @@ echo -e "VM is starting..."
 
 counter=0
 while : ; do
-    sleep 1
+    sleep 2
     counter=$((counter + 1))
     ipaddr=$(arp -an \
         | sed -rn 's/^.*\((\S+)\)\sat\s(\S+)\s.*$/\1 \2/p' \
