@@ -1515,6 +1515,7 @@ else # else $TMUX is not empty, start test.
             VM_BASE_NAME=netronome-dpdk-ovs-intel-vm
             VM_CPUS=4
             
+            
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
             tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m
@@ -1709,6 +1710,8 @@ else # else $TMUX is not empty, start test.
             ;;
 
         d)  echo "d) Setup DPDK OVS"
+            DPDK_VER=17.05
+            OVS_VER=openvswitch-2.8.1
 
              #_#_#_#_#_START LOG_#_#_#_#_#
             tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Setup_DPDK_OVS_DUT_1.log" C-m
@@ -1729,8 +1732,8 @@ else # else $TMUX is not empty, start test.
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_12_dpdk_ovs_uni_intel root@$IP_DUT1:/root/IVG_folder/
             scp -i ~/.ssh/netronome_key -r $IVG_dir/aovs_2.6B/test_case_12_dpdk_ovs_uni_intel root@$IP_DUT2:/root/IVG_folder/
 
-            tmux send-keys -t 2 "./IVG_folder/test_case_12_dpdk_ovs_uni_intel/setup_test_case_install_12.sh" C-m
-            tmux send-keys -t 3 "./IVG_folder/test_case_12_dpdk_ovs_uni_intel/setup_test_case_install_12.sh" C-m
+            tmux send-keys -t 2 "./IVG_folder/test_case_12_dpdk_ovs_uni_intel/setup_test_case_install_12.sh $DPDK_VER $OVS_VER" C-m
+            tmux send-keys -t 3 "./IVG_folder/test_case_12_dpdk_ovs_uni_intel/setup_test_case_install_12.sh $DPDK_VER $OVS_VER" C-m
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/configure_grub_kovs.sh" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/configure_grub_kovs.sh" C-m

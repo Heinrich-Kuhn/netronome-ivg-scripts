@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export OVS_BASE_DIR=/root/
-export DPDK_BASE_DIR=/root/
+export DPDK_BASE_DIR=/opt/src/
 export DPDK_VERSION=$1
 export OVS_VERSION=$2
 export DPDK_TARGET=x86_64-native-linuxapp-gcc
