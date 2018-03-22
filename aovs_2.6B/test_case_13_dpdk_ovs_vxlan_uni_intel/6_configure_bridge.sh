@@ -1,5 +1,12 @@
 #!/bin/bash
 
+intel_pf=$(lspci -d 8086:1583 | awk 'NR==1 {print $1}')
+if [ -z "$intel_pf" ]
+then
+    intel_pf=$(lspci -d 8086:1584 | awk 'NR==1 {print $1}')
+fi
+
+
 BONDBR_DEST_IP=$1
 BONDBR_SRC_IP=$2
 
