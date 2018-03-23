@@ -13,7 +13,9 @@ fi
 echo $PCI
 
 modprobe uio
-IGB_UIO="$(find -name 'igb_uio.ko' | head -1)"
+sleep 1
+IGB_UIO="$(find / -name 'igb_uio.ko' | head -1)"
+sleep 1
 insmod $IGB_UIO
 
 driver=igb_uio

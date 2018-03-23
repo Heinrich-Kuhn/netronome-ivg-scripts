@@ -469,6 +469,24 @@ else # else $TMUX is not empty, start test.
             #Wait for test case 1 setup to complete
             wait_text ALL "DONE(setup_test_case_1a.sh)"
 
+            NUMA=$(lscpu | grep NUMA | head -1 | sed 's/.*\([0-9]\)/\1/g')
+            echo $NUMA
+            MEM=""
+            NUM=$(cat $(find / -name "*run_dpdk-pktgen_uni-tx*" | head -1) | grep socket-mem | sed -r 's#^[^0-9]*([0-9]+).*#\1#')
+            echo $NUM
+            for i in $(seq 1 $NUMA)
+            do 
+                MEM="$MEM$NUM,"
+            done
+            MEM=${MEM::-1}
+            echo $MEM
+
+            tmux send-keys -t 2 'sed -i "s/^memory=.*/memory=\"--socket-mem '$MEM'\"/g" /root/IVG_folder/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/0_run_dpdk-pktgen_uni-rx.sh' C-m
+            tmux send-keys -t 2 'sed -i "s/^memory=.*/memory=\"--socket-mem '$MEM'\"/g" /root/IVG_folder/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/1_run_dpdk-pktgen_uni-tx.sh' C-m
+            tmux send-keys -t 3 'sed -i "s/^memory=.*/memory=\"--socket-mem '$MEM'\"/g" /root/IVG_folder/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/0_run_dpdk-pktgen_uni-rx.sh' C-m
+            tmux send-keys -t 3 'sed -i "s/^memory=.*/memory=\"--socket-mem '$MEM'\"/g" /root/IVG_folder/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen/3_dpdk_pktgen_lua_capture/1_run_dpdk-pktgen_uni-tx.sh' C-m
+ 
+
             sleep 1
             tmux send-keys -t 2 "cd /root/IVG_folder/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen" C-m
             tmux send-keys -t 3 "cd /root/IVG_folder/vm_creator/ubuntu/vm_scripts/samples/DPDK-pktgen" C-m

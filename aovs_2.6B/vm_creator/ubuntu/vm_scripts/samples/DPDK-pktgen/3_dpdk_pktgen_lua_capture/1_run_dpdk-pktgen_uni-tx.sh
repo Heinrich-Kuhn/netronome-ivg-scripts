@@ -19,7 +19,7 @@ CPU_COUNT=$(cat /proc/cpuinfo | grep processor | wc -l)
 
 NETRONOME_VF_LIST=$(ls /sys/bus/pci/drivers/igb_uio/ | grep 000)
 
-memory="--socket-mem 1440,1440"
+memory="--socket-mem 1440"
 lcores="-l 0-$((CPU_COUNT-1))"
 
 # whitelist
