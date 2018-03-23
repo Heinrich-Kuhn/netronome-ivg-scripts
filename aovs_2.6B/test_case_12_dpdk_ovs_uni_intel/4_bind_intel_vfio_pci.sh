@@ -7,7 +7,7 @@ then
     intel_pf=$(lspci -d 8086:1584 | awk 'NR==1 {print $1}')
 fi
 
-driver=vfio-pci
+driver=igb_uio
 
 DPDK_DEVBIND=$(find / -iname dpdk-devbind.py | head -1)
 if [ "$DPDK_DEVBIND" == "" ]; then

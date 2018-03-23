@@ -12,6 +12,11 @@ elif [[ "$PCI" == *":"*"."* ]]; then
 fi
 echo $PCI
 
+INTERFACE=$(ls /sys/bus/pci/devices/0000\:$intel_bus/net)
+echo "Intel interface: $INTERFACE"
+
+ip l set $INTERFACE up
+
 echo "1 - Configure br0"
 #oet Interface dpdk0 s-vsctl del-br br0
 ovs-vsctl add-br br0 -- set bridge br0 datapath_type=netdev
@@ -24,7 +29,7 @@ ovs-vsctl add-port br0 dpdkvhostuser0 -- set Interface dpdkvhostuser0 type=dpdkv
 #ovs-vsctl add-port br0 dpdkvhostuser1 -- set Interface dpdkvhostuser1 type=dpdkvhostuser ofport_request=11 -- set Interface dpdkvhostuser1 options:n_rxq=1
 
 echo "2 - Add echo rule"
-ovs-ofctl del-flows br0
+#ovs-ofctl del-flows br0
 ovs-ofctl dump-flows br0
 
 chmod 777 /usr/local/var/run/openvswitch/*
