@@ -1,11 +1,16 @@
 #!/bin/bash
-
-
-intel_pf=$(lspci -d 8086:1583 | awk 'NR==1 {print $1}')
-if [ -z "$intel_pf" ]
+PCI=$(lspci -d 8086:1583 | awk 'NR==1 {print $1}')
+if [ -z "$PCI" ]
 then
-    intel_pf=$(lspci -d 8086:1584 | awk 'NR==1 {print $1}')
+    PCI=$(lspci -d 8086:1584 | awk 'NR==1 {print $1}')
 fi
+if [[ "$PCI" == *":"*":"*"."* ]]; then
+    echo "PCI correct format"
+elif [[ "$PCI" == *":"*"."* ]]; then
+    echo "PCI corrected"
+    PCI="0000:$PCI"
+fi
+echo $PCI
 
 driver=igb_uio
 
@@ -18,8 +23,8 @@ fi
 echo "loading driver"
 modprobe $driver
 echo "DPDK_DEVBIND: $DPDK_DEVBIND"
-echo $DPDK_DEVBIND --bind $driver $intel_pf
-$DPDK_DEVBIND --bind $driver $intel_pf
+echo $DPDK_DEVBIND --bind $driver $PCI
+$DPDK_DEVBIND --bind $driver $PCI
 
 echo $DPDK_DEVBIND --status
 $DPDK_DEVBIND --status
