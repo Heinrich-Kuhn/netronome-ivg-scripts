@@ -12,10 +12,6 @@ elif [[ "$PCI" == *":"*"."* ]]; then
 fi
 echo $PCI
 
-INTERFACE=$(ls /sys/bus/pci/devices/0000\:$intel_bus/net)
-echo "Intel interface: $INTERFACE"
-
-ip l set $INTERFACE up
 
 echo "1 - Configure br0"
 #oet Interface dpdk0 s-vsctl del-br br0
