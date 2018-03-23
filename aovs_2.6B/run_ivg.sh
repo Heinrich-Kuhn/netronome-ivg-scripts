@@ -181,10 +181,28 @@ else # else $TMUX is not empty, start test.
         case "$OPT" in
         
         a)  echo "a) Connect to DUT's"
-            
-            #Get IP's of DUT's
-            read -p "Enter IP of first DUT: " IP_DUT1
-            read -p "Enter IP of second DUT: " IP_DUT2
+
+            if [ -f $script_dir/ip ]; then
+                echo "Previous IPs"
+                cat $script_dir/ip
+                read -p "Do you want to use previous IPs? (y/n) " ans
+                if [[ $ans == "y" ]]; then
+                    IP_DUT1=$(cat $script_dir/ip | head -1)
+                    IP_DUT2=$(cat $script_dir/ip | tail -1)
+                else
+                    #Get IP's of DUT's
+                    read -p "Enter IP of first DUT: " IP_DUT1
+                    read -p "Enter IP of second DUT: " IP_DUT2
+                    echo $IP_DUT1 > $script_dir/ip
+                    echo $IP_DUT2 >> $script_dir/ip
+                fi
+            else 
+                #Get IP's of DUT's
+                read -p "Enter IP of first DUT: " IP_DUT1
+                read -p "Enter IP of second DUT: " IP_DUT2
+                echo $IP_DUT1 > $script_dir/ip
+                echo $IP_DUT2 >> $script_dir/ip
+            fi
 
             export IVG_SERVERS_IPADDR_LIST="$IP_DUT1 $IP_DUT2"
 
