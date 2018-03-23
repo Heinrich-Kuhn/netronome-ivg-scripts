@@ -12,6 +12,10 @@ elif [[ "$PCI" == *":"*"."* ]]; then
 fi
 echo $PCI
 
+modprobe uio
+IGB_UIO="$(find -name 'igb_uio.ko' | head -1)"
+insmod $IGB_UIO
+
 driver=igb_uio
 
 DPDK_DEVBIND=$(find / -iname dpdk-devbind.py | head -1)
