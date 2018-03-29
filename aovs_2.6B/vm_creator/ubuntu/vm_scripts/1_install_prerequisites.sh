@@ -7,7 +7,7 @@ pkgs+=( "cmake" )
 pkgs+=( "libpcap-dev" )
 pkgs+=( "python" )
 pkgs+=( "unzip" )
-pkgs+=( "python-scapy" "python-pip" )
+pkgs+=( "python-scapy" "python-pip" "python-numpy" )
 pkgs+=( "numactl" "libnuma-dev" )
 
 apt-get update \
