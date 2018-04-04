@@ -11,7 +11,7 @@ echo "nfp_cpulist: $nfp_cpulist"
 grub_setting=$(grep "^GRUB_CMDLINE_LINUX_DEFAULT" /etc/default/grub)
 echo "START: $grub_setting"
 
-check_list=( "intel_iommu=on" "iommu=pt" "intremap=on" "isolcpus=$nfp_cpulist" "intel_idle.max_cstate=0" "processor.max_cstate=0" "idle=mwait" "intel_pstate=disable" "nohz_full=$nfp_cpulist" "rcu_nocbs=$nfp_cpulist" "transparent_hugepage=never")
+check_list=( "intel_iommu=on" "iommu=pt" "intremap=on" "isolcpus=$nfp_cpulist" "intel_idle.max_cstate=0" "processor.max_cstate=0" "intel_pstate=disable" "nohz_full=$nfp_cpulist" "rcu_nocbs=$nfp_cpulist" "transparent_hugepage=never")
 
 #pcie_asmp=off tsc=reliable 
 export modification=0
