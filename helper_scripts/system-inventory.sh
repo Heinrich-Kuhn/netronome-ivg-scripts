@@ -13,6 +13,7 @@ mkdir -p $capdir
 list=()
 list+=( "/etc/hostname" )
 list+=( "/etc/os-release" )
+list+=( "/etc/redhat-release" )
 list+=( "/etc/hosts" )
 list+=( "/etc/fstab" )
 list+=( "/etc/netronome.conf" )
@@ -21,7 +22,6 @@ list+=( "/etc/grub" )
 list+=( "/etc/irqbalance" )
 list+=( "/etc/libvirt-bin" )
 list+=( "/etc/rc.local" )
-
 
 list+=( "/boot/grub/grub.cfg" )
 list+=( "/boot/grub2/grub.cfg" )
@@ -44,6 +44,9 @@ list+=( "/proc/net/dev" )
 list+=( "/sys/module/nfp_offloads/control/rh_entries" )
 
 list+=( "/sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages" )
+
+# Save the script into the capture
+list+=( "$0" )
 
 ########################################################
 if [ -d /sys/bus/pci/drivers/nfp ]; then
@@ -92,18 +95,20 @@ run "dmesg" ""                  "dmesg.txt"
 run "yum" "list"                "yum-list.txt"
 run "dpkg" "--get-selections"   "dpkg-pkg-list.txt"
 run "ifconfig" ""               "ifconfig.txt"
+run "ip" "link list"            "ip-link-list.txt"
 run "arp" "-n"                  "arp-n.txt"
 run "route" "-n"                "route-n.txt"
 run "netstat" "-s"              "netstat-s.txt"
 run "lsmod" ""                  "lsmod.txt"
 run "ps" "aux"                  "ps-aux.txt"
-run "dmidecode" "--type system" "dmidecode.txt"
+run "dmidecode" ""              "dmidecode.txt"
 run "lshw" ""                   "lshw.txt"
 run "printenv" ""               "printenv.txt"
 
 run "virsh" "--version"         "virsh-version.txt"
 run "kvm" "--version"           "kvm-version.txt"
 run "/usr/libexec/qemu-kvm" "--version" "qemu-kvm-version.txt"
+run "qemu-system-x86_64" "--version" "qemu-system-version.txt"
 
 run "getenforce" "" "selinux-getenforce.txt"
 
@@ -120,9 +125,9 @@ run "ovs-dpctl" "dump-flows -m" "ovs-dpctl-flows.txt"
 run "ovs-ctl" "status troubleshoot -C" "ovs-ctl-status-troubleshoot.txt"
 
 run "nfp" "-m mac show port info 0 0" "nfp-mac-0-0-first.txt"
-run "nfp" "-m mac show port info 0 4" "nfp-mac-0-0-first.txt"
+run "nfp" "-m mac show port info 0 4" "nfp-mac-0-4-first.txt"
 run "nfp" "-m mac show port info 0 0" "nfp-mac-0-0-second.txt"
-run "nfp" "-m mac show port info 0 4" "nfp-mac-0-0-second.txt"
+run "nfp" "-m mac show port info 0 4" "nfp-mac-0-4-second.txt"
 
 run "ovs-appctl" "bond/list" "bond-list.txt"
 
@@ -134,7 +139,7 @@ nscnt=$(lspci -d 19ee: | wc -l)
 if [ $nscnt -lt 1 ]; then
     echo "ERROR: card missing" > $capdir/pci-patch.txt
 else
-    check=$(setpci -d 19ee:4000 0xFFC.L | sed '2,$d')
+    check=$(setpci -d 19ee: 0xFFC.L | sed '2,$d')
     if [ "$check" != "ffffffff" ]; then
         echo "WARNING: patch MISSING" > $capdir/pci-patch.txt
     else
@@ -191,6 +196,35 @@ for logfile in $loglist ; do
 done
 
 ########################################################
+# Capture listing of initramfs files
+
+kvers=$(uname -r)
+irflist=$(find /boot -name "init*$kvers*")
+for irfname in $irflist ; do
+    run "lsinitramfs" "$irfname" "$irfname.list"
+done
+
+########################################################
+# Capture listing of Netronome firmware files
+
+if [ -d /lib/firmware/netronome ]; then
+    ls -lR /lib/firmware/netronome \
+        > $capdir/firmware.list
+fi
+
+########################################################
+# Capture Kernel Module Information
+
+midir="$capdir/modinfo"
+mkdir -p $midir
+modlist=$(lsmod \
+    | tail -n +2 \
+    | sed -rn 's/^(\S+)\s.*$/\1/p')
+for modname in $modlist ; do
+    modinfo $modname > $midir/$modname.info
+done
+
+########################################################
 if [ -x /sbin/ethtool ]; then
     iflist=$(cat /proc/net/dev \
         | sed -rn 's/^\s*(\S+):.*$/\1/p')
@@ -221,7 +255,7 @@ if [ -f $listfile ]; then
 fi
 
 ########################################################
-if [ -x $(which ovs-vsctl) ]; then
+if [ -x "$(which ovs-vsctl)" ]; then
     for brname in $(ovs-vsctl list-br) ; do
         brdir="$capdir/ovs/$brname"
         mkdir -p $brdir
@@ -236,6 +270,8 @@ if [ -x $(which ovs-vsctl) ]; then
         ovs-appctl fdb/show $brname \
             > $brdir/ofctl-fdb-show.txt
     done
+    ovs-dpctl dump-flows \
+        > $capdir/ovs/dpctl-flows.txt
 fi
         
 ########################################################

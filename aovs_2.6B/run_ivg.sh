@@ -226,6 +226,9 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "cd IVG_folder" C-m
             tmux send-keys -t 3 "cd IVG_folder" C-m
 
+            tmux send-keys -t 2 "export IVG_dir=\$PWD" C-m
+            tmux send-keys -t 3 "export IVG_dir=\$PWD" C-m
+
             tmux send-keys -t 2 "mkdir -p aovs_2.6B" C-m
             tmux send-keys -t 3 "mkdir -p aovs_2.6B" C-m
 

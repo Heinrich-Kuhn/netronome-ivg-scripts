@@ -1,7 +1,5 @@
 #!/bin/bash
 
-apt-get install libelf-dev
-
 if [ -f "$1" ]; then
     pkgfile="$1"
 elif [ -d "$1" ]; then
@@ -42,11 +40,10 @@ prereqs+=( "tar@" )
 prereqs+=( "sed@" )
 prereqs+=( "gcc@build-essential" )
 prereqs+=( "make@build-essential" )
+prereqs+=( "/usr/include/libelf.h@libelf-dev" )
 
-if which install-packages.sh > /dev/null 2>&1 ; then
-    install-packages.sh ${prereqs[@]}
-        check_status "failed to install prerequisites"
-fi
+$IVG_dir/helper_scripts/install-packages.sh ${prereqs[@]}
+    check_status "failed to install prerequisites"
 
 ########################################
 ##  Try to find a local DPDK package

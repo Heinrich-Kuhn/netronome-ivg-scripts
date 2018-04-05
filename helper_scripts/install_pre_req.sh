@@ -3,7 +3,7 @@
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
   # Agilio OVS requirement
-  apt-get -y install make autoconf automake libtool \
+  apt-get -y install make autoconf automake libtool dmidecode \
   gcc g++ bison flex hwloc-nox libreadline-dev libpcap-dev dkms libftdi1 libjansson4 \
   libjansson-dev guilt pkg-config libevent-dev ethtool build-essential libssl-dev \
   libnl-3-200 libnl-3-dev libnl-genl-3-200 libnl-genl-3-dev psmisc gawk \
