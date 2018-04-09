@@ -1,7 +1,7 @@
 #!/bin/bash
 script_dir="$(dirname $(readlink -f $0))"
 
-path_ovs=$(find / -name "ovs-ctl" | sed -n 1p | sed 's=/ovs-ctl==g')
+path_ovs=$(find / -name "ovs-ctl" | sed 's=/ovs-ctl==g' | grep ovs | sed -n 1p)
 
 test=$(cat /etc/environment | grep $path_ovs)
 
