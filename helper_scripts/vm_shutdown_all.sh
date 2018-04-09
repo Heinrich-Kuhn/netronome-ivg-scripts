@@ -1,50 +1,41 @@
 #!/bin/bash
 
-vmlist=( $(virsh list --state-running \
-    | sed -rn 's/^.*(netronome\S+)\s+running$/\1/p' ) )
+for mode in shutdown destroy undefine ; do
 
-for vmname in ${vmlist[@]} ; do
-    echo "Shutdown $vmname"
-    virsh shutdown $vmname > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo "WARNING: failed to shutdown $vmname"
-    fi
+    case $mode in
+        shutdown)
+            filter="--state-running"
+            timeout=15
+            ;;
+        destroy)
+            filter="--state-running --state-paused"
+            timeout=5
+            ;;
+        undefine)
+            filter="--all"
+            timeout=20
+            ;;
+    esac
+
+    vmlist=( $(virsh list $filter \
+        | sed -rn 's/^.*\s(netronome\S+)\s.*$/\1/p' ) )
+
+    for vmname in ${vmlist[@]} ; do
+        echo " - $mode VM $vmname"
+        virsh $mode $vmname > /dev/null 2>&1
+        if [ $? -ne 0 ]; then
+            echo "WARNING: failed to $mode $vmname"
+        fi
+    done
+
+    while [ ${#vmlist[@]} -gt 0 ] && [ $(( timeout-- )) -gt 0 ] ; do
+
+        sleep 1
+
+        vmlist=( $(virsh list $filter \
+            | sed -rn 's/^.*\s(netronome\S+)\s.*$/\1/p' ) )
+    done
+
 done
-
-if [ ${#vmlist[@]} -gt 0 ]; then
-    sleep 4
-fi
-
-vmlist=( $(virsh list --state-running \
-    | sed -rn 's/^.*(netronome\S+)\s+running$/\1/p' ) )
-
-await=
-for vmname in ${vmlist[@]} ; do
-    echo "Destroy $vmname"
-    virsh destroy $vmname > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo "WARNING: failed to destroy $vmname"
-    fi
-    await="yes"
-done
-
-if [ ${#vmlist[@]} -gt 0 ]; then
-    sleep 1
-fi
-
-vmlist=( $(virsh list --all \
-    | sed -rn 's/^.*(netronome\S+)\s+.*$/\1/p' ) )
-
-for vmname in ${vmlist[@]} ; do
-    echo "Undefine $vmname"
-    virsh undefine $vmname > /dev/null 2>&1
-    if [ $? -ne 0 ]; then
-        echo "WARNING: failed to undefine $vmname"
-    fi
-done
-
-if [ ${#vmlist[@]} -gt 0 ]; then
-    sleep 1
-fi
 
 exit 0
