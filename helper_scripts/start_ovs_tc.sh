@@ -3,10 +3,10 @@ script_dir="$(dirname $(readlink -f $0))"
 
 path_ovs=$(find / -name "ovs-ctl" | sed 's=/ovs-ctl==g' | grep ovs | sed -n 1p)
 
-test=$(cat /etc/environment | grep $path_ovs)
+test=$(echo $PATH | grep $path_ovs)
 
 if [[ -z "$test" ]];then
-    export PATH=$PATH:$path_ovs
+    export PATH="$PATH:$path_ovs"
     echo $PATH
     echo "PATH=\"$PATH\"" > /etc/environment
 fi
