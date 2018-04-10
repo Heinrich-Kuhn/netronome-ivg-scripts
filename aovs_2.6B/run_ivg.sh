@@ -9,6 +9,9 @@ ivg_config_dir="$HOME/.config/ivg"
 mkdir -p $ivg_config_dir \
     || exit -1
 
+# IVG Sticky Settings
+ivg_cfg="$ivg_config_dir/settings.cfg"
+
 # IVG Log Capture Directory
 capdir="$IVG_dir/aovs_2.6B/logs"
 mkdir -p $capdir \
@@ -123,9 +126,32 @@ case "$CLOUD_IMAGE_OS" in
     ;;
 esac
 
+# Set Default Settings
 SOFTWARE="OVS_TC"
 CLOUD_IMAGE_OS="ubuntu"
 DPDK_VER="17.05"
+
+# Load Settings from Configuration file
+if [ -f $ivg_cfg ]; then
+    . $ivg_cfg
+fi
+
+# Maintain IVG settings in file
+function ivg_update_settings () {
+    local varname="$1"
+    local value="$2"
+    if [ ! -f $ivg_cfg ]; then
+        echo "$varname=$value" > $ivg_cfg
+    else
+        grep -E "^$varname" $ivg_cfg > /dev/null
+        if [ $? -eq 0 ]; then
+            sed -r 's/^('$varname')=.*$/\1='$value'/' \
+                -i $ivg_cfg
+        else
+            echo "$varname=$value" >> $ivg_cfg
+        fi
+    fi
+}
 
 #######################################################################
 ######################### Main function ###############################
@@ -1660,6 +1686,8 @@ else # else $TMUX is not empty, start test.
                 "centos") CLOUD_IMAGE_OS="ubuntu" ;;
             esac
 
+            ivg_update_settings "CLOUD_IMAGE_OS" "$CLOUD_IMAGE_OS"
+
             ;;
 
         O)  echo "O) Toggle Host Software"
@@ -1670,19 +1698,10 @@ else # else $TMUX is not empty, start test.
                 "None") SOFTWARE="OVS_TC" ;;
             esac
 
-            ;;
-
-
-        o)  echo "o) Toggle VM OS"
-
-            case "$CLOUD_IMAGE_OS" in
-                "ubuntu") CLOUD_IMAGE_OS="centos" ;;
-                "centos") CLOUD_IMAGE_OS="ubuntu" ;;
-            esac
+            ivg_update_settings "SOFTWARE" "$SOFTWARE"
 
             ;;
 
-    
         k)  echo "k) Setup KOVS"
 
             if [ $DUT_CONNECT == 0 ]; then
