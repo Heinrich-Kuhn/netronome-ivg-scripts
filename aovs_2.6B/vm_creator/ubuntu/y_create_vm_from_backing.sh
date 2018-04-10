@@ -2,16 +2,10 @@
 
 script_dir="$(dirname $(readlink -f $0))"
 
-# When running manually
-IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
-scr="$IVG_dir/helper_scripts/vm_shutdown_all.sh"
-if [ -x $scr ]; then
-    $scr
-fi
-sleep 4
-
-# When running in auto mode
-/root/IVG_folder/helper_scripts/vm_shutdown_all.sh
+# Shutdown all VMs
+$IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+# Undefine Netronome VMs
+$IVG_dir/helper_scripts/delete-vms.sh --filter "netronome"
 
 LIBVIRT_DIR=/var/lib/libvirt/images
 basefile=$LIBVIRT_DIR/ubuntu-17.10-server-cloudimg-amd64.img
@@ -32,15 +26,10 @@ BOOTPROTO="dhcp"
 TYPE="Ethernet"
 EOF
 
-if [ -f /etc/redhat-release ]; then
-    yum -y install libguestfs-tools \
-        || exit -1
-fi
-
-if [ -f /etc/lsb-release ]; then
-    apt-get -y install libguestfs-tools \
-        || exit -1
-fi
+# Check for and install 'libguestfs-tools'
+$IVG_dir/helper_scripts/install-packages.sh \
+    "guestfish@libguestfs-tools" \
+    || exit -1
 
 echo "create overlay image"
 overlay="$LIBVIRT_DIR/$VM_NAME.qcow2"

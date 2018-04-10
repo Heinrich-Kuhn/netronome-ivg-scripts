@@ -1,14 +1,14 @@
 #!/bin/bash
 
-if [ -z "$1" ] && [ -z "$2" ] && [ -z "$3" ] && [ -z "$4" ]; then
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ] || [ -z "$4" ]; then
     echo "ERROR: Not enough parameters where passed to this script"
     echo "Example: ./setup_test_case_6.sh <vm_name> <number_of_vm_cpu's> <local_bridge_ip> <remote_bridge_ip>"
     exit -1
 else
     VM_NAME=$1
     VM_CPU_COUNT=$2
-    BONDBR_DEST_IP=$3 
-    BONDBR_SRC_IP=$4    
+    BONDBR_DEST_IP=$3
+    BONDBR_SRC_IP=$4
 fi 
 
 script_dir="$(dirname $(readlink -f $0))"

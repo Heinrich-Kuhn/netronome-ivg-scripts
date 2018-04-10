@@ -378,30 +378,25 @@ else # else $TMUX is not empty, start test.
 
             ;;
 
-        c)  echo "c) Create backing image for test VM's (Only done once)"
-            
+        c)  echo "c) Create backing image for test VM's (Only needed once)"
+
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
-            
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install_pre_req.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install_pre_req.sh" C-m
+
+            tmux_run_cmd ALL "\$IVG_dir/helper_scripts/install_pre_req.sh"
 
             wait_text ALL "PreReq Installed!"
-            
+
             #_#_#_#_#_START LOG_#_#_#_#_#
             tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_1.log" C-m
             tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_2.log" C-m
-            
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
 
             # Copy VM creator script to DUT
-            $IVG_dir/helper_scripts/rsync-servers.sh \
+            rsync_duts \
                 $IVG_dir/aovs_2.6B/vm_creator \
-                /root/IVG_folder \
                 || exit -1
 
             # Download cloud image to local machine and update DUTs
@@ -410,16 +405,15 @@ else # else $TMUX is not empty, start test.
                 || exit -1
 
             # Create backing image
-            tmux send-keys -t 2 "$VM_MGMT_DIR/x_create_backing_image.sh" C-m
-            tmux send-keys -t 3 "$VM_MGMT_DIR/x_create_backing_image.sh" C-m
+            tmux_run_cmd ALL "$VM_MGMT_DIR/x_create_backing_image.sh"
 
             echo -e "${GREEN}Creating base image for test VM's, please wait...${NC}"
 
             wait_text ALL "Base image created!"
 
             #_#_#_#_#_END LOG_#_#_#_#_#
-            tmux send-keys -t 3 "exit" C-m
-            tmux send-keys -t 2 "exit" C-m
+            tmux_run_cmd ALL "exit"
+
             sleep 1
             scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_1.log $capdir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_2.log $capdir
@@ -442,7 +436,6 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "cd" C-m
 
             rsync_duts \
-                $IVG_dir/helper_scripts \
                 $IVG_dir/aovs_2.6B/test_case_1_ping \
                 || exit -1
 
@@ -687,13 +680,9 @@ else # else $TMUX is not empty, start test.
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/parsed_data.txt $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_2.csv $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_2.html $script_dir
-            sleep 2
 
-            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/vm_shutdown_all.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/vm_shutdown_all.sh" C-m
+            tmux_run_cmd ALL "\$IVG_dir/helper_scripts/delete-vms.sh --all --shutdown"
+            wait_text ALL "DONE(delete-vms.sh)"
 
             if [[ ! -e "parsed_data.txt" ]]; then
                 mv parsed_data.txt "SRIOV_test_run_parsed-0-f$flow_count.txt"
@@ -728,9 +717,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
             tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
 
-            
-
-           ;;
+            ;;
 
         3)  echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
 
@@ -748,7 +735,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
 
-            VM_BASE_NAME=netronome-sriov-vxlan-vm
+            VM_BASE_NAME="netronome-sriov-vxlan-vm"
             VM_CPUS=5
             DST_IP="10.10.10.2"
             SRC_IP="10.10.10.1"
@@ -776,7 +763,7 @@ else # else $TMUX is not empty, start test.
         
             #Pause tmux until VM boots up 
             wait_text ALL "WELCOME"
-            
+
             sleep 1
             tmux send-keys -t 2 "cd vm_scripts/samples/DPDK-pktgen" C-m
             tmux send-keys -t 3 "cd vm_scripts/samples/DPDK-pktgen" C-m
@@ -797,7 +784,7 @@ else # else $TMUX is not empty, start test.
             flows_config
 
             tmux send-keys -t 3 "./0_run_dpdk-pktgen_uni-rx.sh" C-m
-            
+
             sleep 5
             tmux send-keys -t 2 "./1_run_dpdk-pktgen_uni-tx.sh y" C-m
             
@@ -833,24 +820,17 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Copying data...${NC}"
             sleep 1
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/x_copy_data_dump.sh $VM_BASE_NAME" C-m
-            
-            
+
             sleep 2
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/capture.txt $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/parsed_data.txt $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_3.csv $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_3.html $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_3_flow_count.txt $script_dir
-            sleep 2
 
-            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+            tmux_run_cmd ALL "\$IVG_dir/helper_scripts/delete-vms.sh --all --shutdown"
+            wait_text ALL "DONE(delete-vms.sh)"
 
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/vm_shutdown_all.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/vm_shutdown_all.sh" C-m
-
-            
-            
             if [[ ! -e "parsed_data.txt" ]]; then
                mv parsed_data.txt "SRIOV_vxlan_test_run_parsed-0-f$flow_count.txt"
             else
@@ -883,7 +863,6 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
             tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
 
-            
             ;;
 
          4)  echo "4) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
@@ -891,13 +870,9 @@ else # else $TMUX is not empty, start test.
             ;;
                 
          5)  echo "5) Test case 5 (Ixia Tx & Rx - VM L2FWD SR-IOV)"
-            
-           
 
             ;;
 
-
-        
          6)  echo "6) Test Case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
             
             if [ $DUT_CONNECT == 0 ]; then
@@ -909,7 +884,6 @@ else # else $TMUX is not empty, start test.
             #_#_#_#_#_START LOG_#_#_#_#_#
             tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_1.log" C-m
             tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_2.log" C-m
-            
 
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
@@ -938,7 +912,7 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
         
-            #Pause tmux until VM boots up 
+            # Wait for VMs to boot up
             wait_text ALL "WELCOME"
             
             sleep 1
@@ -1004,12 +978,10 @@ else # else $TMUX is not empty, start test.
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_6.csv $script_dir
             sleep 1
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_6.html $script_dir
-            sleep 2
 
-            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            
-            
+            tmux_run_cmd ALL "\$IVG_dir/helper_scripts/delete-vms.sh --all --shutdown"
+            wait_text ALL "DONE(delete-vms.sh)"
+
             if [[ ! -e "parsed_data.txt" ]]; then
                mv parsed_data.txt "XVIO_test_run_parsed-0-f$flow_count.txt"
             else
@@ -1034,7 +1006,6 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
 
-            
             sleep 1
             scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_1.log $capdir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_2.log $capdir
@@ -1157,16 +1128,10 @@ else # else $TMUX is not empty, start test.
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_7.csv $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_7.html $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_7_flow_count.txt $script_dir
-            sleep 2
 
-            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+            tmux_run_cmd ALL "\$IVG_dir/helper_scripts/delete-vms.sh --all --shutdown"
+            wait_text ALL "DONE(delete-vms.sh)"
 
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/vm_shutdown_all.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/vm_shutdown_all.sh" C-m
-
-            
-            
             if [[ ! -e "parsed_data.txt" ]]; then
                mv parsed_data.txt "XVIO_vxlan_test_run_parsed-0-f$flow_count.txt"
             else
@@ -1377,12 +1342,10 @@ else # else $TMUX is not empty, start test.
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_10.csv $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_10.html $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_10_flow_count.txt $script_dir
-            sleep 2
 
-            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            
-            
+            tmux_run_cmd ALL "\$IVG_dir/helper_scripts/delete-vms.sh --all --shutdown"
+            wait_text ALL "DONE(delete-vms.sh)"
+
             if [[ ! -e "parsed_data.txt" ]]; then
                 mv parsed_data.txt "KOVS_vxlan_test_run_parsed-0-f$flow_count.txt"
             else
@@ -1512,14 +1475,11 @@ else # else $TMUX is not empty, start test.
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_11.csv $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_11.html $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_11_flow_count.txt $script_dir
-            sleep 2
 
-            
-            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            
-            
-             if [[ ! -e "parsed_data.txt" ]]; then
+            tmux_run_cmd ALL "\$IVG_dir/helper_scripts/delete-vms.sh --all --shutdown"
+            wait_text ALL "DONE(delete-vms.sh)"
+
+            if [[ ! -e "parsed_data.txt" ]]; then
                mv parsed_data.txt "KOVS_test_run_parsed-0-f$flow_count.txt"
             else
             num=1
@@ -1646,10 +1606,9 @@ else # else $TMUX is not empty, start test.
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_12.csv $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_12.html $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_12_flow_count.txt $script_dir
-            sleep 2
 
-            tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
-            tmux send-keys -t 3 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
+            tmux_run_cmd ALL "\$IVG_dir/helper_scripts/delete-vms.sh --all --shutdown"
+            wait_text ALL "DONE(delete-vms.sh)"
 
             if [[ ! -e "parsed_data.txt" ]]; then
                 mv parsed_data.txt "DPDK_OVS_test_run_parsed-0-f$flow_count.txt"

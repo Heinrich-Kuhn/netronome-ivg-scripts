@@ -53,5 +53,3 @@ ovs-vsctl set Open_vSwitch . other_config:flow-limit=1000000
 ovs-appctl upcall/set-flow-limit 1000000
 
 exit 0
-
-

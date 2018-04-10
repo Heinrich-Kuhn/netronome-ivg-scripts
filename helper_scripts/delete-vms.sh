@@ -96,4 +96,6 @@ for mode in $actions ; do
 
 done
 
+echo "DONE($(basename $0))"
+
 exit 0

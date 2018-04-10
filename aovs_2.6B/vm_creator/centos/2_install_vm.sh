@@ -23,7 +23,9 @@ fi
 cp -f $CLOUD_IMAGE_FILE $BASE_IMAGE_FILE \
     || exit -1
 
-virsh undefine $VM_NAME > /dev/null 2>&1
+# Shutdown/undefine previous VM with the same name
+$IVG_dir/helper_scripts/delete-vms.sh --name "$VM_NAME" \
+    || exit -1
 
 cpu_model=$(virsh capabilities | grep -o '<model>.*</model>' | head -1 | sed 's/\(<model>\|<\/model>\)//g')
 virt-install \
