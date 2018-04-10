@@ -38,8 +38,8 @@ export DB_SOCK=/usr/local/var/run/openvswitch/db.sock
 ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-hugepage-dir="/mnt/huge"
 ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-init=true
 ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem="2048,2048"
-ovs-vsctl --no-wait set Open_vSwitch . other_config:pmd-cpu-mask=83
-#ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-lcore-mask=18
+ovs-vsctl --no-wait set Open_vSwitch . other_config:pmd-cpu-mask=81
+ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-lcore-mask=02
 ovs-vswitchd unix:$DB_SOCK --pidfile --detach --log
 
 sleep 5

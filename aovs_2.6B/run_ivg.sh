@@ -661,7 +661,6 @@ else # else $TMUX is not empty, start test.
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/parsed_data.txt $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_2.csv $script_dir
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_2.html $script_dir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_2_flow_count.txt $script_dir
             sleep 2
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/y_vm_shutdown.sh $VM_BASE_NAME" C-m
