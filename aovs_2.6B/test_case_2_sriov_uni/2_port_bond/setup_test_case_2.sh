@@ -16,8 +16,7 @@ fi
 
 script_dir="$(dirname $(readlink -f $0))"
 
-IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
-$IVG_dir/helper_scripts/vm_shutdown.sh
+$IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
 
 $script_dir/0_configure_hugepages.sh
 $script_dir/1_bind_VFIO-PCI_driver.sh
@@ -26,4 +25,4 @@ $script_dir/3_configure_AOVS_rules.sh
 $script_dir/4_guest_xml_configure.sh $VM_NAME
 $script_dir/5_vm_pinning.sh $VM_NAME $VM_CPU_COUNT
 
-
+exit 0

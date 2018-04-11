@@ -10,7 +10,7 @@ RED='\033[0;31m'
 
 UBUNTU_CLOUD_IMAGE=ubuntu-17.10-server-cloudimg-amd64.img
 UBUNTU_CLOUD_IMAGE_URL=https://cloud-images.ubuntu.com/releases/17.10/release/$UBUNTU_CLOUD_IMAGE
-cd /var/lib/libvirt/images/
+cd /var/lib/libvirt/images
 
 if [[ -z "$1" ]]; then
     if [ -f $UBUNTU_CLOUD_IMAGE.copy ]; then
@@ -21,7 +21,7 @@ if [[ -z "$1" ]]; then
                 rm -f $UBUNTU_CLOUD_IMAGE
                 cp $UBUNTU_CLOUD_IMAGE.copy $UBUNTU_CLOUD_IMAGE
             else
-                exit 1
+                exit -1
             fi
     else
     	cd /var/lib/libvirt/images/
@@ -43,5 +43,4 @@ else
 
 fi
 
-
-
+exit 0

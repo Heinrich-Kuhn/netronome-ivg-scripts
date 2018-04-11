@@ -24,7 +24,9 @@ done
 echo "IP: $IP"
 echo "SOFTWARE: $SOFTWARE"
 
-if [ -z "$IP" ] ; then IP=$DEFAULT_IP ; fi
+if [ -z "$IP" ]; then
+    IP=$DEFAULT_IP
+fi
 
 script_dir="$(dirname $(readlink -f $0))"
 IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"

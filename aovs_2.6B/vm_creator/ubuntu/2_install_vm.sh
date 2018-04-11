@@ -5,8 +5,9 @@ VM_NAME=ubuntu_backing
 
 cpu_model=$(virsh capabilities | grep -o '<model>.*</model>' | head -1 | sed 's/\(<model>\|<\/model>\)//g')
 
-virsh destroy $VM_NAME > /dev/null 2>&1
-virsh undefine $VM_NAME > /dev/null 2>&1
+# Shutdown/undefine previous VM with the same name
+$IVG_dir/helper_scripts/delete-vms.sh --name "$VM_NAME" \
+    || exit -1
 
 virt-install \
   --name $VM_NAME \

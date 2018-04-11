@@ -3,6 +3,10 @@
 if [ -z "$1" ] || [ -z "$2" ]; then
     echo "ERROR: No VM name was passed to this script."
     echo "Example: ./4_guest_xml_configure.sh <vm_name> <vm_cpu_count>"
+
+echo "-- $1 -- $2 -- 2"
+
+
     exit -1
 fi
 
@@ -39,5 +43,6 @@ EDITOR='sed -i "/<domain/a \<memoryBacking><hugepages><page size=\"2048\" unit=\
 echo VM_CPU: $VM_CPU
 EDITOR='sed -i "/<domain/a \<cpu mode=\"host-model\"><model fallback=\"allow\"\/><numa><cell id=\"0\" cpus=\"0-'$((VM_CPU-1))'\" memory=\"'${max_memory}'\" unit=\"KiB\" memAccess=\"shared\"\/><\/numa><\/cpu>"' virsh edit $VM_NAME
 
-
 sleep 5
+
+exit 0
