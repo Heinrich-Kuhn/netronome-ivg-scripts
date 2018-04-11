@@ -890,7 +890,7 @@ else # else $TMUX is not empty, start test.
 
             VM_BASE_NAME=netronome-xvio-vm
             VM_CPUS=5
-            XVIO_CPUS=2
+            XVIO_CPUS=4
             
             echo -e "${GREEN}* VM's are called $VM_BASE_NAME${NC}"
             tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME" C-m

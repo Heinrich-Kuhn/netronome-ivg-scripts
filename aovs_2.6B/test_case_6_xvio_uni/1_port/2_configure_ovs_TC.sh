@@ -28,11 +28,11 @@ done
 
 xvio_cpus_string=$(IFS=',';echo "${xvio_cpus_list[*]}";IFS=$' \t\n')
 
-ovs_db=$(find / -name 'db.sock')
+ovs_db="$(find / -name 'db.sock')"
 
 grep  ID_LIKE /etc/os-release | grep -q fedora
 if [[ $? -eq 0 ]]; then
-  sed "s#^VIRTIOFWD_LOG_LEVEL=.*#VIRTIOFWD_LOG_LEVEL=7g" -i /etc/default/virtioforwarder
+  sed "s#^VIRTIOFWD_LOG_LEVEL=.*#VIRTIOFWD_LOG_LEVEL=7#g" -i /etc/default/virtioforwarder
   sed "s#^VIRTIOFWD_ZMQ_PORT_CONTROL_EP=.*#VIRTIOFWD_ZMQ_PORT_CONTROL_EP=ipc:///var/run/virtio-forwarder/port_control#g" -i /etc/default/virtioforwarder
   sed "s#^VIRTIOFWD_OVSDB_SOCK_PATH=.*#VIRTIOFWD_OVSDB_SOCK_PATH=$ovs_db#g" -i /etc/default/virtioforwarder
   sed "s#^VIRTIOFWD_CPU_MASK=.*#VIRTIOFWD_CPU_MASK=$xvio_cpus_string#g" -i /etc/default/virtioforwarder
@@ -43,7 +43,7 @@ fi
 
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
-  sed "s#^VIRTIOFWD_LOG_LEVEL=.*#VIRTIOFWD_LOG_LEVEL=7g" -i /etc/default/virtioforwarder
+  sed "s#^VIRTIOFWD_LOG_LEVEL=.*#VIRTIOFWD_LOG_LEVEL=7#g" -i /etc/default/virtioforwarder
   sed "s#^VIRTIOFWD_ZMQ_PORT_CONTROL_EP=.*#VIRTIOFWD_ZMQ_PORT_CONTROL_EP=ipc:///var/run/virtio-forwarder/port_control#g" -i /etc/default/virtioforwarder
   sed "s#^VIRTIOFWD_OVSDB_SOCK_PATH=.*#VIRTIOFWD_OVSDB_SOCK_PATH=$ovs_db#g" -i /etc/default/virtioforwarder
   sed "s#^VIRTIOFWD_CPU_MASK=.*#VIRTIOFWD_CPU_MASK=$xvio_cpus_string#g" -i /etc/default/virtioforwarder
