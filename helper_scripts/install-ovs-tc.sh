@@ -140,7 +140,7 @@ tar xvf disa-2.8.A-r5642-2017-11-24_firmware.tar.gz \
 /tmp/disa-2.8.A-r5642-2017-11-24_firmware/install.sh \
     || exit -1
 
-$IVG_DIR/helper_scripts/install-virtio-forwarder.sh \
+$IVG_DIR/helper_scripts/install-virtio-forwarder.sh $dpdk_version \
     || exit -1
 
 path_ovs=$(find / -name "ovs-ctl" | sed -n 1p | sed 's=/ovs-ctl==g')

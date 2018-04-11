@@ -66,8 +66,8 @@ ovs-vsctl add-port $BRIDGE $repr_p0 -- set interface $repr_p0 ofport_request=1
 #Add VF's
 ovs-vsctl add-port $BRIDGE $repr_vf1 -- set interface $repr_vf1 ofport_request=21 external_ids:virtio_forwarder=21
 ovs-vsctl add-port $BRIDGE $repr_vf2 -- set interface $repr_vf2 ofport_request=22 external_ids:virtio_forwarder=22
-ovs-vsctl add-port $BRIDGE $repr_vf3 -- set interface $repr_vf2 ofport_request=23 external_ids:virtio_forwarder=23
-ovs-vsctl add-port $BRIDGE $repr_vf4 -- set interface $repr_vf2 ofport_request=24 external_ids:virtio_forwarder=24
+ovs-vsctl add-port $BRIDGE $repr_vf3 -- set interface $repr_vf3 ofport_request=23 external_ids:virtio_forwarder=23
+ovs-vsctl add-port $BRIDGE $repr_vf4 -- set interface $repr_vf4 ofport_request=24 external_ids:virtio_forwarder=24
 
 ovs-ofctl del-flows $BRIDGE
 

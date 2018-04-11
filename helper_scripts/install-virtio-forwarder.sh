@@ -1,5 +1,7 @@
 #!/bin/bash
 
+dpdk_version="$1"
+
 # REMOVE VIRTIO-FORWARDER
 rm -rf /opt/src/virtio-forwarder
 systemctl stop virtio-forwarder
@@ -17,10 +19,10 @@ if [[ $? -eq 0 ]]; then
     yum install policycoreutils-python
     semanage permissive -a svirt_t
 
-    cd /opt/src/dpdk-17.05/
-    sed -i 's#^CONFIG_RTE_MAX_ETHPORTS=.*#CONFIG_RTE_MAX_ETHPORTS=64#g' /opt/src/dpdk-17.05/config/common_base
-    sed -i 's#^CONFIG_RTE_LIBRTE_VHOST_NUMA=.*#CONFIG_RTE_LIBRTE_VHOST_NUMA=y#g' /opt/src/dpdk-17.05/config/common_base
-    sed -i 's#^CONFIG_RTE_LIBRTE_NFP_PMD=.*#CONFIG_RTE_LIBRTE_NFP_PMD=y#g' /opt/src/dpdk-17.05/config/common_base
+    cd /opt/src/$dpdk_version/
+    sed -i 's#^CONFIG_RTE_MAX_ETHPORTS=.*#CONFIG_RTE_MAX_ETHPORTS=64#g' /opt/src/$dpdk_version/config/common_base
+    sed -i 's#^CONFIG_RTE_LIBRTE_VHOST_NUMA=.*#CONFIG_RTE_LIBRTE_VHOST_NUMA=y#g' /opt/src/$dpdk_version/config/common_base
+    sed -i 's#^CONFIG_RTE_LIBRTE_NFP_PMD=.*#CONFIG_RTE_LIBRTE_NFP_PMD=y#g' /opt/src/$dpdk_version/config/common_base
     echo "Rebuilding DPDK with NFP_PMD enabled"
     make config T=x86_64-native-linuxapp-gcc
     make -j8
@@ -31,7 +33,7 @@ if [[ $? -eq 0 ]]; then
     cd /opt/src/
     git clone https://github.com/Netronome/virtio-forwarder
     cd /opt/src/virtio-forwarder
-    export RTE_SDK=/opt/src/dpdk-17.05
+    export RTE_SDK=/opt/src/$dpdk_version
     export RTE_TARGET=x86_64-native-linuxapp-gcc
 
     make 
@@ -45,10 +47,10 @@ if [[ $? -eq 0 ]]; then
     #add-apt-repository -y ppa:netronome/virtio-forwarder
     #apt-get -y update
     #apt-get -y install virtio-forwarder
-    cd /opt/src/dpdk-17.05/
-    sed -i 's#^CONFIG_RTE_MAX_ETHPORTS=.*#CONFIG_RTE_MAX_ETHPORTS=64#g' /opt/src/dpdk-17.05/config/common_base
-    sed -i 's#^CONFIG_RTE_LIBRTE_VHOST_NUMA=.*#CONFIG_RTE_LIBRTE_VHOST_NUMA=y#g' /opt/src/dpdk-17.05/config/common_base
-    sed -i 's#^CONFIG_RTE_LIBRTE_NFP_PMD=.*#CONFIG_RTE_LIBRTE_NFP_PMD=y#g' /opt/src/dpdk-17.05/config/common_base
+    cd /opt/src/$dpdk_version/
+    sed -i 's#^CONFIG_RTE_MAX_ETHPORTS=.*#CONFIG_RTE_MAX_ETHPORTS=64#g' /opt/src/$dpdk_version/config/common_base
+    sed -i 's#^CONFIG_RTE_LIBRTE_VHOST_NUMA=.*#CONFIG_RTE_LIBRTE_VHOST_NUMA=y#g' /opt/src/$dpdk_version/config/common_base
+    sed -i 's#^CONFIG_RTE_LIBRTE_NFP_PMD=.*#CONFIG_RTE_LIBRTE_NFP_PMD=y#g' /opt/src/$dpdk_version/config/common_base
     echo "Rebuilding DPDK with NFP_PMD enabled"
     make config T=x86_64-native-linuxapp-gcc
     make -j8
@@ -59,7 +61,7 @@ if [[ $? -eq 0 ]]; then
     cd /opt/src/
     git clone https://github.com/Netronome/virtio-forwarder
     cd /opt/src/virtio-forwarder
-    export RTE_SDK=/opt/src/dpdk-17.05
+    export RTE_SDK=/opt/src/$dpdk_version
     export RTE_TARGET=x86_64-native-linuxapp-gcc
 
     make 
