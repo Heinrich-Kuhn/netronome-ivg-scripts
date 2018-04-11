@@ -74,6 +74,8 @@ fi
 
 systemctl start virtio-forwarder # systemd
 
+echo "VirtioForwarder Installed"
+
 
 
 

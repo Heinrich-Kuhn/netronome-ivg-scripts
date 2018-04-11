@@ -28,9 +28,11 @@ done
 
 xvio_cpus_string=$(IFS=',';echo "${xvio_cpus_list[*]}";IFS=$' \t\n')
 
+ovs_db=$(find / -name 'db.sock')
+
 grep  ID_LIKE /etc/os-release | grep -q fedora
 if [[ $? -eq 0 ]]; then
-  sed 's#^VIRTIOFWD_OVSDB_SOCK_PATH=.*#VIRTIOFWD_OVSDB_SOCK_PATH=/var/run/openvswitch/db.sock#g' -i /etc/default/virtioforwarder
+  sed "s#^VIRTIOFWD_OVSDB_SOCK_PATH=.*#VIRTIOFWD_OVSDB_SOCK_PATH=$ovs_db#g" -i /etc/default/virtioforwarder
   sed "s#^VIRTIOFWD_CPU_MASK=.*#VIRTIOFWD_CPU_MASK=$xvio_cpus_string#g" -i /etc/default/virtioforwarder
   sed 's#^VIRTIOFWD_SOCKET_OWNER=.*#VIRTIOFWD_SOCKET_OWNER=qemu#g' -i /etc/default/virtioforwarder
   sed 's#^VIRTIOFWD_SOCKET_GROUP=.*#VIRTIOFWD_SOCKET_GROUP=kvm#g' -i /etc/default/virtioforwarder
@@ -40,7 +42,7 @@ fi
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
 
-  sed 's#^VIRTIOFWD_OVSDB_SOCK_PATH=.*#VIRTIOFWD_OVSDB_SOCK_PATH=/var/run/openvswitch/db.sock#g' -i /etc/default/virtioforwarder
+  sed "s#^VIRTIOFWD_OVSDB_SOCK_PATH=.*#VIRTIOFWD_OVSDB_SOCK_PATH=$ovs_db#g" -i /etc/default/virtioforwarder
   sed "s#^VIRTIOFWD_CPU_MASK=.*#VIRTIOFWD_CPU_MASK=$xvio_cpus_string#g" -i /etc/default/virtioforwarder
   sed 's#^VIRTIOFWD_SOCKET_OWNER=.*#VIRTIOFWD_SOCKET_OWNER=libvirt-qemu#g' -i /etc/default/virtioforwarder
   sed 's#^VIRTIOFWD_SOCKET_GROUP=.*#VIRTIOFWD_SOCKET_GROUP=kvm#g' -i /etc/default/virtioforwarder
