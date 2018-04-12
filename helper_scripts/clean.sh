@@ -20,11 +20,11 @@ function find_repr()
 # Delete all bridges
 for br in $(ovs-vsctl list-br);
 do
-  ovs-vsctl --if-exists del-br $br
+  /root/ovs/utilities/ovs-vsctl --if-exists del-br $br
 done
 
 echo "Stop openvswitch ..."
-ovs-ctl stop
+/root/ovs/utilities/ovs-ctl stop
 
 dev="0000:"$(lspci -d 19ee:4000 | cut -d ' ' -f 1)
 echo 0 > /sys/bus/pci/devices/$dev/sriov_numvfs

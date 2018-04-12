@@ -51,6 +51,6 @@ for ndev in $(ls /sys/bus/pci/devices/$pci/net); do
     ethtool -K $ndev hw-tc-offload on
 done
 echo "Start OVS"
-ovs-ctl start
+/root/ovs/utilities/ovs-ctl start
 echo "OVS-TC started"
 

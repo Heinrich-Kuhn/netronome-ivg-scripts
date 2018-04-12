@@ -5,10 +5,10 @@ $script_dir/vm_shutdown_all.sh
 
 $script_dir/clean.sh
 
-ovs-ctl stop
+/root/ovs/utilities/ovs-ctl stop
 for dp in $(ovs-dpctl dump-dps)
 do
-    ovs-dpctl del-dp $dp
+    /root/ovs/utilities/ovs-dpctl del-dp $dp
 done
 rmmod openvswitch 2>/dev/null
 rmmod nfp 2>/dev/null
