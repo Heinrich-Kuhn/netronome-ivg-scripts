@@ -208,20 +208,21 @@ else # else $TMUX is not empty, start test.
         echo "b) Install/Re-install Agilio-OVS"
         echo "B) Install OVS-TC"
         echo "c) Create backing image for test VM's (Only done once)"
+        echo ""
         echo "1) Test Case 1 (Simple ping between hosts)"
-        echo "1a)Test Case 1a (Pktgen between hosts)"
+        #echo "1a)Test Case 1a (Pktgen between hosts)"
         echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
         echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
-        echo "4) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
+        #echo "4) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
         echo "6) Test case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
         echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO VXLAN)"
-        echo "8) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
+        #echo "8) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
         echo ""
-        echo "10) Test Case 10 (DPDK-pktgen VM-VM uni-directional KOVS VXLAN Intel XL710)"
-        echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
+        #echo "10) Test Case 10 (DPDK-pktgen VM-VM uni-directional KOVS VXLAN Intel XL710)"
+        #echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
         echo "r) Reboot host machines"
         echo "d) Set up DPDK OVS"
-        echo "k) Set up KOVS"        
+        #echo "k) Set up KOVS"        
         echo "x) Exit"
         echo ""
         read -p "Enter choice: " OPT
@@ -618,6 +619,8 @@ else # else $TMUX is not empty, start test.
 
             wait_text ALL "DONE(setup_test_case_2.sh)"
 
+            sleep 3
+
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
         
@@ -757,6 +760,8 @@ else # else $TMUX is not empty, start test.
             
             echo -e "${GREEN}* Setting up test case 3${NC}"
             wait_text ALL "DONE(setup_test_case_3.sh)"
+
+            sleep 3
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
@@ -909,6 +914,8 @@ else # else $TMUX is not empty, start test.
             echo -e "${GREEN}* Setting up test case 6${NC}"
             wait_text ALL "DONE(setup_test_case_6.sh)"
 
+            sleep 3
+
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
         
@@ -1060,6 +1067,8 @@ else # else $TMUX is not empty, start test.
             
             echo -e "${GREEN}* Setting up test case 7${NC}"
             wait_text ALL "DONE(setup_test_case_7.sh)"
+
+            sleep 3
 
             tmux send-keys -t 2 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m
             tmux send-keys -t 3 "./IVG_folder/helper_scripts/start_vm.sh $VM_BASE_NAME" C-m

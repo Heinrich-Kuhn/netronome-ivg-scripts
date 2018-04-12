@@ -15,7 +15,7 @@ ovs-ctl start
 
 script_dir="$(dirname $(readlink -f $0))"
 
-$script_dir/0_configure_hugepages.sh
+#$script_dir/0_configure_hugepages.sh
 
 if [[ "$5" == "AOVS" ]]; then
     $script_dir/1_bind_VFIO-PCI_driver.sh \

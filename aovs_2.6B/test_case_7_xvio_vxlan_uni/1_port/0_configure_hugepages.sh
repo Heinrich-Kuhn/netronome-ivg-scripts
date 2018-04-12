@@ -30,6 +30,7 @@ if [[ $? -eq 0 ]]; then
     chown libvirt-qemu:kvm -R /mnt/huge/libvirt || exit -1
     service libvirt-bin restart || exit -1
     echo 9096 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
+    echo 8 > /sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages
     echo "DONE($(basename $0))"
     exit 0
 fi
@@ -40,6 +41,7 @@ if [[ $? -eq 0 ]]; then
     chown qemu:qemu -R /mnt/huge/libvirt || exit -1
     service libvirtd restart || exit -1
     echo 9096 > /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages
+    echo 8 > /sys/kernel/mm/hugepages/hugepages-1048576kB/nr_hugepages
     echo "DONE($(basename $0))"
     exit 0
 fi
