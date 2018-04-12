@@ -372,10 +372,23 @@ else # else $TMUX is not empty, start test.
                 sleep 5
                 continue
             fi
+            #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Installation_TC_DUT_1.log" C-m
+            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Installation_TC_DUT_2.log" C-m
+
             tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh $DPDK_VER" C-m
             tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh $DPDK_VER" C-m
 
             wait_text ALL "DONE(install-ovs-tc.sh)"
+
+            #_#_#_#_#_END LOG_#_#_#_#_#
+            tmux send-keys -t 3 "exit" C-m
+            tmux send-keys -t 2 "exit" C-m
+
+            sleep 1
+            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Installation_DUT_1.log $capdir
+            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Installation_DUT_2.log $capdir
+
 
             ;;
 
