@@ -1,6 +1,7 @@
 #!/bin/bash
 
 script_dir="$(dirname $(readlink -f $0))"
+IVG_dir="/root/IVG_folder"
 
 # Shutdown all VMs
 $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
