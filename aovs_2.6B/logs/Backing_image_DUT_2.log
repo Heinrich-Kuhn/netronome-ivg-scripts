@@ -1,0 +1,2571 @@
+Script started on Tue 08 May 2018 12:32:18 PM UTC
+root@temp8:~# [Kroot@temp8:~# $HOME/IVG_folder/vm_creator/ubuntu/y_create_vm_from_backing.sh netronome-dpdk-ovs-intel-vm[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccd[K[K[Kcd IVG_folder/aovs_2.6B/o[Klogs/
+root@temp8:~/IVG_folder/aovs_2.6B/logs# ls
+Backing_image_DUT_2.log  inventory.log  Setup_DPDK_OVS_DUT_2.log  Test_case_12_DUT_2.log  Test_case_1_DUT_2.log
+root@temp8:~/IVG_folder/aovs_2.6B/logs# nano Backing_image_DUT_2.log 
+(B)0[?1049h[1;30r[m[4l[?1h=[?1h=[?1h=[39;49m[?25l[39;49m[m[H[J[28;51H[0;7m[ Reading File ][25A[m[28;57H[0;7m 0 lines[25A[m[34h[?25h[H[39;49m[0;7m  GNU nano 2.5.3                      File: Backing_image_DUT_2.log                                                  [29;1H^G[m Get Help     [0;7m^O[m Write Out    [0;7m^W[m Where Is     [0;7m^K[m Cut Text     [0;7m^J[m Justify[6C[0;7m^C[m Cur Pos[6C[0;7m^Y[m Prev Page[1B[0;7m^X[m Exit[30;17H[0;7m^R[m Read File    [0;7m^\[m Replace[6C[0;7m^U[m Uncut Text   [0;7m^T[m To Spell     [0;7m^_[m Go To Line   [0;7m^V[m Next Page[27A[25B[J[30;117H[30;1H[?1049l[?1l>root@temp8:~/IVG_folder/aovs_2.6B/logs# nano Test_case_12_DUT_2.log 
+(B)0[?1049h[1;30r[m[4l[?1h=[?1h=[?1h=[39;49m[?25l[39;49m[m[H[J[28;51H[0;7m[ Reading File ][25A[m[28;57H[0;7m 0 lines[25A[m[34h[?25h[H[39;49m[0;7m  GNU nano 2.5.3                      File: Test_case_12_DUT_2.log                                                   [29;1H^G[m Get Help     [0;7m^O[m Write Out    [0;7m^W[m Where Is     [0;7m^K[m Cut Text     [0;7m^J[m Justify[6C[0;7m^C[m Cur Pos[6C[0;7m^Y[m Prev Page[1B[0;7m^X[m Exit[30;17H[0;7m^R[m Read File    [0;7m^\[m Replace[6C[0;7m^U[m Uncut Text   [0;7m^T[m To Spell     [0;7m^_[m Go To Line   [0;7m^V[m Next Page[27A[25B[J[30;117H[30;1H[?1049l[?1l>root@temp8:~/IVG_folder/aovs_2.6B/logs# nano Test_case_12_DUT_2.log [1P[1P[1P[1P[1@c[1@a[1@t
+root@temp8:~/IVG_folder/aovs_2.6B/logs# cat Test_case_12_DUT_2.log $HOME/IVG_folder/vm_creator/ubuntu/x_create_backin g_image.sh
+#!/bin/bash
+
+script_dir="$(dirname $(readlink -f $0))"
+
+$script_dir/0_download_cloud_image.sh || exit -1
+$script_dir/1_cloud_init.sh || exit -1
+$script_dir/2_install_vm.sh || exit -1
+$script_dir/3_copy_vm_scripts.sh || exit -1
+$script_dir/4_run_vm_scripts.sh
+
+exit 0
+root@temp8:~/IVG_folder/aovs_2.6B/logs# virsh list --all
+ Id    Name                           State
+----------------------------------------------------
+
+root@temp8:~/IVG_folder/aovs_2.6B/logs# ls
+Backing_image_DUT_2.log  inventory.log  Setup_DPDK_OVS_DUT_2.log  Test_case_12_DUT_2.log  Test_case_1_DUT_2.log
+root@temp8:~/IVG_folder/aovs_2.6B/logs# cd ..
+root@temp8:~/IVG_folder/aovs_2.6B# ls
+[0m[01;32mflow_setting.txt[0m  [01;34mlogs[0m
+root@temp8:~/IVG_folder/aovs_2.6B# ls
+[0m[01;32mflow_setting.txt[0m  [01;34mlogs[0m
+root@temp8:~/IVG_folder/aovs_2.6B# cd ..
+root@temp8:~/IVG_folder# ls
+[0m[01;34maovs_2.6B[0m  [34;42mhelper_scripts[0m  [34;42mtest_case_12_dpdk_ovs_uni_intel[0m  [34;42mtest_case_1_ping[0m  [34;42mvm_creator[0m
+root@temp8:~/IVG_folder# cd vm_creator/
+root@temp8:~/IVG_folder/vm_creator# ls
+[0m[34;42mcentos[0m  [34;42mubuntu[0m
+root@temp8:~/IVG_folder/vm_creator# cd ubuntu/
+root@temp8:~/IVG_folder/vm_creator/ubuntu# ls
+[0m[01;32m0_download_cloud_image.sh[0m  [01;32m3_copy_vm_scripts.sh[0m  [34;42mvm_scripts[0m
+[01;32m1_cloud_init.sh[0m            [01;32m4_run_vm_scripts.sh[0m   [01;32mx_create_backing_image.sh[0m
+[01;32m2_install_vm.sh[0m            [01;32mREADME.md[0m             [01;32my_create_vm_from_backing.sh[0m
+root@temp8:~/IVG_folder/vm_creator/ubuntu# ./x_create_backing_image.sh 
+[0;32mDownloading ubuntu-17.10-server-cloudimg-amd64.img to /var/lib/libvirt/images/[0m
+--2018-05-08 12:34:40--  https://cloud-images.ubuntu.com/releases/17.10/release/ubuntu-17.10-server-cloudimg-amd64.img
+Resolving cloud-images.ubuntu.com (cloud-images.ubuntu.com)... 91.189.92.141, 2001:67c:1360:8c01::8001
+Connecting to cloud-images.ubuntu.com (cloud-images.ubuntu.com)|91.189.92.141|:443... connected.
+HTTP request sent, awaiting response... 304 Not Modified
+File ‘ubuntu-17.10-server-cloudimg-amd64.img’ not modified on server. Omitting download.
+
+[0;32mCreating copy of ubuntu-cloud-image[0m
+[0;32mGenerating SSH keypair...[0m
+dpkg-query: no packages found matching cloud-image-utils
+Reading package lists... 0%Reading package lists... 100%Reading package lists... Done
+Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree       
+Reading state information... 0%Reading state information... 0%Reading state information... Done
+The following additional packages will be installed:
+  distro-info
+Suggested packages:
+  cloud-utils-euca shunit2
+The following NEW packages will be installed:
+  cloud-image-utils distro-info
+0 upgraded, 2 newly installed, 0 to remove and 0 not upgraded.
+Need to get 35.8 kB of archives.
+After this operation, 173 kB of additional disk space will be used.
+0% [Working]            Get:1 http://archive.ubuntu.com/ubuntu xenial/main amd64 distro-info amd64 0.14build1 [20.0 kB]
+18% [1 distro-info 8,192 B/20.0 kB 41%]                                       55% [Working]             Get:2 http://archive.ubuntu.com/ubuntu xenial-updates/main amd64 cloud-image-utils all 0.27-0ubuntu25.1 [15.8 kB]
+55% [2 cloud-image-utils 0 B/15.8 kB 0%]                                        100% [Working]              Fetched 35.8 kB in 0s (156 kB/s)
+Selecting previously unselected package distro-info.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 90181 files and directories currently installed.)
+Preparing to unpack .../distro-info_0.14build1_amd64.deb ...
+Unpacking distro-info (0.14build1) ...
+Selecting previously unselected package cloud-image-utils.
+Preparing to unpack .../cloud-image-utils_0.27-0ubuntu25.1_all.deb ...
+Unpacking cloud-image-utils (0.27-0ubuntu25.1) ...
+Processing triggers for man-db (2.7.5-1) ...
+Setting up distro-info (0.14build1) ...
+Setting up cloud-image-utils (0.27-0ubuntu25.1) ...
+DONE(delete-vms.sh)
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (cli:256) Launched with command line: /usr/share/virt-manager/virt-install --name ubuntu_backing --disk path=/var/lib/libvirt/images/ubuntu-17.10-server-cloudimg-amd64.img,format=qcow2,bus=virtio,cache=none --disk /var/lib/libvirt/images/user_data_1.img,device=cdrom --ram 6144 --vcpus 10 --cpu Broadwell --network bridge=virbr0,model=virtio --nographics --debug --accelerate --os-type=linux --os-variant=ubuntu16.04 --noautoconsole --import
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (cli:266) Requesting libvirt URI default
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (cli:270) Received libvirt URI qemu:///system
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (virt-install:357) Requesting virt method 'default', hv type 'default'.
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (virt-install:577) Received virt method 'kvm'
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (virt-install:578) Hypervisor name is 'hvm'
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (virt-install:269) Distilled --network options: ['bridge=virbr0,model=virtio']
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (virt-install:315) --graphics compat generated: none
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (virt-install:182) Distilled --disk options: ['path=/var/lib/libvirt/images/ubuntu-17.10-server-cloudimg-amd64.img,format=qcow2,bus=virtio,cache=none', '/var/lib/libvirt/images/user_data_1.img,device=cdrom']
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (diskbackend:146) Attempting to build pool=images target=/var/lib/libvirt/images
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (storage:498) Creating storage pool 'images' with xml:
+<pool type="dir">
+  <name>images</name>
+  <uuid>a64dccbf-0b6f-4c01-9aad-fb10879e32d1</uuid>
+  <target>
+    <path>/var/lib/libvirt/images</path>
+  </target>
+</pool>
+
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (guest:241) Setting Guest.os_variant to 'ubuntu16.04'
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (virt-install:732) Guest.has_install_phase: False
+
+Starting install...
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (guest:398) Generated install XML: None required
+[Tue, 08 May 2018 12:34:49 virt-install 3091] DEBUG (guest:399) Generated boot XML: 
+<domain type="kvm">
+  <name>ubuntu_backing</name>
+  <uuid>82633c0b-8d84-44d3-86cb-b9cf67beb3fd</uuid>
+  <memory>6291456</memory>
+  <currentMemory>6291456</currentMemory>
+  <vcpu>10</vcpu>
+  <os>
+    <type arch="x86_64">hvm</type>
+    <boot dev="hd"/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <cpu mode="custom" match="exact">
+    <model>Broadwell</model>
+  </cpu>
+  <clock offset="utc">
+    <timer name="rtc" tickpolicy="catchup"/>
+    <timer name="pit" tickpolicy="delay"/>
+    <timer name="hpet" present="no"/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <pm>
+    <suspend-to-mem enabled="no"/>
+    <suspend-to-disk enabled="no"/>
+  </pm>
+  <devices>
+    <emulator>/usr/bin/kvm-spice</emulator>
+    <disk type="file" device="disk">
+      <driver name="qemu" type="qcow2" cache="none"/>
+      <source file="/var/lib/libvirt/images/ubuntu-17.10-server-cloudimg-amd64.img"/>
+      <target dev="vda" bus="virtio"/>
+    </disk>
+    <disk type="file" device="cdrom">
+      <driver name="qemu" type="raw"/>
+      <source file="/var/lib/libvirt/images/user_data_1.img"/>
+      <target dev="hda" bus="ide"/>
+      <readonly/>
+    </disk>
+    <controller type="usb" index="0" model="ich9-ehci1"/>
+    <controller type="usb" index="0" model="ich9-uhci1">
+      <master startport="0"/>
+    </controller>
+    <controller type="usb" index="0" model="ich9-uhci2">
+      <master startport="2"/>
+    </controller>
+    <controller type="usb" index="0" model="ich9-uhci3">
+      <master startport="4"/>
+    </controller>
+    <interface type="bridge">
+      <source bridge="virbr0"/>
+      <mac address="52:54:00:ad:b7:b5"/>
+      <model type="virtio"/>
+    </interface>
+    <input type="mouse" bus="ps2"/>
+    <console type="pty"/>
+  </devices>
+</domain>
+
+Creating domain...                                                                            |    0 B  00:00:04     
+[Tue, 08 May 2018 12:34:53 virt-install 3091] DEBUG (guest:429) XML fetched from libvirt object:
+<domain type='kvm' id='1'>
+  <name>ubuntu_backing</name>
+  <uuid>82633c0b-8d84-44d3-86cb-b9cf67beb3fd</uuid>
+  <memory unit='KiB'>6291456</memory>
+  <currentMemory unit='KiB'>6291456</currentMemory>
+  <vcpu placement='static'>10</vcpu>
+  <resource>
+    <partition>/machine</partition>
+  </resource>
+  <os>
+    <type arch='x86_64' machine='pc-i440fx-xenial'>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <cpu mode='custom' match='exact'>
+    <model fallback='allow'>Broadwell</model>
+  </cpu>
+  <clock offset='utc'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <pm>
+    <suspend-to-mem enabled='no'/>
+    <suspend-to-disk enabled='no'/>
+  </pm>
+  <devices>
+    <emulator>/usr/bin/kvm-spice</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='none'/>
+      <source file='/var/lib/libvirt/images/ubuntu-17.10-server-cloudimg-amd64.img'/>
+      <backingStore/>
+      <target dev='vda' bus='virtio'/>
+      <alias name='virtio-disk0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+    </disk>
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/var/lib/libvirt/images/user_data_1.img'/>
+      <backingStore/>
+      <target dev='hda' bus='ide'/>
+      <readonly/>
+      <alias name='ide0-0-0'/>
+      <address type='drive' controller='0' bus='0' target='0' unit='0'/>
+    </disk>
+    <controller type='usb' index='0' model='ich9-ehci1'>
+      <alias name='usb'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x7'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci1'>
+      <alias name='usb'/>
+      <master startport='0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0' multifunction='on'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci2'>
+      <alias name='usb'/>
+      <master startport='2'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x1'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci3'>
+      <alias name='usb'/>
+      <master startport='4'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x2'/>
+    </controller>
+    <controller type='pci' index='0' model='pci-root'>
+      <alias name='pci.0'/>
+    </controller>
+    <controller type='ide' index='0'>
+      <alias name='ide'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
+    </controller>
+    <interface type='bridge'>
+      <mac address='52:54:00:ad:b7:b5'/>
+      <source bridge='virbr0'/>
+      <target dev='vnet0'/>
+      <model type='virtio'/>
+      <alias name='net0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+    </interface>
+    <serial type='pty'>
+      <source path='/dev/pts/2'/>
+      <target port='0'/>
+      <alias name='serial0'/>
+    </serial>
+    <console type='pty' tty='/dev/pts/2'>
+      <source path='/dev/pts/2'/>
+      <target type='serial' port='0'/>
+      <alias name='serial0'/>
+    </console>
+    <memballoon model='virtio'>
+      <alias name='balloon0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
+    </memballoon>
+  </devices>
+  <seclabel type='dynamic' model='apparmor' relabel='yes'>
+    <label>libvirt-82633c0b-8d84-44d3-86cb-b9cf67beb3fd</label>
+    <imagelabel>libvirt-82633c0b-8d84-44d3-86cb-b9cf67beb3fd</imagelabel>
+  </seclabel>
+</domain>
+
+[Tue, 08 May 2018 12:34:53 virt-install 3091] DEBUG (virt-install:814) Domain state after install: 1
+Domain creation completed.
+Waiting for VM to shutdown........................................................ DOWN
+Successfully ejected media.
+Domain ubuntu_backing started
+
+Waiting for VM to boot ............192.168.122.97
+
+VM IP address: 192.168.122.97
+Copying setup scripts to VM...
+do_known_hosts: hostkeys_foreach failed: No such file or directory
+Warning: Permanently added '192.168.122.97' (ECDSA) to the list of known hosts.
+1_install_prerequisites.sh                                                           0%    0     0.0KB/s   --:-- ETA1_install_prerequisites.sh                                                         100%  360     0.4KB/s   00:00    
+5_build_pktgen.sh                                                                    0%    0     0.0KB/s   --:-- ETA5_build_pktgen.sh                                                                  100% 1710     1.7KB/s   00:00    
+8_build_moongen.sh                                                                   0%    0     0.0KB/s   --:-- ETA8_build_moongen.sh                                                                 100%  145     0.1KB/s   00:00    
+1_configure_hugepages.sh                                                             0%    0     0.0KB/s   --:-- ETA1_configure_hugepages.sh                                                           100%  140     0.1KB/s   00:00    
+1_run_dpdk-pktgen_uni-tx.sh                                                          0%    0     0.0KB/s   --:-- ETA1_run_dpdk-pktgen_uni-tx.sh                                                        100% 1533     1.5KB/s   00:00    
+unidirectional_receiver.lua                                                          0%    0     0.0KB/s   --:-- ETAunidirectional_receiver.lua                                                        100% 4193     4.1KB/s   00:00    
+unidirectional_transmitter_vxlan.lua                                                 0%    0     0.0KB/s   --:-- ETAunidirectional_transmitter_vxlan.lua                                               100% 4284     4.2KB/s   00:00    
+0_run_dpdk-pktgen_uni-rx.sh                                                          0%    0     0.0KB/s   --:-- ETA0_run_dpdk-pktgen_uni-rx.sh                                                        100% 1316     1.3KB/s   00:00    
+parse_and_plot.py                                                                    0%    0     0.0KB/s   --:-- ETAparse_and_plot.py                                                                  100% 3174     3.1KB/s   00:00    
+unidirectional_transmitter.lua                                                       0%    0     0.0KB/s   --:-- ETAunidirectional_transmitter.lua                                                     100% 4269     4.2KB/s   00:00    
+2_auto_bind_igb_uio.sh                                                               0%    0     0.0KB/s   --:-- ETA2_auto_bind_igb_uio.sh                                                             100%  598     0.6KB/s   00:00    
+1_configure_hugepages.sh                                                             0%    0     0.0KB/s   --:-- ETA1_configure_hugepages.sh                                                           100%  140     0.1KB/s   00:00    
+3_run_l3fwd.sh                                                                       0%    0     0.0KB/s   --:-- ETA3_run_l3fwd.sh                                                                     100% 1280     1.3KB/s   00:00    
+2_auto_bind_igb_uio.sh                                                               0%    0     0.0KB/s   --:-- ETA2_auto_bind_igb_uio.sh                                                             100%  598     0.6KB/s   00:00    
+1_configure_hugepages.sh                                                             0%    0     0.0KB/s   --:-- ETA1_configure_hugepages.sh                                                           100%  140     0.1KB/s   00:00    
+3_start_testpmd.sh                                                                   0%    0     0.0KB/s   --:-- ETA3_start_testpmd.sh                                                                 100%  266     0.3KB/s   00:00    
+2_auto_bind_igb_uio.sh                                                               0%    0     0.0KB/s   --:-- ETA2_auto_bind_igb_uio.sh                                                             100%  598     0.6KB/s   00:00    
+3_run_l2fwd.sh                                                                       0%    0     0.0KB/s   --:-- ETA3_run_l2fwd.sh                                                                     100%  229     0.2KB/s   00:00    
+1_configure_hugepages.sh                                                             0%    0     0.0KB/s   --:-- ETA1_configure_hugepages.sh                                                           100%  140     0.1KB/s   00:00    
+2_auto_bind_igb_uio.sh                                                               0%    0     0.0KB/s   --:-- ETA2_auto_bind_igb_uio.sh                                                             100%  598     0.6KB/s   00:00    
+11_install_nfp_drv_kmods.sh                                                          0%    0     0.0KB/s   --:-- ETA11_install_nfp_drv_kmods.sh                                                        100%  703     0.7KB/s   00:00    
+7_install_netperf.sh                                                                 0%    0     0.0KB/s   --:-- ETA7_install_netperf.sh                                                               100%   40     0.0KB/s   00:00    
+3_install_build_dpdk.sh                                                              0%    0     0.0KB/s   --:-- ETA3_install_build_dpdk.sh                                                            100% 2272     2.2KB/s   00:00    
+0_setup.sh                                                                           0%    0     0.0KB/s   --:-- ETA0_setup.sh                                                                         100%  972     1.0KB/s   00:00    
+6_install_iperf3.sh                                                                  0%    0     0.0KB/s   --:-- ETA6_install_iperf3.sh                                                                100%  227     0.2KB/s   00:00    
+10_build_l3fwd.sh                                                                    0%    0     0.0KB/s   --:-- ETA10_build_l3fwd.sh                                                                  100%  435     0.4KB/s   00:00    
+4_build_l2fwd.sh                                                                     0%    0     0.0KB/s   --:-- ETA4_build_l2fwd.sh                                                                   100%  435     0.4KB/s   00:00    
+09_setup-hugepages.sh                                                                0%    0     0.0KB/s   --:-- ETA09_setup-hugepages.sh                                                              100%  427     0.4KB/s   00:00    
+Installing prerequisites
+Get:1 http://security.ubuntu.com/ubuntu artful-security InRelease [83.2 kB]
+Hit:2 http://archive.ubuntu.com/ubuntu artful InRelease
+Get:3 http://archive.ubuntu.com/ubuntu artful-updates InRelease [88.7 kB]
+Get:4 http://security.ubuntu.com/ubuntu artful-security/universe Sources [18.4 kB]
+Get:5 http://archive.ubuntu.com/ubuntu artful-backports InRelease [74.6 kB]
+Get:6 http://security.ubuntu.com/ubuntu artful-security/multiverse Sources [1168 B]
+Get:7 http://archive.ubuntu.com/ubuntu artful/main Sources [849 kB]
+Get:8 http://security.ubuntu.com/ubuntu artful-security/main Sources [52.3 kB]
+Get:9 http://security.ubuntu.com/ubuntu artful-security/restricted Sources [960 B]
+Get:10 http://security.ubuntu.com/ubuntu artful-security/main amd64 Packages [160 kB]
+Get:11 http://archive.ubuntu.com/ubuntu artful/universe Sources [8721 kB]
+Get:12 http://security.ubuntu.com/ubuntu artful-security/main Translation-en [69.8 kB]
+Get:13 http://security.ubuntu.com/ubuntu artful-security/universe amd64 Packages [62.9 kB]
+Get:14 http://security.ubuntu.com/ubuntu artful-security/universe Translation-en [37.4 kB]
+Get:15 http://security.ubuntu.com/ubuntu artful-security/multiverse amd64 Packages [1824 B]
+Get:16 http://security.ubuntu.com/ubuntu artful-security/multiverse Translation-en [1124 B]
+Get:17 http://archive.ubuntu.com/ubuntu artful/restricted Sources [5392 B]
+Get:18 http://archive.ubuntu.com/ubuntu artful/multiverse Sources [182 kB]
+Get:19 http://archive.ubuntu.com/ubuntu artful/universe amd64 Packages [8103 kB]
+Get:20 http://archive.ubuntu.com/ubuntu artful/universe Translation-en [4789 kB]
+Get:21 http://archive.ubuntu.com/ubuntu artful/multiverse amd64 Packages [150 kB]
+Get:22 http://archive.ubuntu.com/ubuntu artful/multiverse Translation-en [108 kB]
+Get:23 http://archive.ubuntu.com/ubuntu artful-updates/main Sources [101 kB]
+Get:24 http://archive.ubuntu.com/ubuntu artful-updates/multiverse Sources [2892 B]
+Get:25 http://archive.ubuntu.com/ubuntu artful-updates/restricted Sources [960 B]
+Get:26 http://archive.ubuntu.com/ubuntu artful-updates/universe Sources [36.6 kB]
+Get:27 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 Packages [254 kB]
+Get:28 http://archive.ubuntu.com/ubuntu artful-updates/main Translation-en [113 kB]
+Get:29 http://archive.ubuntu.com/ubuntu artful-updates/universe amd64 Packages [111 kB]
+Get:30 http://archive.ubuntu.com/ubuntu artful-updates/universe Translation-en [62.3 kB]
+Get:31 http://archive.ubuntu.com/ubuntu artful-updates/multiverse amd64 Packages [4128 B]
+Get:32 http://archive.ubuntu.com/ubuntu artful-updates/multiverse Translation-en [2264 B]
+Get:33 http://archive.ubuntu.com/ubuntu artful-backports/main Sources [1192 B]
+Get:34 http://archive.ubuntu.com/ubuntu artful-backports/universe Sources [2480 B]
+Get:35 http://archive.ubuntu.com/ubuntu artful-backports/main amd64 Packages [1516 B]
+Get:36 http://archive.ubuntu.com/ubuntu artful-backports/main Translation-en [668 B]
+Get:37 http://archive.ubuntu.com/ubuntu artful-backports/universe amd64 Packages [4076 B]
+Get:38 http://archive.ubuntu.com/ubuntu artful-backports/universe Translation-en [2116 B]
+Fetched 24.3 MB in 14s (1717 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+git is already the newest version (1:2.14.1-1ubuntu4).
+The following package was automatically installed and is no longer required:
+  grub-pc-bin
+Use 'apt autoremove' to remove it.
+The following additional packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu cmake-data cpp cpp-7
+  dpkg-dev fakeroot g++ g++-7 gcc gcc-7 libalgorithm-diff-perl
+  libalgorithm-diff-xs-perl libalgorithm-merge-perl libarchive13 libasan4
+  libatomic1 libbinutils libblas3 libc-dev-bin libc6-dev libcc1-0 libcilkrts5
+  libdpkg-perl libexpat1-dev libfakeroot libfile-fcntllock-perl libgcc-7-dev
+  libgfortran4 libgomp1 libisl15 libitm1 libjsoncpp1 liblapack3 liblsan0
+  libmpc3 libmpx2 libpcap0.8-dev libpython-all-dev libpython-dev
+  libpython-stdlib libpython2.7 libpython2.7-dev libpython2.7-minimal
+  libpython2.7-stdlib libquadmath0 librhash0 libstdc++-7-dev libtsan0
+  libubsan0 libuv1 linux-libc-dev make manpages-dev python-all python-all-dev
+  python-asn1crypto python-cffi-backend python-crypto python-cryptography
+  python-dbus python-dev python-enum34 python-gi python-idna python-ipaddress
+  python-keyring python-keyrings.alt python-minimal python-pip-whl
+  python-pkg-resources python-secretstorage python-setuptools python-six
+  python-wheel python-xdg python2.7 python2.7-dev python2.7-minimal
+Suggested packages:
+  binutils-doc ninja-build cpp-doc gcc-7-locales debian-keyring g++-multilib
+  g++-7-multilib gcc-7-doc libstdc++6-7-dbg gcc-multilib autoconf automake
+  libtool flex bison gdb gcc-doc gcc-7-multilib libgcc1-dbg libgomp1-dbg
+  libitm1-dbg libatomic1-dbg libasan4-dbg liblsan0-dbg libtsan0-dbg
+  libubsan0-dbg libcilkrts5-dbg libmpx2-dbg libquadmath0-dbg lrzip glibc-doc
+  libstdc++-7-doc make-doc python-doc python-tk python-crypto-dbg
+  python-crypto-doc python-cryptography-doc python-cryptography-vectors
+  python-dbus-dbg python-dbus-doc python-enum34-doc python-gi-cairo
+  gnome-keyring libkf5wallet-bin gir1.2-gnomekeyring-1.0 python-fs
+  python-gdata python-keyczar gfortran python-nose python-numpy-dbg
+  python-numpy-doc tcpreplay wireshark graphviz imagemagick python-gnuplot
+  python-pyx python-visual sox xpdf gv hexer librsvg2-bin python-pcapy
+  python-secretstorage-doc python-setuptools-doc python2.7-doc binfmt-support
+  zip
+The following NEW packages will be installed:
+  binutils binutils-common binutils-x86-64-linux-gnu build-essential cmake
+  cmake-data cpp cpp-7 dpkg-dev fakeroot g++ g++-7 gcc gcc-7
+  libalgorithm-diff-perl libalgorithm-diff-xs-perl libalgorithm-merge-perl
+  libarchive13 libasan4 libatomic1 libbinutils libblas3 libc-dev-bin libc6-dev
+  libcc1-0 libcilkrts5 libdpkg-perl libexpat1-dev libfakeroot
+  libfile-fcntllock-perl libgcc-7-dev libgfortran4 libgomp1 libisl15 libitm1
+  libjsoncpp1 liblapack3 liblsan0 libmpc3 libmpx2 libnuma-dev libpcap-dev
+  libpcap0.8-dev libpython-all-dev libpython-dev libpython-stdlib libpython2.7
+  libpython2.7-dev libpython2.7-minimal libpython2.7-stdlib libquadmath0
+  librhash0 libstdc++-7-dev libtsan0 libubsan0 libuv1 linux-libc-dev make
+  manpages-dev numactl python python-all python-all-dev python-asn1crypto
+  python-cffi-backend python-crypto python-cryptography python-dbus python-dev
+  python-enum34 python-gi python-idna python-ipaddress python-keyring
+  python-keyrings.alt python-minimal python-numpy python-pip python-pip-whl
+  python-pkg-resources python-scapy python-secretstorage python-setuptools
+  python-six python-wheel python-xdg python2.7 python2.7-dev python2.7-minimal
+  unzip
+0 upgraded, 90 newly installed, 0 to remove and 2 not upgraded.
+Need to get 83.8 MB of archives.
+After this operation, 280 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu artful/main amd64 cmake-data all 3.9.1-1 [1276 kB]
+Get:2 http://archive.ubuntu.com/ubuntu artful/main amd64 libarchive13 amd64 3.2.2-3.1 [289 kB]
+Get:3 http://archive.ubuntu.com/ubuntu artful/main amd64 libjsoncpp1 amd64 1.7.4-3 [73.6 kB]
+Get:4 http://archive.ubuntu.com/ubuntu artful/main amd64 librhash0 amd64 1.3.4-3 [77.0 kB]
+Get:5 http://archive.ubuntu.com/ubuntu artful/main amd64 libuv1 amd64 1.9.1-3 [58.6 kB]
+Get:6 http://archive.ubuntu.com/ubuntu artful/main amd64 cmake amd64 3.9.1-1 [3107 kB]
+Get:7 http://archive.ubuntu.com/ubuntu artful/main amd64 libpython2.7-minimal amd64 2.7.14-2ubuntu2 [338 kB]
+Get:8 http://archive.ubuntu.com/ubuntu artful/main amd64 python2.7-minimal amd64 2.7.14-2ubuntu2 [1286 kB]
+Get:9 http://archive.ubuntu.com/ubuntu artful/main amd64 python-minimal amd64 2.7.14-2ubuntu1 [28.1 kB]
+Get:10 http://archive.ubuntu.com/ubuntu artful/main amd64 libpython2.7-stdlib amd64 2.7.14-2ubuntu2 [1910 kB]
+Get:11 http://archive.ubuntu.com/ubuntu artful/main amd64 python2.7 amd64 2.7.14-2ubuntu2 [233 kB]
+Get:12 http://archive.ubuntu.com/ubuntu artful/main amd64 libpython-stdlib amd64 2.7.14-2ubuntu1 [7576 B]
+Get:13 http://archive.ubuntu.com/ubuntu artful/main amd64 python amd64 2.7.14-2ubuntu1 [140 kB]
+Get:14 http://archive.ubuntu.com/ubuntu artful/main amd64 binutils-common amd64 2.29.1-4ubuntu1 [190 kB]
+Get:15 http://archive.ubuntu.com/ubuntu artful/main amd64 libbinutils amd64 2.29.1-4ubuntu1 [502 kB]
+Get:16 http://archive.ubuntu.com/ubuntu artful/main amd64 binutils-x86-64-linux-gnu amd64 2.29.1-4ubuntu1 [1824 kB]
+Get:17 http://archive.ubuntu.com/ubuntu artful/main amd64 binutils amd64 2.29.1-4ubuntu1 [3342 B]
+Get:18 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libc-dev-bin amd64 2.26-0ubuntu2.1 [69.5 kB]
+Get:19 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 linux-libc-dev amd64 4.13.0-39.44 [960 kB]
+Get:20 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libc6-dev amd64 2.26-0ubuntu2.1 [2526 kB]
+Get:21 http://archive.ubuntu.com/ubuntu artful/main amd64 libisl15 amd64 0.18-1 [545 kB]
+Get:22 http://archive.ubuntu.com/ubuntu artful/main amd64 libmpc3 amd64 1.0.3-2 [39.5 kB]
+Get:23 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 cpp-7 amd64 7.2.0-8ubuntu3.2 [6732 kB]
+Get:24 http://archive.ubuntu.com/ubuntu artful/main amd64 cpp amd64 4:7.2.0-1ubuntu1 [27.6 kB]
+Get:25 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libcc1-0 amd64 7.2.0-8ubuntu3.2 [38.7 kB]
+Get:26 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libgomp1 amd64 7.2.0-8ubuntu3.2 [76.4 kB]
+Get:27 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libitm1 amd64 7.2.0-8ubuntu3.2 [27.6 kB]
+Get:28 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libatomic1 amd64 7.2.0-8ubuntu3.2 [8950 B]
+Get:29 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libasan4 amd64 7.2.0-8ubuntu3.2 [360 kB]
+Get:30 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 liblsan0 amd64 7.2.0-8ubuntu3.2 [133 kB]
+Get:31 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libtsan0 amd64 7.2.0-8ubuntu3.2 [282 kB]
+Get:32 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libubsan0 amd64 7.2.0-8ubuntu3.2 [126 kB]
+Get:33 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libcilkrts5 amd64 7.2.0-8ubuntu3.2 [42.6 kB]
+Get:34 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libmpx2 amd64 7.2.0-8ubuntu3.2 [11.7 kB]
+Get:35 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libquadmath0 amd64 7.2.0-8ubuntu3.2 [133 kB]
+Get:36 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libgcc-7-dev amd64 7.2.0-8ubuntu3.2 [2368 kB]
+Get:37 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 gcc-7 amd64 7.2.0-8ubuntu3.2 [7418 kB]
+Get:38 http://archive.ubuntu.com/ubuntu artful/main amd64 gcc amd64 4:7.2.0-1ubuntu1 [5124 B]
+Get:39 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libstdc++-7-dev amd64 7.2.0-8ubuntu3.2 [1456 kB]
+Get:40 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 g++-7 amd64 7.2.0-8ubuntu3.2 [7555 kB]
+Get:41 http://archive.ubuntu.com/ubuntu artful/main amd64 g++ amd64 4:7.2.0-1ubuntu1 [1482 B]
+Get:42 http://archive.ubuntu.com/ubuntu artful/main amd64 make amd64 4.1-9.1 [154 kB]
+Get:43 http://archive.ubuntu.com/ubuntu artful/main amd64 libdpkg-perl all 1.18.24ubuntu1 [209 kB]
+Get:44 http://archive.ubuntu.com/ubuntu artful/main amd64 dpkg-dev all 1.18.24ubuntu1 [608 kB]
+Get:45 http://archive.ubuntu.com/ubuntu artful/main amd64 build-essential amd64 12.4ubuntu1 [4758 B]
+Get:46 http://archive.ubuntu.com/ubuntu artful/main amd64 libfakeroot amd64 1.21-1ubuntu2 [25.9 kB]
+Get:47 http://archive.ubuntu.com/ubuntu artful/main amd64 fakeroot amd64 1.21-1ubuntu2 [62.2 kB]
+Get:48 http://archive.ubuntu.com/ubuntu artful/main amd64 libalgorithm-diff-perl all 1.19.03-1 [47.6 kB]
+Get:49 http://archive.ubuntu.com/ubuntu artful/main amd64 libalgorithm-diff-xs-perl amd64 0.04-4build3 [11.2 kB]
+Get:50 http://archive.ubuntu.com/ubuntu artful/main amd64 libalgorithm-merge-perl all 0.08-3 [12.0 kB]
+Get:51 http://archive.ubuntu.com/ubuntu artful/main amd64 libblas3 amd64 3.7.1-3ubuntu2 [140 kB]
+Get:52 http://archive.ubuntu.com/ubuntu artful/main amd64 libexpat1-dev amd64 2.2.3-1 [120 kB]
+Get:53 http://archive.ubuntu.com/ubuntu artful/main amd64 libfile-fcntllock-perl amd64 0.22-3build2 [33.2 kB]
+Get:54 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 libgfortran4 amd64 7.2.0-8ubuntu3.2 [494 kB]
+Get:55 http://archive.ubuntu.com/ubuntu artful/main amd64 liblapack3 amd64 3.7.1-3ubuntu2 [2112 kB]
+Get:56 http://archive.ubuntu.com/ubuntu artful/main amd64 libpcap0.8-dev amd64 1.8.1-5ubuntu1 [217 kB]
+Get:57 http://archive.ubuntu.com/ubuntu artful/main amd64 libpcap-dev amd64 1.8.1-5ubuntu1 [3396 B]
+Get:58 http://archive.ubuntu.com/ubuntu artful/main amd64 libpython2.7 amd64 2.7.14-2ubuntu2 [1053 kB]
+Get:59 http://archive.ubuntu.com/ubuntu artful/main amd64 libpython2.7-dev amd64 2.7.14-2ubuntu2 [28.2 MB]
+Get:60 http://archive.ubuntu.com/ubuntu artful/main amd64 libpython-dev amd64 2.7.14-2ubuntu1 [7644 B]
+Get:61 http://archive.ubuntu.com/ubuntu artful/main amd64 libpython-all-dev amd64 2.7.14-2ubuntu1 [1006 B]
+Get:62 http://archive.ubuntu.com/ubuntu artful/main amd64 manpages-dev all 4.13-3 [2202 kB]
+Get:63 http://archive.ubuntu.com/ubuntu artful/main amd64 numactl amd64 2.0.11-2.1 [32.0 kB]
+Get:64 http://archive.ubuntu.com/ubuntu artful/main amd64 python-all amd64 2.7.14-2ubuntu1 [994 B]
+Get:65 http://archive.ubuntu.com/ubuntu artful/main amd64 python2.7-dev amd64 2.7.14-2ubuntu2 [278 kB]
+Get:66 http://archive.ubuntu.com/ubuntu artful/main amd64 python-dev amd64 2.7.14-2ubuntu1 [1176 B]
+Get:67 http://archive.ubuntu.com/ubuntu artful/main amd64 python-all-dev amd64 2.7.14-2ubuntu1 [1014 B]
+Get:68 http://archive.ubuntu.com/ubuntu artful/main amd64 python-asn1crypto all 0.22.0-1 [69.9 kB]
+Get:69 http://archive.ubuntu.com/ubuntu artful/main amd64 python-cffi-backend amd64 1.9.1-2build2 [59.7 kB]
+Get:70 http://archive.ubuntu.com/ubuntu artful-updates/main amd64 python-crypto amd64 2.6.1-7ubuntu0.1 [244 kB]
+Get:71 http://archive.ubuntu.com/ubuntu artful/main amd64 python-enum34 all 1.1.6-1 [34.6 kB]
+Get:72 http://archive.ubuntu.com/ubuntu artful/main amd64 python-idna all 2.5-1 [31.5 kB]
+Get:73 http://archive.ubuntu.com/ubuntu artful/main amd64 python-ipaddress all 1.0.17-1 [18.2 kB]
+Get:74 http://archive.ubuntu.com/ubuntu artful/main amd64 python-six all 1.10.0-4 [10.8 kB]
+Get:75 http://archive.ubuntu.com/ubuntu artful/main amd64 python-cryptography amd64 1.9-1 [215 kB]
+Get:76 http://archive.ubuntu.com/ubuntu artful/main amd64 python-dbus amd64 1.2.4-1build3 [84.8 kB]
+Get:77 http://archive.ubuntu.com/ubuntu artful/main amd64 python-gi amd64 3.24.1-2build1 [195 kB]
+Get:78 http://archive.ubuntu.com/ubuntu artful/main amd64 python-secretstorage all 2.3.1-2 [11.8 kB]
+Get:79 http://archive.ubuntu.com/ubuntu artful/main amd64 python-keyring all 10.4.0-1 [30.6 kB]
+Get:80 http://archive.ubuntu.com/ubuntu artful/main amd64 python-keyrings.alt all 2.2-2 [16.2 kB]
+Get:81 http://archive.ubuntu.com/ubuntu artful/main amd64 python-numpy amd64 1:1.12.1-3.1ubuntu4 [1885 kB]
+Get:82 http://archive.ubuntu.com/ubuntu artful/universe amd64 python-pip-whl all 9.0.1-2 [1379 kB]
+Get:83 http://archive.ubuntu.com/ubuntu artful/universe amd64 python-pip all 9.0.1-2 [151 kB]
+Get:84 http://archive.ubuntu.com/ubuntu artful/main amd64 python-pkg-resources all 36.2.7-2 [128 kB]
+Get:85 http://archive.ubuntu.com/ubuntu artful/universe amd64 python-scapy all 2.3.3-1 [360 kB]
+Get:86 http://archive.ubuntu.com/ubuntu artful/main amd64 python-setuptools all 36.2.7-2 [260 kB]
+Get:87 http://archive.ubuntu.com/ubuntu artful/universe amd64 python-wheel all 0.29.0-2 [48.3 kB]
+Get:88 http://archive.ubuntu.com/ubuntu artful/universe amd64 python-xdg all 0.25-4 [31.4 kB]
+Get:89 http://archive.ubuntu.com/ubuntu artful/main amd64 unzip amd64 6.0-21ubuntu1 [167 kB]
+Get:90 http://archive.ubuntu.com/ubuntu artful/main amd64 libnuma-dev amd64 2.0.11-2.1 [32.2 kB]
+debconf: unable to initialize frontend: Dialog
+debconf: (TERM is not set, so the dialog frontend is not usable.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (This frontend requires a controlling tty.)
+debconf: falling back to frontend: Teletype
+dpkg-preconfigure: unable to re-open stdin: 
+Fetched 83.8 MB in 45s (1859 kB/s)
+Selecting previously unselected package cmake-data.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 57265 files and directories currently installed.)
+Preparing to unpack .../00-cmake-data_3.9.1-1_all.deb ...
+Unpacking cmake-data (3.9.1-1) ...
+Selecting previously unselected package libarchive13:amd64.
+Preparing to unpack .../01-libarchive13_3.2.2-3.1_amd64.deb ...
+Unpacking libarchive13:amd64 (3.2.2-3.1) ...
+Selecting previously unselected package libjsoncpp1:amd64.
+Preparing to unpack .../02-libjsoncpp1_1.7.4-3_amd64.deb ...
+Unpacking libjsoncpp1:amd64 (1.7.4-3) ...
+Selecting previously unselected package librhash0.
+Preparing to unpack .../03-librhash0_1.3.4-3_amd64.deb ...
+Unpacking librhash0 (1.3.4-3) ...
+Selecting previously unselected package libuv1:amd64.
+Preparing to unpack .../04-libuv1_1.9.1-3_amd64.deb ...
+Unpacking libuv1:amd64 (1.9.1-3) ...
+Selecting previously unselected package cmake.
+Preparing to unpack .../05-cmake_3.9.1-1_amd64.deb ...
+Unpacking cmake (3.9.1-1) ...
+Selecting previously unselected package libpython2.7-minimal:amd64.
+Preparing to unpack .../06-libpython2.7-minimal_2.7.14-2ubuntu2_amd64.deb ...
+Unpacking libpython2.7-minimal:amd64 (2.7.14-2ubuntu2) ...
+Selecting previously unselected package python2.7-minimal.
+Preparing to unpack .../07-python2.7-minimal_2.7.14-2ubuntu2_amd64.deb ...
+Unpacking python2.7-minimal (2.7.14-2ubuntu2) ...
+Selecting previously unselected package python-minimal.
+Preparing to unpack .../08-python-minimal_2.7.14-2ubuntu1_amd64.deb ...
+Unpacking python-minimal (2.7.14-2ubuntu1) ...
+Selecting previously unselected package libpython2.7-stdlib:amd64.
+Preparing to unpack .../09-libpython2.7-stdlib_2.7.14-2ubuntu2_amd64.deb ...
+Unpacking libpython2.7-stdlib:amd64 (2.7.14-2ubuntu2) ...
+Selecting previously unselected package python2.7.
+Preparing to unpack .../10-python2.7_2.7.14-2ubuntu2_amd64.deb ...
+Unpacking python2.7 (2.7.14-2ubuntu2) ...
+Selecting previously unselected package libpython-stdlib:amd64.
+Preparing to unpack .../11-libpython-stdlib_2.7.14-2ubuntu1_amd64.deb ...
+Unpacking libpython-stdlib:amd64 (2.7.14-2ubuntu1) ...
+Setting up libpython2.7-minimal:amd64 (2.7.14-2ubuntu2) ...
+Setting up python2.7-minimal (2.7.14-2ubuntu2) ...
+Linking and byte-compiling packages for runtime python2.7...
+Setting up python-minimal (2.7.14-2ubuntu1) ...
+Selecting previously unselected package python.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 60352 files and directories currently installed.)
+Preparing to unpack .../00-python_2.7.14-2ubuntu1_amd64.deb ...
+Unpacking python (2.7.14-2ubuntu1) ...
+Selecting previously unselected package binutils-common:amd64.
+Preparing to unpack .../01-binutils-common_2.29.1-4ubuntu1_amd64.deb ...
+Unpacking binutils-common:amd64 (2.29.1-4ubuntu1) ...
+Selecting previously unselected package libbinutils:amd64.
+Preparing to unpack .../02-libbinutils_2.29.1-4ubuntu1_amd64.deb ...
+Unpacking libbinutils:amd64 (2.29.1-4ubuntu1) ...
+Selecting previously unselected package binutils-x86-64-linux-gnu.
+Preparing to unpack .../03-binutils-x86-64-linux-gnu_2.29.1-4ubuntu1_amd64.deb ...
+Unpacking binutils-x86-64-linux-gnu (2.29.1-4ubuntu1) ...
+Selecting previously unselected package binutils.
+Preparing to unpack .../04-binutils_2.29.1-4ubuntu1_amd64.deb ...
+Unpacking binutils (2.29.1-4ubuntu1) ...
+Selecting previously unselected package libc-dev-bin.
+Preparing to unpack .../05-libc-dev-bin_2.26-0ubuntu2.1_amd64.deb ...
+Unpacking libc-dev-bin (2.26-0ubuntu2.1) ...
+Selecting previously unselected package linux-libc-dev:amd64.
+Preparing to unpack .../06-linux-libc-dev_4.13.0-39.44_amd64.deb ...
+Unpacking linux-libc-dev:amd64 (4.13.0-39.44) ...
+Selecting previously unselected package libc6-dev:amd64.
+Preparing to unpack .../07-libc6-dev_2.26-0ubuntu2.1_amd64.deb ...
+Unpacking libc6-dev:amd64 (2.26-0ubuntu2.1) ...
+Selecting previously unselected package libisl15:amd64.
+Preparing to unpack .../08-libisl15_0.18-1_amd64.deb ...
+Unpacking libisl15:amd64 (0.18-1) ...
+Selecting previously unselected package libmpc3:amd64.
+Preparing to unpack .../09-libmpc3_1.0.3-2_amd64.deb ...
+Unpacking libmpc3:amd64 (1.0.3-2) ...
+Selecting previously unselected package cpp-7.
+Preparing to unpack .../10-cpp-7_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking cpp-7 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package cpp.
+Preparing to unpack .../11-cpp_4%3a7.2.0-1ubuntu1_amd64.deb ...
+Unpacking cpp (4:7.2.0-1ubuntu1) ...
+Selecting previously unselected package libcc1-0:amd64.
+Preparing to unpack .../12-libcc1-0_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libcc1-0:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libgomp1:amd64.
+Preparing to unpack .../13-libgomp1_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libgomp1:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libitm1:amd64.
+Preparing to unpack .../14-libitm1_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libitm1:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libatomic1:amd64.
+Preparing to unpack .../15-libatomic1_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libatomic1:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libasan4:amd64.
+Preparing to unpack .../16-libasan4_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libasan4:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package liblsan0:amd64.
+Preparing to unpack .../17-liblsan0_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking liblsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libtsan0:amd64.
+Preparing to unpack .../18-libtsan0_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libtsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libubsan0:amd64.
+Preparing to unpack .../19-libubsan0_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libubsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libcilkrts5:amd64.
+Preparing to unpack .../20-libcilkrts5_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libcilkrts5:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libmpx2:amd64.
+Preparing to unpack .../21-libmpx2_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libmpx2:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libquadmath0:amd64.
+Preparing to unpack .../22-libquadmath0_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libquadmath0:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package libgcc-7-dev:amd64.
+Preparing to unpack .../23-libgcc-7-dev_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libgcc-7-dev:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package gcc-7.
+Preparing to unpack .../24-gcc-7_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking gcc-7 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package gcc.
+Preparing to unpack .../25-gcc_4%3a7.2.0-1ubuntu1_amd64.deb ...
+Unpacking gcc (4:7.2.0-1ubuntu1) ...
+Selecting previously unselected package libstdc++-7-dev:amd64.
+Preparing to unpack .../26-libstdc++-7-dev_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libstdc++-7-dev:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package g++-7.
+Preparing to unpack .../27-g++-7_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking g++-7 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package g++.
+Preparing to unpack .../28-g++_4%3a7.2.0-1ubuntu1_amd64.deb ...
+Unpacking g++ (4:7.2.0-1ubuntu1) ...
+Selecting previously unselected package make.
+Preparing to unpack .../29-make_4.1-9.1_amd64.deb ...
+Unpacking make (4.1-9.1) ...
+Selecting previously unselected package libdpkg-perl.
+Preparing to unpack .../30-libdpkg-perl_1.18.24ubuntu1_all.deb ...
+Unpacking libdpkg-perl (1.18.24ubuntu1) ...
+Selecting previously unselected package dpkg-dev.
+Preparing to unpack .../31-dpkg-dev_1.18.24ubuntu1_all.deb ...
+Unpacking dpkg-dev (1.18.24ubuntu1) ...
+Selecting previously unselected package build-essential.
+Preparing to unpack .../32-build-essential_12.4ubuntu1_amd64.deb ...
+Unpacking build-essential (12.4ubuntu1) ...
+Selecting previously unselected package libfakeroot:amd64.
+Preparing to unpack .../33-libfakeroot_1.21-1ubuntu2_amd64.deb ...
+Unpacking libfakeroot:amd64 (1.21-1ubuntu2) ...
+Selecting previously unselected package fakeroot.
+Preparing to unpack .../34-fakeroot_1.21-1ubuntu2_amd64.deb ...
+Unpacking fakeroot (1.21-1ubuntu2) ...
+Selecting previously unselected package libalgorithm-diff-perl.
+Preparing to unpack .../35-libalgorithm-diff-perl_1.19.03-1_all.deb ...
+Unpacking libalgorithm-diff-perl (1.19.03-1) ...
+Selecting previously unselected package libalgorithm-diff-xs-perl.
+Preparing to unpack .../36-libalgorithm-diff-xs-perl_0.04-4build3_amd64.deb ...
+Unpacking libalgorithm-diff-xs-perl (0.04-4build3) ...
+Selecting previously unselected package libalgorithm-merge-perl.
+Preparing to unpack .../37-libalgorithm-merge-perl_0.08-3_all.deb ...
+Unpacking libalgorithm-merge-perl (0.08-3) ...
+Selecting previously unselected package libblas3:amd64.
+Preparing to unpack .../38-libblas3_3.7.1-3ubuntu2_amd64.deb ...
+Unpacking libblas3:amd64 (3.7.1-3ubuntu2) ...
+Selecting previously unselected package libexpat1-dev:amd64.
+Preparing to unpack .../39-libexpat1-dev_2.2.3-1_amd64.deb ...
+Unpacking libexpat1-dev:amd64 (2.2.3-1) ...
+Selecting previously unselected package libfile-fcntllock-perl.
+Preparing to unpack .../40-libfile-fcntllock-perl_0.22-3build2_amd64.deb ...
+Unpacking libfile-fcntllock-perl (0.22-3build2) ...
+Selecting previously unselected package libgfortran4:amd64.
+Preparing to unpack .../41-libgfortran4_7.2.0-8ubuntu3.2_amd64.deb ...
+Unpacking libgfortran4:amd64 (7.2.0-8ubuntu3.2) ...
+Selecting previously unselected package liblapack3:amd64.
+Preparing to unpack .../42-liblapack3_3.7.1-3ubuntu2_amd64.deb ...
+Unpacking liblapack3:amd64 (3.7.1-3ubuntu2) ...
+Selecting previously unselected package libpcap0.8-dev:amd64.
+Preparing to unpack .../43-libpcap0.8-dev_1.8.1-5ubuntu1_amd64.deb ...
+Unpacking libpcap0.8-dev:amd64 (1.8.1-5ubuntu1) ...
+Selecting previously unselected package libpcap-dev.
+Preparing to unpack .../44-libpcap-dev_1.8.1-5ubuntu1_amd64.deb ...
+Unpacking libpcap-dev (1.8.1-5ubuntu1) ...
+Selecting previously unselected package libpython2.7:amd64.
+Preparing to unpack .../45-libpython2.7_2.7.14-2ubuntu2_amd64.deb ...
+Unpacking libpython2.7:amd64 (2.7.14-2ubuntu2) ...
+Selecting previously unselected package libpython2.7-dev:amd64.
+Preparing to unpack .../46-libpython2.7-dev_2.7.14-2ubuntu2_amd64.deb ...
+Unpacking libpython2.7-dev:amd64 (2.7.14-2ubuntu2) ...
+Selecting previously unselected package libpython-dev:amd64.
+Preparing to unpack .../47-libpython-dev_2.7.14-2ubuntu1_amd64.deb ...
+Unpacking libpython-dev:amd64 (2.7.14-2ubuntu1) ...
+Selecting previously unselected package libpython-all-dev:amd64.
+Preparing to unpack .../48-libpython-all-dev_2.7.14-2ubuntu1_amd64.deb ...
+Unpacking libpython-all-dev:amd64 (2.7.14-2ubuntu1) ...
+Selecting previously unselected package manpages-dev.
+Preparing to unpack .../49-manpages-dev_4.13-3_all.deb ...
+Unpacking manpages-dev (4.13-3) ...
+Selecting previously unselected package numactl.
+Preparing to unpack .../50-numactl_2.0.11-2.1_amd64.deb ...
+Unpacking numactl (2.0.11-2.1) ...
+Selecting previously unselected package python-all.
+Preparing to unpack .../51-python-all_2.7.14-2ubuntu1_amd64.deb ...
+Unpacking python-all (2.7.14-2ubuntu1) ...
+Selecting previously unselected package python2.7-dev.
+Preparing to unpack .../52-python2.7-dev_2.7.14-2ubuntu2_amd64.deb ...
+Unpacking python2.7-dev (2.7.14-2ubuntu2) ...
+Selecting previously unselected package python-dev.
+Preparing to unpack .../53-python-dev_2.7.14-2ubuntu1_amd64.deb ...
+Unpacking python-dev (2.7.14-2ubuntu1) ...
+Selecting previously unselected package python-all-dev.
+Preparing to unpack .../54-python-all-dev_2.7.14-2ubuntu1_amd64.deb ...
+Unpacking python-all-dev (2.7.14-2ubuntu1) ...
+Selecting previously unselected package python-asn1crypto.
+Preparing to unpack .../55-python-asn1crypto_0.22.0-1_all.deb ...
+Unpacking python-asn1crypto (0.22.0-1) ...
+Selecting previously unselected package python-cffi-backend.
+Preparing to unpack .../56-python-cffi-backend_1.9.1-2build2_amd64.deb ...
+Unpacking python-cffi-backend (1.9.1-2build2) ...
+Selecting previously unselected package python-crypto.
+Preparing to unpack .../57-python-crypto_2.6.1-7ubuntu0.1_amd64.deb ...
+Unpacking python-crypto (2.6.1-7ubuntu0.1) ...
+Selecting previously unselected package python-enum34.
+Preparing to unpack .../58-python-enum34_1.1.6-1_all.deb ...
+Unpacking python-enum34 (1.1.6-1) ...
+Selecting previously unselected package python-idna.
+Preparing to unpack .../59-python-idna_2.5-1_all.deb ...
+Unpacking python-idna (2.5-1) ...
+Selecting previously unselected package python-ipaddress.
+Preparing to unpack .../60-python-ipaddress_1.0.17-1_all.deb ...
+Unpacking python-ipaddress (1.0.17-1) ...
+Selecting previously unselected package python-six.
+Preparing to unpack .../61-python-six_1.10.0-4_all.deb ...
+Unpacking python-six (1.10.0-4) ...
+Selecting previously unselected package python-cryptography.
+Preparing to unpack .../62-python-cryptography_1.9-1_amd64.deb ...
+Unpacking python-cryptography (1.9-1) ...
+Selecting previously unselected package python-dbus.
+Preparing to unpack .../63-python-dbus_1.2.4-1build3_amd64.deb ...
+Unpacking python-dbus (1.2.4-1build3) ...
+Selecting previously unselected package python-gi.
+Preparing to unpack .../64-python-gi_3.24.1-2build1_amd64.deb ...
+Unpacking python-gi (3.24.1-2build1) ...
+Selecting previously unselected package python-secretstorage.
+Preparing to unpack .../65-python-secretstorage_2.3.1-2_all.deb ...
+Unpacking python-secretstorage (2.3.1-2) ...
+Selecting previously unselected package python-keyring.
+Preparing to unpack .../66-python-keyring_10.4.0-1_all.deb ...
+Unpacking python-keyring (10.4.0-1) ...
+Selecting previously unselected package python-keyrings.alt.
+Preparing to unpack .../67-python-keyrings.alt_2.2-2_all.deb ...
+Unpacking python-keyrings.alt (2.2-2) ...
+Selecting previously unselected package python-numpy.
+Preparing to unpack .../68-python-numpy_1%3a1.12.1-3.1ubuntu4_amd64.deb ...
+Unpacking python-numpy (1:1.12.1-3.1ubuntu4) ...
+Selecting previously unselected package python-pip-whl.
+Preparing to unpack .../69-python-pip-whl_9.0.1-2_all.deb ...
+Unpacking python-pip-whl (9.0.1-2) ...
+Selecting previously unselected package python-pip.
+Preparing to unpack .../70-python-pip_9.0.1-2_all.deb ...
+Unpacking python-pip (9.0.1-2) ...
+Selecting previously unselected package python-pkg-resources.
+Preparing to unpack .../71-python-pkg-resources_36.2.7-2_all.deb ...
+Unpacking python-pkg-resources (36.2.7-2) ...
+Selecting previously unselected package python-scapy.
+Preparing to unpack .../72-python-scapy_2.3.3-1_all.deb ...
+Unpacking python-scapy (2.3.3-1) ...
+Selecting previously unselected package python-setuptools.
+Preparing to unpack .../73-python-setuptools_36.2.7-2_all.deb ...
+Unpacking python-setuptools (36.2.7-2) ...
+Selecting previously unselected package python-wheel.
+Preparing to unpack .../74-python-wheel_0.29.0-2_all.deb ...
+Unpacking python-wheel (0.29.0-2) ...
+Selecting previously unselected package python-xdg.
+Preparing to unpack .../75-python-xdg_0.25-4_all.deb ...
+Unpacking python-xdg (0.25-4) ...
+Selecting previously unselected package unzip.
+Preparing to unpack .../76-unzip_6.0-21ubuntu1_amd64.deb ...
+Unpacking unzip (6.0-21ubuntu1) ...
+Selecting previously unselected package libnuma-dev:amd64.
+Preparing to unpack .../77-libnuma-dev_2.0.11-2.1_amd64.deb ...
+Unpacking libnuma-dev:amd64 (2.0.11-2.1) ...
+Setting up libquadmath0:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libgomp1:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libatomic1:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up python-pip-whl (9.0.1-2) ...
+Setting up libcc1-0:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up make (4.1-9.1) ...
+Processing triggers for mime-support (3.60ubuntu1) ...
+Setting up libasan4:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libgfortran4:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libarchive13:amd64 (3.2.2-3.1) ...
+Setting up libcilkrts5:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libuv1:amd64 (1.9.1-3) ...
+Setting up libubsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libtsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up unzip (6.0-21ubuntu1) ...
+Setting up linux-libc-dev:amd64 (4.13.0-39.44) ...
+Setting up libdpkg-perl (1.18.24ubuntu1) ...
+Setting up cmake-data (3.9.1-1) ...
+Setting up librhash0 (1.3.4-3) ...
+Setting up liblsan0:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up binutils-common:amd64 (2.29.1-4ubuntu1) ...
+Setting up libfile-fcntllock-perl (0.22-3build2) ...
+Setting up libmpx2:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libisl15:amd64 (0.18-1) ...
+Setting up numactl (2.0.11-2.1) ...
+Setting up libblas3:amd64 (3.7.1-3ubuntu2) ...
+update-alternatives: using /usr/lib/x86_64-linux-gnu/blas/libblas.so.3 to provide /usr/lib/x86_64-linux-gnu/libblas.so.3 (libblas.so.3-x86_64-linux-gnu) in auto mode
+Processing triggers for libc-bin (2.26-0ubuntu2.1) ...
+Setting up libfakeroot:amd64 (1.21-1ubuntu2) ...
+Setting up libalgorithm-diff-perl (1.19.03-1) ...
+Processing triggers for man-db (2.7.6.1-2) ...
+Setting up libmpc3:amd64 (1.0.3-2) ...
+Setting up libc-dev-bin (2.26-0ubuntu2.1) ...
+Setting up manpages-dev (4.13-3) ...
+Setting up libc6-dev:amd64 (2.26-0ubuntu2.1) ...
+Setting up libitm1:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libpython2.7-stdlib:amd64 (2.7.14-2ubuntu2) ...
+Setting up libjsoncpp1:amd64 (1.7.4-3) ...
+Setting up libbinutils:amd64 (2.29.1-4ubuntu1) ...
+Setting up liblapack3:amd64 (3.7.1-3ubuntu2) ...
+update-alternatives: using /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3 to provide /usr/lib/x86_64-linux-gnu/liblapack.so.3 (liblapack.so.3-x86_64-linux-gnu) in auto mode
+Setting up python2.7 (2.7.14-2ubuntu2) ...
+Setting up libpcap0.8-dev:amd64 (1.8.1-5ubuntu1) ...
+Setting up fakeroot (1.21-1ubuntu2) ...
+update-alternatives: using /usr/bin/fakeroot-sysv to provide /usr/bin/fakeroot (fakeroot) in auto mode
+Setting up libgcc-7-dev:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up cpp-7 (7.2.0-8ubuntu3.2) ...
+Setting up libstdc++-7-dev:amd64 (7.2.0-8ubuntu3.2) ...
+Setting up libpython-stdlib:amd64 (2.7.14-2ubuntu1) ...
+Setting up libalgorithm-merge-perl (0.08-3) ...
+Setting up libalgorithm-diff-xs-perl (0.04-4build3) ...
+Setting up libpython2.7:amd64 (2.7.14-2ubuntu2) ...
+Setting up libexpat1-dev:amd64 (2.2.3-1) ...
+Setting up libpcap-dev (1.8.1-5ubuntu1) ...
+Setting up libpython2.7-dev:amd64 (2.7.14-2ubuntu2) ...
+Setting up libnuma-dev:amd64 (2.0.11-2.1) ...
+Setting up cmake (3.9.1-1) ...
+Setting up python2.7-dev (2.7.14-2ubuntu2) ...
+Setting up python (2.7.14-2ubuntu1) ...
+Setting up python-xdg (0.25-4) ...
+Setting up binutils-x86-64-linux-gnu (2.29.1-4ubuntu1) ...
+Setting up python-idna (2.5-1) ...
+Setting up cpp (4:7.2.0-1ubuntu1) ...
+Setting up libpython-dev:amd64 (2.7.14-2ubuntu1) ...
+Setting up python-asn1crypto (0.22.0-1) ...
+Setting up python-crypto (2.6.1-7ubuntu0.1) ...
+Setting up python-dev (2.7.14-2ubuntu1) ...
+Setting up python-wheel (0.29.0-2) ...
+Setting up libpython-all-dev:amd64 (2.7.14-2ubuntu1) ...
+Setting up python-pkg-resources (36.2.7-2) ...
+Setting up python-numpy (1:1.12.1-3.1ubuntu4) ...
+Setting up python-cffi-backend (1.9.1-2build2) ...
+Setting up python-gi (3.24.1-2build1) ...
+Setting up python-six (1.10.0-4) ...
+Setting up python-scapy (2.3.3-1) ...
+Setting up python-enum34 (1.1.6-1) ...
+Setting up binutils (2.29.1-4ubuntu1) ...
+Setting up python-dbus (1.2.4-1build3) ...
+Remove stale byte-compiled files...
+Setting up python-ipaddress (1.0.17-1) ...
+Setting up python-pip (9.0.1-2) ...
+Setting up python-all (2.7.14-2ubuntu1) ...
+Setting up python-setuptools (36.2.7-2) ...
+Setting up gcc-7 (7.2.0-8ubuntu3.2) ...
+Setting up g++-7 (7.2.0-8ubuntu3.2) ...
+Setting up gcc (4:7.2.0-1ubuntu1) ...
+Setting up python-keyrings.alt (2.2-2) ...
+Setting up dpkg-dev (1.18.24ubuntu1) ...
+Setting up python-all-dev (2.7.14-2ubuntu1) ...
+Setting up python-cryptography (1.9-1) ...
+Setting up g++ (4:7.2.0-1ubuntu1) ...
+update-alternatives: using /usr/bin/g++ to provide /usr/bin/c++ (c++) in auto mode
+Setting up python-secretstorage (2.3.1-2) ...
+Setting up python-keyring (10.4.0-1) ...
+Setting up build-essential (12.4ubuntu1) ...
+Processing triggers for libc-bin (2.26-0ubuntu2.1) ...
+Requirement already satisfied: numpy in /usr/lib/python2.7/dist-packages
+Collecting plotly
+  Downloading https://files.pythonhosted.org/packages/a7/3d/4dcdbafc9d5c01f468d41999cd9ab733f38e9ea4e4bea5a62841fedf5f0e/plotly-2.5.1.tar.gz (24.9MB)
+Collecting decorator>=4.0.6 (from plotly)
+  Downloading https://files.pythonhosted.org/packages/bc/bb/a24838832ba35baf52f32ab1a49b906b5f82fb7c76b2f6a7e35e140bac30/decorator-4.3.0-py2.py3-none-any.whl
+Collecting nbformat>=4.2 (from plotly)
+  Downloading https://files.pythonhosted.org/packages/da/27/9a654d2b6cc1eaa517d1c5a4405166c7f6d72f04f6e7eea41855fe808a46/nbformat-4.4.0-py2.py3-none-any.whl (155kB)
+Collecting pytz (from plotly)
+  Downloading https://files.pythonhosted.org/packages/dc/83/15f7833b70d3e067ca91467ca245bae0f6fe56ddc7451aa0dc5606b120f2/pytz-2018.4-py2.py3-none-any.whl (510kB)
+Collecting requests (from plotly)
+  Downloading https://files.pythonhosted.org/packages/49/df/50aa1999ab9bde74656c2919d9c0c085fd2b3775fd3eca826012bef76d8c/requests-2.18.4-py2.py3-none-any.whl (88kB)
+Requirement already satisfied: six in /usr/lib/python2.7/dist-packages (from plotly)
+Collecting traitlets>=4.1 (from nbformat>=4.2->plotly)
+  Downloading https://files.pythonhosted.org/packages/93/d6/abcb22de61d78e2fc3959c964628a5771e47e7cc60d53e9342e21ed6cc9a/traitlets-4.3.2-py2.py3-none-any.whl (74kB)
+Collecting jupyter-core (from nbformat>=4.2->plotly)
+  Downloading https://files.pythonhosted.org/packages/1d/44/065d2d7bae7bebc06f1dd70d23c36da8c50c0f08b4236716743d706762a8/jupyter_core-4.4.0-py2.py3-none-any.whl (126kB)
+Collecting jsonschema!=2.5.0,>=2.4 (from nbformat>=4.2->plotly)
+  Downloading https://files.pythonhosted.org/packages/77/de/47e35a97b2b05c2fadbec67d44cfcdcd09b8086951b331d82de90d2912da/jsonschema-2.6.0-py2.py3-none-any.whl
+Collecting ipython-genutils (from nbformat>=4.2->plotly)
+  Downloading https://files.pythonhosted.org/packages/fa/bc/9bd3b5c2b4774d5f33b2d544f1460be9df7df2fe42f352135381c347c69a/ipython_genutils-0.2.0-py2.py3-none-any.whl
+Requirement already satisfied: idna<2.7,>=2.5 in /usr/lib/python2.7/dist-packages (from requests->plotly)
+Collecting urllib3<1.23,>=1.21.1 (from requests->plotly)
+  Downloading https://files.pythonhosted.org/packages/63/cb/6965947c13a94236f6d4b8223e21beb4d576dc72e8130bd7880f600839b8/urllib3-1.22-py2.py3-none-any.whl (132kB)
+Collecting certifi>=2017.4.17 (from requests->plotly)
+  Downloading https://files.pythonhosted.org/packages/7c/e6/92ad559b7192d846975fc916b65f667c7b8c3a32bea7372340bfe9a15fa5/certifi-2018.4.16-py2.py3-none-any.whl (150kB)
+Collecting chardet<3.1.0,>=3.0.2 (from requests->plotly)
+  Downloading https://files.pythonhosted.org/packages/bc/a9/01ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet-3.0.4-py2.py3-none-any.whl (133kB)
+Requirement already satisfied: enum34; python_version == "2.7" in /usr/lib/python2.7/dist-packages (from traitlets>=4.1->nbformat>=4.2->plotly)
+Collecting functools32; python_version == "2.7" (from jsonschema!=2.5.0,>=2.4->nbformat>=4.2->plotly)
+  Downloading https://files.pythonhosted.org/packages/c5/60/6ac26ad05857c601308d8fb9e87fa36d0ebf889423f47c3502ef034365db/functools32-3.2.3-2.tar.gz
+Building wheels for collected packages: plotly, functools32
+  Running setup.py bdist_wheel for plotly: started
+  Running setup.py bdist_wheel for plotly: finished with status 'done'
+  Stored in directory: /root/.cache/pip/wheels/33/be/39/f82c0f53ea29777fdc29afaf7bfad87442488a280662d355fb
+  Running setup.py bdist_wheel for functools32: started
+  Running setup.py bdist_wheel for functools32: finished with status 'done'
+  Stored in directory: /root/.cache/pip/wheels/b5/18/32/77a1030457155606ba5e3ec3a8a57132b1a04b1c4f765177b2
+Successfully built plotly functools32
+Installing collected packages: decorator, ipython-genutils, traitlets, jupyter-core, functools32, jsonschema, nbformat, pytz, urllib3, certifi, chardet, requests, plotly
+Successfully installed certifi-2018.4.16 chardet-3.0.4 decorator-4.3.0 functools32-3.2.3.post2 ipython-genutils-0.2.0 jsonschema-2.6.0 jupyter-core-4.4.0 nbformat-4.4.0 plotly-2.5.1 pytz-2018.4 requests-2.18.4 traitlets-4.3.2 urllib3-1.22
+Cleaning..
+Downloading..
+--2018-05-08 12:40:45--  http://fast.dpdk.org/rel/dpdk-17.05.tar.gz
+Resolving fast.dpdk.org (fast.dpdk.org)... 151.101.146.49
+Connecting to fast.dpdk.org (fast.dpdk.org)|151.101.146.49|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 12187485 (12M) [application/octet-stream]
+Saving to: ‘/root/dpdk-17.05.tar.gz’
+
+     0K .......... .......... .......... .......... ..........  0%  102K 1m56s
+    50K .......... .......... .......... .......... ..........  0%  274K 79s
+   100K .......... .......... .......... .......... ..........  1%  463K 61s
+   150K .......... .......... .......... .......... ..........  1%  447K 52s
+   200K .......... .......... .......... .......... ..........  2%  768K 45s
+   250K .......... .......... .......... .......... ..........  2% 1.21M 39s
+   300K .......... .......... .......... .......... ..........  2% 1.43M 34s
+   350K .......... .......... .......... .......... ..........  3% 1.52M 31s
+   400K .......... .......... .......... .......... ..........  3%  718K 29s
+   450K .......... .......... .......... .......... ..........  4% 1.19M 27s
+   500K .......... .......... .......... .......... ..........  4% 2.09M 25s
+   550K .......... .......... .......... .......... ..........  5% 2.39M 23s
+   600K .......... .......... .......... .......... ..........  5% 2.63M 21s
+   650K .......... .......... .......... .......... ..........  5% 2.97M 20s
+   700K .......... .......... .......... .......... ..........  6% 2.95M 19s
+   750K .......... .......... .......... .......... ..........  6% 3.43M 18s
+   800K .......... .......... .......... .......... ..........  7%  876K 17s
+   850K .......... .......... .......... .......... ..........  7% 3.61M 17s
+   900K .......... .......... .......... .......... ..........  7% 1.67M 16s
+   950K .......... .......... .......... .......... ..........  8% 4.18M 15s
+  1000K .......... .......... .......... .......... ..........  8% 3.60M 15s
+  1050K .......... .......... .......... .......... ..........  9% 2.81M 14s
+  1100K .......... .......... .......... .......... ..........  9% 2.88M 14s
+  1150K .......... .......... .......... .......... .......... 10% 2.73M 13s
+  1200K .......... .......... .......... .......... .......... 10% 2.97M 13s
+  1250K .......... .......... .......... .......... .......... 10% 2.83M 12s
+  1300K .......... .......... .......... .......... .......... 11% 1.07M 12s
+  1350K .......... .......... .......... .......... .......... 11% 3.45M 12s
+  1400K .......... .......... .......... .......... .......... 12% 2.66M 11s
+  1450K .......... .......... .......... .......... .......... 12% 2.53M 11s
+  1500K .......... .......... .......... .......... .......... 13% 3.27M 11s
+  1550K .......... .......... .......... .......... .......... 13%  154K 12s
+  1600K .......... .......... .......... .......... .......... 13% 2.71M 12s
+  1650K .......... .......... .......... .......... .......... 14% 4.92M 12s
+  1700K .......... .......... .......... .......... .......... 14%  191M 11s
+  1750K .......... .......... .......... .......... .......... 15% 10.5M 11s
+  1800K .......... .......... .......... .......... .......... 15% 4.88M 11s
+  1850K .......... .......... .......... .......... .......... 15% 13.8M 10s
+  1900K .......... .......... .......... .......... .......... 16% 8.95M 10s
+  1950K .......... .......... .......... .......... .......... 16% 4.07M 10s
+  2000K .......... .......... .......... .......... .......... 17% 6.11M 10s
+  2050K .......... .......... .......... .......... .......... 17% 4.44M 9s
+  2100K .......... .......... .......... .......... .......... 18% 4.75M 9s
+  2150K .......... .......... .......... .......... .......... 18% 5.37M 9s
+  2200K .......... .......... .......... .......... .......... 18% 4.20M 9s
+  2250K .......... .......... .......... .......... .......... 19% 5.80M 9s
+  2300K .......... .......... .......... .......... .......... 19% 5.63M 8s
+  2350K .......... .......... .......... .......... .......... 20% 6.89M 8s
+  2400K .......... .......... .......... .......... .......... 20% 4.44M 8s
+  2450K .......... .......... .......... .......... .......... 21% 4.67M 8s
+  2500K .......... .......... .......... .......... .......... 21% 5.87M 8s
+  2550K .......... .......... .......... .......... .......... 21% 4.05M 8s
+  2600K .......... .......... .......... .......... .......... 22% 10.7M 7s
+  2650K .......... .......... .......... .......... .......... 22%  183M 7s
+  2700K .......... .......... .......... .......... .......... 23%  195M 7s
+  2750K .......... .......... .......... .......... .......... 23% 2.80M 7s
+  2800K .......... .......... .......... .......... .......... 23% 3.52M 7s
+  2850K .......... .......... .......... .......... .......... 24% 4.62M 7s
+  2900K .......... .......... .......... .......... .......... 24% 4.69M 7s
+  2950K .......... .......... .......... .......... .......... 25% 20.7M 6s
+  3000K .......... .......... .......... .......... .......... 25% 4.92M 6s
+  3050K .......... .......... .......... .......... .......... 26% 5.01M 6s
+  3100K .......... .......... .......... .......... .......... 26% 2.76M 6s
+  3150K .......... .......... .......... .......... .......... 26% 5.42M 6s
+  3200K .......... .......... .......... .......... .......... 27% 54.7M 6s
+  3250K .......... .......... .......... .......... .......... 27% 2.81M 6s
+  3300K .......... .......... .......... .......... .......... 28% 2.90M 6s
+  3350K .......... .......... .......... .......... .......... 28% 2.72M 6s
+  3400K .......... .......... .......... .......... .......... 28%  146K 6s
+  3450K .......... .......... .......... .......... .......... 29% 6.38M 6s
+  3500K .......... .......... .......... .......... .......... 29% 5.94M 6s
+  3550K .......... .......... .......... .......... .......... 30% 6.15M 6s
+  3600K .......... .......... .......... .......... .......... 30% 6.25M 6s
+  3650K .......... .......... .......... .......... .......... 31% 6.15M 6s
+  3700K .......... .......... .......... .......... .......... 31%  182K 6s
+  3750K .......... .......... .......... .......... .......... 31% 10.0M 6s
+  3800K .......... .......... .......... .......... .......... 32%  165M 6s
+  3850K .......... .......... .......... .......... .......... 32%  144M 6s
+  3900K .......... .......... .......... .......... .......... 33%  154M 6s
+  3950K .......... .......... .......... .......... .......... 33%  184M 6s
+  4000K .......... .......... .......... .......... .......... 34%  186M 6s
+  4050K .......... .......... .......... .......... .......... 34%  156M 6s
+  4100K .......... .......... .......... .......... .......... 34%  184M 5s
+  4150K .......... .......... .......... .......... .......... 35%  177M 5s
+  4200K .......... .......... .......... .......... .......... 35%  188M 5s
+  4250K .......... .......... .......... .......... .......... 36%  149M 5s
+  4300K .......... .......... .......... .......... .......... 36%  181M 5s
+  4350K .......... .......... .......... .......... .......... 36%  189M 5s
+  4400K .......... .......... .......... .......... .......... 37%  185M 5s
+  4450K .......... .......... .......... .......... .......... 37%  159M 5s
+  4500K .......... .......... .......... .......... .......... 38%  181M 5s
+  4550K .......... .......... .......... .......... .......... 38%  184M 5s
+  4600K .......... .......... .......... .......... .......... 39%  186M 5s
+  4650K .......... .......... .......... .......... .......... 39%  144M 5s
+  4700K .......... .......... .......... .......... .......... 39%  187M 4s
+  4750K .......... .......... .......... .......... .......... 40%  187M 4s
+  4800K .......... .......... .......... .......... .......... 40%  181M 4s
+  4850K .......... .......... .......... .......... .......... 41%  157M 4s
+  4900K .......... .......... .......... .......... .......... 41%  183M 4s
+  4950K .......... .......... .......... .......... .......... 42%  188M 4s
+  5000K .......... .......... .......... .......... .......... 42%  158M 4s
+  5050K .......... .......... .......... .......... .......... 42%  192M 4s
+  5100K .......... .......... .......... .......... .......... 43%  251M 4s
+  5150K .......... .......... .......... .......... .......... 43%  245M 4s
+  5200K .......... .......... .......... .......... .......... 44%  235M 4s
+  5250K .......... .......... .......... .......... .......... 44% 3.04M 4s
+  5300K .......... .......... .......... .......... .......... 44% 2.73M 4s
+  5350K .......... .......... .......... .......... .......... 45% 2.83M 4s
+  5400K .......... .......... .......... .......... .......... 45% 2.88M 4s
+  5450K .......... .......... .......... .......... .......... 46% 2.73M 4s
+  5500K .......... .......... .......... .......... .......... 46% 2.73M 3s
+  5550K .......... .......... .......... .......... .......... 47% 2.94M 3s
+  5600K .......... .......... .......... .......... .......... 47% 2.63M 3s
+  5650K .......... .......... .......... .......... .......... 47% 2.71M 3s
+  5700K .......... .......... .......... .......... .......... 48% 2.83M 3s
+  5750K .......... .......... .......... .......... .......... 48% 2.81M 3s
+  5800K .......... .......... .......... .......... .......... 49% 2.90M 3s
+  5850K .......... .......... .......... .......... .......... 49% 2.69M 3s
+  5900K .......... .......... .......... .......... .......... 49% 2.80M 3s
+  5950K .......... .......... .......... .......... .......... 50% 2.88M 3s
+  6000K .......... .......... .......... .......... .......... 50% 2.90M 3s
+  6050K .......... .......... .......... .......... .......... 51% 2.81M 3s
+  6100K .......... .......... .......... .......... .......... 51% 2.84M 3s
+  6150K .......... .......... .......... .......... .......... 52% 2.91M 3s
+  6200K .......... .......... .......... .......... .......... 52% 2.78M 3s
+  6250K .......... .......... .......... .......... .......... 52% 2.87M 3s
+  6300K .......... .......... .......... .......... .......... 53% 2.82M 3s
+  6350K .......... .......... .......... .......... .......... 53% 2.84M 3s
+  6400K .......... .......... .......... .......... .......... 54% 2.74M 3s
+  6450K .......... .......... .......... .......... .......... 54% 2.90M 3s
+  6500K .......... .......... .......... .......... .......... 55% 2.88M 3s
+  6550K .......... .......... .......... .......... .......... 55% 2.79M 3s
+  6600K .......... .......... .......... .......... .......... 55% 2.79M 3s
+  6650K .......... .......... .......... .......... .......... 56% 2.80M 3s
+  6700K .......... .......... .......... .......... .......... 56% 2.86M 3s
+  6750K .......... .......... .......... .......... .......... 57% 2.76M 3s
+  6800K .......... .......... .......... .......... .......... 57% 2.90M 3s
+  6850K .......... .......... .......... .......... .......... 57% 2.86M 3s
+  6900K .......... .......... .......... .......... .......... 58% 2.80M 3s
+  6950K .......... .......... .......... .......... .......... 58% 2.89M 2s
+  7000K .......... .......... .......... .......... .......... 59% 1.07M 2s
+  7050K .......... .......... .......... .......... .......... 59% 3.45M 2s
+  7100K .......... .......... .......... .......... .......... 60% 2.83M 2s
+  7150K .......... .......... .......... .......... .......... 60% 2.87M 2s
+  7200K .......... .......... .......... .......... .......... 60% 2.88M 2s
+  7250K .......... .......... .......... .......... .......... 61% 2.77M 2s
+  7300K .......... .......... .......... .......... .......... 61%  173K 2s
+  7350K .......... .......... .......... .......... .......... 62% 6.28M 2s
+  7400K .......... .......... .......... .......... .......... 62%  185M 2s
+  7450K .......... .......... .......... .......... .......... 63% 2.77M 2s
+  7500K .......... .......... .......... .......... .......... 63% 3.78M 2s
+  7550K .......... .......... .......... .......... .......... 63%  201M 2s
+  7600K .......... .......... .......... .......... .......... 64%  192M 2s
+  7650K .......... .......... .......... .......... .......... 64%  172M 2s
+  7700K .......... .......... .......... .......... .......... 65%  203M 2s
+  7750K .......... .......... .......... .......... .......... 65%  178M 2s
+  7800K .......... .......... .......... .......... .......... 65%  157M 2s
+  7850K .......... .......... .......... .......... .......... 66%  170M 2s
+  7900K .......... .......... .......... .......... .......... 66%  199M 2s
+  7950K .......... .......... .......... .......... .......... 67%  203M 2s
+  8000K .......... .......... .......... .......... .......... 67%  200M 2s
+  8050K .......... .......... .......... .......... .......... 68%  177M 2s
+  8100K .......... .......... .......... .......... .......... 68%  199M 2s
+  8150K .......... .......... .......... .......... .......... 68%  182M 2s
+  8200K .......... .......... .......... .......... .......... 69%  166M 2s
+  8250K .......... .......... .......... .......... .......... 69% 3.33M 2s
+  8300K .......... .......... .......... .......... .......... 70% 2.83M 2s
+  8350K .......... .......... .......... .......... .......... 70% 2.80M 2s
+  8400K .......... .......... .......... .......... .......... 70% 2.77M 2s
+  8450K .......... .......... .......... .......... .......... 71% 2.50M 2s
+  8500K .......... .......... .......... .......... .......... 71% 2.09M 2s
+  8550K .......... .......... .......... .......... .......... 72% 1.83M 2s
+  8600K .......... .......... .......... .......... .......... 72% 2.43M 2s
+  8650K .......... .......... .......... .......... .......... 73% 2.73M 2s
+  8700K .......... .......... .......... .......... .......... 73% 2.72M 2s
+  8750K .......... .......... .......... .......... .......... 73% 2.67M 1s
+  8800K .......... .......... .......... .......... .......... 74% 2.79M 1s
+  8850K .......... .......... .......... .......... .......... 74% 2.52M 1s
+  8900K .......... .......... .......... .......... .......... 75% 2.67M 1s
+  8950K .......... .......... .......... .......... .......... 75% 2.71M 1s
+  9000K .......... .......... .......... .......... .......... 76% 2.77M 1s
+  9050K .......... .......... .......... .......... .......... 76% 3.00M 1s
+  9100K .......... .......... .......... .......... .......... 76% 2.09M 1s
+  9150K .......... .......... .......... .......... .......... 77% 1.98M 1s
+  9200K .......... .......... .......... .......... .......... 77% 2.48M 1s
+  9250K .......... .......... .......... .......... .......... 78% 2.90M 1s
+  9300K .......... .......... .......... .......... .......... 78% 2.98M 1s
+  9350K .......... .......... .......... .......... .......... 78% 2.73M 1s
+  9400K .......... .......... .......... .......... .......... 79% 2.72M 1s
+  9450K .......... .......... .......... .......... .......... 79% 2.52M 1s
+  9500K .......... .......... .......... .......... .......... 80% 2.94M 1s
+  9550K .......... .......... .......... .......... .......... 80% 2.78M 1s
+  9600K .......... .......... .......... .......... .......... 81% 2.73M 1s
+  9650K .......... .......... .......... .......... .......... 81% 2.94M 1s
+  9700K .......... .......... .......... .......... .......... 81% 1017K 1s
+  9750K .......... .......... .......... .......... .......... 82% 4.07M 1s
+  9800K .......... .......... .......... .......... .......... 82% 2.88M 1s
+  9850K .......... .......... .......... .......... .......... 83% 2.85M 1s
+  9900K .......... .......... .......... .......... .......... 83% 2.88M 1s
+  9950K .......... .......... .......... .......... .......... 84% 2.80M 1s
+ 10000K .......... .......... .......... .......... .......... 84% 2.90M 1s
+ 10050K .......... .......... .......... .......... .......... 84% 2.80M 1s
+ 10100K .......... .......... .......... .......... .......... 85% 2.31M 1s
+ 10150K .......... .......... .......... .......... .......... 85% 2.82M 1s
+ 10200K .......... .......... .......... .......... .......... 86% 2.77M 1s
+ 10250K .......... .......... .......... .......... .......... 86% 3.01M 1s
+ 10300K .......... .......... .......... .......... .......... 86% 1.21M 1s
+ 10350K .......... .......... .......... .......... .......... 87% 2.66M 1s
+ 10400K .......... .......... .......... .......... .......... 87% 3.03M 1s
+ 10450K .......... .......... .......... .......... .......... 88% 3.07M 1s
+ 10500K .......... .......... .......... .......... .......... 88% 2.75M 1s
+ 10550K .......... .......... .......... .......... .......... 89% 3.03M 1s
+ 10600K .......... .......... .......... .......... .......... 89% 2.89M 1s
+ 10650K .......... .......... .......... .......... .......... 89% 2.84M 1s
+ 10700K .......... .......... .......... .......... .......... 90% 2.99M 1s
+ 10750K .......... .......... .......... .......... .......... 90% 2.85M 1s
+ 10800K .......... .......... .......... .......... .......... 91% 2.88M 0s
+ 10850K .......... .......... .......... .......... .......... 91% 2.83M 0s
+ 10900K .......... .......... .......... .......... .......... 92% 1.55M 0s
+ 10950K .......... .......... .......... .......... .......... 92% 3.16M 0s
+ 11000K .......... .......... .......... .......... .......... 92% 2.85M 0s
+ 11050K .......... .......... .......... .......... .......... 93% 3.17M 0s
+ 11100K .......... .......... .......... .......... .......... 93% 2.74M 0s
+ 11150K .......... .......... .......... .......... .......... 94% 2.99M 0s
+ 11200K .......... .......... .......... .......... .......... 94% 3.05M 0s
+ 11250K .......... .......... .......... .......... .......... 94% 2.73M 0s
+ 11300K .......... .......... .......... .......... .......... 95% 3.08M 0s
+ 11350K .......... .......... .......... .......... .......... 95% 3.07M 0s
+ 11400K .......... .......... .......... .......... .......... 96% 2.81M 0s
+ 11450K .......... .......... .......... .......... .......... 96% 2.93M 0s
+ 11500K .......... .......... .......... .......... .......... 97% 3.05M 0s
+ 11550K .......... .......... .......... .......... .......... 97% 1.52M 0s
+ 11600K .......... .......... .......... .......... .......... 97% 3.13M 0s
+ 11650K .......... .......... .......... .......... .......... 98% 2.89M 0s
+ 11700K .......... .......... .......... .......... .......... 98% 3.12M 0s
+ 11750K .......... .......... .......... .......... .......... 99% 3.06M 0s
+ 11800K .......... .......... .......... .......... .......... 99% 2.99M 0s
+ 11850K .......... .......... .......... .......... .......... 99% 3.10M 0s
+ 11900K .                                                     100% 3.28M=5.4s
+
+2018-05-08 12:40:51 (2.16 MB/s) - ‘/root/dpdk-17.05.tar.gz’ saved [12187485/12187485]
+
+Extracting..
+Configuration done
+Configuration done
+== Build lib
+== Build lib/librte_compat
+== Build lib/librte_eal
+  SYMLINK-FILE include/rte_compat.h
+== Build lib/librte_eal/common
+  SYMLINK-FILE include/generic/rte_atomic.h
+  SYMLINK-FILE include/generic/rte_byteorder.h
+  SYMLINK-FILE include/generic/rte_cycles.h
+  SYMLINK-FILE include/generic/rte_prefetch.h
+  SYMLINK-FILE include/generic/rte_spinlock.h
+  SYMLINK-FILE include/generic/rte_memcpy.h
+  SYMLINK-FILE include/generic/rte_cpuflags.h
+  SYMLINK-FILE include/generic/rte_rwlock.h
+  SYMLINK-FILE include/generic/rte_vect.h
+  SYMLINK-FILE include/generic/rte_io.h
+  SYMLINK-FILE include/rte_branch_prediction.h
+  SYMLINK-FILE include/rte_common.h
+  SYMLINK-FILE include/rte_debug.h
+  SYMLINK-FILE include/rte_eal.h
+  SYMLINK-FILE include/rte_errno.h
+  SYMLINK-FILE include/rte_lcore.h
+  SYMLINK-FILE include/rte_launch.h
+  SYMLINK-FILE include/rte_log.h
+  SYMLINK-FILE include/rte_memory.h
+  SYMLINK-FILE include/rte_memzone.h
+  SYMLINK-FILE include/rte_pci.h
+  SYMLINK-FILE include/rte_random.h
+  SYMLINK-FILE include/rte_tailq.h
+  SYMLINK-FILE include/rte_alarm.h
+  SYMLINK-FILE include/rte_per_lcore.h
+  SYMLINK-FILE include/rte_interrupts.h
+  SYMLINK-FILE include/rte_string_fns.h
+  SYMLINK-FILE include/rte_eal_memconfig.h
+  SYMLINK-FILE include/rte_version.h
+  SYMLINK-FILE include/rte_malloc_heap.h
+  SYMLINK-FILE include/rte_hexdump.h
+  SYMLINK-FILE include/rte_bus.h
+  SYMLINK-FILE include/rte_devargs.h
+  SYMLINK-FILE include/rte_dev.h
+  SYMLINK-FILE include/rte_vdev.h
+  SYMLINK-FILE include/rte_pci_dev_feature_defs.h
+  SYMLINK-FILE include/rte_pci_dev_features.h
+  SYMLINK-FILE include/rte_malloc.h
+  SYMLINK-FILE include/rte_keepalive.h
+  SYMLINK-FILE include/rte_time.h
+  SYMLINK-FILE include/rte_memcpy.h
+  SYMLINK-FILE include/rte_rwlock.h
+  SYMLINK-FILE include/rte_cycles.h
+  SYMLINK-FILE include/rte_spinlock.h
+  SYMLINK-FILE include/rte_atomic_32.h
+  SYMLINK-FILE include/rte_vect.h
+  SYMLINK-FILE include/rte_prefetch.h
+  SYMLINK-FILE include/rte_atomic_64.h
+  SYMLINK-FILE include/rte_byteorder_32.h
+  SYMLINK-FILE include/rte_rtm.h
+  SYMLINK-FILE include/rte_cpuflags.h
+  SYMLINK-FILE include/rte_byteorder_64.h
+  SYMLINK-FILE include/rte_atomic.h
+  SYMLINK-FILE include/rte_io.h
+  SYMLINK-FILE include/rte_byteorder.h
+== Build lib/librte_eal/linuxapp
+== Build lib/librte_eal/linuxapp/eal
+== Build lib/librte_eal/linuxapp/igb_uio
+  CC eal.o
+  CC eal_hugepage_info.o
+  CC eal_memory.o
+  CC eal_thread.o
+  CC eal_log.o
+  CC eal_vfio.o
+  CC eal_vfio_mp_sync.o
+  CC eal_pci.o
+  CC eal_pci_uio.o
+  CC eal_pci_vfio.o
+  CC eal_debug.o
+  CC eal_lcore.o
+  CC eal_timer.o
+  CC eal_interrupts.o
+  CC eal_alarm.o
+  CC eal_common_lcore.o
+  CC eal_common_timer.o
+  CC eal_common_memzone.o
+  CC eal_common_log.o
+  CC eal_common_launch.o
+  CC eal_common_vdev.o
+  CC eal_common_memory.o
+  CC eal_common_pci.o
+  CC eal_common_pci_uio.o
+  CC eal_common_tailqs.o
+  CC eal_common_cpuflags.o
+  CC eal_common_errno.o
+  CC eal_common_string_fns.o
+  CC eal_common_hexdump.o
+  CC eal_common_devargs.o
+  CC eal_common_dev.o
+  CC eal_common_bus.o
+  CC eal_common_options.o
+  CC eal_common_proc.o
+  CC rte_malloc.o
+  CC eal_common_thread.o
+  CC malloc_elem.o
+  CC malloc_heap.o
+  CC rte_cpuflags.o
+  CC rte_keepalive.o
+  SYMLINK-FILE include/exec-env/rte_interrupts.h
+  CC rte_spinlock.o
+  SYMLINK-FILE include/exec-env/rte_kni_common.h
+  SYMLINK-FILE include/exec-env/rte_dom0_common.h
+  AR librte_eal.a
+  INSTALL-LIB librte_eal.a
+  AR      /root/dpdk-17.05/x86_64-native-linuxapp-gcc/build/lib/librte_eal/linuxapp/igb_uio/built-in.o
+  CC [M]  /root/dpdk-17.05/x86_64-native-linuxapp-gcc/build/lib/librte_eal/linuxapp/igb_uio/igb_uio.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /root/dpdk-17.05/x86_64-native-linuxapp-gcc/build/lib/librte_eal/linuxapp/igb_uio/igb_uio.mod.o
+  LD [M]  /root/dpdk-17.05/x86_64-native-linuxapp-gcc/build/lib/librte_eal/linuxapp/igb_uio/igb_uio.ko
+INSTALL-MODULE igb_uio.ko
+== Build lib/librte_ring
+== Build lib/librte_timer
+== Build lib/librte_cfgfile
+== Build lib/librte_kvargs
+== Build lib/librte_acl
+== Build lib/librte_jobstats
+== Build lib/librte_metrics
+== Build lib/librte_cmdline
+== Build lib/librte_lpm
+== Build lib/librte_eventdev
+  CC rte_lpm.o
+  CC tb_mem.o
+  CC rte_jobstats.o
+  CC cmdline.o
+  CC rte_ring.o
+  CC rte_cfgfile.o
+  CC rte_eventdev.o
+  CC rte_metrics.o
+  CC rte_kvargs.o
+  CC rte_timer.o
+  CC cmdline_cirbuf.o
+  SYMLINK-FILE include/rte_ring.h
+  SYMLINK-FILE include/rte_metrics.h
+  AR librte_ring.a
+  SYMLINK-FILE include/rte_kvargs.h
+  AR librte_metrics.a
+  INSTALL-LIB librte_ring.a
+  INSTALL-LIB librte_metrics.a
+  AR librte_kvargs.a
+  INSTALL-LIB librte_kvargs.a
+  CC cmdline_parse.o
+  CC rte_lpm6.o
+  CC cmdline_parse_etheraddr.o
+  SYMLINK-FILE include/rte_cfgfile.h
+  CC rte_acl.o
+  AR librte_cfgfile.a
+  INSTALL-LIB librte_cfgfile.a
+  CC acl_bld.o
+  SYMLINK-FILE include/rte_timer.h
+  CC acl_gen.o
+  CC acl_run_scalar.o
+  AR librte_timer.a
+  SYMLINK-FILE include/rte_jobstats.h
+  INSTALL-LIB librte_timer.a
+  CC cmdline_parse_ipaddr.o
+== Build lib/librte_power
+  AR librte_jobstats.a
+  INSTALL-LIB librte_jobstats.a
+  CC acl_run_sse.o
+== Build lib/librte_meter
+  CC cmdline_parse_num.o
+  SYMLINK-FILE include/rte_eventdev.h
+  SYMLINK-FILE include/rte_eventdev_pmd.h
+  CC cmdline_parse_string.o
+  AR librte_eventdev.a
+  INSTALL-LIB librte_eventdev.a
+  CC acl_run_avx2.o
+== Build lib/librte_mempool
+  CC cmdline_rdline.o
+  CC cmdline_vt100.o
+  SYMLINK-FILE include/rte_lpm.h
+  CC cmdline_socket.o
+  CC rte_power.o
+  SYMLINK-FILE include/rte_lpm6.h
+  SYMLINK-FILE include/rte_acl_osdep.h
+  SYMLINK-FILE include/rte_lpm_sse.h
+  CC cmdline_parse_portlist.o
+  AR librte_lpm.a
+  INSTALL-LIB librte_lpm.a
+  CC rte_power_acpi_cpufreq.o
+  SYMLINK-FILE include/cmdline.h
+  SYMLINK-FILE include/rte_acl.h
+  SYMLINK-FILE include/cmdline_parse.h
+  CC rte_power_kvm_vm.o
+  CC rte_meter.o
+  SYMLINK-FILE include/rte_meter.h
+  SYMLINK-FILE include/cmdline_parse_num.h
+  SYMLINK-FILE include/cmdline_parse_ipaddr.h
+  SYMLINK-FILE include/cmdline_parse_etheraddr.h
+  SYMLINK-FILE include/cmdline_parse_string.h
+  SYMLINK-FILE include/cmdline_rdline.h
+  SYMLINK-FILE include/cmdline_vt100.h
+  SYMLINK-FILE include/cmdline_socket.h
+  CC guest_channel.o
+  AR librte_meter.a
+  SYMLINK-FILE include/cmdline_cirbuf.h
+  SYMLINK-FILE include/rte_power.h
+  INSTALL-LIB librte_meter.a
+  SYMLINK-FILE include/cmdline_parse_portlist.h
+== Build lib/librte_hash
+  AR librte_cmdline.a
+  CC rte_mempool.o
+  SYMLINK-FILE include/rte_mempool.h
+  CC rte_mempool_ops.o
+  INSTALL-LIB librte_cmdline.a
+  AR librte_power.a
+  INSTALL-LIB librte_power.a
+  SYMLINK-FILE include/rte_hash.h
+  CC rte_cuckoo_hash.o
+  CC rte_fbk_hash.o
+  SYMLINK-FILE include/rte_jhash.h
+  SYMLINK-FILE include/rte_hash_crc.h
+  SYMLINK-FILE include/rte_thash.h
+  SYMLINK-FILE include/rte_fbk_hash.h
+  AR librte_mempool.a
+  INSTALL-LIB librte_mempool.a
+== Build lib/librte_mbuf
+  CC rte_mbuf.o
+  SYMLINK-FILE include/rte_mbuf.h
+  SYMLINK-FILE include/rte_mbuf_ptype.h
+  CC rte_mbuf_ptype.o
+  AR librte_acl.a
+  INSTALL-LIB librte_acl.a
+  AR librte_mbuf.a
+  INSTALL-LIB librte_mbuf.a
+== Build lib/librte_net
+== Build lib/librte_cryptodev
+== Build lib/librte_reorder
+  SYMLINK-FILE include/rte_tcp.h
+  SYMLINK-FILE include/rte_ip.h
+  CC rte_net.o
+  CC rte_net_crc.o
+  SYMLINK-FILE include/rte_udp.h
+  SYMLINK-FILE include/rte_sctp.h
+  SYMLINK-FILE include/rte_icmp.h
+  SYMLINK-FILE include/rte_arp.h
+  SYMLINK-FILE include/rte_ether.h
+  SYMLINK-FILE include/rte_gre.h
+  SYMLINK-FILE include/rte_crypto.h
+  SYMLINK-FILE include/rte_net.h
+  SYMLINK-FILE include/rte_reorder.h
+  CC rte_reorder.o
+  CC rte_cryptodev.o
+  SYMLINK-FILE include/rte_crypto_sym.h
+  SYMLINK-FILE include/rte_net_crc.h
+  SYMLINK-FILE include/rte_cryptodev.h
+  SYMLINK-FILE include/rte_cryptodev_pmd.h
+  AR librte_hash.a
+  INSTALL-LIB librte_hash.a
+== Build lib/librte_efd
+  AR librte_net.a
+  INSTALL-LIB librte_net.a
+== Build lib/librte_ether
+== Build lib/librte_sched
+  SYMLINK-FILE include/rte_efd.h
+  CC rte_efd.o
+  AR librte_reorder.a
+  INSTALL-LIB librte_reorder.a
+  CC rte_ethdev.o
+  SYMLINK-FILE include/rte_ethdev.h
+  SYMLINK-FILE include/rte_ethdev_pci.h
+  CC rte_flow.o
+  SYMLINK-FILE include/rte_ethdev_vdev.h
+  SYMLINK-FILE include/rte_dev_info.h
+  SYMLINK-FILE include/rte_eth_ctrl.h
+  CC rte_sched.o
+  CC rte_red.o
+  SYMLINK-FILE include/rte_flow.h
+  CC rte_approx.o
+  CC rte_reciprocal.o
+  SYMLINK-FILE include/rte_flow_driver.h
+  SYMLINK-FILE include/rte_sched.h
+  SYMLINK-FILE include/rte_bitmap.h
+  SYMLINK-FILE include/rte_sched_common.h
+  SYMLINK-FILE include/rte_red.h
+  SYMLINK-FILE include/rte_approx.h
+  SYMLINK-FILE include/rte_reciprocal.h
+  AR librte_cryptodev.a
+  INSTALL-LIB librte_cryptodev.a
+  AR librte_efd.a
+  INSTALL-LIB librte_efd.a
+  AR librte_sched.a
+  INSTALL-LIB librte_sched.a
+  AR librte_ethdev.a
+  INSTALL-LIB librte_ethdev.a
+== Build lib/librte_vhost
+== Build lib/librte_latencystats
+== Build lib/librte_ip_frag
+== Build lib/librte_distributor
+== Build lib/librte_bitratestats
+== Build lib/librte_pdump
+  CC rte_distributor_v20.o
+  CC rte_distributor.o
+  SYMLINK-FILE include/rte_distributor.h
+  SYMLINK-FILE include/rte_pdump.h
+  CC rte_distributor_match_sse.o
+  CC rte_pdump.o
+  CC rte_bitrate.o
+  CC fd_man.o
+  CC rte_ipv4_fragmentation.o
+  CC vhost.o
+  CC rte_latencystats.o
+  CC socket.o
+  SYMLINK-FILE include/rte_latencystats.h
+  CC vhost_user.o
+  SYMLINK-FILE include/rte_bitrate.h
+  CC virtio_net.o
+  AR librte_bitratestats.a
+  INSTALL-LIB librte_bitratestats.a
+  CC rte_ipv6_fragmentation.o
+  SYMLINK-FILE include/rte_vhost.h
+  AR librte_latencystats.a
+  INSTALL-LIB librte_latencystats.a
+  CC rte_ipv4_reassembly.o
+  CC rte_ipv6_reassembly.o
+  CC rte_ip_frag_common.o
+  SYMLINK-FILE include/rte_ip_frag.h
+  CC ip_frag_internal.o
+  AR librte_pdump.a
+  INSTALL-LIB librte_pdump.a
+  AR librte_distributor.a
+  INSTALL-LIB librte_distributor.a
+  AR librte_ip_frag.a
+  INSTALL-LIB librte_ip_frag.a
+== Build lib/librte_port
+  CC rte_port_ethdev.o
+  CC rte_port_ring.o
+  CC rte_port_frag.o
+  CC rte_port_ras.o
+  CC rte_port_sched.o
+  CC rte_port_source_sink.o
+  SYMLINK-FILE include/rte_port.h
+  CC rte_port_fd.o
+  SYMLINK-FILE include/rte_port_ethdev.h
+  SYMLINK-FILE include/rte_port_ring.h
+  SYMLINK-FILE include/rte_port_frag.h
+  SYMLINK-FILE include/rte_port_ras.h
+  SYMLINK-FILE include/rte_port_sched.h
+  SYMLINK-FILE include/rte_port_fd.h
+  SYMLINK-FILE include/rte_port_source_sink.h
+  AR librte_vhost.a
+  INSTALL-LIB librte_vhost.a
+  AR librte_port.a
+  INSTALL-LIB librte_port.a
+== Build lib/librte_table
+  CC rte_table_lpm.o
+  CC rte_table_lpm_ipv6.o
+  CC rte_table_acl.o
+  CC rte_table_hash_cuckoo.o
+  CC rte_table_hash_key8.o
+  CC rte_table_hash_ext.o
+  CC rte_table_hash_key32.o
+  CC rte_table_array.o
+  CC rte_table_hash_key16.o
+  CC rte_table_hash_lru.o
+  SYMLINK-FILE include/rte_table.h
+  CC rte_table_stub.o
+  SYMLINK-FILE include/rte_table_lpm.h
+  SYMLINK-FILE include/rte_table_lpm_ipv6.h
+  SYMLINK-FILE include/rte_table_acl.h
+  SYMLINK-FILE include/rte_table_hash.h
+  SYMLINK-FILE include/rte_lru.h
+  SYMLINK-FILE include/rte_table_array.h
+  SYMLINK-FILE include/rte_table_stub.h
+  AR librte_table.a
+  INSTALL-LIB librte_table.a
+== Build lib/librte_pipeline
+  SYMLINK-FILE include/rte_pipeline.h
+  CC rte_pipeline.o
+  AR librte_pipeline.a
+  INSTALL-LIB librte_pipeline.a
+== Build buildtools
+== Build buildtools/pmdinfogen
+  HOSTCC pmdinfogen.o
+  HOSTLD dpdk-pmdinfogen
+  INSTALL-HOSTAPP dpdk-pmdinfogen
+== Build drivers
+== Build drivers/bus
+== Build drivers/event
+== Build drivers/mempool
+== Build drivers/event/octeontx
+== Build drivers/event/skeleton
+== Build drivers/event/sw
+== Build drivers/mempool/ring
+== Build drivers/mempool/stack
+  CC skeleton_eventdev.o
+  CC ssovf_worker.o
+  SYMLINK-FILE include/rte_pmd_octeontx_ssovf.h
+  CC ssovf_mbox.o
+  CC ssovf_evdev.o
+  CC ssovf_probe.o
+  CC sw_evdev.o
+  CC sw_evdev_worker.o
+  CC sw_evdev_scheduler.o
+  PMDINFO skeleton_eventdev.o.pmd.c
+  CC skeleton_eventdev.o.pmd.o
+  LD skeleton_eventdev.o
+  PMDINFO ssovf_probe.o.pmd.c
+  CC ssovf_probe.o.pmd.o
+  CC sw_evdev_xstats.o
+  AR librte_pmd_skeleton_event.a
+  PMDINFO ssovf_evdev.o.pmd.c
+  CC ssovf_evdev.o.pmd.o
+  LD ssovf_probe.o
+  INSTALL-LIB librte_pmd_skeleton_event.a
+  LD ssovf_evdev.o
+  AR librte_pmd_octeontx_ssovf.a
+  INSTALL-LIB librte_pmd_octeontx_ssovf.a
+  CC rte_mempool_ring.o
+  CC rte_mempool_stack.o
+  PMDINFO sw_evdev.o.pmd.c
+  CC sw_evdev.o.pmd.o
+  LD sw_evdev.o
+  AR librte_pmd_sw_event.a
+  INSTALL-LIB librte_pmd_sw_event.a
+  AR librte_mempool_stack.a
+  INSTALL-LIB librte_mempool_stack.a
+  AR librte_mempool_ring.a
+  INSTALL-LIB librte_mempool_ring.a
+== Build drivers/net
+== Build drivers/crypto
+== Build drivers/crypto/null
+== Build drivers/crypto/scheduler
+== Build drivers/net/af_packet
+== Build drivers/net/bonding
+== Build drivers/net/ena
+== Build drivers/net/ark
+== Build drivers/net/cxgbe
+== Build drivers/net/enic
+== Build drivers/net/avp
+== Build drivers/net/e1000
+  CC rte_eth_af_packet.o
+  CC ark_ddm.o
+  CC avp_ethdev.o
+  CC rte_eth_bond_api.o
+  CC ena_ethdev.o
+  CC cxgbe_ethdev.o
+  CC scheduler_pmd.o
+  CC null_crypto_pmd.o
+  CC enic_ethdev.o
+  CC e1000_80003es2lan.o
+  CC ark_ethdev.o
+  PMDINFO rte_eth_af_packet.o.pmd.c
+  CC rte_eth_af_packet.o.pmd.o
+  LD rte_eth_af_packet.o
+  AR librte_pmd_af_packet.a
+  CC rte_eth_bond_pmd.o
+  PMDINFO avp_ethdev.o.pmd.c
+  CC avp_ethdev.o.pmd.o
+  INSTALL-LIB librte_pmd_af_packet.a
+  CC e1000_82540.o
+  LD avp_ethdev.o
+  SYMLINK-FILE include/rte_avp_common.h
+  SYMLINK-FILE include/rte_avp_fifo.h
+  AR librte_pmd_avp.a
+  INSTALL-LIB librte_pmd_avp.a
+  CC ena_com.o
+  CC ena_eth_com.o
+  PMDINFO ark_ethdev.o.pmd.c
+  PMDINFO null_crypto_pmd.o.pmd.c
+  CC ark_ethdev.o.pmd.o
+  CC null_crypto_pmd.o.pmd.o
+  PMDINFO cxgbe_ethdev.o.pmd.c
+  CC cxgbe_ethdev.o.pmd.o
+  CC scheduler_pmd_ops.o
+  CC e1000_82541.o
+  LD null_crypto_pmd.o
+  LD ark_ethdev.o
+  PMDINFO enic_ethdev.o.pmd.c
+  CC enic_ethdev.o.pmd.o
+  CC ark_ethdev_rx.o
+  CC null_crypto_pmd_ops.o
+  LD cxgbe_ethdev.o
+  CC cxgbe_main.o
+  LD enic_ethdev.o
+  CC sge.o
+  CC enic_main.o
+  PMDINFO ena_ethdev.o.pmd.c
+  CC ena_ethdev.o.pmd.o
+  LD ena_ethdev.o
+  CC e1000_82542.o
+  CC enic_rxtx.o
+  AR librte_pmd_ena.a
+  INSTALL-LIB librte_pmd_ena.a
+  CC e1000_82543.o
+  CC rte_cryptodev_scheduler.o
+  AR librte_pmd_null_crypto.a
+  INSTALL-LIB librte_pmd_null_crypto.a
+  CC scheduler_roundrobin.o
+  CC ark_ethdev_tx.o
+  CC ark_mpu.o
+  CC e1000_82571.o
+== Build drivers/net/fm10k
+  CC t4_hw.o
+  CC enic_clsf.o
+  CC scheduler_pkt_size_distr.o
+  CC scheduler_failover.o
+  PMDINFO rte_eth_bond_pmd.o.pmd.c
+  CC rte_eth_bond_pmd.o.pmd.o
+  LD rte_eth_bond_pmd.o
+  CC rte_eth_bond_args.o
+  SYMLINK-FILE include/rte_cryptodev_scheduler_operations.h
+  CC e1000_82575.o
+  CC ark_pktchkr.o
+  CC e1000_i210.o
+  CC fm10k_ethdev.o
+  CC enic_res.o
+  CC rte_eth_bond_8023ad.o
+  CC e1000_api.o
+  SYMLINK-FILE include/rte_cryptodev_scheduler.h
+  CC fm10k_rxtx.o
+  AR librte_pmd_crypto_scheduler.a
+  INSTALL-LIB librte_pmd_crypto_scheduler.a
+  CC fm10k_pf.o
+  CC fm10k_tlv.o
+  CC e1000_ich8lan.o
+  CC base/vnic_cq.o
+  CC e1000_mac.o
+  CC ark_pktdir.o
+  CC e1000_manage.o
+  CC e1000_mbx.o
+  CC base/vnic_wq.o
+  CC fm10k_common.o
+  CC fm10k_mbx.o
+  CC e1000_nvm.o
+  CC fm10k_vf.o
+  CC ark_pktgen.o
+  CC ark_rqp.o
+  CC fm10k_api.o
+  CC base/vnic_dev.o
+  CC fm10k_rxtx_vec.o
+  CC rte_eth_bond_alb.o
+  SYMLINK-FILE include/rte_eth_bond.h
+  CC base/vnic_intr.o
+  CC e1000_osdep.o
+  CC base/vnic_rq.o
+  CC e1000_phy.o
+  AR librte_pmd_cxgbe.a
+  CC ark_udm.o
+  INSTALL-LIB librte_pmd_cxgbe.a
+  CC base/vnic_rss.o
+== Build drivers/net/i40e
+== Build drivers/net/ixgbe
+  AR librte_pmd_ark.a
+  INSTALL-LIB librte_pmd_ark.a
+== Build drivers/net/liquidio
+== Build drivers/net/nfp
+  SYMLINK-FILE include/rte_eth_bond_8023ad.h
+  AR librte_pmd_bond.a
+  INSTALL-LIB librte_pmd_bond.a
+== Build drivers/net/bnxt
+== Build drivers/net/null
+  PMDINFO fm10k_ethdev.o.pmd.c
+  CC fm10k_ethdev.o.pmd.o
+  LD fm10k_ethdev.o
+  CC i40e_adminq.o
+  CC e1000_vf.o
+  AR librte_pmd_fm10k.a
+  INSTALL-LIB librte_pmd_fm10k.a
+  CC nfp_net.o
+  CC igb_ethdev.o
+  CC lio_ethdev.o
+  CC bnxt_cpr.o
+  CC ixgbe_common.o
+  CC bnxt_ethdev.o
+  CC rte_eth_null.o
+  CC ixgbe_82598.o
+  CC i40e_common.o
+  PMDINFO bnxt_ethdev.o.pmd.c
+  CC bnxt_ethdev.o.pmd.o
+  LD bnxt_ethdev.o
+  CC bnxt_filter.o
+  CC igb_rxtx.o
+  CC lio_rxtx.o
+  PMDINFO lio_ethdev.o.pmd.c
+  CC lio_ethdev.o.pmd.o
+  LD lio_ethdev.o
+  CC ixgbe_82599.o
+  AR librte_pmd_enic.a
+  INSTALL-LIB librte_pmd_enic.a
+  CC igb_pf.o
+  PMDINFO rte_eth_null.o.pmd.c
+  CC rte_eth_null.o.pmd.o
+  PMDINFO nfp_net.o.pmd.c
+  CC nfp_net.o.pmd.o
+  LD rte_eth_null.o
+  LD nfp_net.o
+  AR librte_pmd_null.a
+  AR librte_pmd_nfp.a
+  INSTALL-LIB librte_pmd_null.a
+  INSTALL-LIB librte_pmd_nfp.a
+  CC em_ethdev.o
+  CC em_rxtx.o
+  CC bnxt_hwrm.o
+== Build drivers/net/qede
+== Build drivers/net/ring
+  PMDINFO igb_ethdev.o.pmd.c
+  CC igb_ethdev.o.pmd.o
+  LD igb_ethdev.o
+  CC ixgbe_x540.o
+  CC ixgbe_x550.o
+  PMDINFO em_ethdev.o.pmd.c
+  CC em_ethdev.o.pmd.o
+  LD em_ethdev.o
+  CC ixgbe_phy.o
+  CC bnxt_ring.o
+  CC lio_23xx_vf.o
+  CC ixgbe_api.o
+  CC i40e_diag.o
+  CC rte_eth_ring.o
+  SYMLINK-FILE include/rte_eth_ring.h
+  CC ecore_dev.o
+  AR librte_pmd_e1000.a
+  INSTALL-LIB librte_pmd_e1000.a
+  CC bnxt_rxq.o
+  CC lio_mbox.o
+  CC ecore_hw.o
+  CC bnxt_rxr.o
+  CC i40e_hmc.o
+  CC ecore_cxt.o
+== Build drivers/net/sfc
+  CC ixgbe_vf.o
+  AR librte_pmd_lio.a
+  CC ixgbe_hv_vf.o
+  INSTALL-LIB librte_pmd_lio.a
+  PMDINFO rte_eth_ring.o.pmd.c
+  CC rte_eth_ring.o.pmd.o
+  CC ixgbe_dcb.o
+  LD rte_eth_ring.o
+  AR librte_pmd_ring.a
+  INSTALL-LIB librte_pmd_ring.a
+  CC i40e_lan_hmc.o
+  CC i40e_nvm.o
+  CC bnxt_stats.o
+  CC bnxt_txq.o
+  CC bnxt_txr.o
+  CC bnxt_vnic.o
+  CC ixgbe_dcb_82599.o
+  CC bnxt_irq.o
+  CC sfc_ethdev.o
+  CC sfc_kvargs.o
+  CC sfc.o
+  CC sfc_intr.o
+  CC sfc_mcdi.o
+  AR librte_pmd_bnxt.a
+  INSTALL-LIB librte_pmd_bnxt.a
+  CC sfc_ev.o
+  CC sfc_port.o
+  CC ixgbe_dcb_82598.o
+  CC ecore_l2.o
+  CC ixgbe_mbx.o
+  CC i40e_dcb.o
+  CC i40e_ethdev.o
+  CC ecore_sp_commands.o
+  CC ecore_init_fw_funcs.o
+== Build drivers/net/tap
+  CC ixgbe_rxtx.o
+== Build drivers/net/thunderx
+  PMDINFO sfc_ethdev.o.pmd.c
+  CC sfc_ethdev.o.pmd.o
+== Build drivers/net/virtio
+  LD sfc_ethdev.o
+  CC sfc_rx.o
+  CC sfc_tx.o
+  CC sfc_tso.o
+  CC sfc_filter.o
+  CC virtqueue.o
+  CC nicvf_rxtx.o
+  CC rte_eth_tap.o
+  CC ecore_spq.o
+  CC ecore_init_ops.o
+  CC i40e_rxtx.o
+  CC ixgbe_ethdev.o
+  CC virtio_pci.o
+  CC sfc_flow.o
+  CC nicvf_hw.o
+  CC ixgbe_fdir.o
+  CC virtio_rxtx.o
+  CC ecore_mcp.o
+  PMDINFO rte_eth_tap.o.pmd.c
+  CC rte_eth_tap.o.pmd.o
+  CC sfc_dp.o
+  LD rte_eth_tap.o
+  CC tap_flow.o
+  CC sfc_ef10_rx.o
+  CC nicvf_mbox.o
+  CC sfc_ef10_tx.o
+  CC nicvf_ethdev.o
+  CC ecore_int.o
+  CC efx_bootcfg.o
+  CC tap_netlink.o
+  CC tap_tcmsgs.o
+== Build drivers/net/vmxnet3
+  PMDINFO nicvf_ethdev.o.pmd.c
+  CC nicvf_ethdev.o.pmd.o
+  LD nicvf_ethdev.o
+  CC virtio_ethdev.o
+  CC nicvf_bsvf.o
+  CC efx_crc32.o
+  PMDINFO ixgbe_ethdev.o.pmd.c
+  CC ixgbe_ethdev.o.pmd.o
+  LD ixgbe_ethdev.o
+  CC ixgbe_pf.o
+  CC efx_ev.o
+  CC nicvf_svf.o
+  AR librte_pmd_tap.a
+  INSTALL-LIB librte_pmd_tap.a
+  CC efx_filter.o
+  AR librte_pmd_thunderx_nicvf.a
+  INSTALL-LIB librte_pmd_thunderx_nicvf.a
+  CC i40e_rxtx_vec_sse.o
+  CC i40e_ethdev_vf.o
+  CC i40e_pf.o
+  CC ecore_dcbx.o
+  PMDINFO i40e_ethdev.o.pmd.c
+  CC i40e_ethdev.o.pmd.o
+  LD i40e_ethdev.o
+  CC efx_hash.o
+  CC vmxnet3_rxtx.o
+  CC vmxnet3_ethdev.o
+  CC ixgbe_flow.o
+  CC ixgbe_rxtx_vec_sse.o
+  PMDINFO virtio_ethdev.o.pmd.c
+  CC virtio_ethdev.o.pmd.o
+  LD virtio_ethdev.o
+  CC virtio_rxtx_simple.o
+  CC efx_intr.o
+  PMDINFO vmxnet3_ethdev.o.pmd.c
+  CC vmxnet3_ethdev.o.pmd.o
+  LD vmxnet3_ethdev.o
+  CC efx_lic.o
+  CC efx_mac.o
+  CC ecore_sriov.o
+  CC bcm_osal.o
+  CC ecore_vf.o
+  PMDINFO i40e_ethdev_vf.o.pmd.c
+  CC i40e_ethdev_vf.o.pmd.o
+  LD i40e_ethdev_vf.o
+  CC i40e_fdir.o
+  CC virtio_rxtx_simple_sse.o
+== Build drivers/net/vhost
+  CC efx_mcdi.o
+  CC efx_mon.o
+  CC efx_nic.o
+  CC rte_pmd_ixgbe.o
+  CC virtio_user/vhost_user.o
+  CC rte_eth_vhost.o
+  CC i40e_flow.o
+  CC rte_pmd_i40e.o
+  AR librte_pmd_vmxnet3_uio.a
+  INSTALL-LIB librte_pmd_vmxnet3_uio.a
+  SYMLINK-FILE include/rte_pmd_i40e.h
+  CC virtio_user/vhost_kernel.o
+  CC qede_ethdev.o
+  CC efx_nvram.o
+  CC efx_phy.o
+  SYMLINK-FILE include/rte_pmd_ixgbe.h
+  AR librte_pmd_ixgbe.a
+  INSTALL-LIB librte_pmd_ixgbe.a
+  CC qede_eth_if.o
+  CC qede_main.o
+  CC qede_rxtx.o
+  CC efx_port.o
+  CC virtio_user/vhost_kernel_tap.o
+  PMDINFO rte_eth_vhost.o.pmd.c
+  CC rte_eth_vhost.o.pmd.o
+  CC qede_fdir.o
+  LD rte_eth_vhost.o
+  SYMLINK-FILE include/rte_eth_vhost.h
+  CC virtio_user/virtio_user_dev.o
+  CC efx_rx.o
+  AR librte_pmd_vhost.a
+  INSTALL-LIB librte_pmd_vhost.a
+  AR librte_pmd_i40e.a
+  INSTALL-LIB librte_pmd_i40e.a
+  CC virtio_user_ethdev.o
+  CC efx_sram.o
+  CC efx_vpd.o
+  CC efx_tx.o
+  PMDINFO qede_ethdev.o.pmd.c
+  CC qede_ethdev.o.pmd.o
+  LD qede_ethdev.o
+  CC mcdi_mon.o
+  CC siena_mac.o
+  CC siena_mcdi.o
+  CC siena_nic.o
+  CC siena_nvram.o
+  PMDINFO virtio_user_ethdev.o.pmd.c
+  CC virtio_user_ethdev.o.pmd.o
+  LD virtio_user_ethdev.o
+  CC siena_phy.o
+  CC siena_sram.o
+  AR librte_pmd_virtio.a
+  INSTALL-LIB librte_pmd_virtio.a
+  CC ef10_ev.o
+  CC siena_vpd.o
+  CC ef10_filter.o
+  CC ef10_intr.o
+  CC ef10_mac.o
+  CC ef10_mcdi.o
+  CC ef10_nic.o
+  CC ef10_nvram.o
+  CC ef10_phy.o
+  CC ef10_rx.o
+  CC ef10_tx.o
+  CC ef10_vpd.o
+  CC hunt_nic.o
+  CC medford_nic.o
+  AR librte_pmd_sfc_efx.a
+  INSTALL-LIB librte_pmd_sfc_efx.a
+  AR librte_pmd_qede.a
+  INSTALL-LIB librte_pmd_qede.a
+== Build app
+== Build app/test-pmd
+== Build app/pdump
+== Build app/test-crypto-perf
+== Build app/proc_info
+  CC main.o
+  CC main.o
+  CC cperf_ops.o
+  CC cperf_options_parsing.o
+  CC cperf_test_vectors.o
+  CC cperf_test_latency.o
+  CC cperf_test_throughput.o
+  CC main.o
+  CC cperf_test_verify.o
+  CC testpmd.o
+  CC parameters.o
+  CC cperf_test_vector_parsing.o
+  CC cmdline.o
+  LD dpdk-pdump
+  CC cmdline_flow.o
+  CC config.o
+  CC iofwd.o
+  LD dpdk-procinfo
+  CC macfwd.o
+  INSTALL-APP dpdk-pdump
+  INSTALL-MAP dpdk-pdump.map
+  CC macswap.o
+  LD dpdk-test-crypto-perf
+  CC flowgen.o
+  CC rxonly.o
+  INSTALL-APP dpdk-test-crypto-perf
+  INSTALL-APP dpdk-procinfo
+  INSTALL-MAP dpdk-procinfo.map
+  INSTALL-MAP dpdk-test-crypto-perf.map
+  CC txonly.o
+  CC csumonly.o
+  CC icmpecho.o
+  LD testpmd
+  INSTALL-APP testpmd
+  INSTALL-MAP testpmd.map
+Build complete [x86_64-native-linuxapp-gcc]
+================== Installing dpdk-install/
+Installation in dpdk-install/ complete
+cp: cannot create regular file '/lib/modules/4.13.0-39-generic/extra/': Not a directory
+modprobe: FATAL: Module igb_uio not found in directory /lib/modules/4.13.0-39-generic
+/root/vm_scripts/4_build_l2fwd.sh: line 6: cd: /root//dpdk-16.11/examples/l2fwd: No such file or directory
+sed: can't read main.c: No such file or directory
+sed: can't read main.c: No such file or directory
+make: *** No targets specified and no makefile found.  Stop.
+Cleaning..
+Downloading..
+--2018-05-08 12:41:47--  http://dpdk.org/browse/apps/pktgen-dpdk/snapshot/pktgen-3.4.1.tar.gz
+Resolving dpdk.org (dpdk.org)... 92.243.14.124
+Connecting to dpdk.org (dpdk.org)|92.243.14.124|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [application/x-gzip]
+Saving to: ‘/root/pktgen-3.4.1.tar.gz’
+
+     0K .......... .......... .......... .......... ..........  144K
+    50K .......... .......... .......... .......... ..........  286K
+   100K .......... .......... .......... .......... .......... 4.98M
+   150K .......... .......... .......... .......... ..........  301K
+   200K .......... .......... .......... .......... .......... 3.09M
+   250K .......... .......... .......... .......... ..........  320K
+   300K .......... .......... .......... .......... .......... 2.95M
+   350K .......... .......... .......... .......... .......... 2.90M
+   400K .......... .......... .......... .......... ..........  354K
+   450K .......... .......... .......... .......... .......... 7.13M
+   500K .......... .......... .......... .......... .......... 2.87M
+   550K .......... .......... .......... .......... .......... 2.87M
+   600K .......... .......... .......... .......... .......... 2.96M
+   650K .......... .......... .......... .......... .......... 2.73M
+   700K .......... .......... .......... .......... ..........  518K
+   750K .......... .......... .......... .......... .......... 4.47M
+   800K .......... .......... .......... .......... .......... 2.77M
+   850K .......... .......... .......... .......... .......... 2.95M
+   900K .......... .......... .......... .......... .......... 2.90M
+   950K .......... .......... .......... .......... .......... 2.84M
+  1000K .......... .......... .......... .......... .......... 2.91M
+  1050K .......... .......... .......... .......... .......... 2.93M
+  1100K .......... .......... .......... .......... .......... 2.78M
+  1150K .......... .......... .......... .......... .......... 2.61M
+  1200K .......... .......... .......... .......... .......... 1.83M
+  1250K .......... .......... .......... .......... .......... 3.19M
+  1300K .......... .......... .......... .......... .......... 2.87M
+  1350K .......... .......... .......... .......... .......... 2.84M
+  1400K .......... .......... .......... .......... .......... 2.90M
+  1450K .......... .......... .......... .......... .......... 2.82M
+  1500K .......... .......... .......... .......... .......... 2.91M
+  1550K .......... .......... .......... .......... .......... 2.87M
+  1600K .......... .......... .......... .......... .......... 1018K
+  1650K .......... .......... .......... .......... .......... 4.91M
+  1700K .......... .......... .......... .......... .......... 2.76M
+  1750K .......... .......... .......... .......... ..........  193K
+  1800K .......... .......... .......... .......... .......... 5.80M
+  1850K .......... .......... .......... .......... .......... 4.81M
+  1900K .......... .......... .......... .......... .......... 3.70M
+  1950K .......... .......... .......... .......... .......... 10.0M
+  2000K .......... .......... .......... .......... .......... 4.22M
+  2050K .......... .......... .......... .......... .......... 5.28M
+  2100K .......... .......... .......... .......... ..........  185K
+  2150K .......... .......... .......... .......... ..........  156M
+  2200K .......... .......... .......... .......... ..........  286K
+  2250K .......... .......... .......... .......... .......... 5.88M
+  2300K .......... .......... .......... .......... .......... 10.0M
+  2350K .......... .......... .......... .......... ..........  103M
+  2400K .......... .......... .......... .......... .......... 1.03M
+  2450K .......... .......... .......... .......... .......... 29.8M
+  2500K .......... .......... .......... .......... ..........  106M
+  2550K .......... .......... .......... .......... .......... 69.5M
+  2600K .......... .......... .......... .......... ..........  169K
+  2650K .......... .......... .......... .......... .......... 20.2M
+  2700K .......... .......... .......... .......... .......... 24.1M
+  2750K .......... .......... .......... .......... .......... 71.1M
+  2800K .......... .......... .......... .......... ..........  117M
+  2850K .......... .......... .......... .......... ..........  113M
+  2900K .......... .......... .......... .......... .......... 93.5M
+  2950K .......... .......... .......... .......... ..........  109M
+  3000K .......... .......... .......... .......... .......... 96.6M
+  3050K .......... .......... .......... .......... ..........  120M
+  3100K .......... .......... .......... .......... ..........  138M
+  3150K .......... .......... .......... .......... .......... 11.2M
+  3200K .......... .......... .......... .......... .......... 22.8M
+  3250K .......... .......... .......... .......... ..........  166M
+  3300K .......... .......... .......... .......... ..........  178M
+  3350K .......... .......... .......... .......... ..........  128M
+  3400K .......... .......... .......... .......... ..........  174M
+  3450K .......... .......... .......... .......... ..........  176M
+  3500K .......... .......... .......... .......... ..........  164M
+  3550K .......... .......... .......... .......... ..........  161M
+  3600K .......... .......... .......... .......... ..........  185M
+  3650K .......... .......... .......... .......... ..........  150M
+  3700K .......... .......... .......... .......... ..........  178M
+  3750K .......... .......... .......... .......... ..........  168M
+  3800K .......... .......... .......... .......... ..........  166M
+  3850K .......... .......... .......... .......... ..........  116M
+  3900K .......... .......... .......... .......... ..........  329K
+  3950K .......... .......... .......... .......... .......... 6.29M
+  4000K .......... .......... .......... .......... .......... 2.95M
+  4050K .......... .......... .......... .......... .......... 2.80M
+  4100K .......... .......... .......... .......... .......... 2.91M
+  4150K .......... .......... .......... .......... ..........  417K
+  4200K .......... .......... .......... .......... .......... 2.93M
+  4250K .......... .......... .......... .......... .......... 2.81M
+  4300K .......... .......... .......... .......... .......... 2.89M
+  4350K .......... .......... .......... .......... .......... 2.90M
+  4400K .......... .......... .......... .......... .......... 2.82M
+  4450K .......... .......... .......... .......... .......... 2.91M
+  4500K .......... .......... .......... .......... ..........  754K
+  4550K .......... .......... .......... .......... .......... 4.92M
+  4600K .......... .......... .......... .......... .......... 2.89M
+  4650K .......... .......... .......... .......... .......... 2.78M
+  4700K .......... .......... .......... .......... .......... 2.17M
+  4750K .......... .......... .......... .......... .......... 4.22M
+  4800K .......... .......... .......... .......... .......... 2.90M
+  4850K .......... .......... .......... .......... .......... 2.35M
+  4900K .......... .......... .......... .......... .......... 2.81M
+  4950K .......... .......... .......... .......... .......... 2.87M
+  5000K .......... .......... .......... .......... .......... 2.78M
+  5050K .......... .......... .......... .......... ..........  177K
+  5100K .......... .......... .......... .......... ..........  198K
+  5150K .......... .......... .......... .......... .......... 65.0M
+  5200K .......... .......... .......... .......... ..........  143M
+  5250K .......... .......... .......... .......... ..........  120M
+  5300K .......... .......... .......... .......... ..........  117M
+  5350K .......... .......... .......... .......... .......... 99.8M
+  5400K .......... .......... .......... .......... ..........  111M
+  5450K .......... .......... .......... .......... ..........  122M
+  5500K .......... .......... .......... .......... ..........  108M
+  5550K .......... .......... .......... .......... .......... 96.8M
+  5600K .......... .......... .......... .......... ..........  125M
+  5650K .......... .......... .......... .......... ..........  114M
+  5700K .......... .......... .......... .......... ..........  129M
+  5750K .......... .......... .......... .......... ..........  131M
+  5800K .......... .......... .......... .......... ..........  102M
+  5850K .......... .......... .......... .......... ..........  201K
+  5900K .......... .......... .......... .......... .......... 9.31M
+  5950K .......... .......... .......... .......... ..........  107M
+  6000K .......... .......... .......... .......... ..........  129M
+  6050K .......... .......... .......... .......... ..........  129M
+  6100K .......... .......... .......... .......... ..........  112M
+  6150K .......... .......... .......... .......... ..........  107M
+  6200K .......... .......... .......... .......... ..........  137M
+  6250K .......... .......... .......... .......... ..........  131M
+  6300K .......... .......... .......... .......... ..........  139M
+  6350K .......... .......... .......... .......... ..........  101M
+  6400K .......... .......... .......... .......... ..........  138M
+  6450K .......... .......... .......... .......... ..........  141M
+  6500K .......... .......... .......... .......... ..........  131M
+  6550K .......... .......... .......... .......... ..........  130M
+  6600K .......... .......... .......... .......... ..........  129M
+  6650K .......... .......... .......... .......... .......... 1.04M
+  6700K .......... .......... .......... .......... .......... 5.61M
+  6750K .......... .......... .......... .......... .......... 10.4M
+  6800K .......... .......... .......... .......... ..........  134M
+  6850K .......... .......... .......... .......... ..........  138M
+  6900K .......... .......... .......... .......... ..........  136M
+  6950K .......... .......... .......... .......... .......... 97.6M
+  7000K .......... .......... .......... .......... ..........  146M
+  7050K .......... .......... .......... .......... ..........  480K
+  7100K .......... .......... .......... .......... ..........  132M
+  7150K .......... .......... .......... .......... .......... 1.60M
+  7200K .......... .......... .......... .......... ..........  111M
+  7250K .......... .......... .......... .......... ..........  126M
+  7300K .......... .......... .......... .......... ..........  131M
+  7350K .......... ......                                       133M=4.4s
+
+2018-05-08 12:41:52 (1.64 MB/s) - ‘/root/pktgen-3.4.1.tar.gz’ saved [7543077]
+
+Extracting..
+== lib
+== common
+  CC copyright_info.o
+  CC port_config.o
+  CC core_info.o
+  CC cmdline_parse_args.o
+  CC lscpu.o
+  CC utils.o
+  CC coremap.o
+  CC _pcap.o
+  CC cksum.o
+  CC l2p.o
+  AR libcommon.a
+  SYMLINK-FILE include/cksum.h
+  SYMLINK-FILE include/copyright_info.h
+  SYMLINK-FILE include/core_info.h
+  SYMLINK-FILE include/coremap.h
+  SYMLINK-FILE include/cmdline_parse_args.h
+  SYMLINK-FILE include/cycles.h
+  SYMLINK-FILE include/pg_ether.h
+  SYMLINK-FILE include/l2p.h
+  SYMLINK-FILE include/lscpu.h
+  SYMLINK-FILE include/mbuf.h
+  SYMLINK-FILE include/_pcap.h
+  SYMLINK-FILE include/port_config.h
+  SYMLINK-FILE include/utils.h
+  INSTALL-LIB libcommon.a
+== lua
+== src
+  CC lapi.o
+  CC lauxlib.o
+  CC lbaselib.o
+  CC lbitlib.o
+  CC lcode.o
+  CC lcorolib.o
+  CC lctype.o
+  CC ldblib.o
+  CC ldebug.o
+  CC ldo.o
+  CC ldump.o
+  CC lfunc.o
+  CC lgc.o
+  CC linit.o
+  CC liolib.o
+  CC llex.o
+  CC lmathlib.o
+  CC lmem.o
+  CC loadlib.o
+  CC lobject.o
+  CC lopcodes.o
+  CC loslib.o
+  CC lparser.o
+  CC lstate.o
+  CC lutf8lib.o
+  CC lstring.o
+  CC lstrlib.o
+  CC ltable.o
+  CC ltablib.o
+  CC ltm.o
+  CC lua_shell.o
+  CC lundump.o
+  CC lvm.o
+  CC lzio.o
+  CC lua-socket.o
+  AR librte_lua.a
+  SYMLINK-FILE include/lapi.h
+  SYMLINK-FILE include/lauxlib.h
+  SYMLINK-FILE include/lcode.h
+  SYMLINK-FILE include/lctype.h
+  SYMLINK-FILE include/ldebug.h
+  SYMLINK-FILE include/ldo.h
+  SYMLINK-FILE include/lfunc.h
+  SYMLINK-FILE include/lgc.h
+  SYMLINK-FILE include/llex.h
+  SYMLINK-FILE include/llimits.h
+  SYMLINK-FILE include/lmem.h
+  SYMLINK-FILE include/lobject.h
+  SYMLINK-FILE include/lopcodes.h
+  SYMLINK-FILE include/lparser.h
+  SYMLINK-FILE include/lprefix.h
+  SYMLINK-FILE include/lstate.h
+  SYMLINK-FILE include/lstring.h
+  SYMLINK-FILE include/ltable.h
+  SYMLINK-FILE include/ltm.h
+  SYMLINK-FILE include/luaconf.h
+  SYMLINK-FILE include/lua.h
+  SYMLINK-FILE include/lualib.h
+  SYMLINK-FILE include/lua_shell.h
+  SYMLINK-FILE include/lua-socket.h
+  SYMLINK-FILE include/lundump.h
+  SYMLINK-FILE include/lvm.h
+  SYMLINK-FILE include/lzio.h
+  INSTALL-LIB librte_lua.a
+== cli
+  CC cli.o
+  CC cli_cmds.o
+  CC cli_map.o
+  CC cli_gapbuf.o
+  CC cli_file.o
+  CC cli_env.o
+  CC cli_auto_complete.o
+  CC cli_help.o
+  CC cli_history.o
+  CC cli_search.o
+  CC cli_cmap.o
+  CC cli_vt100.o
+  CC cli_vt100_keys.o
+  CC cli_scrn.o
+  CC cli_string_fns.o
+  AR librte_cli.a
+  SYMLINK-FILE include/cli.h
+  SYMLINK-FILE include/cli_common.h
+  SYMLINK-FILE include/cli_map.h
+  SYMLINK-FILE include/cli_gapbuf.h
+  SYMLINK-FILE include/cli_file.h
+  SYMLINK-FILE include/cli_env.h
+  SYMLINK-FILE include/cli_search.h
+  SYMLINK-FILE include/cli_help.h
+  SYMLINK-FILE include/cli_history.h
+  SYMLINK-FILE include/cli_vt100.h
+  SYMLINK-FILE include/cli_vt100_keys.h
+  SYMLINK-FILE include/cli_scrn.h
+  SYMLINK-FILE include/cli_string_fns.h
+  INSTALL-LIB librte_cli.a
+== app
+  CC cli-functions.o
+  CC lpktgenlib.o
+  CC pktgen-cmds.o
+  CC pktgen.o
+  CC pktgen-cfg.o
+  CC pktgen-main.o
+  CC pktgen-pcap.o
+  CC pktgen-range.o
+  CC pktgen-cpu.o
+  CC pktgen-seq.o
+  CC pktgen-dump.o
+  CC pktgen-capture.o
+  CC pktgen-stats.o
+  CC pktgen-port-cfg.o
+  CC pktgen-ipv6.o
+  CC pktgen-ipv4.o
+  CC pktgen-arp.o
+  CC pktgen-gre.o
+  CC pktgen-ether.o
+  CC pktgen-tcp.o
+  CC pktgen-udp.o
+  CC pktgen-vlan.o
+  CC pktgen-random.o
+  CC pktgen-display.o
+  CC pktgen-log.o
+  CC pktgen-gtpu.o
+  CC pktgen-latency.o
+  LD pktgen
+Cloning into '/opt/src/nfp-drv-kmods'...
+make -C /lib/modules/4.13.0-39-generic/build M=`pwd`/src modules
+make[1]: Entering directory '/usr/src/linux-headers-4.13.0-39-generic'
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp6000_pcie.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_nsp.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_cppcore.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_cpplib.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_em_manager.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_hwinfo.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_mip.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_mutex.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_nbi.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_nffw.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_nsp_cmds.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_nsp_eth.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_platform.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_resource.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_rtsym.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_target.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_nbi_mac_eth.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_net_vnic.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_net_debugdump.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_plat.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_main.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_hwmon.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_dev_cpp.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfpcore/nfp_export.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_app.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_net_ctrl.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_net_common.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_net_ethtool.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_net_debugfs.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_net_sriov.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_port.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_app_nic.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_ctrl.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_net_main.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nic/main.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_devlink.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_net_repr.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/flower/action.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/flower/cmsg.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/flower/match.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/flower/metadata.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/flower/offload.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/flower/main.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/flower/tunnel_conf.o
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_netvf_main.o
+  LD [M]  /opt/src/nfp-drv-kmods/src/nfp.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /opt/src/nfp-drv-kmods/src/nfp.mod.o
+  LD [M]  /opt/src/nfp-drv-kmods/src/nfp.ko
+make[1]: Leaving directory '/usr/src/linux-headers-4.13.0-39-generic'
+make -C /lib/modules/4.13.0-39-generic/build M=`pwd`/src modules
+make[1]: Entering directory '/usr/src/linux-headers-4.13.0-39-generic'
+  CC [M]  /opt/src/nfp-drv-kmods/src/nfp_main.o
+  LD [M]  /opt/src/nfp-drv-kmods/src/nfp.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  LD [M]  /opt/src/nfp-drv-kmods/src/nfp.ko
+make[1]: Leaving directory '/usr/src/linux-headers-4.13.0-39-generic'
+make -C /lib/modules/4.13.0-39-generic/build M=`pwd`/src modules_install
+make[1]: Entering directory '/usr/src/linux-headers-4.13.0-39-generic'
+  INSTALL /opt/src/nfp-drv-kmods/src/nfp.ko
+At main.c:160:
+- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175
+- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178
+sign-file: certs/signing_key.pem: No such file or directory
+  DEPMOD  4.13.0-39-generic
+make[1]: Leaving directory '/usr/src/linux-headers-4.13.0-39-generic'
+make -C /lib/modules/4.13.0-39-generic/build M=`pwd` clean
+make[1]: Entering directory '/usr/src/linux-headers-4.13.0-39-generic'
+make[1]: Leaving directory '/usr/src/linux-headers-4.13.0-39-generic'
+  CC main.o
+  CC l3fwd_lpm.o
+In file included from /root/dpdk-17.05/examples/l3fwd/l3fwd_lpm.c:108:0:
+/root/dpdk-17.05/examples/l3fwd/l3fwd_lpm_sse.h: In function ‘l3fwd_lpm_send_packets’:
+/root/dpdk-17.05/examples/l3fwd/l3fwd_lpm_sse.h:201:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_lpm_sse.h:202:2: note: here
+  case 2:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_lpm_sse.h:204:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_lpm_sse.h:205:2: note: here
+  case 1:
+  ^~~~
+In file included from /root/dpdk-17.05/examples/l3fwd/l3fwd_lpm_sse.h:37:0,
+                 from /root/dpdk-17.05/examples/l3fwd/l3fwd_lpm.c:108:
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h: In function ‘send_packets_multi’:
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:466:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:467:2: note: here
+  case 2:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:470:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:471:2: note: here
+  case 1:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h: In function ‘send_packetsx4’:
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:351:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:352:2: note: here
+  case 3:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:354:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:355:2: note: here
+  case 2:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:357:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:358:2: note: here
+  case 1:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:378:5: warning: this statement may fall through [-Wimplicit-fallthrough=]
+    j++;
+    ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:379:3: note: here
+   case 3:
+   ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:381:5: warning: this statement may fall through [-Wimplicit-fallthrough=]
+    j++;
+    ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:382:3: note: here
+   case 2:
+   ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:384:5: warning: this statement may fall through [-Wimplicit-fallthrough=]
+    j++;
+    ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:385:3: note: here
+   case 1:
+   ^~~~
+  CC l3fwd_em.o
+In file included from /root/dpdk-17.05/examples/l3fwd/l3fwd_em_hlm_sse.h:37:0,
+                 from /root/dpdk-17.05/examples/l3fwd/l3fwd_em.c:335:
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h: In function ‘send_packets_multi’:
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:466:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:467:2: note: here
+  case 2:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:470:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:471:2: note: here
+  case 1:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h: In function ‘send_packetsx4’:
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:351:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:352:2: note: here
+  case 3:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:354:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:355:2: note: here
+  case 2:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:357:4: warning: this statement may fall through [-Wimplicit-fallthrough=]
+   j++;
+   ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:358:2: note: here
+  case 1:
+  ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:378:5: warning: this statement may fall through [-Wimplicit-fallthrough=]
+    j++;
+    ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:379:3: note: here
+   case 3:
+   ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:381:5: warning: this statement may fall through [-Wimplicit-fallthrough=]
+    j++;
+    ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:382:3: note: here
+   case 2:
+   ^~~~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:384:5: warning: this statement may fall through [-Wimplicit-fallthrough=]
+    j++;
+    ~^~
+/root/dpdk-17.05/examples/l3fwd/l3fwd_sse.h:385:3: note: here
+   case 1:
+   ^~~~
+  LD l3fwd
+  INSTALL-APP l3fwd
+  INSTALL-MAP l3fwd.map
+sed: can't read /etc/rc.local: No such file or directory
+Updating Netplan ...
+Netplan apply...
+Domain ubuntu_backing is being shutdown
+
+VM is still running
+Domain ubuntu_backing has been undefined
+
+
+Base image created!
+
+root@temp8:~/IVG_folder/vm_creator/ubuntu# exit
+exit
+
+Script done on Tue 08 May 2018 12:43:40 PM UTC

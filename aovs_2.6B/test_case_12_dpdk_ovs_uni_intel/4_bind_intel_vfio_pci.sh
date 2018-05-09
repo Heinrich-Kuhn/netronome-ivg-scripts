@@ -12,11 +12,11 @@ elif [[ "$PCI" == *":"*"."* ]]; then
 fi
 echo $PCI
 
-modprobe uio
+modprobe uio #TODO: why modprobe uio not igb_uio??
 sleep 1
 IGB_UIO="$(find / -name 'igb_uio.ko' | head -1)"
 sleep 1
-insmod $IGB_UIO
+insmod $IGB_UIO #TODO: needs check for preload driver
 
 driver=igb_uio
 
@@ -27,7 +27,7 @@ if [ "$DPDK_DEVBIND" == "" ]; then
 fi
 
 echo "loading driver"
-modprobe $driver
+modprobe uio
 echo "DPDK_DEVBIND: $DPDK_DEVBIND"
 echo $DPDK_DEVBIND --bind $driver $PCI
 $DPDK_DEVBIND --bind $driver $PCI

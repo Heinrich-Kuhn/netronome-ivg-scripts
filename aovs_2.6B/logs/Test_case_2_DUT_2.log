@@ -1,0 +1,1084 @@
+Script started on Mon 07 May 2018 06:48:24 AM UTC
+cd
+root@stingray:~# cd
+root@stingray:~# $HOME/IVG_folder/vm_creator/ubuntu/y_creat e_vm_from_backing.sh netronome-sriov-vm
+DONE(delete-vms.sh)
+ - undefine VM netronome-xvio-vxlan-vm
+DONE(delete-vms.sh)
+create overlay image
+Formatting '/var/lib/libvirt/images/netronome-sriov-vm.qcow2', fmt=qcow2 size=2361393152 backing_file=/var/lib/libvirt/images/ubuntu-17.10-server-cloudimg-amd64.img encryption=off cluster_size=65536 lazy_refcounts=off refcount_bits=16
+create domain
+[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (cli:256) Launched with command line: /usr/share/virt-manager/virt-install --name netronome-sriov-vm --disk path=/var/lib/libvirt/images/netronome-sriov-vm.qcow2,format=qcow2,bus=virtio,cache=none --ram 6144 --vcpus 5 --cpu Haswell-noTSX-IBRS --network network=default --nographics --debug --accelerate --os-type=linux --os-variant=ubuntu16.04 --noautoconsole --noreboot --import
+[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (cli:266) Requesting libvirt URI default
+[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (cli:270) Received libvirt URI qemu:///system
+[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:357) Requesting virt method 'default', hv type 'default'.
+[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:577) Received virt method 'kvm'
+[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:578) Hypervisor name is 'hvm'
+[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:269) Distilled --network options: ['network=default']
+[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:315) --graphics compat generated: none
+[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:182) Distilled --disk options: ['path=/var/lib/libvirt/images/netronome-sriov-vm.qcow2,format=qcow2,bus=virtio,cache=none']
+[Mon, 07 May 2018 06:48:37 virt-install 24065] DEBUG (guest:241) Setting Guest.os_variant to 'ubuntu16.04'
+[Mon, 07 May 2018 06:48:37 virt-install 24065] DEBUG (virt-install:732) Guest.has_install_phase: False
+
+Starting install...
+[Mon, 07 May 2018 06:48:37 virt-install 24065] DEBUG (guest:398) Generated install XML: None required
+[Mon, 07 May 2018 06:48:37 virt-install 24065] DEBUG (guest:399) Generated boot XML: 
+<domain type="kvm">
+  <name>netronome-sriov-vm</name>
+  <uuid>8513cd40-df8a-4e65-a337-716d764ba98c</uuid>
+  <memory>6291456</memory>
+  <currentMemory>6291456</currentMemory>
+  <vcpu>5</vcpu>
+  <os>
+    <type arch="x86_64">hvm</type>
+    <boot dev="hd"/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <cpu mode="custom" match="exact">
+    <model>Haswell-noTSX-IBRS</model>
+  </cpu>
+  <clock offset="utc">
+    <timer name="rtc" tickpolicy="catchup"/>
+    <timer name="pit" tickpolicy="delay"/>
+    <timer name="hpet" present="no"/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <pm>
+    <suspend-to-mem enabled="no"/>
+    <suspend-to-disk enabled="no"/>
+  </pm>
+  <devices>
+    <emulator>/usr/bin/kvm-spice</emulator>
+    <disk type="file" device="disk">
+      <driver name="qemu" type="qcow2" cache="none"/>
+      <source file="/var/lib/libvirt/images/netronome-sriov-vm.qcow2"/>
+      <target dev="vda" bus="virtio"/>
+    </disk>
+    <controller type="usb" index="0" model="ich9-ehci1"/>
+    <controller type="usb" index="0" model="ich9-uhci1">
+      <master startport="0"/>
+    </controller>
+    <controller type="usb" index="0" model="ich9-uhci2">
+      <master startport="2"/>
+    </controller>
+    <controller type="usb" index="0" model="ich9-uhci3">
+      <master startport="4"/>
+    </controller>
+    <interface type="network">
+      <source network="default"/>
+      <mac address="52:54:00:04:84:f1"/>
+      <model type="virtio"/>
+    </interface>
+    <input type="mouse" bus="ps2"/>
+    <console type="pty"/>
+  </devices>
+</domain>
+
+Creating domain...                     |    0 B  00:00     
+[Mon, 07 May 2018 06:48:37 virt-install 24065] DEBUG (guest:429) XML fetched from libvirt object:
+<domain type='kvm'>
+  <name>netronome-sriov-vm</name>
+  <uuid>8513cd40-df8a-4e65-a337-716d764ba98c</uuid>
+  <memory unit='KiB'>6291456</memory>
+  <currentMemory unit='KiB'>6291456</currentMemory>
+  <vcpu placement='static'>5</vcpu>
+  <os>
+    <type arch='x86_64' machine='pc-i440fx-xenial'>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <cpu mode='custom' match='exact'>
+    <model fallback='allow'>Haswell-noTSX-IBRS</model>
+  </cpu>
+  <clock offset='utc'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <pm>
+    <suspend-to-mem enabled='no'/>
+    <suspend-to-disk enabled='no'/>
+  </pm>
+  <devices>
+    <emulator>/usr/bin/kvm-spice</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='none'/>
+      <source file='/var/lib/libvirt/images/netronome-sriov-vm.qcow2'/>
+      <target dev='vda' bus='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+    </disk>
+    <controller type='usb' index='0' model='ich9-ehci1'>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x7'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci1'>
+      <master startport='0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0' multifunction='on'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci2'>
+      <master startport='2'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x1'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci3'>
+      <master startport='4'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x2'/>
+    </controller>
+    <controller type='pci' index='0' model='pci-root'/>
+    <interface type='network'>
+      <mac address='52:54:00:04:84:f1'/>
+      <source network='default'/>
+      <model type='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+    </interface>
+    <serial type='pty'>
+      <target port='0'/>
+    </serial>
+    <console type='pty'>
+      <target type='serial' port='0'/>
+    </console>
+    <memballoon model='virtio'>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
+    </memballoon>
+  </devices>
+</domain>
+
+Domain creation completed.
+You can restart your domain by running:
+  virsh --connect qemu:///system start netronome-sriov-vm
+VM has been created!
+root@stingray:~# ./IVG_folder/test_case_2_sriov_uni/1_port/ setup_test_case_2.sh netronome-sriov-vm 5 OVS_TC
+[1m[37mlibvirt folders[m
+DONE(0_configure_hugepages.sh)
+find: ‘/proc/24165’: No such file or directory
+Stop openvswitch ...
+ * Exiting ovs-vswitchd (30121)
+ * Exiting ovsdb-server (30111)
+PCI corrected
+0000:82
+Unbinding VFs
+Stop Virtioforwarder ...
+Failed to stop virtioforwarder.service: Unit virtioforwarder.service not loaded.
+rmmod nfp
+CLEANED
+Reloading nfp module
+rmmod: ERROR: Module nfp is not currently loaded
+nfp module loaded
+Creating VF's ...
+Creating VF's done
+PCI corrected
+0000:82:00.0
+enp130s0
+Cannot get device udp-fragmentation-offload settings: Operation not supported
+Cannot get device udp-fragmentation-offload settings: Operation not supported
+rename851
+Cannot get device udp-fragmentation-offload settings: Operation not supported
+Cannot get device udp-fragmentation-offload settings: Operation not supported
+Start OVS
+ * Starting ovsdb-server
+ * system ID not configured, please use --system-id
+ * Configuring Open vSwitch system IDs
+ * Starting ovs-vswitchd
+ * Enabling remote OVSDB managers
+OVS-TC started
+PCI corrected
+hostname: Name or service not known
+ovs-vsctl: external-ids:hostname=: argument does not end in "=" followed by a value.
+Add eth42 to br0
+ovs-vsctl add-port br0 eth42 -- set interface eth42 ofport_request=41
+VF1_PCI_ADDRESS: 0000:82:0d.1
+INTERFACE_PCI: 0000:82:0d.1
+current driver: nfp_netvf
+expected driver: vfio-pci
+testing: bind nfp_netvf on 0000:82:0d.1
+FIRST VF DONE
+Add eth43 to br0
+ovs-vsctl add-port br0 eth43 -- set interface eth43 ofport_request=42
+VF2_PCI_ADDRESS: 0000:82:0d.2
+INTERFACE_PCI: 0000:82:0d.2
+current driver: nfp_netvf
+expected driver: vfio-pci
+testing: bind nfp_netvf on 0000:82:0d.2
+SECOND VF DONE
+Add eth44 to br0
+ovs-vsctl add-port br0 eth44 -- set interface eth44 ofport_request=43
+VF3_PCI_ADDRESS: 0000:82:0d.3
+INTERFACE_PCI: 0000:82:0d.3
+current driver: nfp_netvf
+expected driver: vfio-pci
+testing: bind nfp_netvf on 0000:82:0d.3
+THIRD VF DONE
+Add eth45 to br0
+ovs-vsctl add-port br0 eth45 -- set interface eth45 ofport_request=44
+VF4_PCI_ADDRESS: 0000:82:0d.4
+INTERFACE_PCI: 0000:82:0d.4
+current driver: nfp_netvf
+expected driver: vfio-pci
+testing: bind nfp_netvf on 0000:82:0d.4
+FOURTH VF DONE
+pf0 = eth1
+p0 = rename851
+d6eff4d8-c118-40a0-bf18-4eafe70ae0de
+    Bridge "br0"
+        Port "eth44"
+            Interface "eth44"
+        Port "eth45"
+            Interface "eth45"
+        Port "eth42"
+            Interface "eth42"
+        Port "eth43"
+            Interface "eth43"
+        Port "rename851"
+            Interface "rename851"
+        Port "br0"
+            Interface "br0"
+                type: internal
+    ovs_version: "2.8.3"
+OFPT_FEATURES_REPLY (xid=0x2): dpid:000000154d1305ea
+n_tables:254, n_buffers:0
+capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS ARP_MATCH_IP
+actions: output enqueue set_vlan_vid set_vlan_pcp strip_vlan mod_dl_src mod_dl_dst mod_nw_src mod_nw_dst mod_nw_tos mod_tp_src mod_tp_dst
+ 1(rename851): addr:00:15:4d:13:05:ea
+     config:     0
+     state:      0
+     current:    AUTO_NEG
+     supported:  FIBER
+     speed: 0 Mbps now, 0 Mbps max
+ 41(eth42): addr:72:39:79:ef:36:bb
+     config:     0
+     state:      LINK_DOWN
+     supported:  FIBER
+     speed: 0 Mbps now, 0 Mbps max
+ 42(eth43): addr:0a:45:98:83:73:77
+     config:     0
+     state:      LINK_DOWN
+     supported:  FIBER
+     speed: 0 Mbps now, 0 Mbps max
+ 43(eth44): addr:ae:04:ee:a4:dc:c4
+     config:     0
+     state:      LINK_DOWN
+     supported:  FIBER
+     speed: 0 Mbps now, 0 Mbps max
+ 44(eth45): addr:f2:35:5c:96:a8:71
+     config:     0
+     state:      LINK_DOWN
+     supported:  FIBER
+     speed: 0 Mbps now, 0 Mbps max
+ LOCAL(br0): addr:00:15:4d:13:05:ea
+     config:     PORT_DOWN
+     state:      LINK_DOWN
+     speed: 0 Mbps now, 0 Mbps max
+OFPT_GET_CONFIG_REPLY (xid=0x4): frags=normal miss_send_len=0
+10
+Domain netronome-sriov-vm XML configuration not changed.
+
+Domain netronome-sriov-vm XML configuration not changed.
+
+Domain netronome-sriov-vm XML configuration edited.
+
+Domain netronome-sriov-vm XML configuration edited.
+
+Domain netronome-sriov-vm XML configuration edited.
+
+Domain netronome-sriov-vm XML configuration edited.
+
+Domain netronome-sriov-vm XML configuration edited.
+
+Domain netronome-sriov-vm XML configuration not changed.
+
+Domain netronome-sriov-vm XML configuration edited.
+
+Domain netronome-sriov-vm XML configuration edited.
+
+netronome-sriov-vm
+nfp_cpu_list: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47
+VCPU: CPU Affinity
+----------------------------------
+   0: 3
+   1: 5
+   2: 7
+   3: 9
+   4: 11
+
+DONE(setup_test_case_2.sh)
+root@stingray:~# ./IVG_folder/helper_scripts/start_vm.sh ne tronome-sriov-vm
+Domain netronome-sriov-vm started
+
+Waiting for VM to boot ................................ UP
+Warning: Permanently added '192.168.122.163' (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 17.10 (GNU/Linux 4.13.0-39-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+
+  Get cloud support with Ubuntu Advantage Cloud Guest:
+    http://www.ubuntu.com/business/services/cloud
+
+1 package can be updated.
+0 updates are security updates.
+
+
+WELCOME
+root@netronome-sriov-vm:~# cd vm_scripts/samples/DPDK-pktgenn
+root@netronome-sriov-vm:~/vm_scripts/samples/DPDK-pktgen# .//1_configure_hugepages.sh
+1024
+root@netronome-sriov-vm:~/vm_scripts/samples/DPDK-pktgen# .//2_auto_bind_igb_uio.sh
+00:0a.0 00:0b.0 00:0c.0 00:0d.0
+netronome_vf: 00:0a.0
+netronome_vf: 00:0b.0
+netronome_vf: 00:0c.0
+netronome_vf: 00:0d.0
+whitelist:  00:0a.0 00:0b.0 00:0c.0 00:0d.0
+root@netronome-sriov-vm:~/vm_scripts/samples/DPDK-pktgen# cdd 3_dpdk_pktgen_lua_capture
+root@netronome-sriov-vm:~/vm_scripts/samples/DPDK-pktgen/3_ddpdk_pktgen_lua_capture# ./0_run_dpdk-pktgen_uni-rx.sh
+netronome_vf: 0000:00:0a.0
+netronome_vf: 0000:00:0b.0
+netronome_vf: 0000:00:0c.0
+netronome_vf: 0000:00:0d.0
+netronome_vf: 0000:00:0a.0
+cpu_counter: 1
+netronome_vf: 0000:00:0b.0
+cpu_counter: 2
+netronome_vf: 0000:00:0c.0
+cpu_counter: 3
+netronome_vf: 0000:00:0d.0
+cpu_counter: 4
+whitelist:  -w 0000:00:0a.0 -w 0000:00:0b.0 -w 0000:00:0c.0 -w 0000:00:0d.0
+mapping: -m 1.0,2.1,3.2,4.3
+[1;r[100;1H
+Copyright (c) <2010-2017>, Intel Corporation. All rights reserved. Powered by DPDK
+EAL: Detected 5 lcore(s)
+EAL: Auto-detected process type: PRIMARY
+EAL: No free hugepages reported in hugepages-1048576kB
+EAL: Probing VFIO support...
+EAL: WARNING: cpu flags constant_tsc=yes nonstop_tsc=no -> using unreliable clock cycles !
+EAL: PCI device 0000:00:0a.0 on NUMA socket -1
+EAL:   probe driver: 19ee:6003 net_nfp
+PMD: nfp_net_init(): VER: 0x300, Maximum supported MTU: 9420
+PMD: nfp_net_init(): CAP: 0x140673, PROMISC RXCSUM TXCSUM RXVLAN GATHER TSO 
+PMD: nfp_net_init(): max_rx_queues: 1, max_tx_queues: 1
+PMD: nfp_net_init(): port 0 VendorID=0x19ee DeviceID=0x6003 mac=c2:fb:5a:8c:00:37
+EAL: PCI device 0000:00:0b.0 on NUMA socket -1
+EAL:   probe driver: 19ee:6003 net_nfp
+PMD: nfp_net_init(): VER: 0x300, Maximum supported MTU: 9420
+PMD: nfp_net_init(): CAP: 0x140673, PROMISC RXCSUM TXCSUM RXVLAN GATHER TSO 
+PMD: nfp_net_init(): max_rx_queues: 1, max_tx_queues: 1
+PMD: nfp_net_init(): port 1 VendorID=0x19ee DeviceID=0x6003 mac=82:d2:44:7e:f3:c7
+EAL: PCI device 0000:00:0c.0 on NUMA socket -1
+EAL:   probe driver: 19ee:6003 net_nfp
+PMD: nfp_net_init(): VER: 0x300, Maximum supported MTU: 9420
+PMD: nfp_net_init(): CAP: 0x140673, PROMISC RXCSUM TXCSUM RXVLAN GATHER TSO 
+PMD: nfp_net_init(): max_rx_queues: 1, max_tx_queues: 1
+PMD: nfp_net_init(): port 2 VendorID=0x19ee DeviceID=0x6003 mac=5e:4f:15:46:8f:ea
+EAL: PCI device 0000:00:0d.0 on NUMA socket -1
+EAL:   probe driver: 19ee:6003 net_nfp
+PMD: nfp_net_init(): VER: 0x300, Maximum supported MTU: 9420
+PMD: nfp_net_init(): CAP: 0x140673, PROMISC RXCSUM TXCSUM RXVLAN GATHER TSO 
+PMD: nfp_net_init(): max_rx_queues: 1, max_tx_queues: 1
+PMD: nfp_net_init(): port 3 VendorID=0x19ee DeviceID=0x6003 mac=3e:ad:b3:2d:fd:e6
+[0;39;49m[1;r[45;1H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lua 5.3.4  Copyright (C) 1994-2017 Lua.org, PUC-Rio
+[0;39;49m[1;r[45;1H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   Copyright (c) <2010-2017>, Intel Corporation. All rights reserved.
+   Pktgen created by: Keith Wiles -- >>> Powered by DPDK <<<
+
+>>> Packet Burst 64, RX Desc 512, TX Desc 1024, mbufs/port 32768, mbuf cache 4096
+
+=== port to lcore mapping table (# lcores 5) ===
+   lcore:    0       1       2       3       4      Total
+port   0: ( D: T) ( 1: 1) ( 0: 0) ( 0: 0) ( 0: 0) = ( 1: 1)
+port   1: ( D: T) ( 0: 0) ( 1: 1) ( 0: 0) ( 0: 0) = ( 1: 1)
+port   2: ( D: T) ( 0: 0) ( 0: 0) ( 1: 1) ( 0: 0) = ( 1: 1)
+port   3: ( D: T) ( 0: 0) ( 0: 0) ( 0: 0) ( 1: 1) = ( 1: 1)
+Total   : ( 0: 0) ( 1: 1) ( 1: 1) ( 1: 1) ( 1: 1)
+  Display and Timer on lcore 0, rx:tx counts per port/lcore
+
+Configuring 4 ports, MBUF Size 2176, MBUF Cache Size 4096
+Lcore:
+    1, RX-TX  
+                RX_cnt( 1): (pid= 0:qid= 0) 
+                TX_cnt( 1): (pid= 0:qid= 0) 
+    2, RX-TX  
+                RX_cnt( 1): (pid= 1:qid= 0) 
+                TX_cnt( 1): (pid= 1:qid= 0) 
+    3, RX-TX  
+                RX_cnt( 1): (pid= 2:qid= 0) 
+                TX_cnt( 1): (pid= 2:qid= 0) 
+    4, RX-TX  
+                RX_cnt( 1): (pid= 3:qid= 0) 
+                TX_cnt( 1): (pid= 3:qid= 0) 
+
+Port :
+    0, nb_lcores  1, private 0x563eaf5483a0, lcores:  1 
+    1, nb_lcores  1, private 0x563eaf54af00, lcores:  2 
+    2, nb_lcores  1, private 0x563eaf54da60, lcores:  3 
+    3, nb_lcores  1, private 0x563eaf5505c0, lcores:  4 
+
+
+
+** Default Info (0000:00:0a.0, if_index:0) **
+   max_vfs        :   0, min_rx_bufsize    :  68, max_rx_pktlen :  9420
+   max_rx_queues  :   1, max_tx_queues     :   1
+   max_mac_addrs  :   1, max_hash_mac_addrs:   0, max_vmdq_pools:     0
+   rx_offload_capa:  15, tx_offload_capa   :  46, reta_size     :   128, flow_type_rss_offloads:0000000000000000
+   vmdq_queue_base:   0, vmdq_queue_num    :   0, vmdq_pool_base:     0
+** RX Conf **
+   pthresh        :   8, hthresh          :   8, wthresh        :     0
+   Free Thresh    :  32, Drop Enable      :   0, Deferred Start :     0
+** TX Conf **
+   pthresh        :  32, hthresh          :   0, wthresh        :     0
+   Free Thresh    :  32, RS Thresh        :  32, Deferred Start :     0, TXQ Flags:00000f01
+
+    Create: Default RX  0:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+      Set RX queue stats mapping pid 0, q 0, lcore 1
+
+
+    Create: Default TX  0:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Range TX    0:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Sequence TX 0:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Special TX  0:0  - Memory used (MBUFs   64 x (size 2176 + Hdr 128)) + 192 =    145 KB headroom 128 2176
+
+                                                                       Port memory used = 295057 KB
+Initialize Port 0 -- TxQ 1, RxQ 1,  Src MAC c2:fb:5a:8c:00:37
+
+** Default Info (0000:00:0b.0, if_index:0) **
+   max_vfs        :   0, min_rx_bufsize    :  68, max_rx_pktlen :  9420
+   max_rx_queues  :   1, max_tx_queues     :   1
+   max_mac_addrs  :   1, max_hash_mac_addrs:   0, max_vmdq_pools:     0
+   rx_offload_capa:  15, tx_offload_capa   :  46, reta_size     :   128, flow_type_rss_offloads:0000000000000000
+   vmdq_queue_base:   0, vmdq_queue_num    :   0, vmdq_pool_base:     0
+** RX Conf **
+   pthresh        :   8, hthresh          :   8, wthresh        :     0
+   Free Thresh    :  32, Drop Enable      :   0, Deferred Start :     0
+** TX Conf **
+   pthresh        :  32, hthresh          :   0, wthresh        :     0
+   Free Thresh    :  32, RS Thresh        :  32, Deferred Start :     0, TXQ Flags:00000f01
+
+    Create: Default RX  1:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+      Set RX queue stats mapping pid 1, q 0, lcore 2
+
+
+    Create: Default TX  1:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Range TX    1:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Sequence TX 1:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Special TX  1:0  - Memory used (MBUFs   64 x (size 2176 + Hdr 128)) + 192 =    145 KB headroom 128 2176
+
+                                                                       Port memory used = 295057 KB
+Initialize Port 1 -- TxQ 1, RxQ 1,  Src MAC 82:d2:44:7e:f3:c7
+
+** Default Info (0000:00:0c.0, if_index:0) **
+   max_vfs        :   0, min_rx_bufsize    :  68, max_rx_pktlen :  9420
+   max_rx_queues  :   1, max_tx_queues     :   1
+   max_mac_addrs  :   1, max_hash_mac_addrs:   0, max_vmdq_pools:     0
+   rx_offload_capa:  15, tx_offload_capa   :  46, reta_size     :   128, flow_type_rss_offloads:0000000000000000
+   vmdq_queue_base:   0, vmdq_queue_num    :   0, vmdq_pool_base:     0
+** RX Conf **
+   pthresh        :   8, hthresh          :   8, wthresh        :     0
+   Free Thresh    :  32, Drop Enable      :   0, Deferred Start :     0
+** TX Conf **
+   pthresh        :  32, hthresh          :   0, wthresh        :     0
+   Free Thresh    :  32, RS Thresh        :  32, Deferred Start :     0, TXQ Flags:00000f01
+
+    Create: Default RX  2:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+      Set RX queue stats mapping pid 2, q 0, lcore 3
+
+
+    Create: Default TX  2:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Range TX    2:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Sequence TX 2:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Special TX  2:0  - Memory used (MBUFs   64 x (size 2176 + Hdr 128)) + 192 =    145 KB headroom 128 2176
+
+                                                                       Port memory used = 295057 KB
+Initialize Port 2 -- TxQ 1, RxQ 1,  Src MAC 5e:4f:15:46:8f:ea
+
+** Default Info (0000:00:0d.0, if_index:0) **
+   max_vfs        :   0, min_rx_bufsize    :  68, max_rx_pktlen :  9420
+   max_rx_queues  :   1, max_tx_queues     :   1
+   max_mac_addrs  :   1, max_hash_mac_addrs:   0, max_vmdq_pools:     0
+   rx_offload_capa:  15, tx_offload_capa   :  46, reta_size     :   128, flow_type_rss_offloads:0000000000000000
+   vmdq_queue_base:   0, vmdq_queue_num    :   0, vmdq_pool_base:     0
+** RX Conf **
+   pthresh        :   8, hthresh          :   8, wthresh        :     0
+   Free Thresh    :  32, Drop Enable      :   0, Deferred Start :     0
+** TX Conf **
+   pthresh        :  32, hthresh          :   0, wthresh        :     0
+   Free Thresh    :  32, RS Thresh        :  32, Deferred Start :     0, TXQ Flags:00000f01
+
+    Create: Default RX  3:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+      Set RX queue stats mapping pid 3, q 0, lcore 4
+
+
+    Create: Default TX  3:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Range TX    3:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Sequence TX 3:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Special TX  3:0  - Memory used (MBUFs   64 x (size 2176 + Hdr 128)) + 192 =    145 KB headroom 128 2176
+
+                                                                       Port memory used = 295057 KB
+Initialize Port 3 -- TxQ 1, RxQ 1,  Src MAC 3e:ad:b3:2d:fd:e6
+                                                                      Total memory used = 1180228 KB
+PMD: Port 0: Link Up - speed 100000 Mbps - full-duplex
+PMD: PCI Address: 0000:00:10:0
+Port  0: Link Up - speed 100000 Mbps - full-duplex
+Port  1: Link Up - speed 100000 Mbps - full-duplex
+Port  2: Link Up - speed 100000 Mbps - full-duplex
+Port  3: Link Up - speed 100000 Mbps - full-duplex
+
+
+=== Display processing on lcore 0
+  RX/TX processing lcore:   1 rx:  1 tx:  1
+For RX found 1 port(s) for lcore 1
+For TX found 1 port(s) for lcore 1
+  RX/TX processing lcore:   2 rx:  1 tx:  1
+For RX found 1 port(s) for lcore 2
+For TX found 1 port(s) for lcore 2
+  RX/TX processing lcore:   3 rx:  1 tx:  1
+For RX found 1 port(s) for lcore 3
+For TX found 1 port(s) for lcore 3
+  RX/TX processing lcore:   4 rx:  1 tx:  1
+For RX found 1 port(s) for lcore 4
+For TX found 1 port(s) for lcore 4
+[1;r[45;1H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[2J[100;1H7[1;1H-[1;20H<Main Page>  Copyright (c) <2010-2017>, Intel Corporation[1;3HPorts 0-3 of 4[2;1H  Flags:Port        [3;1HLink State          [4;1HPkts/s Max/Rx       [5;1H       Max/Tx       [6;1HMBits/s Rx/Tx       [7;1HBroadcast           [8;1HMulticast           [9;1H  64 Bytes          [10;1H  65-127            [11;1H  128-255           [12;1H  256-511           [13;1H  512-1023          [14;1H  1024-1518         [15;1HRunts/Jumbos        [16;1HErrors Rx/Tx        [17;1HTotal Rx Pkts       [18;1H      Tx Pkts       [19;1H      Rx MBs        [20;1H      Tx MBs        [21;1HARP/ICMP Pkts       [23;1HPattern Type        [24;1HTx Count/% Rate     [25;1HPktSize/Tx Burst    [26;1HSrc/Dest Port       [27;1HPkt Type:VLAN ID    [28;1HDst  IP Address     [29;1HSrc  IP Address     [30;1HDst MAC Address     [31;1HSrc MAC Address     [32;1HVendID/PCI Addr     [35;r[34;1H-------------------------------------------------------------------------------[34;3H Pktgen Ver: 3.4.1 (DPDK 17.05.0)  Powered by DPDK [2;19H:[3;19H:[4;19H:[5;19H:[6;19H:[7;19H:[8;19H:[9;19H:[10;19H:[11;19H:[12;19H:[13;19H:[14;19H:[15;19H:[16;19H:[17;19H:[18;19H:[19;19H:[20;19H:[21;19H:[22;19H:[23;19H:[24;19H:[25;19H:[26;19H:[27;19H:[28;19H:[29;19H:[30;19H:[31;19H:[32;19H:[23;20H             abcd...[24;20H       Forever /100%[25;20H           64 /   64[26;20H         1234 / 5678[27;20H     IPv4 / TCP:0001[28;20H         192.168.1.1[29;20H      192.168.0.1/24[30;20H   82:d2:44:7e:f3:c7[31;20H   c2:fb:5a:8c:00:37[32;20H   19ee:6003/00:10.0[23;40H             abcd...[24;40H       Forever /100%[25;40H           64 /   64[26;40H         1234 / 5678[27;40H     IPv4 / TCP:0001[28;40H         192.168.0.1[29;40H      192.168.1.1/24[30;40H   c2:fb:5a:8c:00:37[31;40H   82:d2:44:7e:f3:c7[32;40H   19ee:6003/00:11.0[23;60H             abcd...[24;60H       Forever /100%[25;60H           64 /   64[26;60H         1234 / 5678[27;60H     IPv4 / TCP:0001[28;60H         192.168.3.1[29;60H      192.168.2.1/24[30;60H   3e:ad:b3:2d:fd:e6[31;60H   5e:4f:15:46:8f:ea[32;60H   19ee:6003/00:12.0[23;80H             abcd...[24;80H       Forever /100%[25;80H           64 /   64[26;80H         1234 / 5678[27;80H     IPv4 / TCP:0001[28;80H         192.168.2.1[29;80H      192.168.3.1/24[30;80H   5e:4f:15:46:8f:ea[31;80H   3e:ad:b3:2d:fd:e6[32;80H   19ee:6003/00:13.0[3;100H     ----TotalRate----[K[2;20H   ---------------:0[3;20H      <UP-100000-FD>[4;20H                 0/0[5;20H                 0/0[6;20H                 0/0[7;20H                   0[8;20H                   0[9;20H                   0[10;20H                   2[11;20H                   0[12;20H                   0[13;20H                   0[14;20H                   0[15;20H                 0/0[16;20H                 0/0[17;20H                   0[18;20H                   0[19;20H                   0[20;20H                   0[21;20H                 0/0[2;40H   ---------------:1[3;40H      <UP-100000-FD>[4;40H                 0/0[5;40H                 0/0[6;40H                 0/0[7;40H                   0[8;40H                   0[9;40H                   0[10;40H                   2[11;40H                   0[12;40H                   0[13;40H                   0[14;40H                   0[15;40H                 0/0[16;40H                 0/0[17;40H                   0[18;40H                   0[19;40H                   0[20;40H                   0[21;40H                 0/0[2;60H   ---------------:2[3;60H      <UP-100000-FD>[4;60H                 0/0[5;60H                 0/0[6;60H                 0/0[7;60H                   0[8;60H                   0[9;60H                   0[10;60H                   2[11;60H                   0[12;60H                   0[13;60H                   0[14;60H                   0[15;60H                 0/0[16;60H                 0/0[17;60H                   0[18;60H                   0[19;60H                   0[20;60H                   0[21;60H                 0/0[2;80H   ---------------:3[3;80H      <UP-100000-FD>[4;80H                 0/0[5;80H                 0/0[6;80H                 0/0[7;80H                   0[8;80H                   0[9;80H                   0[10;80H                   2[11;80H                   0[12;80H                   0[13;80H                   0[14;80H                   0[15;80H                 0/0[16;80H                 0/0[17;80H                   0[18;80H                   0[19;80H                   0[20;80H                   0[21;80H                 0/0[4;100H                   0/0[K[5;100H                   0/0[K[6;100H                   0/0[K8
+** Version: DPDK 17.05.0, Command Line Interface with timers
+Pktgen:/> [2J[1;r[100;1HPort Count 4
+Total port Count 4
+-- 0.0,4,-nan,0,0
+
+-- 2.0,4,-nan,0,0
+
+PMD: Port 1: Link Up - speed 100000 Mbps - full-duplex
+PMD: PCI Address: 0000:00:11:0
+PMD: Port 2: Link Up - speed 100000 Mbps - full-duplex
+PMD: PCI Address: 0000:00:12:0
+PMD: Port 3: Link Up - speed 100000 Mbps - full-duplex
+PMD: PCI Address: 0000:00:13:0
+-- 3.0,4,-nan,0,0
+
+-- 4.0,4,-nan,0,0
+
+-- 5.0,4,-nan,0,0
+
+-- 6.0,4,64,36,0
+
+-- 7.0,4,64,7121551,4783
+
+-- 8.0,4,64,27338810,18370
+
+-- 9.0,4,64,18540642,12456
+
+-- 10.0,4,-nan,0,0
+
+-- 11.0,4,64,1808085,1212
+
+-- 12.0,4,64,27870788,18727
+
+-- 13.0,4,64,26389867,17732
+
+-- 14.0,4,64,26748332,17972
+
+-- 15.0,4,64,26817042,18019
+
+-- 16.0,4,64,27644599,18574
+
+-- 17.0,4,64,27854226,18716
+
+-- 18.0,4,64,26343401,17700
+
+-- 19.0,4,64,26369482,17720
+
+-- 20.0,4,64,26778343,17993
+
+-- 21.0,4,64,27928246,18765
+
+-- 22.0,4,64,27254801,18313
+
+-- 23.0,4,64,26450727,17773
+
+-- 24.0,4,64,26794295,18004
+
+-- 25.0,4,64,27205298,18280
+
+-- 26.0,4,64,27841301,18707
+
+-- 27.0,4,64,26453576,17775
+
+-- 28.0,4,64,26160966,17578
+
+-- 29.0,4,64,26440073,17765
+
+-- 30.0,4,64,27832488,18701
+
+-- 31.0,4,64,27712173,18621
+
+-- 32.0,4,64,20,0
+
+-- 33.0,4,128,16640173,19700
+
+-- 34.0,4,128,25502358,30193
+
+-- 35.0,4,128,26033192,30822
+
+-- 36.0,4,128,25603095,30313
+
+-- 37.0,4,128,24894348,29473
+
+-- 38.0,4,128,24997356,29594
+
+-- 39.0,4,128,25635741,30351
+
+-- 40.0,4,128,26085280,30883
+
+-- 41.0,4,128,25339557,30000
+
+-- 42.0,4,128,24958000,29548
+
+-- 43.0,4,128,25107083,29725
+
+-- 44.0,4,128,26130490,30937
+
+-- 45.0,4,128,26102247,30903
+
+-- 46.0,4,128,24953228,29542
+
+-- 47.0,4,128,24740714,29291
+
+-- 48.0,4,128,25583573,30289
+
+-- 49.0,4,128,26041591,30831
+
+-- 50.0,4,128,25498596,30189
+
+-- 51.0,4,128,24957828,29548
+
+-- 52.0,4,128,24802184,29363
+
+-- 53.0,4,128,10018250,11859
+
+-- 54.0,4,256,4769200,10528
+
+-- 55.0,4,256,17478248,38589
+
+-- 56.0,4,256,16970316,37469
+
+-- 57.0,4,256,17306490,38210
+
+-- 58.0,4,256,17934913,39597
+
+-- 59.0,4,256,17964183,39663
+
+-- 60.0,4,256,15572641,34383
+
+-- 61.0,4,256,17143183,37849
+
+-- 62.0,4,256,17141026,37845
+
+-- 63.0,4,256,17991359,39723
+
+-- 64.0,4,256,17977477,39693
+
+-- 65.0,4,256,17265922,38121
+
+-- 66.0,4,256,16891978,37295
+
+-- 67.0,4,256,17260494,38109
+
+-- 68.0,4,256,18001557,39746
+
+-- 69.0,4,256,17955481,39644
+
+-- 70.0,4,256,16901837,37317
+
+-- 71.0,4,256,17056656,37658
+
+-- 72.0,4,256,17488480,38612
+
+-- 73.0,4,256,18017185,39780
+
+-- 74.0,4,256,14314630,31603
+
+-- 75.0,4,64,20,0
+
+-- 76.0,4,512,7682638,32695
+
+-- 77.0,4,512,9371918,39884
+
+-- 78.0,4,512,9385583,39945
+
+-- 79.0,4,512,9103984,38745
+
+-- 80.0,4,512,8877028,37777
+
+-- 81.0,4,512,8977161,38204
+
+-- 82.0,4,512,9385482,39942
+
+-- 83.0,4,512,9309260,39618
+
+-- 84.0,4,512,8822775,37548
+
+-- 85.0,4,512,8776673,37351
+
+-- 86.0,4,512,9139484,38895
+
+-- 87.0,4,512,9386418,39946
+
+-- 88.0,4,512,8880529,37793
+
+-- 89.0,4,512,9042035,38481
+
+-- 90.0,4,512,9384700,39939
+
+-- 91.0,4,512,9366901,39863
+
+-- 93.0,4,512,8965531,38155
+
+-- 94.0,4,512,8713484,37083
+
+-- 95.0,4,512,9179969,39068
+
+-- 96.0,4,512,2103520,8950
+
+-- 97.0,4,1024,2000573,16706
+
+-- 98.0,4,1024,4621724,38599
+
+-- 99.0,4,1024,4587773,38314
+
+-- 100.0,4,1024,4708419,39323
+
+-- 101.0,4,1024,4785285,39966
+
+-- 102.0,4,1024,4700266,39254
+
+-- 103.0,4,1024,4450003,37165
+
+-- 104.0,4,1024,4661009,38926
+
+-- 105.0,4,1024,4784400,39958
+
+-- 106.0,4,1024,4785324,39965
+
+-- 107.0,4,1024,4559767,38081
+
+-- 108.0,4,1024,4662051,38935
+
+-- 109.0,4,1024,4574172,38201
+
+-- 110.0,4,1024,4785314,39965
+
+-- 111.0,4,1024,4775040,39879
+
+-- 112.0,4,1024,4532064,37850
+
+-- 113.0,4,1024,4587114,38311
+
+-- 114.0,4,1024,4697409,39229
+
+-- 115.0,4,1024,4797608,40068
+
+-- 116.0,4,1024,4701946,39268
+
+-- 117.0,4,1024,2920662,24390
+
+-- 118.0,4,1280,92302,958
+
+-- 119.0,4,1280,3787012,39383
+
+-- 120.0,4,1280,3843182,39967
+
+-- 121.0,4,1280,3776284,39272
+
+-- 122.0,4,1280,3673572,38203
+
+-- 123.0,4,1280,3757236,39073
+
+-- 124.0,4,1280,3831208,39841
+
+-- 125.0,4,1280,3843761,39973
+
+-- 126.0,4,1280,3729153,38781
+
+-- 127.0,4,1280,3660842,38072
+
+-- 128.0,4,1280,3716150,38646
+
+-- 129.0,4,1280,3805238,39573
+
+-- 130.0,4,1280,3818979,39716
+
+-- 131.0,4,1280,3742155,38917
+
+-- 132.0,4,1280,3693437,38410
+
+-- 133.0,4,1280,3743504,38931
+
+-- 134.0,4,1280,3843974,39975
+
+-- 135.0,4,1280,3775171,39260
+
+-- 136.0,4,1280,3695881,38436
+
+-- 137.0,4,1280,3711103,38593
+
+-- 138.0,4,1280,3760183,39104
+
+-- 139.0,4,1280,148547,1543
+
+-- 140.0,4,1518,1965233,24178
+
+-- 141.0,4,1518,3099657,38137
+
+-- 142.0,4,1518,3134599,38567
+
+-- 143.0,4,1518,3249496,39980
+
+-- 144.0,4,1518,3244222,39915
+
+-- 145.0,4,1518,3114262,38316
+
+-- 146.0,4,1518,3178765,39109
+
+-- 147.0,4,1518,3201084,39384
+
+-- 148.0,4,1518,3249332,39977
+
+-- 149.0,4,1518,3225193,39681
+
+-- 151.0,4,1518,3135015,38572
+
+-- 152.0,4,1518,3175451,39069
+
+-- 153.0,4,1518,3249869,39985
+
+-- 154.0,4,1518,3166416,38957
+
+-- 155.0,4,1518,3100433,38146
+
+-- 156.0,4,1518,3112092,38289
+
+-- 157.0,4,1518,3249631,39981
+
+-- 158.0,4,1518,3218104,39593
+
+-- 159.0,4,1518,3143805,38680
+
+-- 160.0,4,1518,1326551,16320
+
+-- 161.0,4,-nan,0,0
+
+-- 162.0,4,-nan,0,0
+
+-- 163.0,4,-nan,0,0
+
+-- 164.0,4,-nan,0,0
+
+-- 165.0,4,-nan,0,0
+
+-- 166.0,4,74,1,0
+
+-- 167.0,4,-nan,0,0
+
+-- 168.0,4,-nan,0,0
+
+-- 169.0,4,-nan,0,0
+
+-- 170.0,4,-nan,0,0
+
+-- 171.0,4,-nan,0,0
+
+-- 172.0,4,-nan,0,0
+
+-- 173.0,4,-nan,0,0
+
+-- 174.0,4,74,1,0
+
+-- 175.0,4,-nan,0,0
+
+-- 176.0,4,-nan,0,0
+
+-- 177.0,4,-nan,0,0
+
+-- 178.0,4,-nan,0,0
+
+-- 179.0,4,-nan,0,0
+
+-- 180.0,4,74,1,0
+
+-- 181.0,4,-nan,0,0
+
+-- 182.0,4,-nan,0,0
+
+-- 183.0,4,-nan,0,0
+
+-- 184.0,4,-nan,0,0
+
+-- 185.0,4,-nan,0,0
+
+-- 186.0,4,-nan,0,0
+
+-- 187.0,4,-nan,0,0
+
+-- 188.0,4,-nan,0,0
+
+-- 189.0,4,-nan,0,0
+
+-- 190.0,4,-nan,0,0
+
+-- 191.0,4,-nan,0,0
+
+[3g        H        H        H        H        H        H        Hc[?1000l[?25hTest run complete
+root@netronome-sriov-vm:~/vm_scripts/samples/DPDK-pktgen/3_ddpdk_pktgen_lua_capture# ./parse_and_plot.py
+Data parse complete!
+root@netronome-sriov-vm:~/vm_scripts/samples/DPDK-pktgen/3_ddpdk_pktgen_lua_capture# exit
+logout
+Connection to 192.168.122.163 closed.
+root@stingray:~# ./IVG_folder/helper_scripts/x_copy_data_du mp.sh netronome-sriov-vm
+capture.txt                0%    0     0.0KB/s   --:-- ETAcapture.txt              100% 6825     6.7KB/s   00:00    
+parsed_data.txt            0%    0     0.0KB/s   --:-- ETAparsed_data.txt          100%  178     0.2KB/s   00:00    
+root@stingray:~# $IVG_dir/helper_scripts/delete-vms.sh --al l --shutdown
+ - shutdown VM netronome-sriov-vm
+DONE(delete-vms.sh)
+root@stingray:~# exit
+exit
+
+Script done on Mon 07 May 2018 06:54:01 AM UTC

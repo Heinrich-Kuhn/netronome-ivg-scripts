@@ -1,0 +1,19 @@
+Hostname       swordfish
+OS             Ubuntu 16.04.4 LTS (Xenial Xerus)
+Kernel         4.15.3-041503-generic
+Server         Dell Inc. PowerEdge R730
+BIOS           Dell Inc. Version 1.3.6 (06/03/2015); Revision 1.3
+CPU            GenuineIntel Intel(R) Xeon(R) CPU E5-2670 v3 @ 2.30GHz 2307.241MHz
+NUMA           2 sockets, 12 cores/socket
+Memory         65929860 kB
+DIMM           64 bits, 16384 MB, A1, 2133 MHz (max 2133 MHz), rank 2
+DIMM           64 bits, 16384 MB, A2, 2133 MHz (max 2133 MHz), rank 2
+DIMM           64 bits, 16384 MB, B1, 2133 MHz (max 2133 MHz), rank 2
+DIMM           64 bits, 16384 MB, B2, 2133 MHz (max 2133 MHz), rank 2
+NUMA 0         0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46
+NUMA 1         1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47
+NFP NUMA       1
+NFP BDF        0000:82:00.0
+Kernel Command Line 
+               BOOT_IMAGE=/boot/vmlinuz-4.15.3-041503-generic root=UUID=f330c384-cc08-4375-ab3e-54b74328c65e ro intel_iommu=on iommu=pt intremap=on intel_idle.max_cstate=0 processor.max_cstate=0 intel_pstate=disable nohz_full= rcu_nocbs= transparent_hugepage=never console=tty1 console=ttyS0,115200
+VM CPU Usage   

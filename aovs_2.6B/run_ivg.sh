@@ -210,19 +210,19 @@ else # else $TMUX is not empty, start test.
         echo "c) Create backing image for test VM's (Only done once)"
         echo ""
         echo "1) Test Case 1 (Simple ping between hosts)"
-        #echo "1a)Test Case 1a (Pktgen between hosts)"
+        echo "1a)Test Case 1a (Pktgen between hosts)"
         echo "2) Test Case 2 (DPDK-pktgen VM-VM uni-directional SR-IOV)"
         echo "3) Test Case 3 (DPDK-pktgen VM-VM uni-directional SR-IOV VXLAN)"
-        #echo "4) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
+        echo "4) Test case 4 (DPDK-Pktgen Rx -> Ixia Tx SR-IOV)"
         echo "6) Test case 6 (DPDK-pktgen VM-VM uni-directional XVIO)"
         echo "7) Test Case 7 (DPDK-pktgen VM-VM uni-directional XVIO VXLAN)"
-        #echo "8) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
-        echo ""
-        #echo "10) Test Case 10 (DPDK-pktgen VM-VM uni-directional KOVS VXLAN Intel XL710)"
-        #echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
+        echo "8) Test Case 8 (DPDK-Pktgen Rx -> Ixia Tx XVIO)"
+        echo "10) Test Case 10 (DPDK-pktgen VM-VM uni-directional KOVS VXLAN Intel XL710)"
+        echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
+        echo "12) Test Case 12 (DPDK-pktgen VM-VM uni-directional DPDK OVS Intel XL710)"
         echo "r) Reboot host machines"
         echo "d) Set up DPDK OVS"
-        #echo "k) Set up KOVS"        
+        echo "k) Set up KOVS"        
         echo "x) Exit"
         echo ""
         read -p "Enter choice: " OPT
@@ -496,9 +496,9 @@ else # else $TMUX is not empty, start test.
             ##############################################
             # BIFF
 
-            echo -e "${GREEN}* Setting up BIFF 1${NC}"
-
-            /root/IVG/helper_scripts/biff_setup.sh ${DUT_IPADDR[2]}
+            #echo -e "${GREEN}* Setting up BIFF 1${NC}"
+            #/mnt/c/Users/nick-vk/Desktop/Netronome/TestTool/IVG/helper_scripts/biff_setup.sh ${DUT_IPADDR[2]}
+            #/root/IVG/helper_scripts/biff_setup.sh ${DUT_IPADDR[2]}
             ##############################################
 
 
@@ -592,6 +592,18 @@ else # else $TMUX is not empty, start test.
             # CLEAN
             tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
             tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
+
+            ;;
+
+        1b) echo "1b) DPDK VM"
+
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
+            tmux send-keys -t 2 "echo 'test1'" C-m
+            tmux send-keys -t 3 "echo 'test2'" C-m
 
             ;;
 
@@ -1725,18 +1737,21 @@ else # else $TMUX is not empty, start test.
             ;;
 
         d)  echo "d) Setup DPDK OVS"
-            DPDK_VER=dpdk-17.05
+
+            if [ $DUT_CONNECT == 0 ]; then
+                echo -e "${RED}Please connect to DUT's first${NC}"
+                sleep 5
+                continue
+            fi
+
+            DPDK_VER=17.05
             OVS_VER=openvswitch-2.8.1
 
             #_#_#_#_#_START LOG_#_#_#_#_#
             tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Setup_DPDK_OVS_DUT_1.log" C-m
             tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Setup_DPDK_OVS_DUT_2.log" C-m
            
-            if [ $DUT_CONNECT == 0 ]; then
-                echo -e "${RED}Please connect to DUT's first${NC}"
-                sleep 5
-                continue
-            fi
+            
 
             tmux send-keys -t 3 "cd" C-m
             tmux send-keys -t 2 "cd" C-m
