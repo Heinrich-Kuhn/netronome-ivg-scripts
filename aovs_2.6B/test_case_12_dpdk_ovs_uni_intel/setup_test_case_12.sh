@@ -4,7 +4,7 @@ VM_NAME=$1
 script_dir="$(dirname $(readlink -f $0))"
 OVS_VER="openvswitch-2.8.1"
 
-ovs-ctl start
+ovs-vsctl start
 
 $script_dir/4_bind_intel_vfio_pci.sh
 $script_dir/5_start_dpdk_ovs.sh $OVS_VER

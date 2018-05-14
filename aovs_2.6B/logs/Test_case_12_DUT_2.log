@@ -1,0 +1,1093 @@
+Script started on Mon 14 May 2018 08:03:58 AM UTC
+cd
+root@temp8:~# cd
+root@temp8:~# $HOME/IVG_folder/vm_creator/ubuntu/y_create_ vm_from_backing.sh netronome-dpdk-ovs-intel-vm
+DONE(delete-vms.sh)
+ - undefine VM netronome-dpdk-ovs-intel-vm
+DONE(delete-vms.sh)
+create overlay image
+Formatting '/var/lib/libvirt/images/netronome-dpdk-ovs-intel-vm.qcow2', fmt=qcow2 size=2361393152 backing_file=/var/lib/libvirt/images/ubuntu-17.10-server-cloudimg-amd64.img encryption=off cluster_size=65536 lazy_refcounts=off refcount_bits=16
+create domain
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (cli:256) Launched with command line: /usr/share/virt-manager/virt-install --name netronome-dpdk-ovs-intel-vm --disk path=/var/lib/libvirt/images/netronome-dpdk-ovs-intel-vm.qcow2,format=qcow2,bus=virtio,cache=none --ram 6144 --vcpus 5 --cpu Broadwell --network network=default --nographics --debug --accelerate --os-type=linux --os-variant=ubuntu16.04 --noautoconsole --noreboot --import
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (cli:266) Requesting libvirt URI default
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (cli:270) Received libvirt URI qemu:///system
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (virt-install:357) Requesting virt method 'default', hv type 'default'.
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (virt-install:577) Received virt method 'kvm'
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (virt-install:578) Hypervisor name is 'hvm'
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (virt-install:269) Distilled --network options: ['network=default']
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (virt-install:315) --graphics compat generated: none
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (virt-install:182) Distilled --disk options: ['path=/var/lib/libvirt/images/netronome-dpdk-ovs-intel-vm.qcow2,format=qcow2,bus=virtio,cache=none']
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (guest:241) Setting Guest.os_variant to 'ubuntu16.04'
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (virt-install:732) Guest.has_install_phase: False
+
+Starting install...
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (guest:398) Generated install XML: None required
+[Mon, 14 May 2018 08:04:10 virt-install 14268] DEBUG (guest:399) Generated boot XML: 
+<domain type="kvm">
+  <name>netronome-dpdk-ovs-intel-vm</name>
+  <uuid>8dd9e272-0877-44b2-ae76-6d17964564d7</uuid>
+  <memory>6291456</memory>
+  <currentMemory>6291456</currentMemory>
+  <vcpu>5</vcpu>
+  <os>
+    <type arch="x86_64">hvm</type>
+    <boot dev="hd"/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <cpu mode="custom" match="exact">
+    <model>Broadwell</model>
+  </cpu>
+  <clock offset="utc">
+    <timer name="rtc" tickpolicy="catchup"/>
+    <timer name="pit" tickpolicy="delay"/>
+    <timer name="hpet" present="no"/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <pm>
+    <suspend-to-mem enabled="no"/>
+    <suspend-to-disk enabled="no"/>
+  </pm>
+  <devices>
+    <emulator>/usr/bin/kvm-spice</emulator>
+    <disk type="file" device="disk">
+      <driver name="qemu" type="qcow2" cache="none"/>
+      <source file="/var/lib/libvirt/images/netronome-dpdk-ovs-intel-vm.qcow2"/>
+      <target dev="vda" bus="virtio"/>
+    </disk>
+    <controller type="usb" index="0" model="ich9-ehci1"/>
+    <controller type="usb" index="0" model="ich9-uhci1">
+      <master startport="0"/>
+    </controller>
+    <controller type="usb" index="0" model="ich9-uhci2">
+      <master startport="2"/>
+    </controller>
+    <controller type="usb" index="0" model="ich9-uhci3">
+      <master startport="4"/>
+    </controller>
+    <interface type="network">
+      <source network="default"/>
+      <mac address="52:54:00:87:36:fa"/>
+      <model type="virtio"/>
+    </interface>
+    <input type="mouse" bus="ps2"/>
+    <console type="pty"/>
+  </devices>
+</domain>
+
+Creating domain...                    |    0 B  00:00     
+[Mon, 14 May 2018 08:04:11 virt-install 14268] DEBUG (guest:429) XML fetched from libvirt object:
+<domain type='kvm'>
+  <name>netronome-dpdk-ovs-intel-vm</name>
+  <uuid>8dd9e272-0877-44b2-ae76-6d17964564d7</uuid>
+  <memory unit='KiB'>6291456</memory>
+  <currentMemory unit='KiB'>6291456</currentMemory>
+  <vcpu placement='static'>5</vcpu>
+  <os>
+    <type arch='x86_64' machine='pc-i440fx-xenial'>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <cpu mode='custom' match='exact'>
+    <model fallback='allow'>Broadwell</model>
+  </cpu>
+  <clock offset='utc'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <pm>
+    <suspend-to-mem enabled='no'/>
+    <suspend-to-disk enabled='no'/>
+  </pm>
+  <devices>
+    <emulator>/usr/bin/kvm-spice</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='none'/>
+      <source file='/var/lib/libvirt/images/netronome-dpdk-ovs-intel-vm.qcow2'/>
+      <target dev='vda' bus='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+    </disk>
+    <controller type='usb' index='0' model='ich9-ehci1'>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x7'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci1'>
+      <master startport='0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0' multifunction='on'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci2'>
+      <master startport='2'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x1'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci3'>
+      <master startport='4'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x2'/>
+    </controller>
+    <controller type='pci' index='0' model='pci-root'/>
+    <interface type='network'>
+      <mac address='52:54:00:87:36:fa'/>
+      <source network='default'/>
+      <model type='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+    </interface>
+    <serial type='pty'>
+      <target port='0'/>
+    </serial>
+    <console type='pty'>
+      <target type='serial' port='0'/>
+    </console>
+    <memballoon model='virtio'>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
+    </memballoon>
+  </devices>
+</domain>
+
+Domain creation completed.
+You can restart your domain by running:
+  virsh --connect qemu:///system start netronome-dpdk-ovs-intel-vm
+VM has been created!
+root@temp8:~# ./IVG_folder/test_case_12_dpdk_ovs_uni_intel /setup_test_case_12.sh netronome-dpdk-ovs-intel-vm
+ovs-vsctl: unknown command 'start'; use --help for help
+PCI corrected
+0000:02:00.0
+insmod: ERROR: could not insert module /opt/src/dpdk-17.05/build/kmod/igb_uio.ko: File exists
+loading driver
+DPDK_DEVBIND: /opt/src/dpdk-17.05/usertools/dpdk-devbind.py
+/opt/src/dpdk-17.05/usertools/dpdk-devbind.py --bind igb_uio 0000:02:00.0
+0000:02:00.0 already bound to driver igb_uio, skipping
+
+/opt/src/dpdk-17.05/usertools/dpdk-devbind.py --status
+
+Network devices using DPDK-compatible driver
+============================================
+0000:02:00.0 'Ethernet Controller XL710 for 40GbE QSFP+ 1583' drv=igb_uio unused=
+
+Network devices using kernel driver
+===================================
+0000:02:00.1 'Ethernet Controller XL710 for 40GbE QSFP+ 1583' if=enp2s0f1 drv=i40e unused=igb_uio 
+0000:06:00.0 'I350 Gigabit Network Connection 1521' if=eno1 drv=igb unused=igb_uio *Active*
+0000:06:00.1 'I350 Gigabit Network Connection 1521' if=eno2 drv=igb unused=igb_uio 
+0000:09:00.0 'I350 Gigabit Network Connection 1521' if=enp9s0f0 drv=igb unused=igb_uio 
+0000:09:00.1 'I350 Gigabit Network Connection 1521' if=enp9s0f1 drv=igb unused=igb_uio 
+
+Other Network devices
+=====================
+<none>
+
+Crypto devices using DPDK-compatible driver
+===========================================
+<none>
+
+Crypto devices using kernel driver
+==================================
+<none>
+
+Other Crypto devices
+====================
+<none>
+
+Eventdev devices using DPDK-compatible driver
+=============================================
+<none>
+
+Eventdev devices using kernel driver
+====================================
+<none>
+
+Other Eventdev devices
+======================
+<none>
+
+Mempool devices using DPDK-compatible driver
+============================================
+<none>
+
+Mempool devices using kernel driver
+===================================
+<none>
+
+Other Mempool devices
+=====================
+<none>
+1 - Exit applications
+ovsdb-server: no process found
+ovs-vswitchd: no process found
+2 - Recreate database
+rm: cannot remove '/usr/local/etc/openvswitch/conf.db': No such file or directory
+ovsdb-tool: I/O error: /etc/openvswitch/conf.db: create failed (File exists)
+3 - Start ovsdb-server
+2018-05-14T08:04:27Z|00001|vlog|WARN|failed to open /usr/local/var/log/openvswitch/ovsdb-server.log for logging: No such file or directory
+4 - Start ovs-vswitchd
+2018-05-14T08:04:32Z|00001|vlog|WARN|failed to open /usr/local/var/log/openvswitch/ovs-vswitchd.log for logging: No such file or directory
+2018-05-14T08:04:32Z|00002|ovs_numa|INFO|Discovered 8 CPU cores on NUMA node 0
+2018-05-14T08:04:32Z|00003|ovs_numa|INFO|Discovered 1 NUMA nodes and 8 CPU cores
+2018-05-14T08:04:32Z|00004|reconnect|INFO|unix:/usr/local/var/run/openvswitch/db.sock: connecting...
+2018-05-14T08:04:32Z|00005|reconnect|INFO|unix:/usr/local/var/run/openvswitch/db.sock: connected
+2018-05-14T08:04:32Z|00006|dpdk|INFO|DPDK Enabled - initializing...
+2018-05-14T08:04:32Z|00007|dpdk|INFO|No vhost-sock-dir provided - defaulting to /usr/local/var/run/openvswitch
+2018-05-14T08:04:32Z|00008|dpdk|INFO|EAL ARGS: ovs-vswitchd -c 02 --huge-dir /mnt/huge --socket-mem 2048
+2018-05-14T08:04:32Z|00009|dpdk|INFO|EAL: Detected 8 lcore(s)
+2018-05-14T08:04:32Z|00010|dpdk|INFO|EAL: 8 hugepages of size 1073741824 reserved, but no mounted hugetlbfs found for that size
+2018-05-14T08:04:32Z|00011|dpdk|INFO|EAL: Probing VFIO support...
+2018-05-14T08:04:35Z|00012|dpdk|INFO|EAL: PCI device 0000:02:00.0 on NUMA socket 0
+2018-05-14T08:04:35Z|00013|dpdk|INFO|EAL:   probe driver: 8086:1583 net_i40e
+2018-05-14T08:04:35Z|00014|dpdk|INFO|i40e_set_symmetric_hash_enable_per_port(): Symmetric hash has already been disabled
+2018-05-14T08:04:35Z|00015|dpdk|INFO|eth_i40e_dev_init(): FW 6.0 API 1.7 NVM 06.00.01 eetrack 800034a4
+2018-05-14T08:04:35Z|00016|dpdk|INFO|i40e_pf_setup(): Hardware capability of hash lookup table size: 512
+2018-05-14T08:04:35Z|00017|dpdk|INFO|EAL: PCI device 0000:02:00.1 on NUMA socket 0
+2018-05-14T08:04:35Z|00018|dpdk|INFO|EAL:   probe driver: 8086:1583 net_i40e
+2018-05-14T08:04:35Z|00019|dpdk|INFO|EAL: PCI device 0000:06:00.0 on NUMA socket 0
+2018-05-14T08:04:35Z|00020|dpdk|INFO|EAL:   probe driver: 8086:1521 net_e1000_igb
+2018-05-14T08:04:35Z|00021|dpdk|INFO|EAL: PCI device 0000:06:00.1 on NUMA socket 0
+2018-05-14T08:04:35Z|00022|dpdk|INFO|EAL:   probe driver: 8086:1521 net_e1000_igb
+2018-05-14T08:04:35Z|00023|dpdk|INFO|EAL: PCI device 0000:09:00.0 on NUMA socket 0
+2018-05-14T08:04:35Z|00024|dpdk|INFO|EAL:   probe driver: 8086:1521 net_e1000_igb
+2018-05-14T08:04:35Z|00025|dpdk|INFO|EAL: PCI device 0000:09:00.1 on NUMA socket 0
+2018-05-14T08:04:35Z|00026|dpdk|INFO|EAL:   probe driver: 8086:1521 net_e1000_igb
+Zone 0: name:<rte_eth_dev_data>, phys:0x4331cec40, len:0x30100, virt:0x7fc7843cec40, socket_id:0, flags:0
+Zone 1: name:<i40e_dma_5310423791166020275>, phys:0x4331cc000, len:0x400, virt:0x7fc7843cc000, socket_id:0, flags:0
+Zone 2: name:<i40e_dma_4426600283926354236>, phys:0x4331ca000, len:0x1000, virt:0x7fc7843ca000, socket_id:0, flags:0
+Zone 3: name:<i40e_dma_1942208809029295893>, phys:0x4331c8000, len:0x1000, virt:0x7fc7843c8000, socket_id:0, flags:0
+Zone 4: name:<i40e_dma_2860378744313658633>, phys:0x4331c6000, len:0x1000, virt:0x7fc7843c6000, socket_id:0, flags:0
+Zone 5: name:<i40e_dma_8526840737820992263>, phys:0x4331c4000, len:0x1000, virt:0x7fc7843c4000, socket_id:0, flags:0
+Zone 6: name:<i40e_dma_1285119769102308166>, phys:0x4331c2000, len:0x1000, virt:0x7fc7843c2000, socket_id:0, flags:0
+Zone 7: name:<i40e_dma_6374782300123472607>, phys:0x4331c0000, len:0x1000, virt:0x7fc7843c0000, socket_id:0, flags:0
+Zone 8: name:<i40e_dma_2441856657710222369>, phys:0x4331be000, len:0x1000, virt:0x7fc7843be000, socket_id:0, flags:0
+Zone 9: name:<i40e_dma_2570089885951369524>, phys:0x4331bc000, len:0x1000, virt:0x7fc7843bc000, socket_id:0, flags:0
+Zone 10: name:<i40e_dma_7912993865844593792>, phys:0x4331ba000, len:0x1000, virt:0x7fc7843ba000, socket_id:0, flags:0
+Zone 11: name:<i40e_dma_1658753895504713884>, phys:0x4331b8000, len:0x1000, virt:0x7fc7843b8000, socket_id:0, flags:0
+Zone 12: name:<i40e_dma_2897109580820648600>, phys:0x4331b6000, len:0x1000, virt:0x7fc7843b6000, socket_id:0, flags:0
+Zone 13: name:<i40e_dma_6543074645286160272>, phys:0x4331b4000, len:0x1000, virt:0x7fc7843b4000, socket_id:0, flags:0
+Zone 14: name:<i40e_dma_3307349053950679455>, phys:0x4331b2000, len:0x1000, virt:0x7fc7843b2000, socket_id:0, flags:0
+Zone 15: name:<i40e_dma_5444426242163464300>, phys:0x4331b0000, len:0x1000, virt:0x7fc7843b0000, socket_id:0, flags:0
+Zone 16: name:<i40e_dma_2062433204038002329>, phys:0x4331ae000, len:0x1000, virt:0x7fc7843ae000, socket_id:0, flags:0
+Zone 17: name:<i40e_dma_4477319212303861651>, phys:0x4331ac000, len:0x1000, virt:0x7fc7843ac000, socket_id:0, flags:0
+Zone 18: name:<i40e_dma_6614459906314967119>, phys:0x4331aa000, len:0x1000, virt:0x7fc7843aa000, socket_id:0, flags:0
+Zone 19: name:<i40e_dma_1808236303055047088>, phys:0x4331a8000, len:0x1000, virt:0x7fc7843a8000, socket_id:0, flags:0
+Zone 20: name:<i40e_dma_2506714932793979999>, phys:0x4331a6000, len:0x1000, virt:0x7fc7843a6000, socket_id:0, flags:0
+Zone 21: name:<i40e_dma_1831649800699728919>, phys:0x4331a4000, len:0x1000, virt:0x7fc7843a4000, socket_id:0, flags:0
+Zone 22: name:<i40e_dma_4815015840149367660>, phys:0x4331a2000, len:0x1000, virt:0x7fc7843a2000, socket_id:0, flags:0
+Zone 23: name:<i40e_dma_8834500617990998345>, phys:0x4331a0000, len:0x1000, virt:0x7fc7843a0000, socket_id:0, flags:0
+Zone 24: name:<i40e_dma_6908639802755362421>, phys:0x43319e000, len:0x1000, virt:0x7fc78439e000, socket_id:0, flags:0
+Zone 25: name:<i40e_dma_9147729184684534678>, phys:0x43319c000, len:0x1000, virt:0x7fc78439c000, socket_id:0, flags:0
+Zone 26: name:<i40e_dma_6861854042942785348>, phys:0x43319a000, len:0x1000, virt:0x7fc78439a000, socket_id:0, flags:0
+Zone 27: name:<i40e_dma_101417780029642717>, phys:0x433198000, len:0x1000, virt:0x7fc784398000, socket_id:0, flags:0
+Zone 28: name:<i40e_dma_5259836635244021245>, phys:0x433196000, len:0x1000, virt:0x7fc784396000, socket_id:0, flags:0
+Zone 29: name:<i40e_dma_8994465825529244271>, phys:0x433194000, len:0x1000, virt:0x7fc784394000, socket_id:0, flags:0
+Zone 30: name:<i40e_dma_875009995330287062>, phys:0x433192000, len:0x1000, virt:0x7fc784392000, socket_id:0, flags:0
+Zone 31: name:<i40e_dma_5036722061287657490>, phys:0x433190000, len:0x1000, virt:0x7fc784390000, socket_id:0, flags:0
+Zone 32: name:<i40e_dma_4268133719459605221>, phys:0x43318e000, len:0x1000, virt:0x7fc78438e000, socket_id:0, flags:0
+Zone 33: name:<i40e_dma_8639330329346811169>, phys:0x43318c000, len:0x1000, virt:0x7fc78438c000, socket_id:0, flags:0
+Zone 34: name:<i40e_dma_2853123008470375188>, phys:0x43318b000, len:0x400, virt:0x7fc78438b000, socket_id:0, flags:0
+Zone 35: name:<i40e_dma_3818462291432842449>, phys:0x433189000, len:0x1000, virt:0x7fc784389000, socket_id:0, flags:0
+Zone 36: name:<i40e_dma_437082322417325106>, phys:0x433187000, len:0x1000, virt:0x7fc784387000, socket_id:0, flags:0
+Zone 37: name:<i40e_dma_8119596886244493966>, phys:0x433185000, len:0x1000, virt:0x7fc784385000, socket_id:0, flags:0
+Zone 38: name:<i40e_dma_833890758363676964>, phys:0x433183000, len:0x1000, virt:0x7fc784383000, socket_id:0, flags:0
+Zone 39: name:<i40e_dma_7304667351766116228>, phys:0x433181000, len:0x1000, virt:0x7fc784381000, socket_id:0, flags:0
+Zone 40: name:<i40e_dma_1329184713348010041>, phys:0x43317f000, len:0x1000, virt:0x7fc78437f000, socket_id:0, flags:0
+Zone 41: name:<i40e_dma_6994201461296746041>, phys:0x43317d000, len:0x1000, virt:0x7fc78437d000, socket_id:0, flags:0
+Zone 42: name:<i40e_dma_3949384466083474587>, phys:0x43317b000, len:0x1000, virt:0x7fc78437b000, socket_id:0, flags:0
+Zone 43: name:<i40e_dma_1456357454062736983>, phys:0x433179000, len:0x1000, virt:0x7fc784379000, socket_id:0, flags:0
+Zone 44: name:<i40e_dma_7387696191471754464>, phys:0x433177000, len:0x1000, virt:0x7fc784377000, socket_id:0, flags:0
+Zone 45: name:<i40e_dma_19603624055659144>, phys:0x433175000, len:0x1000, virt:0x7fc784375000, socket_id:0, flags:0
+Zone 46: name:<i40e_dma_5731252670762334400>, phys:0x433173000, len:0x1000, virt:0x7fc784373000, socket_id:0, flags:0
+Zone 47: name:<i40e_dma_5883080654529999482>, phys:0x433171000, len:0x1000, virt:0x7fc784371000, socket_id:0, flags:0
+Zone 48: name:<i40e_dma_8041848418249721826>, phys:0x43316f000, len:0x1000, virt:0x7fc78436f000, socket_id:0, flags:0
+Zone 49: name:<i40e_dma_957145952830245634>, phys:0x43316d000, len:0x1000, virt:0x7fc78436d000, socket_id:0, flags:0
+Zone 50: name:<i40e_dma_5629286664791915471>, phys:0x43316b000, len:0x1000, virt:0x7fc78436b000, socket_id:0, flags:0
+Zone 51: name:<i40e_dma_4752398477575528028>, phys:0x433169000, len:0x1000, virt:0x7fc784369000, socket_id:0, flags:0
+Zone 52: name:<i40e_dma_4144030416368768776>, phys:0x433167000, len:0x1000, virt:0x7fc784367000, socket_id:0, flags:0
+Zone 53: name:<i40e_dma_5069578022721629840>, phys:0x433165000, len:0x1000, virt:0x7fc784365000, socket_id:0, flags:0
+Zone 54: name:<i40e_dma_1519037372866753330>, phys:0x433163000, len:0x1000, virt:0x7fc784363000, socket_id:0, flags:0
+Zone 55: name:<i40e_dma_2953106186007544817>, phys:0x433161000, len:0x1000, virt:0x7fc784361000, socket_id:0, flags:0
+Zone 56: name:<i40e_dma_882188469927180399>, phys:0x43315f000, len:0x1000, virt:0x7fc78435f000, socket_id:0, flags:0
+Zone 57: name:<i40e_dma_8002973151951114688>, phys:0x43315d000, len:0x1000, virt:0x7fc78435d000, socket_id:0, flags:0
+Zone 58: name:<i40e_dma_550737540699322313>, phys:0x43315b000, len:0x1000, virt:0x7fc78435b000, socket_id:0, flags:0
+Zone 59: name:<i40e_dma_4178323616914146029>, phys:0x433159000, len:0x1000, virt:0x7fc784359000, socket_id:0, flags:0
+Zone 60: name:<i40e_dma_5643907393831402184>, phys:0x433157000, len:0x1000, virt:0x7fc784357000, socket_id:0, flags:0
+Zone 61: name:<i40e_dma_3807452715250061565>, phys:0x433155000, len:0x1000, virt:0x7fc784355000, socket_id:0, flags:0
+Zone 62: name:<i40e_dma_5736884128027851299>, phys:0x433153000, len:0x1000, virt:0x7fc784353000, socket_id:0, flags:0
+Zone 63: name:<i40e_dma_6822759085351151367>, phys:0x433151000, len:0x1000, virt:0x7fc784351000, socket_id:0, flags:0
+Zone 64: name:<i40e_dma_285664358030478739>, phys:0x43314f000, len:0x1000, virt:0x7fc78434f000, socket_id:0, flags:0
+Zone 65: name:<i40e_dma_7248963447742345944>, phys:0x43314d000, len:0x1000, virt:0x7fc78434d000, socket_id:0, flags:0
+Zone 66: name:<i40e_dma_8571099379812845250>, phys:0x43314b000, len:0x1000, virt:0x7fc78434b000, socket_id:0, flags:0
+Zone 67: name:<i40e_dma_6123554443354973750>, phys:0x43312c000, len:0x1e000, virt:0x7fc78432c000, socket_id:0, flags:0
+Zone 68: name:<RG_HT_ethertype_0000:02:00.0>, phys:0x433129e40, len:0x2180, virt:0x7fc784329e40, socket_id:0, flags:0
+Zone 69: name:<RG_HT_tunnel_0000:02:00.0>, phys:0x43311eb80, len:0x1180, virt:0x7fc78431eb80, socket_id:0, flags:0
+Zone 70: name:<RG_HT_fdir_0000:02:00.0>, phys:0x433102000, len:0x10180, virt:0x7fc784302000, socket_id:0, flags:0
+2018-05-14T08:04:35Z|00027|dpdk|INFO|DPDK Enabled - initialized
+2018-05-14T08:04:35Z|00028|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports recirculation
+2018-05-14T08:04:35Z|00029|ofproto_dpif|INFO|netdev@ovs-netdev: VLAN header stack length probed as 1
+2018-05-14T08:04:35Z|00030|ofproto_dpif|INFO|netdev@ovs-netdev: MPLS label stack length probed as 3
+2018-05-14T08:04:35Z|00031|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports truncate action
+2018-05-14T08:04:35Z|00032|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports unique flow ids
+2018-05-14T08:04:35Z|00033|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports clone action
+2018-05-14T08:04:35Z|00034|ofproto_dpif|INFO|netdev@ovs-netdev: Max sample nesting level probed as 10
+2018-05-14T08:04:35Z|00035|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports eventmask in conntrack action
+2018-05-14T08:04:35Z|00036|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports ct_state
+2018-05-14T08:04:35Z|00037|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports ct_zone
+2018-05-14T08:04:35Z|00038|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports ct_mark
+2018-05-14T08:04:35Z|00039|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports ct_label
+2018-05-14T08:04:35Z|00040|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports ct_state_nat
+2018-05-14T08:04:35Z|00041|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports ct_orig_tuple
+2018-05-14T08:04:35Z|00042|ofproto_dpif|INFO|netdev@ovs-netdev: Datapath supports ct_orig_tuple6
+2018-05-14T08:04:35Z|00043|dpdk|INFO|VHOST_CONFIG: vhost-user server: socket created, fd: 31
+2018-05-14T08:04:35Z|00044|netdev_dpdk|INFO|Socket /usr/local/var/run/openvswitch/dpdkvhostuser0 created for vhost-user port dpdkvhostuser0
+2018-05-14T08:04:35Z|00045|dpdk|INFO|VHOST_CONFIG: bind to /usr/local/var/run/openvswitch/dpdkvhostuser0
+2018-05-14T08:04:35Z|00046|netdev_dpdk|WARN|dpdkvhostuser ports are considered deprecated;  please migrate to dpdkvhostuserclient ports.
+2018-05-14T08:04:35Z|00047|netdev|WARN|dpdkvhostuser0: arguments provided to device that is not configurable
+2018-05-14T08:04:35Z|00048|dpif_netdev|INFO|PMD thread on numa_id: 0, core id:  7 created.
+2018-05-14T08:04:35Z|00049|dpif_netdev|INFO|PMD thread on numa_id: 0, core id:  0 created.
+2018-05-14T08:04:35Z|00050|dpif_netdev|INFO|There are 2 pmd threads on numa node 0
+2018-05-14T08:04:35Z|00001|dpdk|INFO|i40e_dev_interrupt_handler(): ICR0: adminq event
+2018-05-14T08:04:35Z|00002|dpdk|INFO|i40e_dev_interrupt_handler(): ICR0: adminq event
+2018-05-14T08:04:35Z|00003|dpdk|INFO|i40e_dev_interrupt_handler(): ICR0: adminq event
+2018-05-14T08:04:35Z|00051|bridge|INFO|bridge br0: added interface dpdkvhostuser0 on port 10
+2018-05-14T08:04:35Z|00052|dpdk|INFO|i40e_pf_config_rss(): Max of contiguous 1 PF queues are configured
+2018-05-14T08:04:35Z|00053|dpdk|INFO|i40e_ethertype_filter_restore(): Ethertype filter: mac_etype_used = 25184, etype_used = 189, mac_etype_free = 0, etype_free = 0
+2018-05-14T08:04:35Z|00054|dpdk|INFO|i40e_fdir_filter_restore(): FDIR: Guarant count: 0,  Best count: 0
+2018-05-14T08:04:35Z|00004|dpdk|INFO|i40e_dev_interrupt_handler(): ICR0: adminq event
+2018-05-14T08:04:35Z|00005|dpdk|INFO|i40e_dev_interrupt_handler(): ICR0: adminq event
+2018-05-14T08:04:35Z|00055|netdev_dpdk|INFO|Port 0: 3c:fd:fe:a1:04:88
+2018-05-14T08:04:35Z|00056|bridge|INFO|bridge br0: added interface dpdk0 on port 1
+2018-05-14T08:04:35Z|00057|bridge|INFO|bridge br0: added interface br0 on port 65534
+2018-05-14T08:04:35Z|00058|dpif_netlink|WARN|Generic Netlink family 'ovs_datapath' does not exist. The Open vSwitch kernel module is probably not loaded.
+2018-05-14T08:04:35Z|00059|bridge|INFO|bridge br0: using datapath ID 00003cfdfea10488
+2018-05-14T08:04:35Z|00060|connmgr|INFO|br0: added service controller "punix:/usr/local/var/run/openvswitch/br0.mgmt"
+2018-05-14T08:04:35Z|00061|timeval|WARN|Unreasonably long 3573ms poll interval (976ms user, 2480ms system)
+2018-05-14T08:04:35Z|00062|timeval|WARN|faults: 20027 minor, 0 major
+2018-05-14T08:04:35Z|00063|timeval|WARN|context switches: 14 voluntary, 1366 involuntary
+2018-05-14T08:04:35Z|00064|coverage|INFO|Event coverage, avg rate over last: 5 seconds, last minute, last hour,  hash=e41c7b65:
+2018-05-14T08:04:35Z|00065|coverage|INFO|bridge_reconfigure         0.0/sec     0.000/sec        0.0000/sec   total: 1
+2018-05-14T08:04:35Z|00066|coverage|INFO|ofproto_flush              0.0/sec     0.000/sec        0.0000/sec   total: 1
+2018-05-14T08:04:35Z|00067|coverage|INFO|ofproto_update_port        0.0/sec     0.000/sec        0.0000/sec   total: 3
+2018-05-14T08:04:35Z|00068|coverage|INFO|rev_flow_table             0.0/sec     0.000/sec        0.0000/sec   total: 1
+2018-05-14T08:04:35Z|00069|coverage|INFO|cmap_expand                0.0/sec     0.000/sec        0.0000/sec   total: 39
+2018-05-14T08:04:35Z|00070|coverage|INFO|cmap_shrink                0.0/sec     0.000/sec        0.0000/sec   total: 22
+2018-05-14T08:04:35Z|00071|coverage|INFO|dpif_port_add              0.0/sec     0.000/sec        0.0000/sec   total: 3
+2018-05-14T08:04:35Z|00072|coverage|INFO|dpif_flow_flush            0.0/sec     0.000/sec        0.0000/sec   total: 2
+2018-05-14T08:04:35Z|00073|coverage|INFO|dpif_flow_get              0.0/sec     0.000/sec        0.0000/sec   total: 20
+2018-05-14T08:04:35Z|00074|coverage|INFO|dpif_flow_put              0.0/sec     0.000/sec        0.0000/sec   total: 21
+2018-05-14T08:04:35Z|00075|coverage|INFO|dpif_flow_del              0.0/sec     0.000/sec        0.0000/sec   total: 20
+2018-05-14T08:04:35Z|00076|coverage|INFO|dpif_execute               0.0/sec     0.000/sec        0.0000/sec   total: 5
+2018-05-14T08:04:35Z|00077|coverage|INFO|flow_extract               0.0/sec     0.000/sec        0.0000/sec   total: 4
+2018-05-14T08:04:35Z|00078|coverage|INFO|miniflow_malloc            0.0/sec     0.000/sec        0.0000/sec   total: 16
+2018-05-14T08:04:35Z|00079|coverage|INFO|hmap_pathological          0.0/sec     0.000/sec        0.0000/sec   total: 5
+2018-05-14T08:04:35Z|00080|coverage|INFO|hmap_expand                0.0/sec     0.000/sec        0.0000/sec   total: 443
+2018-05-14T08:04:35Z|00081|coverage|INFO|hmap_shrink                0.0/sec     0.000/sec        0.0000/sec   total: 2
+2018-05-14T08:04:35Z|00082|coverage|INFO|netdev_get_stats           0.0/sec     0.000/sec        0.0000/sec   total: 3
+2018-05-14T08:04:35Z|00083|coverage|INFO|poll_create_node           0.0/sec     0.000/sec        0.0000/sec   total: 23
+2018-05-14T08:04:35Z|00084|coverage|INFO|seq_change                 0.0/sec     0.000/sec        0.0000/sec   total: 608
+2018-05-14T08:04:35Z|00085|coverage|INFO|pstream_open               0.0/sec     0.000/sec        0.0000/sec   total: 3
+2018-05-14T08:04:35Z|00086|coverage|INFO|stream_open                0.0/sec     0.000/sec        0.0000/sec   total: 1
+2018-05-14T08:04:35Z|00087|coverage|INFO|util_xalloc                0.0/sec     0.000/sec        0.0000/sec   total: 8818
+2018-05-14T08:04:35Z|00088|coverage|INFO|netdev_set_policing        0.0/sec     0.000/sec        0.0000/sec   total: 1
+2018-05-14T08:04:35Z|00089|coverage|INFO|netdev_get_ifindex         0.0/sec     0.000/sec        0.0000/sec   total: 1
+2018-05-14T08:04:35Z|00090|coverage|INFO|netdev_get_hwaddr          0.0/sec     0.000/sec        0.0000/sec   total: 3
+2018-05-14T08:04:35Z|00091|coverage|INFO|netdev_get_ethtool         0.0/sec     0.000/sec        0.0000/sec   total: 2
+2018-05-14T08:04:35Z|00092|coverage|INFO|netlink_received           0.0/sec     0.000/sec        0.0000/sec   total: 7
+2018-05-14T08:04:35Z|00093|coverage|INFO|netlink_recv_jumbo         0.0/sec     0.000/sec        0.0000/sec   total: 1
+2018-05-14T08:04:35Z|00094|coverage|INFO|netlink_sent               0.0/sec     0.000/sec        0.0000/sec   total: 6
+2018-05-14T08:04:35Z|00095|coverage|INFO|74 events never hit
+2018-05-14T08:04:35Z|00096|poll_loop|INFO|wakeup due to [POLLIN] on fd 39 (FIFO pipe:[3040719]) at lib/ovs-rcu.c:229 (98% CPU usage)
+2018-05-14T08:04:35Z|00097|poll_loop|INFO|wakeup due to [POLLIN] on fd 9 (NETLINK_ROUTE<->NETLINK_ROUTE) at lib/netlink-socket.c:1331 (98% CPU usage)
+2018-05-14T08:04:35Z|00098|poll_loop|INFO|wakeup due to [POLLIN] on fd 10 (<->/usr/local/var/run/openvswitch/db.sock) at lib/stream-fd.c:157 (98% CPU usage)
+2018-05-14T08:04:35Z|00099|netdev|WARN|dpdkvhostuser0: arguments provided to device that is not configurable
+2018-05-14T08:04:35Z|00100|poll_loop|INFO|wakeup due to [POLLIN] on fd 39 (FIFO pipe:[3040719]) at vswitchd/bridge.c:385 (98% CPU usage)
+cf8f99e2-b0ed-4cf0-9291-27534beb5879
+    Bridge "br0"
+        Port "dpdk0"
+            Interface "dpdk0"
+                type: dpdk
+                options: {dpdk-devargs="0000:02:00.0"}
+        Port "br0"
+            Interface "br0"
+                type: internal
+        Port "dpdkvhostuser0"
+            Interface "dpdkvhostuser0"
+                type: dpdkvhostuser
+                options: {n_rxq="1"}
+PCI corrected
+0000:02:00.0
+1 - Configure br0
+2 - Add echo rule
+ cookie=0x0, duration=4.647s, table=0, n_packets=0, n_bytes=0, priority=0 actions=NORMAL
+Device attached successfully
+
+Domain netronome-dpdk-ovs-intel-vm XML configuration not changed.
+
+Domain netronome-dpdk-ovs-intel-vm XML configuration edited.
+
+Domain netronome-dpdk-ovs-intel-vm XML configuration edited.
+
+Domain netronome-dpdk-ovs-intel-vm XML configuration not changed.
+
+
+
+Domain netronome-dpdk-ovs-intel-vm XML configuration edited.
+
+VM_CPU: 5
+Domain netronome-dpdk-ovs-intel-vm XML configuration edited.
+
+ * Unloading AppArmor profiles
+   ...done.
+netronome-dpdk-ovs-intel-vm
+nfp_cpu_list: 0 1 2 3 4 5 6 7
+VCPU: CPU Affinity
+----------------------------------
+   0: 1
+   1: 2
+   2: 3
+   3: 4
+   4: 5
+
+DONE(setup_test_case_12.sh)
+root@temp8:~# ./IVG_folder/helper_scripts/start_vm.sh netr onome-dpdk-ovs-intel-vm
+Domain netronome-dpdk-ovs-intel-vm started
+
+Waiting for VM to boot ................................ UP
+Welcome to Ubuntu 17.10 (GNU/Linux 4.13.0-41-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+
+  Get cloud support with Ubuntu Advantage Cloud Guest:
+    http://www.ubuntu.com/business/services/cloud
+
+1 package can be updated.
+1 update is a security update.
+
+
+WELCOME
+root@netronome-dpdk-ovs-intel-vm:~# cd vm_scripts/samples/DDPDK-pktgen
+root@netronome-dpdk-ovs-intel-vm:~/vm_scripts/samples/DPDK--pktgen# ./1_configure_hugepages.sh
+1024
+root@netronome-dpdk-ovs-intel-vm:~/vm_scripts/samples/DPDK--pktgen# ./2_auto_bind_igb_uio.sh
+01:0a.0 Ethernet controller: Red Hat, Inc Virtio network device
+01:0a.0
+netronome_vf: 01:0a.0
+whitelist:  01:0a.0
+root@netronome-dpdk-ovs-intel-vm:~/vm_scripts/samples/DPDK--pktgen# cd 3_dpdk_pktgen_lua_capture
+root@netronome-dpdk-ovs-intel-vm:~/vm_scripts/samples/DPDK--pktgen/3_dpdk_pktgen_lua_capture# ./0_run_dpdk-pktgen_uni--rx.sh
+netronome_vf: 0000:01:0a.0
+netronome_vf: 0000:01:0a.0
+cpu_counter: 1
+whitelist:  -w 0000:01:0a.0
+mapping: -m 1.0
+[1;r[100;1H
+Copyright (c) <2010-2017>, Intel Corporation. All rights reserved. Powered by DPDK
+EAL: Detected 5 lcore(s)
+EAL: Auto-detected process type: PRIMARY
+EAL: No free hugepages reported in hugepages-1048576kB
+EAL: Probing VFIO support...
+EAL: WARNING: cpu flags constant_tsc=yes nonstop_tsc=no -> using unreliable clock cycles !
+EAL: PCI device 0000:01:0a.0 on NUMA socket -1
+EAL:   probe driver: 1af4:1000 net_virtio
+[0;39;49m[1;r[45;1H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Lua 5.3.4  Copyright (C) 1994-2017 Lua.org, PUC-Rio
+[0;39;49m[1;r[45;1H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   Copyright (c) <2010-2017>, Intel Corporation. All rights reserved.
+   Pktgen created by: Keith Wiles -- >>> Powered by DPDK <<<
+
+>>> Packet Burst 64, RX Desc 512, TX Desc 1024, mbufs/port 32768, mbuf cache 4096
+
+=== port to lcore mapping table (# lcores 5) ===
+   lcore:    0       1       2       3       4      Total
+port   0: ( D: T) ( 1: 1) ( 0: 0) ( 0: 0) ( 0: 0) = ( 1: 1)
+Total   : ( 0: 0) ( 1: 1) ( 0: 0) ( 0: 0) ( 0: 0)
+  Display and Timer on lcore 0, rx:tx counts per port/lcore
+
+Configuring 1 ports, MBUF Size 2176, MBUF Cache Size 4096
+Lcore:
+    1, RX-TX  
+                RX_cnt( 1): (pid= 0:qid= 0) 
+                TX_cnt( 1): (pid= 0:qid= 0) 
+
+Port :
+    0, nb_lcores  1, private 0x55d70bdb53a0, lcores:  1 
+
+
+
+** Default Info (0000:01:0a.0, if_index:0) **
+   max_vfs        :   0, min_rx_bufsize    :  64, max_rx_pktlen :  9728
+   max_rx_queues  :   2, max_tx_queues     :   2
+   max_mac_addrs  :  64, max_hash_mac_addrs:   0, max_vmdq_pools:     0
+   rx_offload_capa:  28, tx_offload_capa   :   0, reta_size     :     0, flow_type_rss_offloads:0000000000000000
+   vmdq_queue_base:   0, vmdq_queue_num    :   0, vmdq_pool_base:     0
+** RX Conf **
+   pthresh        :   0, hthresh          :   0, wthresh        :     0
+   Free Thresh    :   0, Drop Enable      :   0, Deferred Start :     0
+** TX Conf **
+   pthresh        :   0, hthresh          :   0, wthresh        :     0
+   Free Thresh    :   0, RS Thresh        :   0, Deferred Start :     0, TXQ Flags:00000f00
+
+    Create: Default RX  0:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+      Set RX queue stats mapping pid 0, q 0, lcore 1
+
+
+    Create: Default TX  0:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Range TX    0:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Sequence TX 0:0  - Memory used (MBUFs 32768 x (size 2176 + Hdr 128)) + 192 =  73729 KB headroom 128 2176
+    Create: Special TX  0:0  - Memory used (MBUFs   64 x (size 2176 + Hdr 128)) + 192 =    145 KB headroom 128 2176
+
+                                                                       Port memory used = 295057 KB
+Initialize Port 0 -- TxQ 1, RxQ 1,  Src MAC 52:54:00:69:c7:f4
+                                                                      Total memory used = 295057 KB
+Port  0: Link Up - speed 100000 Mbps - full-duplex
+
+
+=== Display processing on lcore 0
+WARNING: Nothing to do on lcore 2: exiting
+WARNING: Nothing to do on lcore 3: exiting
+WARNING: Nothing to do on lcore 4: exiting
+  RX/TX processing lcore:   1 rx:  1 tx:  1
+For RX found 1 port(s) for lcore 1
+For TX found 1 port(s) for lcore 1
+[1;r[45;1H
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[2J[100;1H7[1;1H-[1;20H<Main Page>  Copyright (c) <2010-2017>, Intel Corporation[1;3HPorts 0-0 of 1[2;1H  Flags:Port        [3;1HLink State          [4;1HPkts/s Max/Rx       [5;1H       Max/Tx       [6;1HMBits/s Rx/Tx       [7;1HBroadcast           [8;1HMulticast           [9;1H  64 Bytes          [10;1H  65-127            [11;1H  128-255           [12;1H  256-511           [13;1H  512-1023          [14;1H  1024-1518         [15;1HRunts/Jumbos        [16;1HErrors Rx/Tx        [17;1HTotal Rx Pkts       [18;1H      Tx Pkts       [19;1H      Rx MBs        [20;1H      Tx MBs        [21;1HARP/ICMP Pkts       [23;1HPattern Type        [24;1HTx Count/% Rate     [25;1HPktSize/Tx Burst    [26;1HSrc/Dest Port       [27;1HPkt Type:VLAN ID    [28;1HDst  IP Address     [29;1HSrc  IP Address     [30;1HDst MAC Address     [31;1HSrc MAC Address     [32;1HVendID/PCI Addr     [35;r[34;1H-------------------------------------------------------------------------------[34;3H Pktgen Ver: 3.4.1 (DPDK 17.05.0)  Powered by DPDK [2;19H:[3;19H:[4;19H:[5;19H:[6;19H:[7;19H:[8;19H:[9;19H:[10;19H:[11;19H:[12;19H:[13;19H:[14;19H:[15;19H:[16;19H:[17;19H:[18;19H:[19;19H:[20;19H:[21;19H:[22;19H:[23;19H:[24;19H:[25;19H:[26;19H:[27;19H:[28;19H:[29;19H:[30;19H:[31;19H:[32;19H:[23;20H             abcd...[24;20H       Forever /100%[25;20H           64 /   64[26;20H         1234 / 5678[27;20H     IPv4 / TCP:0001[28;20H         192.168.1.1[29;20H      192.168.0.1/24[30;20H   00:00:00:00:00:00[31;20H   52:54:00:69:c7:f4[32;20H   1af4:1000/01:10.0[3;40H     ----TotalRate----[K[2;20H   ---------------:0[3;20H      <UP-100000-FD>[4;20H                 0/0[5;20H                 0/0[6;20H                 0/0[7;20H                   0[8;20H                   0[9;20H                   0[10;20H                   0[11;20H                   0[12;20H                   0[13;20H                   0[14;20H                   0[15;20H                 0/0[16;20H                 0/0[17;20H                   0[18;20H                   0[19;20H                   0[20;20H                   0[21;20H                 0/0[4;40H                   0/0[K[5;40H                   0/0[K[6;40H                   0/0[K8
+** Version: DPDK 17.05.0, Command Line Interface with timers
+Pktgen:/> [2J[1;r[100;1HPort Count 1
+Total port Count 1
+-- 0.0,1,-nan,0,0
+
+-- 1.0,1,-nan,0,0
+
+-- 2.0,1,-nan,0,0
+
+-- 3.0,1,-nan,0,0
+
+-- 4.0,1,-nan,0,0
+
+-- 5.0,1,-nan,0,0
+
+-- 6.0,1,64,3,0
+
+-- 7.0,1,64,99181,66
+
+-- 8.0,1,64,73652,49
+
+-- 9.0,1,64,37142,24
+
+-- 10.0,1,64,31332,21
+
+-- 11.0,1,64,527815,354
+
+-- 13.0,1,64,587853,395
+
+-- 14.0,1,64,1375890,924
+
+-- 15.0,1,64,1536771,1032
+
+-- 16.0,1,64,1528463,1027
+
+-- 18.0,1,64,1484144,997
+
+-- 19.0,1,64,1550051,1041
+
+-- 20.0,1,64,1519177,1020
+
+-- 21.0,1,64,1467786,986
+
+-- 22.0,1,64,1487887,999
+
+-- 24.0,1,64,1537727,1033
+
+-- 25.0,1,64,1460062,981
+
+-- 26.0,1,64,1504565,1011
+
+-- 27.0,1,64,1521166,1022
+
+-- 29.0,1,64,1491197,1002
+
+-- 30.0,1,64,1513929,1017
+
+-- 31.0,1,64,1529682,1027
+
+-- 32.0,1,64,1491174,1002
+
+-- 33.0,1,64,1453896,977
+
+-- 35.0,1,64,1559315,1047
+
+-- 36.0,1,64,1508439,1013
+
+-- 37.0,1,128,26717,31
+
+-- 38.0,1,128,1461798,1730
+
+-- 39.0,1,128,1522564,1802
+
+-- 41.0,1,128,1481742,1754
+
+-- 42.0,1,128,1540133,1823
+
+-- 43.0,1,128,1502258,1778
+
+-- 44.0,1,128,1471313,1742
+
+-- 45.0,1,128,1529211,1810
+
+-- 47.0,1,128,1555286,1841
+
+-- 48.0,1,128,1476491,1748
+
+-- 49.0,1,128,1533168,1815
+
+-- 51.0,1,128,1529893,1811
+
+-- 52.0,1,128,1493706,1768
+
+-- 53.0,1,128,1521800,1801
+
+-- 54.0,1,128,1524903,1805
+
+-- 56.0,1,128,1488219,1762
+
+-- 57.0,1,128,1550255,1835
+
+-- 58.0,1,128,1511473,1789
+
+-- 59.0,1,128,1486848,1760
+
+-- 60.0,1,128,1548012,1832
+
+-- 62.0,1,128,1532259,1814
+
+-- 63.0,1,128,1507897,1785
+
+-- 64.0,1,128,266500,315
+
+-- 65.0,1,256,1524323,3365
+
+-- 66.0,1,256,1452640,3207
+
+-- 67.0,1,256,1485799,3280
+
+-- 69.0,1,256,1520236,3356
+
+-- 70.0,1,256,1478198,3263
+
+-- 71.0,1,256,1496972,3305
+
+-- 73.0,1,256,1503228,3319
+
+-- 74.0,1,256,1466765,3238
+
+-- 75.0,1,256,1515904,3347
+
+-- 76.0,1,256,1540288,3400
+
+-- 77.0,1,256,1476349,3259
+
+-- 78.0,1,256,1479715,3267
+
+-- 80.0,1,256,1522998,3362
+
+-- 81.0,1,256,1486090,3281
+
+-- 82.0,1,256,1486731,3282
+
+-- 83.0,1,256,1526809,3371
+
+-- 84.0,1,256,1524893,3366
+
+-- 86.0,1,256,1454463,3211
+
+-- 87.0,1,256,1507616,3328
+
+-- 88.0,1,256,1488192,3285
+
+-- 89.0,1,256,1483877,3276
+
+-- 90.0,1,256,67765,149
+
+-- 92.0,1,512,451782,1922
+
+-- 93.0,1,512,1424677,6063
+
+-- 94.0,1,512,1464908,6234
+
+-- 95.0,1,512,1472476,6266
+
+-- 97.0,1,512,1430564,6088
+
+-- 98.0,1,512,1440064,6128
+
+-- 99.0,1,512,1480144,6299
+
+-- 100.0,1,512,1414507,6020
+
+-- 101.0,1,512,1463006,6226
+
+-- 102.0,1,512,1483129,6312
+
+-- 104.0,1,512,1451849,6179
+
+-- 105.0,1,512,1459458,6211
+
+-- 106.0,1,512,1483895,6315
+
+-- 107.0,1,512,1438437,6121
+
+-- 108.0,1,512,1432580,6097
+
+-- 110.0,1,512,1477685,6289
+
+-- 111.0,1,512,1443050,6141
+
+-- 112.0,1,512,1438720,6123
+
+-- 113.0,1,512,1459776,6212
+
+-- 115.0,1,512,1457316,6202
+
+-- 116.0,1,512,904256,3848
+
+-- 117.0,1,64,2,0
+
+-- 118.0,1,1024,916254,7652
+
+-- 119.0,1,1024,1275616,10653
+
+-- 121.0,1,1024,1297369,10835
+
+-- 122.0,1,1024,1308550,10929
+
+-- 123.0,1,1024,1269117,10599
+
+-- 124.0,1,1024,1307805,10922
+
+-- 126.0,1,1024,1286944,10748
+
+-- 127.0,1,1024,1297047,10832
+
+-- 128.0,1,1024,1315584,10987
+
+-- 129.0,1,1024,1293614,10804
+
+-- 131.0,1,1024,1285010,10732
+
+-- 132.0,1,1024,1294140,10808
+
+-- 133.0,1,1024,1302949,10882
+
+-- 134.0,1,1024,1296640,10829
+
+-- 135.0,1,1024,1296187,10825
+
+-- 137.0,1,1024,1311968,10957
+
+-- 138.0,1,1024,1283146,10716
+
+-- 139.0,1,1024,1327727,11089
+
+-- 140.0,1,1024,1301018,10866
+
+-- 141.0,1,1024,1312476,10961
+
+-- 143.0,1,1024,1268378,10593
+
+-- 144.0,1,1024,166053,1386
+
+-- 145.0,1,1280,1216624,12652
+
+-- 146.0,1,1280,1245938,12957
+
+-- 147.0,1,1280,1238185,12877
+
+-- 148.0,1,1280,1242090,12917
+
+-- 150.0,1,1280,1230870,12801
+
+-- 151.0,1,1280,1243032,12927
+
+-- 152.0,1,1280,1233086,12824
+
+-- 153.0,1,1280,1245888,12957
+
+-- 155.0,1,1280,1232205,12814
+
+-- 156.0,1,1280,1233979,12833
+
+-- 157.0,1,1280,1231213,12804
+
+-- 158.0,1,1280,1264790,13153
+
+-- 159.0,1,1280,1236443,12859
+
+-- 161.0,1,1280,1222102,12709
+
+-- 162.0,1,1280,1249344,12993
+
+-- 163.0,1,1280,1241475,12911
+
+-- 164.0,1,1280,1226473,12755
+
+-- 165.0,1,1280,1236569,12860
+
+-- 167.0,1,1280,1248113,12980
+
+-- 168.0,1,1280,490841,5104
+
+-- 169.0,1,1518,22235,273
+
+-- 170.0,1,1518,1066426,13121
+
+-- 171.0,1,1518,1178109,14495
+
+-- 172.0,1,1518,1177483,14487
+
+-- 174.0,1,1518,1187520,14611
+
+-- 175.0,1,1518,1179050,14507
+
+-- 176.0,1,1518,1184870,14578
+
+-- 177.0,1,1518,1184898,14578
+
+-- 179.0,1,1518,1178477,14499
+
+-- 180.0,1,1518,1194855,14701
+
+-- 181.0,1,1518,1184076,14568
+
+-- 182.0,1,1518,1178877,14504
+
+-- 183.0,1,1518,1169915,14394
+
+-- 185.0,1,1518,1179868,14517
+
+-- 186.0,1,1518,1191680,14662
+
+-- 187.0,1,1518,1169555,14390
+
+-- 188.0,1,1518,1180631,14526
+
+-- 189.0,1,1518,1182873,14554
+
+-- 191.0,1,1518,1185628,14587
+
+-- 192.0,1,1518,1172057,14420
+
+-- 193.0,1,1518,1052743,12952
+
+-- 194.0,1,-nan,0,0
+
+-- 195.0,1,-nan,0,0
+
+-- 196.0,1,-nan,0,0
+
+-- 197.0,1,-nan,0,0
+
+-- 198.0,1,-nan,0,0
+
+-- 199.0,1,-nan,0,0
+
+-- 200.0,1,-nan,0,0
+
+-- 201.0,1,-nan,0,0
+
+-- 202.0,1,-nan,0,0
+
+-- 203.0,1,-nan,0,0
+
+-- 204.0,1,-nan,0,0
+
+-- 205.0,1,-nan,0,0
+
+-- 206.0,1,-nan,0,0
+
+-- 207.0,1,-nan,0,0
+
+-- 208.0,1,-nan,0,0
+
+-- 209.0,1,-nan,0,0
+
+-- 210.0,1,-nan,0,0
+
+-- 211.0,1,-nan,0,0
+
+-- 212.0,1,-nan,0,0
+
+-- 213.0,1,-nan,0,0
+
+-- 214.0,1,-nan,0,0
+
+-- 215.0,1,-nan,0,0
+
+-- 216.0,1,-nan,0,0
+
+-- 217.0,1,-nan,0,0
+
+-- 218.0,1,-nan,0,0
+
+-- 219.0,1,-nan,0,0
+
+-- 220.0,1,-nan,0,0
+
+-- 221.0,1,-nan,0,0
+
+-- 222.0,1,-nan,0,0
+
+-- 223.0,1,-nan,0,0
+
+-- 224.0,1,-nan,0,0
+
+[3g        H        H        H        H        H        H        Hc[?1000l[?25hTest run complete
+root@netronome-dpdk-ovs-intel-vm:~/vm_scripts/samples/DPDK--pktgen/3_dpdk_pktgen_lua_capture# ./parse_and_plot.py
+Data parse complete!
+root@netronome-dpdk-ovs-intel-vm:~/vm_scripts/samples/DPDK--pktgen/3_dpdk_pktgen_lua_capture# exit
+logout
+Connection to 192.168.122.176 closed.
+root@temp8:~# ./IVG_folder/helper_scripts/x_copy_data_dump .sh netronome-dpdk-ovs-intel-vm
+capture.txt               0%    0     0.0KB/s   --:-- ETAcapture.txt             100% 7410     7.2KB/s   00:00    
+parsed_data.txt           0%    0     0.0KB/s   --:-- ETAparsed_data.txt         100%  171     0.2KB/s   00:00    
+root@temp8:~# $IVG_dir/helper_scripts/delete-vms.sh --all  --shutdown
+ - shutdown VM netronome-dpdk-ovs-intel-vm
+DONE(delete-vms.sh)
+root@temp8:~# exit
+exit
+
+Script done on Mon 14 May 2018 08:09:57 AM UTC

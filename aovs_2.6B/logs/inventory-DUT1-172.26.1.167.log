@@ -1,0 +1,16 @@
+Hostname       temp7
+OS             Ubuntu 16.04.4 LTS (Xenial Xerus)
+Kernel         4.15.18-041518-generic
+Server         Supermicro Super Server
+BIOS           American Megatrends Inc. Version 2.0b (05/02/2017); Revision 5.6
+CPU            GenuineIntel Intel(R) Xeon(R) CPU E5-2609 v4 @ 1.70GHz 1200.729MHz
+NUMA           1 sockets, 8 cores/socket
+Memory         32891240 kB
+DIMM           64 bits, 16384 MB, DIMMA1, 1866 MHz (max 2400 MHz), rank 1
+DIMM           64 bits, 16384 MB, DIMMB1, 1866 MHz (max 2400 MHz), rank 1
+NUMA 0         0-7
+NFP NUMA       0
+NFP BDF        0000:02:00.0
+Kernel Command Line 
+               BOOT_IMAGE=/boot/vmlinuz-4.15.18-041518-generic root=UUID=dc915355-8728-47e8-895f-f42a5c27a0e5 ro intel_iommu=on iommu=pt intremap=on isolcpus=0-7 intel_idle.max_cstate=0 processor.max_cstate=0 intel_pstate=disable nohz_full=0-7 rcu_nocbs=0-7 transparent_hugepage=never console=tty1 console=ttyS0,115200
+VM CPU Usage   

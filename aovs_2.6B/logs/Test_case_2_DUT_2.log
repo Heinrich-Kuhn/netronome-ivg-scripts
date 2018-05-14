@@ -1,31 +1,31 @@
-Script started on Mon 07 May 2018 06:48:24 AM UTC
+Script started on Mon 14 May 2018 10:22:40 AM UTC
 cd
-root@stingray:~# cd
-root@stingray:~# $HOME/IVG_folder/vm_creator/ubuntu/y_creat e_vm_from_backing.sh netronome-sriov-vm
+root@temp6:~# cd
+root@temp6:~# $HOME/IVG_folder/vm_creator/ubuntu/y_create_v m_from_backing.sh netronome-sriov-vm
 DONE(delete-vms.sh)
- - undefine VM netronome-xvio-vxlan-vm
+ - undefine VM netronome-sriov-vm
 DONE(delete-vms.sh)
 create overlay image
 Formatting '/var/lib/libvirt/images/netronome-sriov-vm.qcow2', fmt=qcow2 size=2361393152 backing_file=/var/lib/libvirt/images/ubuntu-17.10-server-cloudimg-amd64.img encryption=off cluster_size=65536 lazy_refcounts=off refcount_bits=16
 create domain
-[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (cli:256) Launched with command line: /usr/share/virt-manager/virt-install --name netronome-sriov-vm --disk path=/var/lib/libvirt/images/netronome-sriov-vm.qcow2,format=qcow2,bus=virtio,cache=none --ram 6144 --vcpus 5 --cpu Haswell-noTSX-IBRS --network network=default --nographics --debug --accelerate --os-type=linux --os-variant=ubuntu16.04 --noautoconsole --noreboot --import
-[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (cli:266) Requesting libvirt URI default
-[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (cli:270) Received libvirt URI qemu:///system
-[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:357) Requesting virt method 'default', hv type 'default'.
-[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:577) Received virt method 'kvm'
-[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:578) Hypervisor name is 'hvm'
-[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:269) Distilled --network options: ['network=default']
-[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:315) --graphics compat generated: none
-[Mon, 07 May 2018 06:48:36 virt-install 24065] DEBUG (virt-install:182) Distilled --disk options: ['path=/var/lib/libvirt/images/netronome-sriov-vm.qcow2,format=qcow2,bus=virtio,cache=none']
-[Mon, 07 May 2018 06:48:37 virt-install 24065] DEBUG (guest:241) Setting Guest.os_variant to 'ubuntu16.04'
-[Mon, 07 May 2018 06:48:37 virt-install 24065] DEBUG (virt-install:732) Guest.has_install_phase: False
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (cli:256) Launched with command line: /usr/share/virt-manager/virt-install --name netronome-sriov-vm --disk path=/var/lib/libvirt/images/netronome-sriov-vm.qcow2,format=qcow2,bus=virtio,cache=none --ram 6144 --vcpus 5 --cpu Broadwell --network network=default --nographics --debug --accelerate --os-type=linux --os-variant=ubuntu16.04 --noautoconsole --noreboot --import
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (cli:266) Requesting libvirt URI default
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (cli:270) Received libvirt URI qemu:///system
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (virt-install:357) Requesting virt method 'default', hv type 'default'.
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (virt-install:577) Received virt method 'kvm'
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (virt-install:578) Hypervisor name is 'hvm'
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (virt-install:269) Distilled --network options: ['network=default']
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (virt-install:315) --graphics compat generated: none
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (virt-install:182) Distilled --disk options: ['path=/var/lib/libvirt/images/netronome-sriov-vm.qcow2,format=qcow2,bus=virtio,cache=none']
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (guest:241) Setting Guest.os_variant to 'ubuntu16.04'
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (virt-install:732) Guest.has_install_phase: False
 
 Starting install...
-[Mon, 07 May 2018 06:48:37 virt-install 24065] DEBUG (guest:398) Generated install XML: None required
-[Mon, 07 May 2018 06:48:37 virt-install 24065] DEBUG (guest:399) Generated boot XML: 
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (guest:398) Generated install XML: None required
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (guest:399) Generated boot XML: 
 <domain type="kvm">
   <name>netronome-sriov-vm</name>
-  <uuid>8513cd40-df8a-4e65-a337-716d764ba98c</uuid>
+  <uuid>53a2bc04-74c6-4c24-a00d-bedda680919b</uuid>
   <memory>6291456</memory>
   <currentMemory>6291456</currentMemory>
   <vcpu>5</vcpu>
@@ -38,7 +38,7 @@ Starting install...
     <apic/>
   </features>
   <cpu mode="custom" match="exact">
-    <model>Haswell-noTSX-IBRS</model>
+    <model>Broadwell</model>
   </cpu>
   <clock offset="utc">
     <timer name="rtc" tickpolicy="catchup"/>
@@ -71,7 +71,7 @@ Starting install...
     </controller>
     <interface type="network">
       <source network="default"/>
-      <mac address="52:54:00:04:84:f1"/>
+      <mac address="52:54:00:cb:29:dd"/>
       <model type="virtio"/>
     </interface>
     <input type="mouse" bus="ps2"/>
@@ -80,10 +80,10 @@ Starting install...
 </domain>
 
 Creating domain...                     |    0 B  00:00     
-[Mon, 07 May 2018 06:48:37 virt-install 24065] DEBUG (guest:429) XML fetched from libvirt object:
+[Mon, 14 May 2018 10:23:26 virt-install 5613] DEBUG (guest:429) XML fetched from libvirt object:
 <domain type='kvm'>
   <name>netronome-sriov-vm</name>
-  <uuid>8513cd40-df8a-4e65-a337-716d764ba98c</uuid>
+  <uuid>53a2bc04-74c6-4c24-a00d-bedda680919b</uuid>
   <memory unit='KiB'>6291456</memory>
   <currentMemory unit='KiB'>6291456</currentMemory>
   <vcpu placement='static'>5</vcpu>
@@ -96,7 +96,7 @@ Starting install...
     <apic/>
   </features>
   <cpu mode='custom' match='exact'>
-    <model fallback='allow'>Haswell-noTSX-IBRS</model>
+    <model fallback='allow'>Broadwell</model>
   </cpu>
   <clock offset='utc'>
     <timer name='rtc' tickpolicy='catchup'/>
@@ -135,7 +135,7 @@ Starting install...
     </controller>
     <controller type='pci' index='0' model='pci-root'/>
     <interface type='network'>
-      <mac address='52:54:00:04:84:f1'/>
+      <mac address='52:54:00:cb:29:dd'/>
       <source network='default'/>
       <model type='virtio'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
@@ -156,15 +156,15 @@ Domain creation completed.
 You can restart your domain by running:
   virsh --connect qemu:///system start netronome-sriov-vm
 VM has been created!
-root@stingray:~# ./IVG_folder/test_case_2_sriov_uni/1_port/ setup_test_case_2.sh netronome-sriov-vm 5 OVS_TC
+root@temp6:~# ./IVG_folder/test_case_2_sriov_uni/1_port/set up_test_case_2.sh netronome-sriov-vm 5 OVS_TC
 [1m[37mlibvirt folders[m
 DONE(0_configure_hugepages.sh)
-find: ‘/proc/24165’: No such file or directory
 Stop openvswitch ...
- * Exiting ovs-vswitchd (30121)
- * Exiting ovsdb-server (30111)
+ * Exiting ovs-vswitchd (30275)
+ * Exiting ovsdb-server (30253)
+find: ‘/proc/6387’: No such file or directory
 PCI corrected
-0000:82
+0000:02
 Unbinding VFs
 Stop Virtioforwarder ...
 Failed to stop virtioforwarder.service: Unit virtioforwarder.service not loaded.
@@ -176,11 +176,11 @@ nfp module loaded
 Creating VF's ...
 Creating VF's done
 PCI corrected
-0000:82:00.0
-enp130s0
+0000:02:00.0
+enp2s0
 Cannot get device udp-fragmentation-offload settings: Operation not supported
 Cannot get device udp-fragmentation-offload settings: Operation not supported
-rename851
+rename328
 Cannot get device udp-fragmentation-offload settings: Operation not supported
 Cannot get device udp-fragmentation-offload settings: Operation not supported
 Start OVS
@@ -193,87 +193,87 @@ OVS-TC started
 PCI corrected
 hostname: Name or service not known
 ovs-vsctl: external-ids:hostname=: argument does not end in "=" followed by a value.
-Add eth42 to br0
-ovs-vsctl add-port br0 eth42 -- set interface eth42 ofport_request=41
-VF1_PCI_ADDRESS: 0000:82:0d.1
-INTERFACE_PCI: 0000:82:0d.1
+Add eth51 to br0
+ovs-vsctl add-port br0 eth51 -- set interface eth51 ofport_request=41
+VF1_PCI_ADDRESS: 0000:02:0d.1
+INTERFACE_PCI: 0000:02:0d.1
 current driver: nfp_netvf
 expected driver: vfio-pci
-testing: bind nfp_netvf on 0000:82:0d.1
+testing: bind nfp_netvf on 0000:02:0d.1
 FIRST VF DONE
-Add eth43 to br0
-ovs-vsctl add-port br0 eth43 -- set interface eth43 ofport_request=42
-VF2_PCI_ADDRESS: 0000:82:0d.2
-INTERFACE_PCI: 0000:82:0d.2
+Add eth52 to br0
+ovs-vsctl add-port br0 eth52 -- set interface eth52 ofport_request=42
+VF2_PCI_ADDRESS: 0000:02:0d.2
+INTERFACE_PCI: 0000:02:0d.2
 current driver: nfp_netvf
 expected driver: vfio-pci
-testing: bind nfp_netvf on 0000:82:0d.2
+testing: bind nfp_netvf on 0000:02:0d.2
 SECOND VF DONE
-Add eth44 to br0
-ovs-vsctl add-port br0 eth44 -- set interface eth44 ofport_request=43
-VF3_PCI_ADDRESS: 0000:82:0d.3
-INTERFACE_PCI: 0000:82:0d.3
+Add eth53 to br0
+ovs-vsctl add-port br0 eth53 -- set interface eth53 ofport_request=43
+VF3_PCI_ADDRESS: 0000:02:0d.3
+INTERFACE_PCI: 0000:02:0d.3
 current driver: nfp_netvf
 expected driver: vfio-pci
-testing: bind nfp_netvf on 0000:82:0d.3
+testing: bind nfp_netvf on 0000:02:0d.3
 THIRD VF DONE
-Add eth45 to br0
-ovs-vsctl add-port br0 eth45 -- set interface eth45 ofport_request=44
-VF4_PCI_ADDRESS: 0000:82:0d.4
-INTERFACE_PCI: 0000:82:0d.4
+Add eth54 to br0
+ovs-vsctl add-port br0 eth54 -- set interface eth54 ofport_request=44
+VF4_PCI_ADDRESS: 0000:02:0d.4
+INTERFACE_PCI: 0000:02:0d.4
 current driver: nfp_netvf
 expected driver: vfio-pci
-testing: bind nfp_netvf on 0000:82:0d.4
+testing: bind nfp_netvf on 0000:02:0d.4
 FOURTH VF DONE
-pf0 = eth1
-p0 = rename851
-d6eff4d8-c118-40a0-bf18-4eafe70ae0de
+pf0 = eth2
+p0 = rename328
+506d0661-5634-4a38-afe7-884c6780dacd
     Bridge "br0"
-        Port "eth44"
-            Interface "eth44"
-        Port "eth45"
-            Interface "eth45"
-        Port "eth42"
-            Interface "eth42"
-        Port "eth43"
-            Interface "eth43"
-        Port "rename851"
-            Interface "rename851"
+        Port "eth54"
+            Interface "eth54"
+        Port "rename328"
+            Interface "rename328"
+        Port "eth52"
+            Interface "eth52"
+        Port "eth51"
+            Interface "eth51"
         Port "br0"
             Interface "br0"
                 type: internal
+        Port "eth53"
+            Interface "eth53"
     ovs_version: "2.8.3"
-OFPT_FEATURES_REPLY (xid=0x2): dpid:000000154d1305ea
+OFPT_FEATURES_REPLY (xid=0x2): dpid:000000154d122423
 n_tables:254, n_buffers:0
 capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS ARP_MATCH_IP
 actions: output enqueue set_vlan_vid set_vlan_pcp strip_vlan mod_dl_src mod_dl_dst mod_nw_src mod_nw_dst mod_nw_tos mod_tp_src mod_tp_dst
- 1(rename851): addr:00:15:4d:13:05:ea
+ 1(rename328): addr:00:15:4d:12:24:23
      config:     0
      state:      0
-     current:    AUTO_NEG
+     current:    FIBER AUTO_NEG
      supported:  FIBER
      speed: 0 Mbps now, 0 Mbps max
- 41(eth42): addr:72:39:79:ef:36:bb
+ 41(eth51): addr:02:a3:dd:94:aa:27
      config:     0
      state:      LINK_DOWN
      supported:  FIBER
      speed: 0 Mbps now, 0 Mbps max
- 42(eth43): addr:0a:45:98:83:73:77
+ 42(eth52): addr:6a:f2:37:d2:3d:80
      config:     0
      state:      LINK_DOWN
      supported:  FIBER
      speed: 0 Mbps now, 0 Mbps max
- 43(eth44): addr:ae:04:ee:a4:dc:c4
+ 43(eth53): addr:3e:a2:d8:03:1d:22
      config:     0
      state:      LINK_DOWN
      supported:  FIBER
      speed: 0 Mbps now, 0 Mbps max
- 44(eth45): addr:f2:35:5c:96:a8:71
+ 44(eth54): addr:1e:c7:b6:74:51:4a
      config:     0
      state:      LINK_DOWN
      supported:  FIBER
      speed: 0 Mbps now, 0 Mbps max
- LOCAL(br0): addr:00:15:4d:13:05:ea
+ LOCAL(br0): addr:00:15:4d:12:24:23
      config:     PORT_DOWN
      state:      LINK_DOWN
      speed: 0 Mbps now, 0 Mbps max
@@ -300,33 +300,39 @@ Domain netronome-sriov-vm XML configuration edited.
 Domain netronome-sriov-vm XML configuration edited.
 
 netronome-sriov-vm
-nfp_cpu_list: 1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47
+nfp_cpu_list: 0 1 2 3 4 5 6 7
 VCPU: CPU Affinity
 ----------------------------------
-   0: 3
-   1: 5
-   2: 7
-   3: 9
-   4: 11
+   0: 1
+   1: 2
+   2: 3
+   3: 4
+   4: 5
 
 DONE(setup_test_case_2.sh)
-root@stingray:~# ./IVG_folder/helper_scripts/start_vm.sh ne tronome-sriov-vm
+root@temp6:~# ./IVG_folder/helper_scripts/start_vm.sh netro nome-sriov-vm
 Domain netronome-sriov-vm started
 
-Waiting for VM to boot ................................ UP
-Warning: Permanently added '192.168.122.163' (ECDSA) to the list of known hosts.
-Welcome to Ubuntu 17.10 (GNU/Linux 4.13.0-39-generic x86_64)
+Waiting for VM to boot ................................. UP
+Warning: Permanently added '192.168.122.218' (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 17.10 (GNU/Linux 4.13.0-41-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
  * Management:     https://landscape.canonical.com
  * Support:        https://ubuntu.com/advantage
 
+ * Meltdown, Spectre and Ubuntu: What are the attack vectors,
+   how the fixes work, and everything else you need to know
+   - https://ubu.one/u2Know
 
   Get cloud support with Ubuntu Advantage Cloud Guest:
     http://www.ubuntu.com/business/services/cloud
 
 1 package can be updated.
-0 updates are security updates.
+1 update is a security update.
+
+New release '18.04 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
 
 
 WELCOME
@@ -368,25 +374,25 @@ EAL:   probe driver: 19ee:6003 net_nfp
 PMD: nfp_net_init(): VER: 0x300, Maximum supported MTU: 9420
 PMD: nfp_net_init(): CAP: 0x140673, PROMISC RXCSUM TXCSUM RXVLAN GATHER TSO 
 PMD: nfp_net_init(): max_rx_queues: 1, max_tx_queues: 1
-PMD: nfp_net_init(): port 0 VendorID=0x19ee DeviceID=0x6003 mac=c2:fb:5a:8c:00:37
+PMD: nfp_net_init(): port 0 VendorID=0x19ee DeviceID=0x6003 mac=12:0b:5b:26:01:4a
 EAL: PCI device 0000:00:0b.0 on NUMA socket -1
 EAL:   probe driver: 19ee:6003 net_nfp
 PMD: nfp_net_init(): VER: 0x300, Maximum supported MTU: 9420
 PMD: nfp_net_init(): CAP: 0x140673, PROMISC RXCSUM TXCSUM RXVLAN GATHER TSO 
 PMD: nfp_net_init(): max_rx_queues: 1, max_tx_queues: 1
-PMD: nfp_net_init(): port 1 VendorID=0x19ee DeviceID=0x6003 mac=82:d2:44:7e:f3:c7
+PMD: nfp_net_init(): port 1 VendorID=0x19ee DeviceID=0x6003 mac=c2:7a:b0:53:7f:fb
 EAL: PCI device 0000:00:0c.0 on NUMA socket -1
 EAL:   probe driver: 19ee:6003 net_nfp
 PMD: nfp_net_init(): VER: 0x300, Maximum supported MTU: 9420
 PMD: nfp_net_init(): CAP: 0x140673, PROMISC RXCSUM TXCSUM RXVLAN GATHER TSO 
 PMD: nfp_net_init(): max_rx_queues: 1, max_tx_queues: 1
-PMD: nfp_net_init(): port 2 VendorID=0x19ee DeviceID=0x6003 mac=5e:4f:15:46:8f:ea
+PMD: nfp_net_init(): port 2 VendorID=0x19ee DeviceID=0x6003 mac=62:d0:68:89:e4:da
 EAL: PCI device 0000:00:0d.0 on NUMA socket -1
 EAL:   probe driver: 19ee:6003 net_nfp
 PMD: nfp_net_init(): VER: 0x300, Maximum supported MTU: 9420
 PMD: nfp_net_init(): CAP: 0x140673, PROMISC RXCSUM TXCSUM RXVLAN GATHER TSO 
 PMD: nfp_net_init(): max_rx_queues: 1, max_tx_queues: 1
-PMD: nfp_net_init(): port 3 VendorID=0x19ee DeviceID=0x6003 mac=3e:ad:b3:2d:fd:e6
+PMD: nfp_net_init(): port 3 VendorID=0x19ee DeviceID=0x6003 mac=36:de:27:a4:5e:38
 [0;39;49m[1;r[45;1H
 
 
@@ -506,10 +512,10 @@ Lcore:
                 TX_cnt( 1): (pid= 3:qid= 0) 
 
 Port :
-    0, nb_lcores  1, private 0x563eaf5483a0, lcores:  1 
-    1, nb_lcores  1, private 0x563eaf54af00, lcores:  2 
-    2, nb_lcores  1, private 0x563eaf54da60, lcores:  3 
-    3, nb_lcores  1, private 0x563eaf5505c0, lcores:  4 
+    0, nb_lcores  1, private 0x5645052bc3a0, lcores:  1 
+    1, nb_lcores  1, private 0x5645052bef00, lcores:  2 
+    2, nb_lcores  1, private 0x5645052c1a60, lcores:  3 
+    3, nb_lcores  1, private 0x5645052c45c0, lcores:  4 
 
 
 
@@ -536,7 +542,7 @@ Port :
     Create: Special TX  0:0  - Memory used (MBUFs   64 x (size 2176 + Hdr 128)) + 192 =    145 KB headroom 128 2176
 
                                                                        Port memory used = 295057 KB
-Initialize Port 0 -- TxQ 1, RxQ 1,  Src MAC c2:fb:5a:8c:00:37
+Initialize Port 0 -- TxQ 1, RxQ 1,  Src MAC 12:0b:5b:26:01:4a
 
 ** Default Info (0000:00:0b.0, if_index:0) **
    max_vfs        :   0, min_rx_bufsize    :  68, max_rx_pktlen :  9420
@@ -561,7 +567,7 @@ Initialize Port 0 -- TxQ 1, RxQ 1,  Src MAC c2:fb:5a:8c:00:37
     Create: Special TX  1:0  - Memory used (MBUFs   64 x (size 2176 + Hdr 128)) + 192 =    145 KB headroom 128 2176
 
                                                                        Port memory used = 295057 KB
-Initialize Port 1 -- TxQ 1, RxQ 1,  Src MAC 82:d2:44:7e:f3:c7
+Initialize Port 1 -- TxQ 1, RxQ 1,  Src MAC c2:7a:b0:53:7f:fb
 
 ** Default Info (0000:00:0c.0, if_index:0) **
    max_vfs        :   0, min_rx_bufsize    :  68, max_rx_pktlen :  9420
@@ -586,7 +592,7 @@ Initialize Port 1 -- TxQ 1, RxQ 1,  Src MAC 82:d2:44:7e:f3:c7
     Create: Special TX  2:0  - Memory used (MBUFs   64 x (size 2176 + Hdr 128)) + 192 =    145 KB headroom 128 2176
 
                                                                        Port memory used = 295057 KB
-Initialize Port 2 -- TxQ 1, RxQ 1,  Src MAC 5e:4f:15:46:8f:ea
+Initialize Port 2 -- TxQ 1, RxQ 1,  Src MAC 62:d0:68:89:e4:da
 
 ** Default Info (0000:00:0d.0, if_index:0) **
    max_vfs        :   0, min_rx_bufsize    :  68, max_rx_pktlen :  9420
@@ -611,10 +617,10 @@ Initialize Port 2 -- TxQ 1, RxQ 1,  Src MAC 5e:4f:15:46:8f:ea
     Create: Special TX  3:0  - Memory used (MBUFs   64 x (size 2176 + Hdr 128)) + 192 =    145 KB headroom 128 2176
 
                                                                        Port memory used = 295057 KB
-Initialize Port 3 -- TxQ 1, RxQ 1,  Src MAC 3e:ad:b3:2d:fd:e6
+Initialize Port 3 -- TxQ 1, RxQ 1,  Src MAC 36:de:27:a4:5e:38
                                                                       Total memory used = 1180228 KB
-PMD: Port 0: Link Up - speed 100000 Mbps - full-duplex
-PMD: PCI Address: 0000:00:10:0
+PMD: Port 1: Link Up - speed 100000 Mbps - full-duplex
+PMD: PCI Address: 0000:00:11:0
 Port  0: Link Up - speed 100000 Mbps - full-duplex
 Port  1: Link Up - speed 100000 Mbps - full-duplex
 Port  2: Link Up - speed 100000 Mbps - full-duplex
@@ -678,331 +684,337 @@ For TX found 1 port(s) for lcore 4
 
 
 
-[2J[100;1H7[1;1H-[1;20H<Main Page>  Copyright (c) <2010-2017>, Intel Corporation[1;3HPorts 0-3 of 4[2;1H  Flags:Port        [3;1HLink State          [4;1HPkts/s Max/Rx       [5;1H       Max/Tx       [6;1HMBits/s Rx/Tx       [7;1HBroadcast           [8;1HMulticast           [9;1H  64 Bytes          [10;1H  65-127            [11;1H  128-255           [12;1H  256-511           [13;1H  512-1023          [14;1H  1024-1518         [15;1HRunts/Jumbos        [16;1HErrors Rx/Tx        [17;1HTotal Rx Pkts       [18;1H      Tx Pkts       [19;1H      Rx MBs        [20;1H      Tx MBs        [21;1HARP/ICMP Pkts       [23;1HPattern Type        [24;1HTx Count/% Rate     [25;1HPktSize/Tx Burst    [26;1HSrc/Dest Port       [27;1HPkt Type:VLAN ID    [28;1HDst  IP Address     [29;1HSrc  IP Address     [30;1HDst MAC Address     [31;1HSrc MAC Address     [32;1HVendID/PCI Addr     [35;r[34;1H-------------------------------------------------------------------------------[34;3H Pktgen Ver: 3.4.1 (DPDK 17.05.0)  Powered by DPDK [2;19H:[3;19H:[4;19H:[5;19H:[6;19H:[7;19H:[8;19H:[9;19H:[10;19H:[11;19H:[12;19H:[13;19H:[14;19H:[15;19H:[16;19H:[17;19H:[18;19H:[19;19H:[20;19H:[21;19H:[22;19H:[23;19H:[24;19H:[25;19H:[26;19H:[27;19H:[28;19H:[29;19H:[30;19H:[31;19H:[32;19H:[23;20H             abcd...[24;20H       Forever /100%[25;20H           64 /   64[26;20H         1234 / 5678[27;20H     IPv4 / TCP:0001[28;20H         192.168.1.1[29;20H      192.168.0.1/24[30;20H   82:d2:44:7e:f3:c7[31;20H   c2:fb:5a:8c:00:37[32;20H   19ee:6003/00:10.0[23;40H             abcd...[24;40H       Forever /100%[25;40H           64 /   64[26;40H         1234 / 5678[27;40H     IPv4 / TCP:0001[28;40H         192.168.0.1[29;40H      192.168.1.1/24[30;40H   c2:fb:5a:8c:00:37[31;40H   82:d2:44:7e:f3:c7[32;40H   19ee:6003/00:11.0[23;60H             abcd...[24;60H       Forever /100%[25;60H           64 /   64[26;60H         1234 / 5678[27;60H     IPv4 / TCP:0001[28;60H         192.168.3.1[29;60H      192.168.2.1/24[30;60H   3e:ad:b3:2d:fd:e6[31;60H   5e:4f:15:46:8f:ea[32;60H   19ee:6003/00:12.0[23;80H             abcd...[24;80H       Forever /100%[25;80H           64 /   64[26;80H         1234 / 5678[27;80H     IPv4 / TCP:0001[28;80H         192.168.2.1[29;80H      192.168.3.1/24[30;80H   5e:4f:15:46:8f:ea[31;80H   3e:ad:b3:2d:fd:e6[32;80H   19ee:6003/00:13.0[3;100H     ----TotalRate----[K[2;20H   ---------------:0[3;20H      <UP-100000-FD>[4;20H                 0/0[5;20H                 0/0[6;20H                 0/0[7;20H                   0[8;20H                   0[9;20H                   0[10;20H                   2[11;20H                   0[12;20H                   0[13;20H                   0[14;20H                   0[15;20H                 0/0[16;20H                 0/0[17;20H                   0[18;20H                   0[19;20H                   0[20;20H                   0[21;20H                 0/0[2;40H   ---------------:1[3;40H      <UP-100000-FD>[4;40H                 0/0[5;40H                 0/0[6;40H                 0/0[7;40H                   0[8;40H                   0[9;40H                   0[10;40H                   2[11;40H                   0[12;40H                   0[13;40H                   0[14;40H                   0[15;40H                 0/0[16;40H                 0/0[17;40H                   0[18;40H                   0[19;40H                   0[20;40H                   0[21;40H                 0/0[2;60H   ---------------:2[3;60H      <UP-100000-FD>[4;60H                 0/0[5;60H                 0/0[6;60H                 0/0[7;60H                   0[8;60H                   0[9;60H                   0[10;60H                   2[11;60H                   0[12;60H                   0[13;60H                   0[14;60H                   0[15;60H                 0/0[16;60H                 0/0[17;60H                   0[18;60H                   0[19;60H                   0[20;60H                   0[21;60H                 0/0[2;80H   ---------------:3[3;80H      <UP-100000-FD>[4;80H                 0/0[5;80H                 0/0[6;80H                 0/0[7;80H                   0[8;80H                   0[9;80H                   0[10;80H                   2[11;80H                   0[12;80H                   0[13;80H                   0[14;80H                   0[15;80H                 0/0[16;80H                 0/0[17;80H                   0[18;80H                   0[19;80H                   0[20;80H                   0[21;80H                 0/0[4;100H                   0/0[K[5;100H                   0/0[K[6;100H                   0/0[K8
+[2J[100;1H7[1;1H-[1;20H<Main Page>  Copyright (c) <2010-2017>, Intel Corporation[1;3HPorts 0-3 of 4[2;1H  Flags:Port        [3;1HLink State          [4;1HPkts/s Max/Rx       [5;1H       Max/Tx       [6;1HMBits/s Rx/Tx       [7;1HBroadcast           [8;1HMulticast           [9;1H  64 Bytes          [10;1H  65-127            [11;1H  128-255           [12;1H  256-511           [13;1H  512-1023          [14;1H  1024-1518         [15;1HRunts/Jumbos        [16;1HErrors Rx/Tx        [17;1HTotal Rx Pkts       [18;1H      Tx Pkts       [19;1H      Rx MBs        [20;1H      Tx MBs        [21;1HARP/ICMP Pkts       [23;1HPattern Type        [24;1HTx Count/% Rate     [25;1HPktSize/Tx Burst    [26;1HSrc/Dest Port       [27;1HPkt Type:VLAN ID    [28;1HDst  IP Address     [29;1HSrc  IP Address     [30;1HDst MAC Address     [31;1HSrc MAC Address     [32;1HVendID/PCI Addr     [35;r[34;1H-------------------------------------------------------------------------------[34;3H Pktgen Ver: 3.4.1 (DPDK 17.05.0)  Powered by DPDK [2;19H:[3;19H:[4;19H:[5;19H:[6;19H:[7;19H:[8;19H:[9;19H:[10;19H:[11;19H:[12;19H:[13;19H:[14;19H:[15;19H:[16;19H:[17;19H:[18;19H:[19;19H:[20;19H:[21;19H:[22;19H:[23;19H:[24;19H:[25;19H:[26;19H:[27;19H:[28;19H:[29;19H:[30;19H:[31;19H:[32;19H:[23;20H             abcd...[24;20H       Forever /100%[25;20H           64 /   64[26;20H         1234 / 5678[27;20H     IPv4 / TCP:0001[28;20H         192.168.1.1[29;20H      192.168.0.1/24[30;20H   c2:7a:b0:53:7f:fb[31;20H   12:0b:5b:26:01:4a[32;20H   19ee:6003/00:10.0[23;40H             abcd...[24;40H       Forever /100%[25;40H           64 /   64[26;40H         1234 / 5678[27;40H     IPv4 / TCP:0001[28;40H         192.168.0.1[29;40H      192.168.1.1/24[30;40H   12:0b:5b:26:01:4a[31;40H   c2:7a:b0:53:7f:fb[32;40H   19ee:6003/00:11.0[23;60H             abcd...[24;60H       Forever /100%[25;60H           64 /   64[26;60H         1234 / 5678[27;60H     IPv4 / TCP:0001[28;60H         192.168.3.1[29;60H      192.168.2.1/24[30;60H   36:de:27:a4:5e:38[31;60H   62:d0:68:89:e4:da[32;60H   19ee:6003/00:12.0[23;80H             abcd...[24;80H       Forever /100%[25;80H           64 /   64[26;80H         1234 / 5678[27;80H     IPv4 / TCP:0001[28;80H         192.168.2.1[29;80H      192.168.3.1/24[30;80H   62:d0:68:89:e4:da[31;80H   36:de:27:a4:5e:38[32;80H   19ee:6003/00:13.0[3;100H     ----TotalRate----[K[2;20H   ---------------:0[3;20H      <UP-100000-FD>[4;20H                 0/0[5;20H                 0/0[6;20H                 0/0[7;20H                   0[8;20H                   0[9;20H                   0[10;20H                   2[11;20H                   0[12;20H                   0[13;20H                   0[14;20H                   0[15;20H                 0/0[16;20H                 0/0[17;20H                   0[18;20H                   0[19;20H                   0[20;20H                   0[21;20H                 0/0[2;40H   ---------------:1[3;40H      <UP-100000-FD>[4;40H                 0/0[5;40H                 0/0[6;40H                 0/0[7;40H                   0[8;40H                   0[9;40H                   0[10;40H                   2[11;40H                   0[12;40H                   0[13;40H                   0[14;40H                   0[15;40H                 0/0[16;40H                 0/0[17;40H                   0[18;40H                   0[19;40H                   0[20;40H                   0[21;40H                 0/0[2;60H   ---------------:2[3;60H      <UP-100000-FD>[4;60H                 0/0[5;60H                 0/0[6;60H                 0/0[7;60H                   0[8;60H                   0[9;60H                   0[10;60H                   2[11;60H                   0[12;60H                   0[13;60H                   0[14;60H                   0[15;60H                 0/0[16;60H                 0/0[17;60H                   0[18;60H                   0[19;60H                   0[20;60H                   0[21;60H                 0/0[2;80H   ---------------:3[3;80H      <UP-100000-FD>[4;80H                 0/0[5;80H                 0/0[6;80H                 0/0[7;80H                   0[8;80H                   0[9;80H                   0[10;80H                   2[11;80H                   0[12;80H                   0[13;80H                   0[14;80H                   0[15;80H                 0/0[16;80H                 0/0[17;80H                   0[18;80H                   0[19;80H                   0[20;80H                   0[21;80H                 0/0[4;100H                   0/0[K[5;100H                   0/0[K[6;100H                   0/0[K8
 ** Version: DPDK 17.05.0, Command Line Interface with timers
 Pktgen:/> [2J[1;r[100;1HPort Count 4
 Total port Count 4
 -- 0.0,4,-nan,0,0
 
--- 2.0,4,-nan,0,0
+PMD: Port 0: Link Up - speed 100000 Mbps - full-duplex
+PMD: PCI Address: 0000:00:10:0
+-- 1.0,4,-nan,0,0
 
-PMD: Port 1: Link Up - speed 100000 Mbps - full-duplex
-PMD: PCI Address: 0000:00:11:0
 PMD: Port 2: Link Up - speed 100000 Mbps - full-duplex
 PMD: PCI Address: 0000:00:12:0
 PMD: Port 3: Link Up - speed 100000 Mbps - full-duplex
 PMD: PCI Address: 0000:00:13:0
+-- 2.0,4,-nan,0,0
+
 -- 3.0,4,-nan,0,0
 
 -- 4.0,4,-nan,0,0
 
 -- 5.0,4,-nan,0,0
 
--- 6.0,4,64,36,0
+-- 6.0,4,64,16,0
 
--- 7.0,4,64,7121551,4783
+-- 7.0,4,64,20,0
 
--- 8.0,4,64,27338810,18370
+-- 8.0,4,64,20391147,13702
 
--- 9.0,4,64,18540642,12456
+-- 9.0,4,64,28331553,19037
 
--- 10.0,4,-nan,0,0
+-- 10.0,4,64,6036287,4055
 
--- 11.0,4,64,1808085,1212
+-- 11.0,4,64,12282739,8252
 
--- 12.0,4,64,27870788,18727
+-- 12.0,4,64,27726809,18630
 
--- 13.0,4,64,26389867,17732
+-- 13.0,4,64,27765939,18657
 
--- 14.0,4,64,26748332,17972
+-- 14.0,4,64,27670517,18593
 
--- 15.0,4,64,26817042,18019
+-- 15.0,4,64,27603394,18547
 
--- 16.0,4,64,27644599,18574
+-- 16.0,4,64,27635864,18569
 
--- 17.0,4,64,27854226,18716
+-- 17.0,4,64,27561136,18519
 
--- 18.0,4,64,26343401,17700
+-- 18.0,4,64,27610655,18553
 
--- 19.0,4,64,26369482,17720
+-- 19.0,4,64,27469672,18458
 
--- 20.0,4,64,26778343,17993
+-- 20.0,4,64,27732628,18634
 
--- 21.0,4,64,27928246,18765
+-- 21.0,4,64,27701787,18613
 
--- 22.0,4,64,27254801,18313
+-- 22.0,4,64,27678319,18599
 
--- 23.0,4,64,26450727,17773
+-- 23.0,4,64,27713600,18622
 
--- 24.0,4,64,26794295,18004
+-- 24.0,4,64,27656175,18584
 
--- 25.0,4,64,27205298,18280
+-- 25.0,4,64,27668562,18591
 
--- 26.0,4,64,27841301,18707
+-- 26.0,4,64,27811630,18688
 
--- 27.0,4,64,26453576,17775
+-- 27.0,4,64,27689783,18605
 
--- 28.0,4,64,26160966,17578
+-- 28.0,4,64,27701304,18613
 
--- 29.0,4,64,26440073,17765
+-- 29.0,4,64,27682897,18600
 
--- 30.0,4,64,27832488,18701
+-- 30.0,4,64,16945681,11385
 
--- 31.0,4,64,27712173,18621
+-- 31.0,4,128,1466150,1734
 
--- 32.0,4,64,20,0
+-- 32.0,4,128,25439165,30119
 
--- 33.0,4,128,16640173,19700
+-- 33.0,4,128,25337869,29998
 
--- 34.0,4,128,25502358,30193
+-- 34.0,4,128,25308395,29963
 
--- 35.0,4,128,26033192,30822
+-- 35.0,4,128,25360628,30025
 
--- 36.0,4,128,25603095,30313
+-- 36.0,4,128,25395125,30066
 
--- 37.0,4,128,24894348,29473
+-- 37.0,4,128,25305834,29960
 
--- 38.0,4,128,24997356,29594
+-- 38.0,4,128,25401410,30073
 
--- 39.0,4,128,25635741,30351
+-- 39.0,4,128,25306305,29960
 
--- 40.0,4,128,26085280,30883
+-- 40.0,4,128,25283505,29933
 
--- 41.0,4,128,25339557,30000
+-- 41.0,4,128,25326393,29985
 
--- 42.0,4,128,24958000,29548
+-- 42.0,4,128,25294232,29947
 
--- 43.0,4,128,25107083,29725
+-- 43.0,4,128,25312429,29968
 
--- 44.0,4,128,26130490,30937
+-- 44.0,4,128,25432032,30109
 
--- 45.0,4,128,26102247,30903
+-- 45.0,4,128,25499701,30191
 
--- 46.0,4,128,24953228,29542
+-- 46.0,4,128,25282162,29933
 
--- 47.0,4,128,24740714,29291
+-- 47.0,4,128,25441005,30120
 
--- 48.0,4,128,25583573,30289
+-- 48.0,4,128,25512145,30205
 
--- 49.0,4,128,26041591,30831
+-- 49.0,4,128,25383516,30052
 
--- 50.0,4,128,25498596,30189
+-- 50.0,4,128,25469747,30155
 
--- 51.0,4,128,24957828,29548
+-- 51.0,4,128,25084711,29698
 
--- 52.0,4,128,24802184,29363
+-- 52.0,4,128,92716,109
 
--- 53.0,4,128,10018250,11859
+-- 53.0,4,256,12108639,26734
 
--- 54.0,4,256,4769200,10528
+-- 54.0,4,256,18120496,40008
 
--- 55.0,4,256,17478248,38589
+-- 55.0,4,256,18121019,40010
 
--- 56.0,4,256,16970316,37469
+-- 56.0,4,256,18119953,40007
 
--- 57.0,4,256,17306490,38210
+-- 57.0,4,256,18120869,40008
 
--- 58.0,4,256,17934913,39597
+-- 58.0,4,256,18120043,40006
 
--- 59.0,4,256,17964183,39663
+-- 59.0,4,256,18121727,40010
 
--- 60.0,4,256,15572641,34383
+-- 60.0,4,256,18121814,40011
 
--- 61.0,4,256,17143183,37849
+-- 61.0,4,256,18120864,40010
 
--- 62.0,4,256,17141026,37845
+-- 62.0,4,256,18120102,40006
 
--- 63.0,4,256,17991359,39723
+-- 63.0,4,256,18120988,40010
 
--- 64.0,4,256,17977477,39693
+-- 64.0,4,256,18120262,40008
 
--- 65.0,4,256,17265922,38121
+-- 65.0,4,256,18121507,40011
 
--- 66.0,4,256,16891978,37295
+-- 66.0,4,256,18121000,40010
 
--- 67.0,4,256,17260494,38109
+-- 67.0,4,256,18120530,40009
 
--- 68.0,4,256,18001557,39746
+-- 68.0,4,256,18119609,40007
 
--- 69.0,4,256,17955481,39644
+-- 69.0,4,256,18119562,40006
 
--- 70.0,4,256,16901837,37317
+-- 70.0,4,256,18119619,40006
 
--- 71.0,4,256,17056656,37658
+-- 71.0,4,256,18120685,40008
 
--- 72.0,4,256,17488480,38612
+-- 72.0,4,256,18120558,40008
 
--- 73.0,4,256,18017185,39780
+-- 73.0,4,256,6840786,15102
 
--- 74.0,4,256,14314630,31603
+-- 74.0,4,512,2749859,11702
 
--- 75.0,4,64,20,0
+-- 75.0,4,512,9400964,40009
 
--- 76.0,4,512,7682638,32695
+-- 76.0,4,512,9400524,40007
 
--- 77.0,4,512,9371918,39884
+-- 77.0,4,512,9400623,40007
 
--- 78.0,4,512,9385583,39945
+-- 78.0,4,512,9400559,40007
 
--- 79.0,4,512,9103984,38745
+-- 79.0,4,512,9401127,40010
 
--- 80.0,4,512,8877028,37777
+-- 80.0,4,512,9400419,40006
 
--- 81.0,4,512,8977161,38204
+-- 81.0,4,512,9400970,40009
 
--- 82.0,4,512,9385482,39942
+-- 82.0,4,512,9400962,40008
 
--- 83.0,4,512,9309260,39618
+-- 83.0,4,512,9307338,39609
 
--- 84.0,4,512,8822775,37548
+-- 84.0,4,512,9401107,40008
 
--- 85.0,4,512,8776673,37351
+-- 85.0,4,512,9401202,40010
 
--- 86.0,4,512,9139484,38895
+-- 86.0,4,512,9400402,40006
 
--- 87.0,4,512,9386418,39946
+-- 87.0,4,512,9401201,40009
 
--- 88.0,4,512,8880529,37793
+-- 88.0,4,512,9400668,40007
 
--- 89.0,4,512,9042035,38481
+-- 89.0,4,512,9400799,40008
 
--- 90.0,4,512,9384700,39939
+-- 90.0,4,512,9401172,40009
 
--- 91.0,4,512,9366901,39863
+-- 91.0,4,512,9401909,40013
 
--- 93.0,4,512,8965531,38155
+-- 92.0,4,512,9401290,40010
 
--- 94.0,4,512,8713484,37083
+-- 93.0,4,512,9401178,40010
 
--- 95.0,4,512,9179969,39068
+-- 94.0,4,512,7238236,30804
 
--- 96.0,4,512,2103520,8950
+-- 95.0,4,64,20,0
 
--- 97.0,4,1024,2000573,16706
+-- 96.0,4,1024,4193394,35022
 
--- 98.0,4,1024,4621724,38599
+-- 97.0,4,1024,4790260,40007
 
--- 99.0,4,1024,4587773,38314
+-- 98.0,4,1024,4790565,40008
 
--- 100.0,4,1024,4708419,39323
+-- 99.0,4,1024,4790099,40005
 
--- 101.0,4,1024,4785285,39966
+-- 100.0,4,1024,4790494,40008
 
--- 102.0,4,1024,4700266,39254
+-- 101.0,4,1024,4790347,40007
 
--- 103.0,4,1024,4450003,37165
+-- 102.0,4,1024,4790358,40007
 
--- 104.0,4,1024,4661009,38926
+-- 103.0,4,1024,4790600,40008
 
--- 105.0,4,1024,4784400,39958
+-- 104.0,4,1024,4790719,40011
 
--- 106.0,4,1024,4785324,39965
+-- 105.0,4,1024,4790689,40010
 
--- 107.0,4,1024,4559767,38081
+-- 106.0,4,1024,4790588,40009
 
--- 108.0,4,1024,4662051,38935
+-- 107.0,4,1024,4790546,40008
 
--- 109.0,4,1024,4574172,38201
+-- 108.0,4,1024,4790757,40010
 
--- 110.0,4,1024,4785314,39965
+-- 109.0,4,1024,4790508,40008
 
--- 111.0,4,1024,4775040,39879
+-- 110.0,4,1024,4790629,40010
 
--- 112.0,4,1024,4532064,37850
+-- 111.0,4,1024,4790623,40008
 
--- 113.0,4,1024,4587114,38311
+-- 112.0,4,1024,4790509,40008
 
--- 114.0,4,1024,4697409,39229
+-- 113.0,4,1024,4790465,40008
 
--- 115.0,4,1024,4797608,40068
+-- 114.0,4,1024,4742624,39608
 
--- 116.0,4,1024,4701946,39268
+-- 115.0,4,1024,4790884,40012
 
--- 117.0,4,1024,2920662,24390
+-- 116.0,4,1024,874484,7301
 
--- 118.0,4,1280,92302,958
+-- 117.0,4,1280,1852916,19268
 
--- 119.0,4,1280,3787012,39383
+-- 118.0,4,1280,3847013,40007
 
--- 120.0,4,1280,3843182,39967
+-- 119.0,4,1280,3847049,40007
 
--- 121.0,4,1280,3776284,39272
+-- 120.0,4,1280,3847001,40006
 
--- 122.0,4,1280,3673572,38203
+-- 121.0,4,1280,3847117,40008
 
--- 123.0,4,1280,3757236,39073
+-- 122.0,4,1280,3847146,40009
 
--- 124.0,4,1280,3831208,39841
+-- 123.0,4,1280,3846949,40006
 
--- 125.0,4,1280,3843761,39973
+-- 124.0,4,1280,3847633,40015
 
--- 126.0,4,1280,3729153,38781
+-- 125.0,4,1280,3847286,40009
 
--- 127.0,4,1280,3660842,38072
+-- 126.0,4,1280,3847091,40008
 
--- 128.0,4,1280,3716150,38646
+-- 127.0,4,1280,3847360,40010
 
--- 129.0,4,1280,3805238,39573
+-- 128.0,4,1280,3846994,40006
 
--- 130.0,4,1280,3818979,39716
+-- 129.0,4,1280,3847401,40011
 
--- 131.0,4,1280,3742155,38917
+-- 130.0,4,1280,3846518,40002
 
--- 132.0,4,1280,3693437,38410
+-- 131.0,4,1280,3847349,40012
 
--- 133.0,4,1280,3743504,38931
+-- 132.0,4,1280,3847250,40010
 
--- 134.0,4,1280,3843974,39975
+-- 133.0,4,1280,3847030,40007
 
--- 135.0,4,1280,3775171,39260
+-- 134.0,4,1280,3847214,40009
 
--- 136.0,4,1280,3695881,38436
+-- 135.0,4,1280,3847218,40009
 
--- 137.0,4,1280,3711103,38593
+-- 136.0,4,1280,3847253,40010
 
--- 138.0,4,1280,3760183,39104
+-- 137.0,4,1280,2171257,22578
 
--- 139.0,4,1280,148547,1543
+-- 138.0,4,1518,321244,3950
 
--- 140.0,4,1518,1965233,24178
+-- 139.0,4,1518,3251818,40008
 
--- 141.0,4,1518,3099657,38137
+-- 140.0,4,1518,3251605,40007
 
--- 142.0,4,1518,3134599,38567
+-- 141.0,4,1518,3251835,40009
 
--- 143.0,4,1518,3249496,39980
+-- 142.0,4,1518,3251821,40009
 
--- 144.0,4,1518,3244222,39915
+-- 143.0,4,1518,3251556,40006
 
--- 145.0,4,1518,3114262,38316
+-- 144.0,4,1518,3251654,40005
 
--- 146.0,4,1518,3178765,39109
+-- 145.0,4,1518,3251918,40010
 
--- 147.0,4,1518,3201084,39384
+-- 146.0,4,1518,3251848,40009
 
--- 148.0,4,1518,3249332,39977
+-- 147.0,4,1518,3219351,39609
 
--- 149.0,4,1518,3225193,39681
+-- 148.0,4,1518,3251923,40009
 
--- 151.0,4,1518,3135015,38572
+-- 149.0,4,1518,3251842,40009
 
--- 152.0,4,1518,3175451,39069
+-- 150.0,4,1518,3251801,40008
 
--- 153.0,4,1518,3249869,39985
+-- 151.0,4,1518,3251784,40008
 
--- 154.0,4,1518,3166416,38957
+-- 152.0,4,1518,3252041,40012
 
--- 155.0,4,1518,3100433,38146
+-- 153.0,4,1518,3251784,40008
 
--- 156.0,4,1518,3112092,38289
+-- 154.0,4,1518,3252069,40011
 
--- 157.0,4,1518,3249631,39981
+-- 155.0,4,1518,3251836,40009
 
--- 158.0,4,1518,3218104,39593
+-- 156.0,4,1518,3252197,40012
 
--- 159.0,4,1518,3143805,38680
+-- 157.0,4,1518,3251777,40008
 
--- 160.0,4,1518,1326551,16320
+-- 158.0,4,1518,3109497,38257
+
+-- 159.0,4,-nan,0,0
+
+-- 160.0,4,-nan,0,0
 
 -- 161.0,4,-nan,0,0
 
@@ -1014,7 +1026,7 @@ PMD: PCI Address: 0000:00:13:0
 
 -- 165.0,4,-nan,0,0
 
--- 166.0,4,74,1,0
+-- 166.0,4,-nan,0,0
 
 -- 167.0,4,-nan,0,0
 
@@ -1026,11 +1038,11 @@ PMD: PCI Address: 0000:00:13:0
 
 -- 171.0,4,-nan,0,0
 
--- 172.0,4,-nan,0,0
+-- 172.0,4,74,1,0
 
 -- 173.0,4,-nan,0,0
 
--- 174.0,4,74,1,0
+-- 174.0,4,-nan,0,0
 
 -- 175.0,4,-nan,0,0
 
@@ -1042,7 +1054,7 @@ PMD: PCI Address: 0000:00:13:0
 
 -- 179.0,4,-nan,0,0
 
--- 180.0,4,74,1,0
+-- 180.0,4,-nan,0,0
 
 -- 181.0,4,-nan,0,0
 
@@ -1060,25 +1072,21 @@ PMD: PCI Address: 0000:00:13:0
 
 -- 188.0,4,-nan,0,0
 
--- 189.0,4,-nan,0,0
-
--- 190.0,4,-nan,0,0
-
--- 191.0,4,-nan,0,0
+-- 189.0,4,74,1,0
 
 [3g        H        H        H        H        H        H        Hc[?1000l[?25hTest run complete
 root@netronome-sriov-vm:~/vm_scripts/samples/DPDK-pktgen/3_ddpdk_pktgen_lua_capture# ./parse_and_plot.py
 Data parse complete!
 root@netronome-sriov-vm:~/vm_scripts/samples/DPDK-pktgen/3_ddpdk_pktgen_lua_capture# exit
 logout
-Connection to 192.168.122.163 closed.
-root@stingray:~# ./IVG_folder/helper_scripts/x_copy_data_du mp.sh netronome-sriov-vm
-capture.txt                0%    0     0.0KB/s   --:-- ETAcapture.txt              100% 6825     6.7KB/s   00:00    
+Connection to 192.168.122.218 closed.
+root@temp6:~# ./IVG_folder/helper_scripts/x_copy_data_dump. sh netronome-sriov-vm
+capture.txt                0%    0     0.0KB/s   --:-- ETAcapture.txt              100% 7215     7.1KB/s   00:00    
 parsed_data.txt            0%    0     0.0KB/s   --:-- ETAparsed_data.txt          100%  178     0.2KB/s   00:00    
-root@stingray:~# $IVG_dir/helper_scripts/delete-vms.sh --al l --shutdown
+root@temp6:~# $IVG_dir/helper_scripts/delete-vms.sh --all - -shutdown
  - shutdown VM netronome-sriov-vm
 DONE(delete-vms.sh)
-root@stingray:~# exit
+root@temp6:~# exit
 exit
 
-Script done on Mon 07 May 2018 06:54:01 AM UTC
+Script done on Mon 14 May 2018 10:28:40 AM UTC

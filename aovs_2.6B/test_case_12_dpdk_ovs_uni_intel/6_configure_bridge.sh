@@ -17,7 +17,7 @@ echo "1 - Configure br0"
 #oet Interface dpdk0 s-vsctl del-br br0
 br=$(ovs-vsctl list-br | grep -o br0)
 if [[ "$br" == "br0" ]]; then
-    ovs-vsctl del-br br0
+    ovs-vsctl --no-wait del-br br0
 fi
 ovs-vsctl --no-wait add-br br0 -- set bridge br0 datapath_type=netdev
 ovs-vsctl --no-wait add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk ofport_request=1 -- set Interface dpdk0 options:dpdk-devargs=$PCI

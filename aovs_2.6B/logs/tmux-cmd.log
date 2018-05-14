@@ -463,3 +463,467 @@
 2018-05-09 08:31:23 ALL  -- mkdir -p $HOME/IVG_folder
 2018-05-09 08:31:23 ALL  -- export IVG_dir=$HOME/IVG_folder
 2018-05-09 08:31:24 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 10:22:18 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 10:22:18 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 10:22:18 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 10:22:19 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 10:22:19 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 10:22:20 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 10:24:28 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 10:24:28 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 10:24:28 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 10:24:28 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 10:24:28 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 10:24:29 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 10:26:58 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 10:26:58 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 10:26:58 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 10:26:58 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 10:26:58 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 10:26:59 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 10:33:13 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 10:33:13 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 10:33:13 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 10:33:14 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 10:33:14 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 10:33:15 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 10:36:01 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 10:36:01 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 10:36:01 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 10:36:02 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 10:36:02 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 10:36:03 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 10:37:23 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 10:37:23 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 10:37:23 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 10:37:24 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 10:37:24 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 10:37:25 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 10:38:58 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 10:38:58 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 10:38:58 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 10:38:58 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 10:38:58 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 10:38:59 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 10:42:08 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 11:04:04 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 11:04:04 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 11:04:04 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 11:04:05 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 11:04:05 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 11:04:06 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 11:04:25 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 11:04:25 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 11:04:25 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 11:04:26 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 11:04:26 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 11:04:27 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 11:07:42 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 11:11:27 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 11:11:27 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 11:11:27 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 11:11:28 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 11:11:28 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 11:11:29 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 11:16:28 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 11:57:29 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 11:57:29 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 11:57:29 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 11:57:29 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 11:57:29 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 11:57:30 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 12:03:44 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 12:10:34 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 12:37:06 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 12:50:59 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 12:50:59 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 12:51:00 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 12:51:00 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 12:51:00 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 12:51:01 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 12:53:56 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 12:53:56 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 12:53:56 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 12:53:56 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 12:53:56 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 12:53:57 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 13:01:06 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 13:02:53 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 13:02:53 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 13:02:53 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 13:02:54 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 13:02:54 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 13:02:55 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 13:09:51 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 13:10:41 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 13:10:42 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 13:10:42 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 13:10:57 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 13:10:57 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 13:10:57 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 13:10:57 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 13:10:57 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 13:10:58 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 13:43:09 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 13:49:06 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 13:58:00 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 14:05:07 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 14:21:00 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 14:51:54 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 14:51:54 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 14:51:54 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 14:51:55 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 14:51:55 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 14:51:56 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 15:00:52 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 15:28:48 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 16:09:25 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-09 16:09:25 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-09 16:09:25 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 16:09:26 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 16:09:26 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 16:09:27 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 16:17:42 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-09 16:17:42 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-09 16:17:42 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 16:17:43 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 16:17:43 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 16:17:44 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 16:31:31 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-09 16:31:31 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-09 16:31:31 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 16:31:32 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 16:31:32 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 16:31:33 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 16:31:54 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-09 16:31:54 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-09 16:31:54 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 16:31:54 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 16:31:54 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 16:31:55 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 16:32:32 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 16:32:32 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 16:32:32 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 16:32:33 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 16:32:33 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 16:32:34 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 16:34:48 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-09 16:34:48 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-09 16:34:48 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 16:34:49 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 16:34:49 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 16:34:50 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 16:37:23 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-09 16:37:23 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-09 16:37:23 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 16:37:44 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 16:37:44 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 16:38:46 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 16:49:39 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-09 16:49:39 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-09 16:49:40 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 16:49:40 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 16:49:40 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 16:50:30 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-09 16:50:30 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-09 16:50:30 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-09 16:50:31 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-09 16:50:31 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-09 16:50:33 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-09 16:51:02 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 16:56:58 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-09 17:06:12 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-10 08:39:12 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-10 08:39:12 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-10 08:39:12 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 08:39:13 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 08:39:13 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 08:39:14 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-10 09:14:48 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-10 09:14:48 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-10 09:14:48 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 09:14:49 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 09:14:49 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 09:14:50 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-10 09:21:30 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-10 09:46:25 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-10 09:56:46 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-10 11:07:20 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-10 11:07:20 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-10 11:07:20 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 11:07:20 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 11:07:20 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 11:08:37 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-10 11:08:37 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-10 11:08:37 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 11:08:38 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 11:08:38 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 11:08:40 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-10 11:31:05 ALL  -- $IVG_dir/helper_scripts/install_pre_req.sh
+2018-05-10 11:38:47 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-10 11:38:47 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-10 11:38:47 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 11:38:47 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 11:38:48 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 11:38:48 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-10 11:38:53 ALL  -- $IVG_dir/helper_scripts/install_pre_req.sh
+2018-05-10 11:39:39 ALL  -- $HOME/IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh
+2018-05-10 11:55:28 ALL  -- exit
+2018-05-10 12:09:48 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-10 12:09:48 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-10 12:09:48 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 12:10:09 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 12:10:09 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 12:27:15 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-10 12:27:15 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-10 12:27:15 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 12:28:17 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-10 12:28:17 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-10 12:28:17 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 12:28:18 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 12:28:18 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 12:28:20 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-10 12:30:54 ALL  -- $IVG_dir/helper_scripts/install_pre_req.sh
+2018-05-10 12:31:27 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-10 12:31:27 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-10 12:31:27 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 12:31:28 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 12:31:28 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 12:32:25 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-10 12:32:26 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-10 12:32:26 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 12:32:26 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 12:32:26 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 12:32:29 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-10 12:39:07 ALL  -- $HOME/IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh
+2018-05-10 12:42:34 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-10 12:42:34 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-10 12:42:34 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 12:42:34 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 12:42:34 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 12:42:35 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-10 12:46:27 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-10 12:46:27 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-10 12:46:27 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-10 12:46:27 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-10 12:46:28 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-10 12:54:50 ALL  -- exit
+2018-05-10 13:46:37 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-10 14:16:16 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-10 15:56:12 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-11 10:41:01 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 10:41:01 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 10:41:01 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 10:41:06 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 10:41:07 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 10:41:54 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 10:41:54 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 10:41:54 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 10:41:55 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 10:41:55 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 10:41:56 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 11:00:55 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 11:00:55 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 11:00:55 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 11:00:56 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 11:00:56 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 11:00:58 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 11:08:58 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 11:08:58 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 11:08:58 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 11:08:58 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 11:08:58 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 11:08:59 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 11:37:10 ALL  -- $IVG_dir/helper_scripts/install_pre_req.sh
+2018-05-11 11:38:24 ALL  -- $HOME/IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh
+2018-05-11 11:46:28 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 11:46:28 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 11:46:28 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 11:46:29 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 11:46:29 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 11:46:30 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 11:48:24 ALL  -- $IVG_dir/helper_scripts/install_pre_req.sh
+2018-05-11 11:49:22 ALL  -- $HOME/IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh
+2018-05-11 12:14:05 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 12:14:05 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 12:14:05 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 12:14:06 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 12:14:06 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 12:14:07 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 12:14:10 ALL  -- $IVG_dir/helper_scripts/install_pre_req.sh
+2018-05-11 12:14:44 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-11 12:14:44 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-11 12:14:44 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 12:14:45 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 12:14:45 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 12:14:46 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 12:16:15 ALL  -- $HOME/IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh
+2018-05-11 12:21:20 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-11 13:22:35 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-11 13:23:02 ALL  -- exit
+2018-05-11 13:33:57 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-11 13:33:57 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-11 13:33:57 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 13:33:57 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 13:33:57 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 13:33:58 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 13:37:23 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 13:37:23 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 13:37:23 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 13:37:24 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 13:37:24 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 13:37:25 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 13:43:29 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-11 13:43:29 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-11 13:43:29 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 13:43:30 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 13:43:30 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 13:43:31 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 15:49:42 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 15:49:43 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 15:49:43 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 15:49:43 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 15:49:43 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 15:51:30 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 15:51:30 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 15:51:30 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 15:51:31 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 15:51:31 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 15:51:33 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 15:59:17 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 15:59:17 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 15:59:17 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 15:59:17 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 15:59:17 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 15:59:18 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 16:01:45 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 16:01:45 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 16:01:45 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 16:01:45 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 16:01:45 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 16:01:46 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 16:02:37 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 16:02:37 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 16:02:37 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 16:02:38 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 16:02:38 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 16:02:39 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 16:25:41 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 16:25:41 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 16:25:41 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 16:25:42 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 16:25:42 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 16:25:43 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 16:42:57 ALL  -- $IVG_dir/helper_scripts/install_pre_req.sh
+2018-05-11 16:44:41 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 16:44:41 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 16:44:41 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 16:44:42 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 16:44:42 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 16:44:42 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-11 16:44:46 ALL  -- $IVG_dir/helper_scripts/install_pre_req.sh
+2018-05-11 16:45:39 ALL  -- $HOME/IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh
+2018-05-11 17:23:10 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-11 17:23:10 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-11 17:23:10 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-11 17:23:10 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-11 17:23:10 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-11 17:23:11 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 07:55:00 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 07:55:00 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-14 07:55:00 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 07:55:00 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 07:55:00 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 07:55:01 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 07:59:35 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 07:59:35 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-14 07:59:35 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 07:59:36 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 07:59:36 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 07:59:37 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 08:05:44 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 08:05:44 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-14 08:05:44 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 08:05:45 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 08:05:45 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 08:05:46 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 08:07:02 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-14 08:07:02 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-14 08:07:02 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 08:07:02 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 08:07:02 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 08:07:03 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 08:12:30 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 08:12:30 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-14 08:12:30 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 08:12:30 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 08:12:30 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 08:12:31 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 08:13:24 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-14 08:19:25 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-14 08:28:40 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 08:28:40 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-14 08:28:40 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 08:28:40 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 08:28:41 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 08:28:41 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 08:28:45 ALL  -- $IVG_dir/helper_scripts/install_pre_req.sh
+2018-05-14 08:45:43 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-14 08:45:43 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-14 08:45:43 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 08:45:44 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 08:45:44 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 08:45:45 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 08:46:02 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 08:46:02 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.168
+2018-05-14 08:46:02 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 08:47:07 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 08:47:07 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.168
+2018-05-14 08:47:07 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 08:47:28 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 08:47:28 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 08:48:06 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 08:48:06 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-14 08:48:06 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 08:48:07 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 08:48:07 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 08:48:08 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 08:51:40 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 08:51:40 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-14 08:51:40 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 08:51:41 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 08:51:41 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 08:51:42 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 08:55:37 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 08:55:37 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-14 08:55:37 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 08:55:37 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 08:55:37 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 08:55:38 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 09:29:20 ALL  -- $IVG_dir/helper_scripts/install_pre_req.sh
+2018-05-14 09:31:35 ALL  -- $HOME/IVG_folder/vm_creator/ubuntu/x_create_backing_image.sh
+2018-05-14 09:54:07 ALL  -- exit
+2018-05-14 10:02:59 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-14 10:03:36 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-14 10:09:39 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-14 10:10:06 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-14 10:18:37 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown
+2018-05-14 12:21:14 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-14 12:21:14 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-14 12:21:14 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 12:21:15 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 12:21:15 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 12:21:16 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 12:22:46 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.167
+2018-05-14 12:22:46 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.168
+2018-05-14 12:22:46 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 12:22:47 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 12:22:47 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 12:22:48 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 12:23:12 DUT1 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.165
+2018-05-14 12:23:12 DUT2 -- ssh -i /root/.ssh/netronome_key -q 172.26.1.166
+2018-05-14 12:23:12 ALL  -- /bin/echo -e '\x43\x4f\x4e\x4e\x45\x43\x54\x45\x44'
+2018-05-14 12:23:12 ALL  -- mkdir -p $HOME/IVG_folder
+2018-05-14 12:23:12 ALL  -- export IVG_dir=$HOME/IVG_folder
+2018-05-14 12:23:13 ALL  -- $IVG_dir/helper_scripts/setup-dut.sh
+2018-05-14 12:28:46 ALL  -- $IVG_dir/helper_scripts/delete-vms.sh --all --shutdown

@@ -1,23 +1,26 @@
-Script started on Tue 08 May 2018 12:23:40 PM UTC
+Script started on Mon 14 May 2018 10:21:14 AM UTC
 cd
 root@temp8:~# cd
-root@temp8:~# ./IVG_folder/test_case_1_ping/setup_test_case_1.sh -i 10.0.0.2 - s OVS_TC
+root@temp8:~# ./IVG_folder/test_case_1_ping/setup_test_case _1.sh -i 10.0.0.2 -s OVS_TC
 IP: 10.0.0.2
 SOFTWARE: OVS_TC
 Setting up ping for OVS-TC
 SETTING 
+find: ‘/proc/29091’: No such file or directory
 Usage: grep [OPTION]... PATTERN [FILE]...
 Try 'grep --help' for more information.
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:
-/root/IVG_folder/helper_scripts/clean.sh: line 21: ovs-vsctl: command not found
+/root/IVG_folder/helper_scripts/clean.sh: line 23: /root/ovs/utilities/ovs-vsctl: No such file or directory
 Stop openvswitch ...
 /root/IVG_folder/helper_scripts/clean.sh: line 27: /root/ovs/utilities/ovs-ctl: No such file or directory
 /root/IVG_folder/helper_scripts/clean.sh: line 30: /sys/bus/pci/devices/0000:/sriov_numvfs: No such file or directory
 Not enough information: "dev" argument is required.
 Not enough information: "dev" argument is required.
+find: ‘/proc/29165’: No such file or directory
+find: ‘/proc/29220’: No such file or directory
 :
-/root/IVG_folder/helper_scripts/clean.sh: line 56: -s: command not found
 Unbinding VFs
+Routing table indicates that interface 0000:06:00.0 is active. Skipping unbind
 sed: can't read /etc/default/virtioforwarder: No such file or directory
 Stop Virtioforwarder ...
 Failed to stop virtioforwarder.service: Unit virtioforwarder.service not loaded.
@@ -26,7 +29,7 @@ rmmod: ERROR: Module nfp is not currently loaded
 CLEANED
 Reloading nfp module
 rmmod: ERROR: Module nfp is not currently loaded
-modprobe: FATAL: Module nfp not found in directory /lib/modules/4.4.0-122-generic
+modprobe: FATAL: Module nfp not found in directory /lib/modules/4.4.0-124-generic
 nfp module loaded
 Creating VF's ...
 /root/IVG_folder/helper_scripts/start_ovs_tc.sh: line 31: /sys/bus/pci/devices/0000:/sriov_numvfs: No such file or directory
@@ -37,24 +40,39 @@ ls: cannot access '/sys/bus/pci/devices//net': No such file or directory
 Start OVS
 /root/IVG_folder/helper_scripts/start_ovs_tc.sh: line 54: /root/ovs/utilities/ovs-ctl: No such file or directory
 OVS-TC started
-/root/IVG_folder/test_case_1_ping/1_bind_netronome_nfp_netvf_driver_TC.sh: line 53: ovs-vsctl: command not found
-/root/IVG_folder/test_case_1_ping/1_bind_netronome_nfp_netvf_driver_TC.sh: line 54: ovs-vsctl: command not found
-/root/IVG_folder/test_case_1_ping/1_bind_netronome_nfp_netvf_driver_TC.sh: line 55: ovs-vsctl: command not found
-/root/IVG_folder/test_case_1_ping/1_bind_netronome_nfp_netvf_driver_TC.sh: line 56: ovs-vsctl: command not found
-/root/IVG_folder/test_case_1_ping/1_bind_netronome_nfp_netvf_driver_TC.sh: line 44: ovs-vsctl: command not found
-/root/IVG_folder/test_case_1_ping/1_bind_netronome_nfp_netvf_driver_TC.sh: line 83: ovs-vsctl: command not found
+Deleting: br0
+ovs-vsctl: Error detected while setting up 'br0'.  See ovs-vswitchd log for details.
+ovs-vsctl: The default log directory is "/usr/local/var/log/openvswitch".
 
 repr_vf1 = 
 Not enough information: "dev" argument is required.
 VF1_PCI_ADDRESS: virtfn4
-modprobe: FATAL: Module nfp_netvf not found in directory /lib/modules/4.4.0-122-generic
+modprobe: FATAL: Module nfp_netvf not found in directory /lib/modules/4.4.0-124-generic
 lspci: -s: Invalid slot number
 INTERFACE_PCI: virtfn4
 current driver: 
 expected driver: nfp_netvf
-ERROR: could not find dpdk-devbind.py tool
+Not enough information: "dev" argument is required.
+Command line is not complete. Try option "help"
+pf0 = 
+Not enough information: "dev" argument is required.
+p0 = 
+Not enough information: "dev" argument is required.
+ethtool: bad command line argument(s)
+For more information run ethtool -h
+ovs-vsctl: 'add-port' command requires at least 2 arguments
+ovs-vsctl: 'add-port' command requires at least 2 arguments
+ovs-ofctl: br0 is not a bridge or a socket
+ovs-ofctl: br0 is not a bridge or a socket
+cf8f99e2-b0ed-4cf0-9291-27534beb5879
+    Bridge "br0"
+        Port "br0"
+            Interface "br0"
+                type: internal
+ovs-ofctl: br0 is not a bridge or a socket
+ovs-ofctl: br0 is not a bridge or a socket
 DONE(setup_test_case_1.sh)
 root@temp8:~# exit
 exit
 
-Script done on Tue 08 May 2018 12:24:08 PM UTC
+Script done on Mon 14 May 2018 10:21:43 AM UTC

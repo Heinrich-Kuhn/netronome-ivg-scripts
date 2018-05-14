@@ -1,14 +1,14 @@
 Hostname       temp12
 OS             Ubuntu 16.04.4 LTS (Xenial Xerus)
-Kernel         4.4.0-122-generic
+Kernel         4.4.0-124-generic
 Server         Supermicro Super Server
 BIOS           American Megatrends Inc. Version 2.0b (05/02/2017); Revision 5.6
-CPU            GenuineIntel Intel(R) Xeon(R) CPU E5-2609 v4 @ 1.70GHz 1200.000MHz
+CPU            GenuineIntel Intel(R) Xeon(R) CPU E5-2609 v4 @ 1.70GHz 1199.960MHz
 NUMA           1 sockets, 8 cores/socket
-Memory         32897704 kB
+Memory         32831756 kB
 DIMM           64 bits, 16384 MB, DIMMA1, 1866 MHz (max 2400 MHz), rank 1
 DIMM           64 bits, 16384 MB, DIMMB1, 1866 MHz (max 2400 MHz), rank 1
 NUMA 0         0-7
 Kernel Command Line 
-               BOOT_IMAGE=/boot/vmlinuz-4.4.0-122-generic root=UUID=b34735e2-2a80-4164-8c02-cad53b693373 ro intel_iommu=on iommu=pt intremap=on intel_idle.max_cstate=0 processor.max_cstate=0 intel_pstate=disable nohz_full= rcu_nocbs= transparent_hugepage=never console=tty1 console=ttyS0,115200
+               BOOT_IMAGE=/boot/vmlinuz-4.4.0-124-generic root=UUID=b34735e2-2a80-4164-8c02-cad53b693373 ro console=tty1 console=ttyS0,115200
 VM CPU Usage   

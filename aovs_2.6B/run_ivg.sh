@@ -1,11 +1,11 @@
 #!/bin/bash
-
-SESSIONNAME=IVG
+SESSIONNAME="IVG$1"
+echo $SESSIONNAME
 script_dir="$(dirname $(readlink -f $0))"
 export IVG_dir="$(echo $script_dir | sed 's/\(IVG\).*/\1/g')"
 
 # IVG Local Configuration Directory
-ivg_config_dir="$HOME/.config/ivg"
+ivg_config_dir="$HOME/.config/ivg$1"
 mkdir -p $ivg_config_dir \
     || exit -1
 
@@ -172,11 +172,9 @@ then # $TMUX is empty, create/enter tmux session.
         tmux split-window -v -t 0
         tmux split-window -v -t 1
     fi
-    tmux send-keys -t 0 './run_ivg.sh' C-m
+    tmux send-keys -t 0 "./run_ivg.sh $1" C-m
     tmux a -t $SESSIONNAME 
-else # else $TMUX is not empty, start test.
-
-    
+else # else $TMUX is not empty, start test.    
     # Recreate all panes
     if [ $(tmux list-panes | wc -l) -gt 1 ] 
     then
@@ -197,9 +195,9 @@ else # else $TMUX is not empty, start test.
         VM_MGMT_DIR="\$HOME/IVG_folder/vm_creator/$CLOUD_IMAGE_OS"
         #Set flow count for tests
         flow=$(cat /root/IVG/aovs_2.6B/flow_setting.txt)
-
+        TMX=$(tmux display-message -p '#S')
         echo "Please choose a option"
-        echo ""
+        echo "IVG-Session:$TMX"
         echo -e "O) Toggle between AOVS / OVS_TC \t Setting: $SOFTWARE"
         echo -e "o) Toggle between VM operating systems \t Setting: $CLOUD_IMAGE_OS"
         echo -e "f) Change number of Openflow rules to install: \t Setting: $flow"
