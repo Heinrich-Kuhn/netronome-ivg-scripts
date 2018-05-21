@@ -6,7 +6,7 @@ OVS_VER=$2
 
 $script_dir/0_uninstall_aovs.sh
 #$script_dir/1_install_dpdk.sh
-$IVG_dir/helper_scripts/install-dpdk.sh $DPDK_VER
+IVG_dir/helper_scripts/install-dpdk.sh $DPDK_VER
 modprobe uio
 IGB_UIO="$(find -name 'igb_uio.ko' | head -1)"
 insmod $IGB_UIO
