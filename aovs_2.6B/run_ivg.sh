@@ -129,7 +129,7 @@ esac
 # Set Default Settings
 SOFTWARE="OVS_TC"
 CLOUD_IMAGE_OS="ubuntu"
-DPDK_VER="17.11"
+DPDK_VER="17.05"
 
 # Load Settings from Configuration file
 if [ -f $ivg_cfg ]; then
