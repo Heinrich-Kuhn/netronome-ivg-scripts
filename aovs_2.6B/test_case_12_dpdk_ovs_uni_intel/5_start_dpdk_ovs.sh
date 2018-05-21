@@ -44,10 +44,13 @@ ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-init=true
 sock=$(lscpu | grep Socket | grep -o [0-9])
 if [[ $sock == "1" ]]
 then 
+  echo "1"
   ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem="2048"
 else
+  echo "2"
   ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem="2048","2048"
 fi
+read -p
 ovs-vsctl --no-wait set Open_vSwitch . other_config:pmd-cpu-mask=81
 ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-lcore-mask=02
 ovs-vswitchd unix:$DB_SOCK --pidfile --detach --log

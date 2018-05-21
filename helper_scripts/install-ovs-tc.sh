@@ -31,7 +31,7 @@ if [ $kernel_pass -eq 0 ]; then
     echo "The kernel ($(uname -r)) is too old for Agilio OVS-TC"
     echo "Agilio OVS-TC requires at least 4.15"
     echo "Please update kernel with the script:"
-    echo "  $IVG_dir/helper_scripts/kernel_install-4.15.3.sh"
+    echo "  $IVG_dir/helper_scripts/kernel_install-4.15.18.sh"
     exit -1
 fi
 
