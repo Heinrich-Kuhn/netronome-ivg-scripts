@@ -13,10 +13,10 @@ fi
 mkdir -p $IVG_dir/aovs_2.6B \
     || exit -1
 
-logdir="$IVG_dir/aovs_2.6B/logs"
-
-mkdir -p $logdir \
-    || exit -1
+if [ "$logdir" != "" ]; then
+    mkdir -p $logdir \
+        || exit -1
+fi
 
 echo " - Collect System Inventory"
 $IVG_dir/helper_scripts/inventory.sh \

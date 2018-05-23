@@ -1,9 +1,15 @@
 #!/bin/bash
 
-dpdk_version="$1"
+disa_pkg_file="$1"
+dpdk_version="$2"
 
 if [ "$IVG_dir" == "" ] || [ ! -d $IVG_dir ]; then
     echo "ERROR($0): please set variable \$IVG_dir"
+    exit -1
+fi
+
+if [ ! -f "$disa_pkg_file" ]; then
+    echo "ERROR($0): no OVS-TC (DISA) package file specified"
     exit -1
 fi
 
@@ -13,16 +19,12 @@ cur_kernel_1=$(uname -r | cut -d '-' -f1 | cut -d '.' -f1 )
 cur_kernel_2=$(uname -r | cut -d '-' -f1 | cut -d '.' -f2 )
 cur_kernel_3=$(uname -r | cut -d '-' -f1 | cut -d '.' -f3 )
 
-echo "KERNEL VERSION: $cur_kernel_1.$cur_kernel_2.$cur_kernel_3"
-
 kernel_pass=0
 
 if [ $cur_kernel_1 -gt 3 ]; then
     if [ $cur_kernel_1 -eq 4 ] && [ $cur_kernel_2 -gt 14 ]; then
-    	echo "Kernel up to date"
     	kernel_pass=1
     elif [ $cur_kernel_1 -gt 4 ]; then
-        echo "Kernel up to date"
     	kernel_pass=1
     fi
 fi
@@ -34,6 +36,8 @@ if [ $kernel_pass -eq 0 ]; then
     echo "  $IVG_dir/helper_scripts/kernel_install-4.15.18.sh"
     exit -1
 fi
+
+echo "The current kernel ($(uname -r)) is up-to-date"
 
 #INSTALL pre-req
 grep ID_LIKE /etc/os-release | grep -q debian
@@ -106,7 +110,20 @@ if [[ $? -eq 0 ]]; then
     yum -y install centos-release-qemu-ev.noarch qemu-kvm-ev libvirt libvirt-python virt-install
 fi
 
-#CONFIGURE GRUB
+# Un-package DISA package (do this relatively early)
+disa_tmp_dir=$(mktemp --directory)
+tar x -C $disa_tmp_dir -f $disa_pkg_file
+if [ $? -ne 0 ]; then
+    echo "ERROR($0): failed to extract $disa_pkg_file"
+    exit -1
+fi
+disa_install=$(find $disa_tmp_dir -name 'install.sh')
+if [ ! -x "$disa_install" ]; then
+    echo "ERROR($0): missing install script inside $disa_pkg_file"
+    exit -1
+fi
+
+# CONFIGURE GRUB
 $IVG_dir/helper_scripts/configure_grub.sh \
     || exit -1
 $IVG_dir/helper_scripts/configure_hugepages.sh \
@@ -115,16 +132,18 @@ $IVG_dir/helper_scripts/configure_hugepages.sh \
 $IVG_dir/helper_scripts/install-dpdk.sh $dpdk_version \
     || exit -1
 
-#KERNEL OVS INSTALL
-cd /root
+# KERNEL OVS INSTALL
+cd $HOME
 
-if [ -e ovs ];then
+if [ -e ovs ]; then
     rm -r ovs
 fi
 
+echo " - Clone and Install Open vSwitch"
 git clone https://github.com/openvswitch/ovs.git \
     || exit -1
-cd ovs
+cd ovs \
+    || exit -1
 git checkout branch-2.8 \
     || exit -1
 ./boot.sh \
@@ -136,15 +155,18 @@ make -j 8 \
 make -j 8 install \
     || exit -1
 
-#DISA INSTALL
-cd /tmp
-wget --timestamp http://pahome.netronome.com/releases-intern/disa/firmware/disa-2.8.A-r5642-2017-11-24_firmware.tar.gz \
-    || exit -1
-tar xvf disa-2.8.A-r5642-2017-11-24_firmware.tar.gz \
-    || exit -1
-/tmp/disa-2.8.A-r5642-2017-11-24_firmware/install.sh \
-    || exit -1
+echo " - Install OVS-TC (DISA) Firmware"
+{
+    cd $(dirname $disa_install) \
+        || exit -1
+    $disa_install \
+        || exit -1
+}
 
+# Clean-up DISA Firmware temporary directory
+/bin/rm -rf $disa_tmp_dir
+
+echo " - Install VirtIO Forwarder"
 $IVG_dir/helper_scripts/install-virtio-forwarder.sh dpdk-$dpdk_version \
     || exit -1
 

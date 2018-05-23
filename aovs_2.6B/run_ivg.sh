@@ -86,6 +86,19 @@ function rsync_duts {
     return 0
 }
 
+function collect_dut_log_files {
+    ropts=()
+    ropts+=( "-e" "$sshcmd" )
+    for dutidx in $(seq 1 ${#DUT_IPADDR[@]}) ; do
+        ipaddr=${DUT_IPADDR[$dutidx]}
+        dut_log_dir="$capdir/DUT$dutidx"
+        mkdir -p $dut_log_dir
+        rsync "${ropts[@]}" -a -R $ipaddr:.logs/ivg/./. $dut_log_dir \
+            || return -1
+    done
+    return 0
+}
+
 function flows_config {
 
     if [ ! -f /root/IVG/aovs_2.6B/flow_setting.txt ]; then
@@ -145,7 +158,7 @@ function ivg_update_settings () {
     else
         grep -E "^$varname" $ivg_cfg > /dev/null
         if [ $? -eq 0 ]; then
-            sed -r 's/^('$varname')=.*$/\1='$value'/' \
+            sed -r 's@^('$varname')=.*$@\1='$value'@' \
                 -i $ivg_cfg
         else
             echo "$varname=$value" >> $ivg_cfg
@@ -274,8 +287,9 @@ else # else $TMUX is not empty, start test.
 
             wait_text ALL "CONNECTED"
 
-            tmux_run_cmd ALL "mkdir -p \$HOME/IVG_folder"
             tmux_run_cmd ALL "export IVG_dir=\$HOME/IVG_folder"
+            tmux_run_cmd ALL "export logdir=\$HOME/.logs/ivg"
+            tmux_run_cmd ALL "mkdir -p \$IVG_dir \$logdir"
 
             rsync_duts \
                 $IVG_dir/helper_scripts \
@@ -364,29 +378,45 @@ else # else $TMUX is not empty, start test.
             ;;
 
         B)  echo "B) Install OVS-TC"
-            
+
             if [ $DUT_CONNECT == 0 ]; then
                 echo -e "${RED}Please connect to DUT's first${NC}"
                 sleep 5
                 continue
             fi
-            #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Installation_TC_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Installation_TC_DUT_2.log" C-m
 
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh $DPDK_VER" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/install-ovs-tc.sh $DPDK_VER" C-m
+            if [ "$DISA_PKG_FNAME" == "" ] || [ ! -f "$DISA_PKG_FNAME" ]; then
+                echo "A OVS-TC package file is needed. Please consult your Netronome contact."
+                echo "Enter the full path of the OVS-TC firmware package file!"
+                read -p "> " DISA_PKG_FNAME
+            fi
+
+            if [ "$DISA_PKG_FNAME" == "" ] || [ ! -f "$DISA_PKG_FNAME" ]; then
+                echo "NOTICE: specified file does not exist ($DISA_PKG_FNAME)"
+                sleep 3
+                continue
+            fi
+
+            ivg_update_settings "DISA_PKG_FNAME" "$DISA_PKG_FNAME"
+
+            rsync_duts \
+                $DISA_PKG_FNAME \
+                || exit -1
+
+            DUT_PKG_FNAME="\$IVG_dir/$(basename $DISA_PKG_FNAME)"
+
+            #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux_run_cmd ALL "script \$logdir/install-ovs-tc.log"
+
+            tmux_run_cmd ALL "\$IVG_dir/helper_scripts/install-ovs-tc.sh $DUT_PKG_FNAME $DPDK_VER"
 
             wait_text ALL "DONE(install-ovs-tc.sh)"
 
             #_#_#_#_#_END LOG_#_#_#_#_#
-            tmux send-keys -t 3 "exit" C-m
-            tmux send-keys -t 2 "exit" C-m
-
+            tmux_run_cmd ALL "exit"
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Installation_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Installation_DUT_2.log $capdir
 
+            collect_dut_log_files
 
             ;;
 
@@ -1840,9 +1870,7 @@ else # else $TMUX is not empty, start test.
             fi
             ;;
 
-        x)  echo "x) Exiting script"
-            sleep 1
-            tmux kill-session -t $SESSIONNAME
+        x)  tmux kill-session -t $SESSIONNAME
             exit 0
             ;;
 
