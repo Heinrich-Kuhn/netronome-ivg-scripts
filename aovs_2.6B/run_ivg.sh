@@ -300,14 +300,6 @@ else # else $TMUX is not empty, start test.
 
             wait_text ALL "DONE(setup-dut.sh)"
 
-            echo " - Collect System Inventory logs from DUTs"
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/inventory.log \
-                $capdir/inventory-DUT1-${DUT_IPADDR[1]}.log \
-                || exit -1
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/inventory.log \
-                $capdir/inventory-DUT2-${DUT_IPADDR[2]}.log \
-                || exit -1
-
             echo 64000 > $IVG_dir/aovs_2.6B/flow_setting.txt
 
             for ipaddr in ${DUT_IPADDR[@]} ; do
@@ -317,6 +309,8 @@ else # else $TMUX is not empty, start test.
             done
 
             DUT_CONNECT=1
+
+            collect_dut_log_files
 
             ;;
 
@@ -618,8 +612,8 @@ else # else $TMUX is not empty, start test.
             sleep 1
 
             # CLEAN
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
 
             ;;
 
@@ -770,8 +764,8 @@ else # else $TMUX is not empty, start test.
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_2.log $capdir
 
             # CLEAN
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
 
             ;;
 
@@ -918,8 +912,8 @@ else # else $TMUX is not empty, start test.
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_2.log $capdir
 
             # CLEAN
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
 
             ;;
 
@@ -1073,8 +1067,8 @@ else # else $TMUX is not empty, start test.
             sleep 5
 
             # CLEAN
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
 
             ;;
 
@@ -1224,8 +1218,8 @@ else # else $TMUX is not empty, start test.
             sleep 2 
 
             # CLEAN
-            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
-            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop_ovs-tc.sh" C-m
+            tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
+            tmux send-keys -t 3 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
 
 
             ;;

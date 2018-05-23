@@ -80,7 +80,7 @@ $base_dir/helper_scripts/configure_hugepages.sh
 
 sleep 1
 
-$base_dir/helper_scripts/stop_ovs_tc.sh
+$base_dir/helper_scripts/stop-ovs-tc.sh
 
 sleep 1
 

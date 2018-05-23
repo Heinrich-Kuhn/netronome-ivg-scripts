@@ -42,7 +42,7 @@ echo "The current kernel ($(uname -r)) is up-to-date"
 #INSTALL pre-req
 grep ID_LIKE /etc/os-release | grep -q debian
 if [[ $? -eq 0 ]]; then
-    # Agilio OVS requirement
+    # Agilio OVS requirements
     apt-get install -y \
         make autoconf automake libtool gcc g++ bison flex hwloc-nox \
         libreadline-dev libpcap-dev dkms \
@@ -51,7 +51,10 @@ if [[ $? -eq 0 ]]; then
         libnl-3-200 libnl-3-dev libnl-genl-3-200 libnl-genl-3-dev psmisc gawk \
         libzmq3-dev protobuf-c-compiler protobuf-compiler python-protobuf \
         libnuma1 libnuma-dev python-ethtool python-six python-ethtool \
-        virtinst bridge-utils cpu-checker libjansson-dev dkms \
+        virtinst bridge-utils cpu-checker libjansson-dev dkms
+        # Expected to fail
+
+    apt-get -f install -y \
         || exit -1
 
     # CPU-meas pre-req

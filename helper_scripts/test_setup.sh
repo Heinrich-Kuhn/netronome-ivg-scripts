@@ -75,7 +75,7 @@ function general-ovs-config()
 
 #--------------------------------------------------------------
 
-$base_dir/helper_scripts/stop_ovs_tc.sh
+$base_dir/helper_scripts/stop-ovs-tc.sh
 
 sleep 1
 

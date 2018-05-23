@@ -18,13 +18,18 @@ if [ "$logdir" != "" ]; then
         || exit -1
 fi
 
+grep ID_LIKE /etc/os-release | grep -q debian
+if [[ $? -eq 0 ]]; then
+    # Run 'apt-get update' if it has not been run recently
+    if test $(find /var/lib/apt -type d -name 'lists' -mmin +10080) ; then
+        apt-get update \
+            || exit -1
+    fi
+fi
+
 echo " - Collect System Inventory"
 $IVG_dir/helper_scripts/inventory.sh \
     > $logdir/inventory.log 2>&1 \
-    || exit -1
-
-echo " - Setup Hugepages"
-$IVG_dir/helper_scripts/configure_hugepages.sh \
     || exit -1
 
 echo "DONE($(basename $0))"
