@@ -18,8 +18,7 @@ function find_repr()
 }
 
 # Delete all bridges
-for br in $(ovs-vsctl list-br);
-do
+for br in $(ovs-vsctl list-br) ; do
   /root/ovs/utilities/ovs-vsctl --if-exists del-br $br
 done
 
@@ -41,9 +40,8 @@ DPDK_DEVBIND=$(find / -iname dpdk-devbind.py | head -1)
 PCI=$(lspci -d 19ee: | grep 4000 | cut -d ' ' -f1)
 
 if [[ "$PCI" == *":"*":"*"."* ]]; then
-    echo "PCI correct format"
+    :
 elif [[ "$PCI" == *":"*"."* ]]; then
-    echo "PCI corrected"
     PCI="0000:$PCI"
 fi
 
@@ -67,8 +65,12 @@ echo "Stop Virtioforwarder ..."
 
 systemctl stop virtioforwarder
 
-echo "rmmod nfp"
-rmmod nfp
+lsmod | grep -E '^nfp\s' > /dev/null
+if [ $? -eq 0 ]; then
+    echo "Remove kernel module 'nfp'"
+    rmmod nfp \
+        || exit -1
+fi
 
 echo "CLEANED"
 exit 0

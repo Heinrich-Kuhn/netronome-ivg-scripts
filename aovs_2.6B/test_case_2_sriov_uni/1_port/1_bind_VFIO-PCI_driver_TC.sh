@@ -73,7 +73,8 @@ function general-ovs-config()
 
 ##############################################################################################################
 
-/root/IVG_folder/helper_scripts/start_ovs_tc.sh
+/root/IVG_folder/helper_scripts/start_ovs_tc.sh \
+    || exit -1
 
 general-ovs-config
 clean-ovs-bridges

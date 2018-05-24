@@ -12,8 +12,19 @@ for dp in $(ovs-dpctl dump-dps) ; do
     /root/ovs/utilities/ovs-dpctl del-dp $dp
 done
 
-rmmod openvswitch 2>/dev/null
-rmmod nfp 2>/dev/null
+lsmod | grep -E '^openvswitch\s' > /dev/null
+if [ $? -eq 0 ]; then
+    echo "Remove kernel module 'openvswitch'"
+    rmmod openvswitch \
+        || exit -1
+fi
+
+lsmod | grep -E '^nfp\s' > /dev/null
+if [ $? -eq 0 ]; then
+    echo "Remove kernel module 'nfp'"
+    rmmod nfp \
+        || exit -1
+fi
 
 echo "OVS-TC stopped"
 exit 0
