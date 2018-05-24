@@ -71,16 +71,7 @@ echo "rmmod nfp"
 rmmod nfp
 
 echo "CLEANED"
-
-
-
-
-
-
-
-
-
-
+exit 0
 
 
 

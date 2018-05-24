@@ -102,7 +102,6 @@ fi
 ovs-vsctl add-br $BRIDGE_NAME
 sleep 1
 
-
 for (( c=1; c<=$VM_COUNT; c++ ))
 do
 
@@ -126,8 +125,6 @@ do
 
     # Create VM instance c
     $base_dir/aovs_2.6B/vm_creator/$VM_OS/y_create_vm_from_backing.sh  $VM_NAME
-
-
 
     # Bind VFs to be used by VMs
     temp_repr_vf1=$(find_repr $VF_1 | rev | cut -d '/' -f 1 | rev)
@@ -189,7 +186,6 @@ do
 
     echo "VM $c setup done"
 
-
 done
 
 # Set PF up
@@ -211,9 +207,7 @@ ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME
 ovs-ofctl dump-flows $BRIDGE_NAME
 
-
 echo "Custom Setup Done"
-
-
+exit 0
 
 

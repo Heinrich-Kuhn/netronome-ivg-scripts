@@ -74,3 +74,4 @@ if [[ $? -eq 0 ]]; then
 fi
 
 echo "PreReq Installed!"
+exit 0

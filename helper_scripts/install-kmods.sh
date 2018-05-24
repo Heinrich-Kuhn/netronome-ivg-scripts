@@ -11,3 +11,5 @@ rmmod nfp
 depmod -a
 modprobe nfp
 modinfo nfp
+
+exit 0

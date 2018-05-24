@@ -22,3 +22,4 @@ virsh dominfo ${VM_NAME} | grep -q "running" && ( \
 
 virsh undefine ${VM_NAME}
 
+exit 0

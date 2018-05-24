@@ -294,17 +294,10 @@ done
 #ovs-ofctl -O OpenFlow13 add-flow $BRIDGE_NAME actions=NORMAL
 #ovs-ofctl -O Openflow13 add-flow $BRIDGE dl_type=0x0806,actions=NORMAL
 
-
-
-
-
 ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME
 ovs-ofctl dump-flows $BRIDGE_NAME
 
-
 echo "Custom Setup Done"
 
-
-
-
+exit 0

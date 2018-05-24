@@ -38,3 +38,5 @@ ovs-ofctl -O Openflow13 add-flow $BRIDGE dl_type=0x0806,in_port=$PORT2,actions=1
 
 ovs-ofctl -O Openflow13 add-flow $BRIDGE in_port=$PORT1,actions=1
 ovs-ofctl -O Openflow13 add-flow $BRIDGE in_port=$PORT2,actions=1
+
+exit 0

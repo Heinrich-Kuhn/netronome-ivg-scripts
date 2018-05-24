@@ -49,3 +49,5 @@ sed -i "s@<Network IP=\".*\" PORT=\".*\"@<Network IP=\"$MY_IP\" PORT=\"50123\"@g
 #Launch Marvin on Local
 cd /root/BIFF/Board-Instrumentation-Framework/Marvin/build/libs
 java -jar BIFF.Marvin.jar &
+
+exit 0

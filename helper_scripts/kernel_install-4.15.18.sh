@@ -48,4 +48,5 @@ fi
 echo "PLEASE REBOOT MACHINE"
 
 sleep 5
+exit 0
 

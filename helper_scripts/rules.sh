@@ -87,3 +87,5 @@ done
 ovs-vsctl show
 ovs-ofctl show $BRIDGE_NAME
 ovs-ofctl dump-flows $BRIDGE_NAME
+
+exit 0
