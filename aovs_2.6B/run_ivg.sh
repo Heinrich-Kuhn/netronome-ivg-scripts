@@ -323,11 +323,9 @@ else # else $TMUX is not empty, start test.
             fi
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Installation_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Installation_DUT_2.log" C-m           
+            tmux_run_cmd ALL "script \$logdir/install-agilio-ovs.log"
 
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "cd"
 
             #Check if any agilio .tar files are in the folder
             cd 
@@ -366,8 +364,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Installation_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Installation_DUT_2.log $capdir
+
+            collect_dut_log_files
 
             ;;
 
@@ -427,8 +425,7 @@ else # else $TMUX is not empty, start test.
             wait_text ALL "PreReq Installed!"
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_2.log" C-m
+            tmux_run_cmd ALL "script \$logdir/create-backing-image.log"
 
             # Copy VM creator script to DUT
             rsync_duts \
@@ -451,8 +448,8 @@ else # else $TMUX is not empty, start test.
             tmux_run_cmd ALL "exit"
 
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Backing_image_DUT_2.log $capdir
+
+            collect_dut_log_files
 
             ;;
 
@@ -465,11 +462,9 @@ else # else $TMUX is not empty, start test.
             fi
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_2.log" C-m
-            
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "script \$logdir/test-case-1.log"
+
+            tmux_run_cmd ALL "cd"
 
             rsync_duts \
                 $IVG_dir/aovs_2.6B/test_case_1_ping \
@@ -495,8 +490,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_2.log $capdir
+
+            collect_dut_log_files
 
             ;;
 
@@ -509,11 +504,9 @@ else # else $TMUX is not empty, start test.
             fi
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_1_DUT_2.log" C-m
+            tmux_run_cmd ALL "script \$logdir/test-case-1a.log"
             
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "cd"
 
             ##############################################
             # BIFF
@@ -638,11 +631,9 @@ else # else $TMUX is not empty, start test.
             fi
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_2.log" C-m            
+            tmux_run_cmd ALL "script \$logdir/test-case-2.log"
 
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "cd"
 
             VM_BASE_NAME="netronome-sriov-vm"
             VM_CPUS=5
@@ -760,8 +751,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_2_DUT_2.log $capdir
+
+            collect_dut_log_files
 
             # CLEAN
             tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
@@ -778,11 +769,9 @@ else # else $TMUX is not empty, start test.
             fi
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_2.log" C-m
+            tmux_run_cmd ALL "script \$logdir/test-case-3.log"
 
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "cd"
 
             VM_BASE_NAME="netronome-sriov-vxlan-vm"
             VM_CPUS=5
@@ -907,8 +896,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_3_DUT_2.log $capdir
+
+            collect_dut_log_files
 
             # CLEAN
             tmux send-keys -t 2 "/root/IVG_folder/helper_scripts/stop-ovs-tc.sh" C-m
@@ -933,11 +922,9 @@ else # else $TMUX is not empty, start test.
             fi
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_2.log" C-m
+            tmux_run_cmd ALL "script \$logdir/test-case-6.log"
 
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "cd"
 
             VM_BASE_NAME=netronome-xvio-vm
             VM_CPUS=5
@@ -1025,11 +1012,8 @@ else # else $TMUX is not empty, start test.
             
             sleep 2
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/capture.txt $script_dir
-            sleep 1
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/parsed_data.txt $script_dir
-            sleep 1
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_6.csv $script_dir
-            sleep 1
             scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/test_case_6.html $script_dir
 
             tmux_run_cmd ALL "\$IVG_dir/helper_scripts/delete-vms.sh --all --shutdown"
@@ -1060,8 +1044,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 2 "exit" C-m
 
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_6_DUT_2.log $capdir
+
+            collect_dut_log_files
 
             sleep 5
 
@@ -1081,11 +1065,9 @@ else # else $TMUX is not empty, start test.
             fi
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_2.log" C-m
+            tmux_run_cmd ALL "script \$logdir/test-case-7.log"
 
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "cd"
 
             rsync_duts \
                 $IVG_dir/helper_scripts \
@@ -1211,8 +1193,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_7_DUT_2.log $capdir
+
+            collect_dut_log_files
 
             sleep 2 
 
@@ -1231,18 +1213,16 @@ else # else $TMUX is not empty, start test.
                 continue
             fi
 
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_8_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_8_DUT_2.log" C-m
+            #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux_run_cmd ALL "script \$logdir/test-case-8.log"
+
+            tmux_run_cmd ALL "cd"
 
             tcname="test_case_8"
 
             VM_BASE_NAME="ns-bi-sriov"
 
             rsync_duts $tcname vm_creator || exit -1
-
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
 
             tmux send-keys -t 2 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME-1" C-m
             tmux send-keys -t 3 "$VM_MGMT_DIR/y_create_vm_from_backing.sh $VM_BASE_NAME-2" C-m
@@ -1288,8 +1268,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_8_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_8_DUT_2.log $capdir
+
+            collect_dut_log_files
 
             ;;
 
@@ -1302,15 +1282,13 @@ else # else $TMUX is not empty, start test.
                 continue
             fi
 
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_10_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_10_DUT_2.log" C-m
+            #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux_run_cmd ALL "script \$logdir/test-case-10.log"
+
+            tmux_run_cmd ALL "cd"
 
             DST_IP="10.10.10.2"
             SRC_IP="10.10.10.1"
-
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
 
             VM_BASE_NAME=netronome-kovs-vxlan-intel-vm
             VM_CPUS=4
@@ -1425,8 +1403,9 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_10_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_10_DUT_2.log $capdir
+
+            collect_dut_log_files
+
             ;;
 
          11)  echo "11) Test Case 11 (DPDK-pktgen VM-VM uni-directional KOVS Intel XL710)"
@@ -1438,11 +1417,9 @@ else # else $TMUX is not empty, start test.
             fi
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_11_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_11_DUT_2.log" C-m
+            tmux_run_cmd ALL "script \$logdir/test-case-11.log"
 
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "cd"
 
             VM_BASE_NAME="netronome-kovs-intel-vm"
             VM_CPUS=4
@@ -1487,7 +1464,6 @@ else # else $TMUX is not empty, start test.
 
             tmux send-keys -t 2 "cd 3_dpdk_pktgen_lua_capture" C-m
             tmux send-keys -t 3 "cd 3_dpdk_pktgen_lua_capture" C-m
-
 
             flows_config
             
@@ -1558,8 +1534,9 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_11_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_11_DUT_2.log $capdir
+
+            collect_dut_log_files
+
             ;;
     
          12)  echo "12) Test Case 12 (DPDK-pktgen VM-VM uni-directional DPDK OVS Intel XL710)"
@@ -1570,12 +1547,10 @@ else # else $TMUX is not empty, start test.
                 continue
             fi
 
-             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_2.log" C-m
+            #_#_#_#_#_START LOG_#_#_#_#_#
+            tmux_run_cmd ALL "script \$logdir/test-case-12.log"
 
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "cd"
 
             VM_BASE_NAME=netronome-dpdk-ovs-intel-vm
             VM_CPUS=4
@@ -1689,8 +1664,9 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Test_case_12_DUT_2.log $capdir
+
+            collect_dut_log_files
+
             ;;
 
         o)  echo "o) Toggle VM OS"
@@ -1725,11 +1701,9 @@ else # else $TMUX is not empty, start test.
             fi
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Setup_KOVS_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Setup_KOVS_DUT_2.log" C-m
+            tmux_run_cmd ALL "script \$logdir/setup-kernel-ovs.log"
 
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "cd"
 
             rsync_duts \
                 $IVG_dir/helper_scripts \
@@ -1752,8 +1726,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Setup_KOVS_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Setup_KOVS_DUT_2.log $capdir
+
+            collect_dut_log_files
 
             ;;
 
@@ -1769,13 +1743,9 @@ else # else $TMUX is not empty, start test.
             OVS_VER=openvswitch-2.8.1
 
             #_#_#_#_#_START LOG_#_#_#_#_#
-            tmux send-keys -t 2 "script /root/IVG_folder/aovs_2.6B/logs/Setup_DPDK_OVS_DUT_1.log" C-m
-            tmux send-keys -t 3 "script /root/IVG_folder/aovs_2.6B/logs/Setup_DPDK_OVS_DUT_2.log" C-m
-           
-            
+            tmux_run_cmd ALL "script \$logdir/setup-dpdk-ovs.log"
 
-            tmux send-keys -t 3 "cd" C-m
-            tmux send-keys -t 2 "cd" C-m
+            tmux_run_cmd ALL "cd"
 
             rsync_duts \
                 $IVG_dir/helper_scripts \
@@ -1799,8 +1769,8 @@ else # else $TMUX is not empty, start test.
             tmux send-keys -t 3 "exit" C-m
             tmux send-keys -t 2 "exit" C-m
             sleep 1
-            scp ${sshopts[@]} root@${DUT_IPADDR[1]}:/root/IVG_folder/aovs_2.6B/logs/Setup_DPDK_OVS_DUT_1.log $capdir
-            scp ${sshopts[@]} root@${DUT_IPADDR[2]}:/root/IVG_folder/aovs_2.6B/logs/Setup_DPDK_OVS_DUT_2.log $capdir
+
+            collect_dut_log_files
 
             ;;	
 
