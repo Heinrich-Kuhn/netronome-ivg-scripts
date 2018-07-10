@@ -1,9 +1,6 @@
 #!/bin/bash
-PCI=$(lspci -d 8086:1583 | awk 'NR==1 {print $1}')
-if [ -z "$PCI" ]
-then
-    PCI=$(lspci -d 8086:1584 | awk 'NR==1 {print $1}')
-fi
+PCI=$(lspci -d 8086:158b | awk 'NR==1 {print $1}')
+
 if [[ "$PCI" == *":"*":"*"."* ]]; then
     echo "PCI correct format"
 elif [[ "$PCI" == *":"*"."* ]]; then
@@ -25,8 +22,13 @@ ovs-vsctl --no-wait add-port br0 dpdk0 -- set Interface dpdk0 type=dpdk ofport_r
 
 
 #echo "2 - Add dpdkvhostuser0"
-ovs-vsctl --no-wait add-port br0 dpdkvhostuser0 -- set Interface dpdkvhostuser0 type=dpdkvhostuser ofport_request=10 -- set Interface dpdkvhostuser0 options:n_rxq=1
-#ovs-vsctl add-port br0 dpdkvhostuser1 -- set Interface dpdkvhostuser1 type=dpdkvhostuser ofport_request=11 -- set Interface dpdkvhostuser1 options:n_rxq=1
+ovs-vsctl --no-wait add-port br0 dpdkvhostuser0 -- set Interface dpdkvhostuser0 type=dpdkvhostuser ofport_request=10 #-- set Interface dpdkvhostuser0 options:n_rxq=2
+ovs-vsctl --no-wait add-port br0 dpdkvhostuser1 -- set Interface dpdkvhostuser1 type=dpdkvhostuser ofport_request=11 #-- set Interface dpdkvhostuser1 options:n_rxq=2
+ovs-vsctl --no-wait add-port br0 dpdkvhostuser2 -- set Interface dpdkvhostuser2 type=dpdkvhostuser ofport_request=12 #-- set Interface dpdkvhostuser2 options:n_rxq=2
+ovs-vsctl --no-wait add-port br0 dpdkvhostuser3 -- set Interface dpdkvhostuser3 type=dpdkvhostuser ofport_request=13 #-- set Interface dpdkvhostuser3 options:n_rxq=2
+
+
+
 sleep 5
 echo "2 - Add echo rule"
 #ovs-ofctl del-flows br0

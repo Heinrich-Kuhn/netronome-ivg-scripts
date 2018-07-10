@@ -6,7 +6,6 @@ OVS_INSTALL=/root/$OVS_VER
 echo "1 - Exit applications"
 ovs-appctl -t ovs-vswitchd exit
 ovs-appctl -t ovsdb-server exit
-
 sleep 5
 
 pkill ovsdb-server
@@ -51,7 +50,7 @@ else
   ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem="2048","2048"
 fi
 read -p
-ovs-vsctl --no-wait set Open_vSwitch . other_config:pmd-cpu-mask=81
+ovs-vsctl --no-wait set Open_vSwitch . other_config:pmd-cpu-mask=1E
 ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-lcore-mask=02
 ovs-vswitchd unix:$DB_SOCK --pidfile --detach --log
 

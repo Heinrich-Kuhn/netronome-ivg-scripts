@@ -2,6 +2,8 @@
 D_BUS="01"
 D_SLOT_1="a"
 D_SLOT_2="b"
+D_SLOT_3="c"
+D_SLOT_4="d"
 D_FUNCTION="0"
 VM_NAME=$1
 BRIDGE="br0"
@@ -38,7 +40,7 @@ BRIDGE="br0"
 #if [ -z "$VM_NAME" ] ; then VM_NAME=$DEFAULT_VM_NAME ; fi
 #if [ -z "$BRIDGE" ] ; then BRIDGE=$DEFAULT_BRIDGE ; fi
 
-cat > /tmp/interface << EOL
+cat > /tmp/interface1 << EOL
 <interface type='vhostuser'>
       <source type='unix' path='/usr/local/var/run/openvswitch/dpdkvhostuser0' mode='client'/>
       <model type='virtio'/>
@@ -48,8 +50,41 @@ cat > /tmp/interface << EOL
       </driver>
     </interface>
 EOL
+cat > /tmp/interface2 <<EOL
+    <interface type='vhostuser'>
+      <source type='unix' path='/usr/local/var/run/openvswitch/dpdkvhostuser1' mode='client'/>
+      <model type='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x${D_BUS}' slot='0x${D_SLOT_2}' function='0x${D_FUNCTION}'/>
+      <driver queues='2'>
+        <host mrg_rxbuf='off'/>
+      </driver>
+    </interface>
+EOL
+cat > /tmp/interface3 <<EOL
+    <interface type='vhostuser'>
+      <source type='unix' path='/usr/local/var/run/openvswitch/dpdkvhostuser2' mode='client'/>
+      <model type='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x${D_BUS}' slot='0x${D_SLOT_3}' function='0x${D_FUNCTION}'/>
+      <driver queues='2'>
+        <host mrg_rxbuf='off'/>
+      </driver>
+    </interface>
+EOL
+cat > /tmp/interface4 <<EOL
+    <interface type='vhostuser'>
+      <source type='unix' path='/usr/local/var/run/openvswitch/dpdkvhostuser3' mode='client'/>
+      <model type='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x${D_BUS}' slot='0x${D_SLOT_4}' function='0x${D_FUNCTION}'/>
+      <driver queues='2'>
+        <host mrg_rxbuf='off'/>
+      </driver>
+    </interface>
+EOL
 
-virsh attach-device $VM_NAME /tmp/interface --config
+virsh attach-device $VM_NAME /tmp/interface1 --config
+virsh attach-device $VM_NAME /tmp/interface2 --config
+virsh attach-device $VM_NAME /tmp/interface3 --config
+virsh attach-device $VM_NAME /tmp/interface4 --config
 
 # Configuring default settings for VM
 VM_CPU=$(virsh dominfo $VM_NAME | grep 'CPU(s):' | cut -d ':' -f2 | cut -d ' ' -f10)

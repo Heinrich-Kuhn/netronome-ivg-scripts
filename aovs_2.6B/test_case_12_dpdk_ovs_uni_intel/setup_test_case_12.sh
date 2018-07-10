@@ -2,7 +2,7 @@
 
 VM_NAME=$1
 script_dir="$(dirname $(readlink -f $0))"
-OVS_VER="openvswitch-2.8.1"
+OVS_VER="openvswitch-2.9.1"
 
 ovs-vsctl start
 
