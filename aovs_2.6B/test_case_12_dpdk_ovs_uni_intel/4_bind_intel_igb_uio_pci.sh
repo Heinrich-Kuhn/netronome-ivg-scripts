@@ -11,7 +11,7 @@ echo $PCI
 
 modprobe uio #TODO: why modprobe uio not igb_uio??
 sleep 1
-IGB_UIO="/lib/modules/4.14.51/extra/dpdk/igb_uio.ko"
+IGB_UIO="/opt/src/dpdk-stable-17.11.2/build/kmod/igb_uio.ko"
 sleep 1
 insmod $IGB_UIO #TODO: needs check for preload driver
 

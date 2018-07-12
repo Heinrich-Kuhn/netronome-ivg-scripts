@@ -17,12 +17,11 @@ sleep 1
 modprobe vfio-pci
 driver=vfio-pci
 
-DPDK_DEVBIND=$(find / -iname dpdk-devbind.py | head -1)
+DPDK_DEVBIND=$(find / -iname dpdk-devbind.py | grep "opt/src" | head -1)
 if [ "$DPDK_DEVBIND" == "" ]; then
   echo "ERROR: could not find dpdk-devbind.py tool"
   exit -1
 fi
-
 echo "loading driver"
 modprobe uio
 echo "clearing bind"
